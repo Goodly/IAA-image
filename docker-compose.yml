@@ -1,0 +1,4 @@
+version: '3'
+services:
+  iaa_service:
+    image: goodly/dkpro-agreement-python:stable
