@@ -4,8 +4,10 @@ Fetches container for using DKPro statistics with Python and IPython.
 ## Setup
 
 The software is installed in a Docker container. If you do not have Docker already, you will need to install it.
-* For OS X, go [here](https://docs.docker.com/docker-for-mac/).
-* For Windows, go [here](https://docs.docker.com/docker-for-windows/).
+* For OS X El Capitan 10.11 or newer, install [Docker-for-Mac](https://docs.docker.com/docker-for-mac/).
+* Otherwise install [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_mac/)
+* For Windows 10 Pro [detailed requirements](https://docs.docker.com/docker-for-windows/install/#what-to-know-before-you-install), install [Docker-for-Windows](https://docs.docker.com/docker-for-windows/).
+* Otherwise install [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows/)
 * For Ubuntu and other Linux distributions, install
 [docker](https://docs.docker.com/engine/installation/linux/ubuntu/) and
 [docker-compose](https://docs.docker.com/compose/install/).
