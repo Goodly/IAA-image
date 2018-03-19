@@ -1,0 +1,25 @@
+Question,Content Indicator,Data Type,IRR,Relation to Experts
+1,,,,
+2,Title Representativeness, ordinal,0.367, ρ=0.234
+3,Title Representativeness, ordinal,0.367, ρ=0.234
+4,Clickbait Title, ordinal,0.581, ρ=-0.709***
+5,Clickbait Title, ordinal,0.581, ρ=-0.709***
+6,Clickbait Title, ordinal,0.581, ρ=-0.709***
+7,Single Study Article, nominal,0.877, R^2=0.031
+8,,,,
+9,Quotes from Outside Experts, interval,0.673, ρ=0.327
+10,Citation of Studies, interval,0.763, ρ=0.107
+11,Citation of Organizations, interval,0.283, ρ=0.145
+13,Confidence - Extent Claims Justified, ordinal,-0.093, ρ=0.690***
+14,Confidence - Acknowledge Uncertainty, ordinal,0.534, ρ=-0.247
+15,Logical Fallacies - Straw Man, ordinal,-0.096, ρ=-0.402*
+16,Logical Fallacies - False Dilemma, ordinal,0.102, ρ=-0.303
+17,Logical Fallacies - Slippery Slope, ordinal,0.478, ρ=0.374*
+18,Logical Fallacies - Appeal to Fear, ordinal,0.314, ρ=-0.424*
+19,Logical Fallacies - Naturalistic, ordinal,0.377, ρ=-0.533**
+20,Tone - Emotionally Charged, ordinal,0.098, ρ=0.611***
+21,Tone - Exaggerated Claims, ordinal,0.235, ρ=0.606***
+22,Inference - Type of Claims, nominal,0.154, R^2=0.029
+23,,,,
+24,,,,
+25,Inference - Convincing Evidence, ordinal,0.54, ρ=0.764***

@@ -1,0 +1,228 @@
+version: 3
+
+title: Round 3: CredCo WebConf Alpha Testing Questions
+
+#Overall Credibility
+1.01 mc Rate your impression of the credibility of this article
+1.01.01 Very low credibility
+1.01.02 Somewhat low credibility
+1.01.03 Medium credibility
+1.01.04 Somewhat high credibility
+1.01.05 Very high credibility
+options 1.01.01 nohighlight
+options 1.01.02 nohighlight
+options 1.01.03 nohighlight
+options 1.01.04 nohighlight
+options 1.01.05 nohighlight
+
+#Title Representativeness
+1.02 mc Question: Does the title of the article accurately reflect the content of the article?
+1.02.01 Completely Unrepresentative
+1.02.02 Somewhat Unrepresentative
+1.02.03 Somewhat Representative
+1.02.04 Completely Representative
+options 1.02.01 nohighlight
+options 1.02.02 nohighlight
+options 1.02.03 nohighlight
+options 1.02.04 nohighlight
+
+1.03 cl How is the title unrepresentative of the content of the article? (Select all that apply).
+1.03.01  Title is on a different topic than the body
+1.03.02  Title emphasizes different information than the body
+1.03.03  Title carries little information about the body
+1.03.04  Title takes a different stance than the body
+1.03.05  Title overstates claims or conclusions in the body
+1.03.06  Title understates claims or conclusions in the body
+1.03.07  Other
+options 1.03.01 nohighlight
+options 1.03.02 nohighlight
+options 1.03.03 nohighlight
+options 1.03.04 nohighlight
+options 1.03.05 nohighlight
+options 1.03.06 nohighlight
+options 1.03.07 nohighlight
+
+#Clickbaitiness
+1.04 mc Is the headline clickbaity?
+1.04.01 Very much clickbaity
+1.04.02 Somewhat clickbaity
+1.04.03 A little bit clickbaity
+1.04.04 Not at all clickbaity
+options 1.04.01 nohighlight
+options 1.04.02 nohighlight
+options 1.04.03 nohighlight
+options 1.04.04 nohighlight
+
+1.05 cl What clickbait techniques does this headline employ (select all that apply)?
+1.05.01 Listicle (“6 Tips on …”)
+1.05.02 Cliffhanger to a story (“You Won’t Believe What Happens Next”, “Man Divorces His Wife After Overhearing This Conversation”)
+1.05.03 Provoking emotions, such as shock or surprise (“...Shocking Result”, “...Leave You in Tears”)
+1.05.04 Hidden secret or trick (“Fitness Companies Hate Him...”, “Experts are Dying to Know Their Secret”)
+1.05.05 Challenges to the ego (“Only People with IQ Above 160 Can Solve This”)
+1.05.06 Defying convention (“Think Orange Juice is Good for you? Think Again!”, “Here are 5 Foods You Never Thought Would Kill You”)
+1.05.07 Inducing fear (“Is Your Boyfriend Cheating on You?”)
+1.05.08 Other 
+
+1.06 tx How would you describe what makes this headline clickbait?
+
+#Breadth of Citations
+
+1.07 mc Is this article primarily about a single scientific study?
+1.07.01 Yes
+1.07.02 No
+options 1.07.02 nohighlight
+
+1.08 cl Which of the following types of sources are cited in the article? Check all that apply. If Other, please highlight.
+1.08.01 None 
+1.08.02 Experts
+1.08.03 Studies
+1.08.04 Organizations
+1.08.05 Other
+options 1.08.01 nohighlight
+options 1.08.02 nohighlight
+options 1.08.03 nohighlight
+options 1.08.04 nohighlight
+
+1.09 cl Highlight each expert cited:
+1.09.01 Expert 1
+1.09.02 Expert 2
+1.09.03 Expert 3
+1.09.04 Expert 4
+
+1.10 cl Highlight each scientific study cited:
+1.10.01 Scientific Study 1
+1.10.02 Scientific Study 2
+1.10.03 Scientific Study 3
+1.10.04 Scientific Study 4
+
+1.11 cl Highlight each organization cited:
+1.11.01 Cited Organization 1
+1.11.02 Cited Organization 2
+1.11.03 Cited Organization 3
+1.11.04 Cited Organization 4
+
+1.12 mc Are any experts, organizations, or studies cited that are separate from the central study quoted in the article? If so, highlight relevant section(s).
+1.12.01 None
+1.12.02 1
+1.12.03 2
+1.12.04 3
+1.12.05 4 or more
+options 1.12.01 nohighlight
+
+#Calibrating Confidence
+
+1.13 mc To what extent does their confidence in their claims seem justified? 
+1.13.01 Completely justified
+1.13.02 Mostly justified
+1.13.03 Somewhat justified
+1.13.04 Slightly justified
+1.13.05 Not at all justified
+options 1.13.01 nohighlight
+options 1.13.02 nohighlight
+options 1.13.03 nohighlight
+options 1.13.04 nohighlight
+options 1.13.05 nohighlight
+
+1.14 mc Do they acknowledge uncertainty or the possibility that things might be otherwise? If so, highlight the relevant section(s).
+1.14.01 Yes
+1.14.02 Sort of
+1.14.03 No
+options 1.14.03 nohighlight
+
+#Logical Fallacies
+
+1.15 mc Does the author present the counterargument as a weaker, more foolish version of the real counterargument (use a Straw Man Argument)? If so, highlight the relevant section(s).
+1.15.01 Yes
+1.15.02 Sort of
+1.15.03 No
+options 1.15.03 nohighlight
+
+1.16 mc Does the author present a complicated choice as if it were binary (construct a false dilemma)? If so, highlight the relevant section(s).
+1.16.01 Yes
+1.16.02 Sort of
+1.16.03 No
+options 1.16.03 nohighlight
+
+1.17 mc Does the author say that one small change will lead to a major change (use a slippery slope argument)? Highlight the relevant section(s).
+1.17.01 Yes
+1.17.02 Sort of
+1.17.03 No
+options 1.17.03 nohighlight
+
+1.18 mc Does the author exaggerate the dangers of a situation and use scare tactics to persuade (the appeal to fear fallacy)?
+1.18.01 Yes
+1.18.02 Sort of
+1.18.03 No
+options 1.18.03 nohighlight
+
+1.19 mc Does the author suggest that something is good because it is natural, or bad because it is not natural (the naturalistic fallacy)?
+1.19.01 Yes
+1.19.02 Sort of
+1.19.03 No
+options 1.19.03 nohighlight
+
+#Tone
+
+1.20 mc Does the article have an emotionally charged tone? (i.e, outrage, snark, celebration, horror, etc.). If so, highlight the relevant section(s).
+1.20.01 Yes
+1.20.02 Sort of
+1.20.03 No
+options 1.20.03 nohighlight
+
+1.21 mc Does the author exaggerate any claims? If so, highlight the relevant section(s).
+1.21.01 Yes
+1.21.02 Sort of
+1.21.03 No
+options 1.21.03 nohighlight
+
+#Scientific Inference
+
+1.22 mc Is a general or singular causal claim made? Highlight the section(s) that supports your answer.
+1.22.01 General Causal Claim
+1.22.02 Singular Causal Claim
+1.22.03 No Causal Claim
+options 1.22.03 nohighlight
+
+1.23 cl What evidence is given for the primary claim? Select all that apply.
+1.23.01 Correlation 
+1.23.02 Cause precedes effect
+1.23.03 The correlation appears across multiple independent contexts
+1.23.04 A plausible mechanism is proposed
+1.23.05 An experimental study was conducted (natural experiments OK)
+1.23.06 Experts are cited
+1.23.07 Other kind of evidence
+1.23.08 No evidence given
+options 1.23.08 nohighlight
+
+1.24 tx What kind of evidence do they give?
+
+1.25 mc How convincing do you find the evidence given for the primary claim?
+1.25.01 Very Convincing
+1.25.02 Fairly Convincing
+1.25.03 Moderately Convincing
+1.25.04 Slightly Convincing
+1.25.05 Not at All Convincing
+options 1.25.01 nohighlight
+options 1.25.02 nohighlight
+options 1.25.03 nohighlight
+options 1.25.04 nohighlight
+options 1.25.05 nohighlight
+
+#final_logic
+#copy individual section logics and paste the whole set here
+#clickbait_logic
+if 1.02.01, then 1.03
+if 1.02.02, then 1.03 
+if 1.04.01, then 1.05
+if 1.04.02, then 1.05
+if 1.04.03, then 1.05 
+if 1.05.08, then 1.06
+#Citations_logic
+if 1.07.01, then 1.12
+if 1.08.02, then 1.09
+if 1.08.03, then 1.10
+if 1.08.04, then 1.11
+#Logic for Science
+if 1.23.07, then 1.24 
+
+Instructions: Read over this article. Try to spend less than 10 minutes of your time reading. Then consider these questions about the arguments made in it.
