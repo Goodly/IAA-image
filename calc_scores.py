@@ -8,13 +8,7 @@ from collections import defaultdict
 def read_csvfile(filename):
     with open(filename, newline='', encoding='utf-8-sig') as csvfile:
         reader = csv.DictReader(csvfile)
-        collect_rows(reader)
-
-def or_use_pandas(filename):
-    df = pd.read_csv(filename)
-    print(df.columns)
-    print(df.groupby(['topic_number', 'question_number', 'contributor_id'])['contributor_id'].count())
-    return df
+        return collect_rows(reader)
 
 def collect_rows(reader):
     rows = [ row for row in reader ]
@@ -28,11 +22,23 @@ def collect_rows(reader):
             # build a useful data structure here
     # return data
 
+def or_use_pandas(filename):
+    df = pd.read_csv(filename)
+    print(df.columns)
+    grouped = df.groupby(['topic_number', 'question_number', 'contributor_id'])
+    print(grouped['contributor_id'].count())
+    for (topic_number, question_number, contributor_id), group in grouped:
+        print("--------------")
+        print((topic_number, question_number, contributor_id))
+        print(group[['answer_number', 'answer_text']])
+            # build a useful data structure here
+    # return data
+
 def calculate_scores(data):
     scores =[]
     return scores
 
-def write_scores_csv(scores):
+def write_scores_csv(output_filename, scores):
     pass
 
 if __name__ == '__main__':
@@ -42,9 +48,10 @@ if __name__ == '__main__':
         help='CSV file with TextThresher Data Hunt columns.')
     args = parser.parse_args()
     filename = "./pe_data/pe_users_13_14_15-2018-03-19T18.csv"
+    output_filename = "./pe_data/someresults.csv"
     if args.input_file:
         filename = args.input_file
-    data = read_csvfile(filename)
-    data = or_use_pandas(filename)
-    scores = calculate_scores(data)
-    write_scores_csv(scores)
+    data1 = read_csvfile(filename)
+    data2 = or_use_pandas(filename)
+    scores = calculate_scores(data1)
+    write_scores_csv(output_filename, scores)
