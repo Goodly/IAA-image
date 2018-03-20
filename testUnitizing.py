@@ -1,14 +1,6 @@
 import sys
 from jnius import autoclass
 
-CAS = autoclass('org.dkpro.statistics.agreement.coding.CodingAnnotationStudy')
-PA = autoclass('org.dkpro.statistics.agreement.coding.PercentageAgreement')
-KAA = autoclass('org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement')
-NDF = autoclass('org.dkpro.statistics.agreement.distance.NominalDistanceFunction')
-CMP = autoclass('org.dkpro.statistics.agreement.visualization.CoincidenceMatrixPrinter')
-RMP = autoclass('org.dkpro.statistics.agreement.visualization.ReliabilityMatrixPrinter')
-System = autoclass('java.lang.System')
-
 def testUnitizing():
     UAS = autoclass('org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy')
     # raterCount, length
