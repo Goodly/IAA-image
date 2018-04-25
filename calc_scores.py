@@ -5,6 +5,7 @@ import csv
 import numpy as np
 from itertools import groupby
 from collections import defaultdict
+from Integer import *
 
 from jnius import autoclass
 
