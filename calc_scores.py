@@ -16,16 +16,61 @@ def read_csvfile(filename):
         reader = csv.DictReader(csvfile)
         return collect_rows(reader)
 
-# def or_use_pandas(filename):
-#     df = pd.read_csv(filename)
-#     print(df.columns)
-#     print(df.groupby(['topic_number', 'question_number', 'contributor_id'])['contributor_id'].count())
-#     return df
+def or_use_pandas(filename):
+    df = pd.read_csv(filename)
+    print(df.columns)
+    print(df.groupby(['topic_number', 'question_number', 'contributor_id'])['contributor_id'].count())
+    return df
 
+def genStudies():
+    st1 = CAS(5)
+    st1.addItemAsArray(['1','1','1','1','1'])
+    st2 = CAS(5)
+    st2.addItemAsArray(['1','1','1','1','2'])
+    st3 = CAS(5)
+    st3.addItemAsArray(['1','2','3','4','5'])
+    st4 = CAS(5)
+    st4.addItemAsArray(['1','1','1','1','4'])
+    return st1, st2, st3
 #returns dictionary of dictoinaries--to access specifics:
 #collect_rows(reader)[article_num][user][question] --> [answer_num, start_pos, end_pos]
 #All inputs are strings
 def collect_rows(reader):
+    rows = [ row for row in reader ]
+    sort_questions = lambda x: (x['topic_number'], x['question_number'], x['contributor_id'])
+    anno_by_question = sorted(rows, key=sort_questions)
+    ordinal_questions = ['2','3','4','5','6','13','14','15','16','17','18','19','20','21','25']
+    nominal_questions = ['7','22']
+    interval_questions = ['9','10','11']
+    uberDict = {} # the most dictionarial dictionary
+    for (topic_number, question_number, contributor_id), anno \
+        in groupby(anno_by_question, key=sort_questions):
+        #print(topic_number, question_number)
+        #anno is a list of lists
+        for row in anno:
+            article_num = row['taskrun_article_number']
+            if not article_num in uberDict:
+                uberDict[article_num] = {}
+            question = row['question_number']
+            user = row['contributor_id']
+            if not question in uberDict[article_num]:
+                uberDict[article_num][question] = {}
+
+            # if question in uberDict[article_num][user]:
+            #     print("*****%^$^$^% SOMETHING WRONG, SAME Q \
+            #     READ TWICE FROM SAME USER AND ARTICLE")
+            answer = row['answer_number']
+            start = row['start_pos']
+            end = row['end_pos']
+            uberDict[article_num][question][user] = [answer, start, end]
+
+            # build a useful data structure here
+    return uberDict
+
+#returns dictionary of dictoinaries--to access specifics:
+#collect_rows(reader)[article_num][user][question] --> [answer_num, start_pos, end_pos]
+#All inputs are strings
+def collect_rows_old(reader):
     rows = [ row for row in reader ]
     sort_questions = lambda x: (x['topic_number'], x['question_number'], x['contributor_id'])
     anno_by_question = sorted(rows, key=sort_questions)
@@ -81,6 +126,7 @@ def toStudies(data):
                     featuredInThisStudy.append(articdata[user][quest][0])
             numContributors = len(featuredInThisStudy)
             study = CAS(numContributors)
+            study.addItemAsArray(featuredInThisStudy)
             uberStudyDict[article][quest] = study
     return uberStudyDict
 
