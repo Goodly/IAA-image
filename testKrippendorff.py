@@ -98,4 +98,4 @@ if __name__ == "__main__":
     testFromPaper(int_study, ODF())
     testFromPaper(int_study, IDF())
     testRMP(study)
-    testDistances(study)
+    testDistances(int_study)
