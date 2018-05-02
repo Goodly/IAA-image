@@ -10,6 +10,7 @@ from Integer import *
 from jnius import autoclass
 
 CAS = autoclass('org.dkpro.statistics.agreement.coding.CodingAnnotationStudy')
+Integer = autoclass('java.lang.Integer')
 
 def read_csvfile(filename):
     with open(filename, newline='', encoding='utf-8-sig') as csvfile:
@@ -30,6 +31,8 @@ def collect_rows(reader):
     rows = [ row for row in reader ]
     sort_questions = lambda x: (x['topic_number'], x['question_number'], x['contributor_id'])
     anno_by_question = sorted(rows, key=sort_questions)
+    """
+    """
     ordinal_questions = ['2','3','4','5','6','13','14','15','16','17','18','19','20','21','25']
     nominal_questions = ['7','22']
     interval_questions = ['9','10','11']
