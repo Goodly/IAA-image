@@ -12,9 +12,10 @@ def calc_scores(filename):
     data = pd.read_csv(filename)
     uberDict = csv_to_dict(data)
     #@TODO initialize csv file here, and any writer we would need
-    for artic in np.arange(10): #Find a way to iterate through only articles that there agreement
-        for ques in np.arange(10): #get a way to iterate through questions in the csv
-            agreements = score(article, ques, uberDict)
+    for artic in uberDict.keys(): #Find a way to iterate through only articles that there agreement
+        for ques in uberDict[artic].keys(): #get a way to iterate through questions in the csv
+            agreements = score(artic, ques, uberDict)
+            print(agreements)
             #@TODO add to the csv, one column of the 'correct' question answer is agreements[0], degree of agreement is agreements[1]
     #@TODO return the csv, or make sure it's pushed out of the womb and into the world
 
@@ -60,7 +61,7 @@ def score(article, ques, data):
 
 def pickWinnerBecauseAlgorithmsTeamWantsMeToUgh(responses):
     """https://stackoverflow.com/questions/6252280/find-the-most-frequent-number-in-a-numpy-vector"""
-    a = np.array(response)
+    a = np.array(responses)
     (values,counts) = np.unique(a,return_counts=True)
     ind=np.argmax(counts)
     return values[ind]
@@ -93,7 +94,7 @@ def scoreOrdinal(responses):
         return 0
     elif val >1:
         return 1
-    return
+    return 1- val
 
 def scoreInterval():
     return 0
