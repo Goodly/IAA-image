@@ -1,6 +1,6 @@
 import sys
 from jnius import autoclass
-
+import numpy as np
 CAS = autoclass('org.dkpro.statistics.agreement.coding.CodingAnnotationStudy')
 PA = autoclass('org.dkpro.statistics.agreement.coding.PercentageAgreement')
 KAA = autoclass('org.dkpro.statistics.agreement.coding.KrippendorffAlphaAgreement')
@@ -52,24 +52,48 @@ def makeStringStudy():
 
 def makeIntegerStudy():
     study = CAS(3)
-    study.addItemAsArray([Integer(1), Integer(1), Integer(1)])
-    study.addItemAsArray([Integer(1), Integer(2), Integer(2)])
-    study.addItemAsArray([Integer(2), Integer(2), Integer(2)])
-    study.addItemAsArray([Integer(4), Integer(4), Integer(4)])
-    study.addItemAsArray([Integer(1), Integer(4), Integer(4)])
-    study.addItemAsArray([Integer(2), Integer(2), Integer(2)])
-    study.addItemAsArray([Integer(1), Integer(2), Integer(3)])
-    study.addItemAsArray([Integer(3), Integer(3), Integer(3)])
-    study.addItemAsArray([Integer(2), Integer(2), Integer(2)])
+    #study.addItemAsArray([Integer(1), Integer(1), Integer(1)])
+    # study.addItemAsArray([Integer(1), Integer(2), Integer(2)])
+    # study.addItemAsArray([Integer(2), Integer(2), Integer(2)])
+    # study.addItemAsArray([Integer(4), Integer(4), Integer(4)])
+    # study.addItemAsArray([Integer(1), Integer(4), Integer(4)])
+    # study.addItemAsArray([Integer(2), Integer(2), Integer(2)])
+    # study.addItemAsArray([Integer(1), Integer(2), Integer(3)])
+    # study.addItemAsArray([Integer(3), Integer(3), Integer(3)])
+    # study.addItemAsArray([Integer(2), Integer(2), Integer(2)])
+    study.addItemAsArray([Integer(1), Integer(3),Integer(1)])
+
+
     return study
+
+def hellaIntStudies(cycles,categories = 4):
+    percScores = np.zeros(cycles)
+    kripScores = []
+    for c in range(cycles):
+        length = np.random.randint(50)+5
+        study = CAS(length)
+        simulated = []
+        for i in range(length):
+            simulated.append(np.random.randint(categories))
+        obj = [Integer(num) for num in simulated]
+        print(obj)
+        study.addItemAsArray(obj)
+        pa = PA(study)
+        percScores[c] = pa.calculateAgreement()
+        alpha = KAA(study, NDF())
+        print(c)
+        print(alpha)
+        print(alpha.calculateObservedDisagreement())
+        kripScores.append(alpha.calculateObservedDisagreement())
+    return percScores, kripScores
 
 def testFromPaper(study, df):
     # Output numbers match paper
     # http://anthology.aclweb.org/C/C14/C14-2023.pdf
     print("----")
     pa = PA(study)
-    print("{:.4f} (percentage agreement)"
-          .format(pa.calculateAgreement()))
+    # print("{:.4f} (percentage agreement)"
+    #       .format(pa.calculateAgreement()))
 
     alpha = KAA(study, df)
     print("{:.4f} (observed disagreement)"
@@ -93,7 +117,9 @@ def testRMP(study):
 if __name__ == "__main__":
     study = makeStringStudy()
     testFromPaper(study, NDF())
+    print("INT STUDY")
     int_study = makeIntegerStudy()
+    print("NDF")
     testFromPaper(int_study, NDF())
     testFromPaper(int_study, ODF())
     testFromPaper(int_study, IDF())
