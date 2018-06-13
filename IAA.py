@@ -204,6 +204,7 @@ def cleanForUnitization(data, article_num, question_num):
     returnDict['Lengths'] = np.asarray((get_question_end(data, article_num, question_num)) -  np.asarray(get_question_start(data, article_num,question_num)))
     returnDict['Categories'] = get_question_answers(data, article_num, question_num).tolist()
     returnDict['Raters'] = get_question_userid(data, article_num, question_num).tolist()
+    returnDict['Ends'] = np.asarray(get_question_end(data, article_num,question_num))
     return returnDict
 
 
