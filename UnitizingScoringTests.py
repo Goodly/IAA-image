@@ -5,6 +5,7 @@ import numpy as np
 #from jnius import autoclass
 import csv
 from UnitizingScoring import *
+from KaOrdinalCoding import *
 #
 # CAS = autoclass('org.dkpro.statistics.agreement.coding.CodingAnnotationStudy')
 # UAS = autoclass('org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy')
@@ -23,7 +24,7 @@ def calc_scores(filename):
     data = pd.read_csv(filename)
     uberDict = data_storer(data)
     #@TODO initialize csv file here, and any writer we would need
-    data = [["Article Number", "Question Number", "Nick Agreement", "Alpha Agreement"]]
+    data = [["Article Number", "Question Number", "Nick Agreement", "Alpha Agreement", "Coding Agreement"]]
 
     for article in uberDict.keys(): #Find a way to iterate through only articles that there agreement
         for ques in uberDict[article].keys(): #get a way to iterate through questions in the csv
@@ -83,7 +84,6 @@ def get_question_userid(data, article_num, question_num):
 def get_question_start(data, article_num, question_num):
     return data[article_num][question_num][1][2][0]
 
-
 def get_question_end(data, article_num, question_num):
     return data[article_num][question_num][1][3][0]
 
@@ -103,7 +103,7 @@ def score(article, ques, data):
                     get_text_length(data,article,ques), get_num_users(data,article,ques),  get_question_userid(data, article, ques).tolist()
     percentageScore = scoreNickUnitizing(starts,ends,length,numUsers, users)
     alphaScore = scoreAlphaUnitizing(starts,ends,length,numUsers,'nominal')
-    return (np.mean(percentageScore), alphaScore)
+    return (percentageScore, alphaScore)
 
 def pickWinnerBecauseAlgorithmsTeamWantsMeToUgh(responses):
     """https://stackoverflow.com/questions/6252280/find-the-most-frequent-number-in-a-numpy-vector"""
