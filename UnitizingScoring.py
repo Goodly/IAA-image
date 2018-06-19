@@ -14,7 +14,6 @@ def scoreNickUnitizing(starts,ends,length,numUsers,users, dFunc = 'nominal'):
     #print(Filteredmatrix)
     #print('filtered matrix')
     ##print(filteredMatrix)
-    print(np.array_equiv(answerMatrix, filteredMatrix))
     score = scoreAlpha(filteredMatrix, dFunc)
     return score
 
@@ -57,7 +56,7 @@ def unitsToArray(starts, ends, length, numUsers):
     unitsMatrix = np.stack((col1,col2), axis = 0).T
     for i in range(length):
         unitsMatrix[i][1] = numUsers
-    for i in range(len(starts)-1):
+    for i in range(len(starts)):
         raiseMatrix(starts[i],ends[i])
     #print("Processed Matrix")
     #print(unitsMatrix)
@@ -80,22 +79,25 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
         #if it failsor needs more, for now doing nothing,
         #TODO:add that funcitonality to here
         #fornow, just going to return the array of scores of passing indexes
-    print('passingIndices')
+    #print('passingIndices')
     #print(passingIndexes)
     goodUsers = getGoodUsers(passingIndexes, users, starts, ends)
-    print('users')
-    print(goodUsers)
+    #print('users')
+    #print(goodUsers)
     goodIndices =getGoodIndices(users,goodUsers)
     if  len(goodIndices)<1:
         return ([],[],0)
     starts, ends = np.array(starts), np.array(ends)
     numGoodUsers = len(goodUsers)
-    print(goodIndices)
+    #print(goodIndices)
     starts = starts[goodIndices]
     ends =ends[goodIndices]
     return starts,ends,numGoodUsers
 
 def getGoodUsers(passingIndexes, users, starts, ends):
+    """returns array of unique users who highlighted
+    anything that passed the agreement threshold Matrix
+    """
     goodDogs = []
     for i in range(len(starts)):
         if users[i] not in goodDogs:
@@ -109,6 +111,11 @@ def getGoodUsers(passingIndexes, users, starts, ends):
     return goodDogs
 
 def getGoodIndices(users,goodDogs):
+    """Takes in array of all users ordered
+    the same as the starts and ends lists and an array
+    of unique users who had an agreed upon highlight and
+    returns array of all the indices that any user with
+    an agreed upon highlight had highlighted """
     goodUserIndices = []
     for i in range(len(users)):
         if users[i] in goodDogs:
