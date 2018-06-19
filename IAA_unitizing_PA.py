@@ -11,7 +11,7 @@ import numpy as np
 path = './pe_data/pe_data_test.csv'
 
 test_path = './PE_test_data_120.csv'
-test_data = data_storer
+test_data = data_storer(test_path)
 
 # Creates user array of 1's and 0's for annotations
 def create_user_arr(article, question, length, data, user_tuples):
@@ -22,19 +22,43 @@ def create_user_arr(article, question, length, data, user_tuples):
         for i in np.arange(pt[0],pt[1]):
             i = i - 1
             anno_list[i] = 1
+    return anno_list
 
-def create_question_data(article,question, data):
+#Returns dictionary with keys as User ID's and values as the array of answer choices
+def create_question_data(article, question, data):
     anno_data = get_user_tuples(data, article, question)
     length =  get_text_length(data, article, question)
-    all_user_annotations = []
+    all_annotations = dict()
     for u in anno_data.keys():
         user_arr = create_user_arr(article,question, length, anno_data[u])
-        all_user_annotations.append(user_arr)
+        all_annotations[u] = user_arr
 
 
 
 
 
+#Functions used for coding percentage agreements on a specific question
+
+  #This function returns a dictionary with keys as user id's and the values as the array of answer choices, where 1 is yes and 0 is no
+  def get_user_arrays(data, article_num, question_num):
+    returnDict = dict()
+    users = get_question_userid(data, article_num, question_num)
+    answers = get_question_answers(data, article_num, question_num).tolist()
+    index = 0
+    for u in users:
+        array = np.zeros(max(answers))
+        array[answers[index]-1] = 1
+        returnDict[u] = array
+        index +=1
+    return returnDict
+
+  #This function takes in a dictionary outputted by get_user_arrays to give an array of the percentage agreement per answer choice.
+  def get_question_answer_ratios(dictionary):
+    users_num = len(dictionary.keys())
+    returnArray = np.zeros(len(list(dictionary.values())[0]))
+    for a in dictionary.values():
+        returnArray = returnArray + a
+    return returnArray/users_num
 
 
 
