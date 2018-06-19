@@ -3,6 +3,8 @@ import numpy as np
 
 def scoreNickUnitizing(starts,ends,length,numUsers,users, dFunc = 'nominal'):
     answerMatrix = unitsToArray(starts,ends,length,numUsers)
+    #print('answersMatrix')
+    #print(answerMatrix)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     #print(percentageArray)
     filteredData = filterPassFail(percentageArray, answerMatrix,numUsers,users,starts,ends)
@@ -10,8 +12,9 @@ def scoreNickUnitizing(starts,ends,length,numUsers,users, dFunc = 'nominal'):
     fStarts,fEnds,fNumUsers =filteredData[0], filteredData[1], filteredData[2]
     filteredMatrix = unitsToArray(fStarts, fEnds,length, fNumUsers)
     #print(Filteredmatrix)
-    print('filtered matrix')
-    print(filteredMatrix)
+    #print('filtered matrix')
+    ##print(filteredMatrix)
+    print(np.array_equiv(answerMatrix, filteredMatrix))
     score = scoreAlpha(filteredMatrix, dFunc)
     return score
 
@@ -54,7 +57,7 @@ def unitsToArray(starts, ends, length, numUsers):
     unitsMatrix = np.stack((col1,col2), axis = 0).T
     for i in range(length):
         unitsMatrix[i][1] = numUsers
-    for i in range(len(starts)):
+    for i in range(len(starts)-1):
         raiseMatrix(starts[i],ends[i])
     #print("Processed Matrix")
     #print(unitsMatrix)
@@ -68,6 +71,8 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
     output is tuple(starts,ends,numGoodUsers)
     """
     passingIndexes = []
+    print('max of percScores')
+    print(np.max(percentageScoresArray))
     for i in range(len(percentageScoresArray)):
         #TODO: develop functional threshold matrix for more robust analysis
         if percentageScoresArray[i]>.4:
@@ -75,6 +80,8 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
         #if it failsor needs more, for now doing nothing,
         #TODO:add that funcitonality to here
         #fornow, just going to return the array of scores of passing indexes
+    print('passingIndices')
+    #print(passingIndexes)
     goodUsers = getGoodUsers(passingIndexes, users, starts, ends)
     print('users')
     print(goodUsers)
@@ -95,9 +102,8 @@ def getGoodUsers(passingIndexes, users, starts, ends):
             for j in range(starts[i], ends[i]):
                 if j in passingIndexes:
                     goodDogs.append(users[i])
-                    break
-    print('goodDog')
-    print(goodDogs)
+    #vprint('goodDog')
+    #print(goodDogs)
     goodDogs = np.array(goodDogs)
     goodDogs = np.unique(goodDogs)
     return goodDogs
@@ -107,6 +113,8 @@ def getGoodIndices(users,goodDogs):
     for i in range(len(users)):
         if users[i] in goodDogs:
             goodUserIndices.append(i)
+    print('GoodDogIndices')
+    print(goodUserIndices)
     return np.array(goodUserIndices)
 
 

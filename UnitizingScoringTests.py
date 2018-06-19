@@ -36,7 +36,7 @@ def calc_scores(filename):
             else:
                 data.append([article,ques, agreements[0], agreements[1]])
     #@TODO return the csv, or make sure it's pushed out of the womb and into the world
-
+    print('going to csv')
     scores = open('question_scores.csv', 'w')
 
     with scores:
