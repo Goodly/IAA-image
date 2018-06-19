@@ -1,6 +1,6 @@
 import krippendorff
 import numpy as np
-
+from ThresholdMatrix import *
 def scoreNickUnitizing(starts,ends,length,numUsers,users, dFunc = 'nominal'):
     answerMatrix = unitsToArray(starts,ends,length,numUsers)
     #print('answersMatrix')
@@ -74,7 +74,7 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
     print(np.max(percentageScoresArray))
     for i in range(len(percentageScoresArray)):
         #TODO: develop functional threshold matrix for more robust analysis
-        if percentageScoresArray[i]>.4:
+        if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
             passingIndexes.append(i)
         #if it failsor needs more, for now doing nothing,
         #TODO:add that funcitonality to here
