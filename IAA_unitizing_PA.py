@@ -24,19 +24,6 @@ def create_user_arr(article, question, length, data, user_tuples):
             anno_list[i] = 1
     return anno_list
 
-#Returns dictionary with keys as User ID's and values as the array of answer choices
-def create_question_data(article, question, data):
-    anno_data = get_user_tuples(data, article, question)
-    length =  get_text_length(data, article, question)
-    all_annotations = dict()
-    for u in anno_data.keys():
-        user_arr = create_user_arr(article,question, length, anno_data[u])
-        all_annotations[u] = user_arr
-
-
-
-
-
 #Functions used for coding percentage agreements on a specific question
 
   #This function returns a dictionary with keys as user id's and the values as the array of answer choices, where 1 is yes and 0 is no
