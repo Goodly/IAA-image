@@ -1,6 +1,31 @@
 import numpy as np
+from UnitizingScoring import *
+from ThresholdMatrix import *
 
-def scoreCoding(answers, users, dfunc = None):
+def evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = None):
+    highScore, winner, relevantUsers = scoreCoding(answers, users, dfunc)
+    return passToUnitizing(answers,users,starts,ends,numUsers,length,\
+        highScore, winner, relevantUsers)
+
+def passToUnitizing(answers,users,starts,ends,numUsers,length,\
+    highScore, winner, relevantUsers)
+    if evalThresholdMatrix(highscore, numUsers) == 'H':
+        goodIndices = getGoodIndices(users, relevantUsers)
+        #f for filtered
+        starts,ends, users = np.array(starts), np.array(ends), np.array(users)
+        fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
+        if max(fEnds)>0:
+            uScore, units = scoreNickUnitizing(fStarts, fEnds,length, len(relevantUsers))
+        else:
+            uScore = 0
+            units = []
+        return winner, units, uScore
+    else:
+        return 'N/A','N/A','N/A'
+
+
+
+def scoreCoding(answers, users, dfunc):
     """scores coding questions using an ordinal distance
     function(defined in getWinners method)
     inputs: answers array like object of the answers for the question

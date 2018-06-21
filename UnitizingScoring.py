@@ -9,13 +9,13 @@ def scoreNickUnitizing(starts,ends,length,numUsers,users, dFunc = 'nominal'):
     #print(percentageArray)
     filteredData = filterPassFail(percentageArray, answerMatrix,numUsers,users,starts,ends)
     #f for filtered
-    fStarts,fEnds,fNumUsers =filteredData[0], filteredData[1], filteredData[2]
+    fStarts,fEnds,fNumUsers,goodIndices =filteredData[0], filteredData[1], filteredData[2],filteredData[3]
     filteredMatrix = unitsToArray(fStarts, fEnds,length, fNumUsers)
     #print(Filteredmatrix)
     #print('filtered matrix')
     ##print(filteredMatrix)
     score = scoreAlpha(filteredMatrix, dFunc)
-    return score
+    return score, goodIndices
 
 
 def scoreAlphaUnitizing(starts,ends,length,numUsers,dFunc):
@@ -39,7 +39,6 @@ def scorePercentageUnitizing(answerMatrix,length,numUsers):
     """takes in iterables starts,and ends as well as length of the document
     and the total number of Users who were asked to annotate
     returns array of percentage agreement each character"""
-
     totalNumUsers = numUsers
     PercentScoresArray = np.zeros(length)
     for i in range(len(answerMatrix)):
@@ -79,8 +78,6 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
         #if it failsor needs more, for now doing nothing,
         #TODO:add that funcitonality to here
         #fornow, just going to return the array of scores of passing indexes
-    #print('passingIndices')
-    #print(passingIndexes)
     goodUsers = getGoodUsers(passingIndexes, users, starts, ends)
     #print('users')
     #print(goodUsers)
@@ -92,7 +89,7 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
     #print(goodIndices)
     starts = starts[goodIndices]
     ends =ends[goodIndices]
-    return starts,ends,numGoodUsers
+    return starts,ends,numGoodUsers, passingIndexes
 
 def getGoodUsers(passingIndexes, users, starts, ends):
     """returns array of unique users who highlighted
@@ -104,8 +101,6 @@ def getGoodUsers(passingIndexes, users, starts, ends):
             for j in range(starts[i], ends[i]):
                 if j in passingIndexes:
                     goodDogs.append(users[i])
-    #vprint('goodDog')
-    #print(goodDogs)
     goodDogs = np.array(goodDogs)
     goodDogs = np.unique(goodDogs)
     return goodDogs

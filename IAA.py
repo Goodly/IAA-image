@@ -4,15 +4,16 @@ from jnius import autoclass
 import csv
 from UnitizingScoring import *
 from IAA_unitizing_PA import *
+from MultipleCoding import *
 
 def calc_scores(filename):
     uberDict = data_storer(filename)
-    data = [["Article Number", "Question Number", "Agreed Answer", "Agreement Score"]]
+    data = [["Article Number", "Question Number", "Agreed Answer", "HighlightedIndices","Agreement Score"]]
 
     for article in uberDict.keys(): #Iterates thrguh each article
         for ques in uberDict[article].keys(): #Iterates through each question in an article
             agreements = score(article, ques, uberDict)
-            data.append([article,ques, agreements[0], agreements[1]])
+            data.append([article,ques, agreements[0], agreements[1], agreements[2]])
     #@TODO return the csv, or make sure it's pushed out of the womb and into the world
 
     scores = open('question_scores.csv', 'w')
@@ -46,17 +47,23 @@ def score(article, ques, data):
     if ques in unit_questions:
         return run_2step_unitization(data, article, ques)
 
-
+    answers, users,  numUsers = get_question_answers(data, article, ques), \
+        get_question_userid(data, article, ques).tolist(), \
+        get_num_users(data, article, ques)
+    starts,ends,length= get_question_start(data,article,question).tolist(),get_question_end(data,article,question).tolist(),\
+                        get_text_length(data,article,question)
     if ques in ordinal_questions:
         #TODO: put ordinal score calculation here
-        return ...
+        evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = 'ordinal')
+
+        return
     elif ques in nominal_questions:
         #TODO: put nominal score calculation here
-        return ...
+        return evaluateCoding(answers, users, starts, ends, numUsers, length)
     elif ques in multiple_questions:
         #TODO: put multiple question scoring here
         #I believe we should just loop through and do each once nominally but for syntax sake we can make a seperate function
-        return ...
+        return evaluateMultiple(answers, users, starts, ends, numUsers, length)
 
 
 
