@@ -3,7 +3,8 @@ def evalThresholdMatrix(i, num_of_users):
     return_array = []
     index = 0
     if num_of_users <= 2:
-        print("Not enough users")
+        #print("Not enough users")
+        grade = 'U'
     if num_of_users == 3:
         if (i > 2/3):
             grade = "H"

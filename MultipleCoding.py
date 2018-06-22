@@ -20,9 +20,9 @@ def evaluateMultiple(answers, users, starts, ends, numUsers, length, dfunc = Non
     for i in range(1,len(percArray)):
         relevantUsers = getUsers(i, users, answers)
         score = percArray[i]
-        unitizedScore = passToUnitizing(answers,users,starts,ends,numUsers,length,\
-            score, i, relevantUsers)
-        out.append(unitizedScore) 
+        unitizedScore = passToUnitizing(answers,users,starts,ends,numUsers,length, score, i, relevantUsers)
+        out.append(unitizedScore)
+    return out
 ans1 = [1,3,4,1,2,3,4,1,2,3,5,6,3,1,2,1,3,4,2,1,2,2,2,1,1,3,3]
 ans2 = [1,1,1,2,2,2,1,1,1]
 ans3 = [1,1,1,1,1,4,4,4,4,4]

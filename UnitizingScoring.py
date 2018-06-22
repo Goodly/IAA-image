@@ -10,6 +10,8 @@ def scoreNickUnitizing(starts,ends,length,numUsers,users, dFunc = 'nominal'):
     filteredData = filterPassFail(percentageArray, answerMatrix,numUsers,users,starts,ends)
     #f for filtered
     fStarts,fEnds,fNumUsers,goodIndices =filteredData[0], filteredData[1], filteredData[2],filteredData[3]
+    if len(fStarts)==0:
+        return 0,[]
     filteredMatrix = unitsToArray(fStarts, fEnds,length, fNumUsers)
     #print(Filteredmatrix)
     #print('filtered matrix')
@@ -69,8 +71,8 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
     output is tuple(starts,ends,numGoodUsers)
     """
     passingIndexes = []
-    print('max of percScores')
-    print(np.max(percentageScoresArray))
+    # print('max of percScores')
+    # print(np.max(percentageScoresArray))
     for i in range(len(percentageScoresArray)):
         #TODO: develop functional threshold matrix for more robust analysis
         if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
@@ -81,12 +83,16 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
     goodUsers = getGoodUsers(passingIndexes, users, starts, ends)
     #print('users')
     #print(goodUsers)
+    print('starts')
+    print(starts)
     goodIndices =getGoodIndices(users,goodUsers)
     if  len(goodIndices)<1:
-        return ([],[],0)
+        return ([],[],0,[])
     starts, ends = np.array(starts), np.array(ends)
     numGoodUsers = len(goodUsers)
-    #print(goodIndices)
+    print('goodIndices')
+    print(goodIndices)
+    print(starts)
     starts = starts[goodIndices]
     ends =ends[goodIndices]
     return starts,ends,numGoodUsers, passingIndexes
@@ -104,7 +110,12 @@ def getGoodUsers(passingIndexes, users, starts, ends):
     goodDogs = np.array(goodDogs)
     goodDogs = np.unique(goodDogs)
     return goodDogs
-
+def filterIndexByAnswer(winner, answers):
+    goodIndices = []
+    for i in range(len(answers)):
+        if answers[i]==winner:
+            goodIndices.append(i)
+    return np.array(goodIndices)
 def getGoodIndices(users,goodDogs):
     """Takes in array of all users ordered
     the same as the starts and ends lists and an array
@@ -115,8 +126,8 @@ def getGoodIndices(users,goodDogs):
     for i in range(len(users)):
         if users[i] in goodDogs:
             goodUserIndices.append(i)
-    print('GoodDogIndices')
-    print(goodUserIndices)
+    # print('GoodDogIndices')
+    # print(goodUserIndices)
     return np.array(goodUserIndices)
 
 

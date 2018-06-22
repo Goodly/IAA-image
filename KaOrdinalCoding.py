@@ -8,21 +8,24 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = None)
         highScore, winner, relevantUsers)
 
 def passToUnitizing(answers,users,starts,ends,numUsers,length,\
-    highScore, winner, relevantUsers)
-    if evalThresholdMatrix(highscore, numUsers) == 'H':
-        goodIndices = getGoodIndices(users, relevantUsers)
+    highScore, winner, relevantUsers):
+    if evalThresholdMatrix(highScore, numUsers) == 'H':
+        goodIndices = filterIndexByAnswer(winner, answers)
+        print("goodIndices-from answer")
+        print(goodIndices)
+        print(starts)
         #f for filtered
         starts,ends, users = np.array(starts), np.array(ends), np.array(users)
         fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
         if max(fEnds)>0:
-            uScore, units = scoreNickUnitizing(fStarts, fEnds,length, len(relevantUsers))
+            uScore, units = scoreNickUnitizing(fStarts, fEnds,length, len(relevantUsers), users)
         else:
             uScore = 0
             units = []
         return winner, units, uScore
     else:
-        return 'N/A','N/A','N/A'
-
+        status = evalThresholdMatrix(highScore, numUsers)
+        return status,status,status
 
 
 def scoreCoding(answers, users, dfunc):
@@ -80,10 +83,11 @@ def getUsers(winner, users, answers):
     # print("winner")
     # print(winner)
     # print(answers[winner])
+    print(winner)
+    print(answers)
     rightUsers = []
-    correctAnswer = answers[winner]
     for i in range(len(users)):
-        if answers[i] == correctAnswer:
+        if answers[i] == winner:
             rightUsers.append(users[i])
     return rightUsers
 
