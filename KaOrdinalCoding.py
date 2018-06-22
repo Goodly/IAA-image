@@ -18,7 +18,7 @@ def passToUnitizing(answers,users,starts,ends,numUsers,length,\
         starts,ends, users = np.array(starts), np.array(ends), np.array(users)
         fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
         if max(fEnds)>0:
-            uScore, units = scoreNickUnitizing(fStarts, fEnds,length, len(relevantUsers), users)
+            uScore, units = scoreNickUnitizing(fStarts, fEnds,length, len(relevantUsers), relevantUsers)
         else:
             uScore = 0
             units = []
@@ -51,7 +51,8 @@ def scoreCoding(answers, users, dfunc):
 
 def getWinnersOrdinal(answers):
     length = max(answers)+2
-    #index 1 refers to answer 1, 0 and the last item are not answerable
+    #index 1 refers to answer 1, 0 and the last item are not answer choices, but
+    # deal with corner cases that would cause errors
     scores = np.zeros(length)
     for a in answers:
         scores[a] = scores[a]+1
@@ -71,19 +72,12 @@ def getWinnersNominal(answers):
     scores = np.zeros(length)
     for a in answers:
         scores[a] = scores[a]+1
-    #print(scores)
     winner = np.where(scores == scores.max())[0][0]
-    #print (winner)
     topScore = scores[winner]/(len(answers))
-    #print(topScore)
     return (topScore, winner)
 
 def getUsers(winner, users, answers):
-    # print(answers)
-    # print("winner")
-    # print(winner)
-    # print(answers[winner])
-    print(winner)
+    print('answer:', winner)
     print(answers)
     rightUsers = []
     for i in range(len(users)):
