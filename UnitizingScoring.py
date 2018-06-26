@@ -1,16 +1,19 @@
 import krippendorff
 import numpy as np
 from ThresholdMatrix import *
-def scoreNickUnitizing(starts,ends,length,numUsers,users, dFunc = 'nominal'):
+
+def scoreNickUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x'):
+    if answers == 'x':
+        answers = np.zeros(len(users))
     answerMatrix = unitsToArray(starts,ends,length,numUsers)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
-    filteredData = filterPassFail(percentageArray, answerMatrix,numUsers,users,starts,ends)
+    filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
     #f for filtered
-    fStarts,fEnds,fNumUsers,goodIndices =filteredData[0], filteredData[1], filteredData[2],filteredData[3]
+    fStarts,fEnds,fNumUsers,goodIndices = filteredData[0], filteredData[1], filteredData[2], filteredData[3]
     if len(fStarts)==0:
         return 'L', 'L'
     filteredMatrix = unitsToArray(fStarts, fEnds,length, fNumUsers)
-    score = scoreAlpha(filteredMatrix, dFunc)
+    score = scoreAlpha(filteredMatrix, 'nominal')
     return score, goodIndices
 
 
@@ -20,7 +23,7 @@ def scoreAlphaUnitizing(starts,ends,length,numUsers,dFunc):
     returns krippendorff unitizing score for the article, this method
     used mainly for testing and is not used in final algorithm for this"""
     matrix = unitsToArray(starts,ends,length,numUsers)
-    return scoreAlpha(matrix,distanceFunc = dFunc)
+    return scoreAlpha(matrix, distanceFunc = dFunc)
 
 def scoreAlpha(answerMatrix, distanceFunc):
     """provides the krippendorff scores
@@ -41,6 +44,7 @@ def scorePercentageUnitizing(answerMatrix,length,numUsers):
         PercentScoresArray[i] = answerMatrix[i][0]/totalNumUsers
     return PercentScoresArray
 
+
 def unitsToArray(starts, ends, length, numUsers):
     def raiseMatrix(start, end):
         for i in range(start, end):
@@ -55,11 +59,13 @@ def unitsToArray(starts, ends, length, numUsers):
         raiseMatrix(starts[i],ends[i])
     return unitsMatrix
 
-def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,ends):
+
+def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, winner):
     """
     filters the data so that only users who highlighted units that passed the
     thresholdmatrix after their percentage agreement was calculated get scored
     by the krippendorff unitizing measurement
+    Used when users select a single answer choice
     output is tuple(starts,ends,numGoodUsers)
     """
     passingIndexes = []
@@ -68,15 +74,32 @@ def filterPassFail(percentageScoresArray, answerMatrix,numUsers,users,starts,end
         if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
             passingIndexes.append(i)
     goodUsers = getGoodUsers(passingIndexes, users, starts, ends)
-    goodIndices =getGoodIndices(users,goodUsers)
+    goodIndices =getGoodIndices(users, goodUsers, answers, winner)
     if  len(goodIndices)<1:
         return ([],[],0,[])
     starts, ends = np.array(starts), np.array(ends)
     numGoodUsers = len(goodUsers)
     starts = starts[goodIndices]
-    ends =ends[goodIndices]
-    return starts,ends,numGoodUsers, passingIndexes
+    ends = ends[goodIndices]
+    return starts, ends, numGoodUsers, passingIndexes
 
+def filterMultiple(percentageScoresArray, answerMatrix,numUsers,users,starts,ends, winner):
+    """
+    filters the data so that only users who highlighted units that passed the
+    thresholdmatrix after their percentage agreement was calculated get scored
+    by the krippendorff unitizing measurement
+    Used when users select multiple answer choices, differs from method for
+    singular answer choices by only incorporating data from each user for
+    the answer choice they chose
+    output is tuple(starts,ends,numGoodUsers)
+    """
+    passingIndexes = []
+    print('percScoreArraylength', len(percentageScoresArray))
+    for i in range(len(percentageScoresArray)):
+        # TODO: develop functional threshold matrix for more robust analysis
+        if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
+            passingIndexes.append(i)
+    indices = filterIndexByAnswer
 def getGoodUsers(passingIndexes, users, starts, ends):
     """returns array of unique users who highlighted
     anything that passed the agreement threshold Matrix
@@ -100,7 +123,7 @@ def filterIndexByAnswer(winner, answers):
     return np.array(goodIndices)
 
 
-def getGoodIndices(users,goodDogs):
+def getGoodIndices(users,goodDogs, answers, winner):
     """Takes in array of all users ordered
     the same as the starts and ends lists and an array
     of unique users who had an agreed upon highlight and
@@ -108,7 +131,7 @@ def getGoodIndices(users,goodDogs):
     an agreed upon highlight had highlighted """
     goodUserIndices = []
     for i in range(len(users)):
-        if users[i] in goodDogs:
+        if users[i] in goodDogs and answers[i] == winner:
             goodUserIndices.append(i)
     return np.array(goodUserIndices)
 

@@ -60,16 +60,11 @@ def score(article, ques, data):
     starts,ends,length= get_question_start(data,article,ques).tolist(),get_question_end(data,article,ques).tolist(),\
                         get_text_length(data,article,ques)
     if ques in ordinal_questions:
-        #TODO: put ordinal score calculation here
-
 
         return evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = 'ordinal')
     elif ques in nominal_questions:
-        #TODO: put nominal score calculation here
         return evaluateCoding(answers, users, starts, ends, numUsers, length)
     elif ques in multiple_questions:
-        #TODO: put multiple question scoring here
-        #I believe we should just loop through and do each once nominally but for syntax sake we can make a seperate function
         return evaluateMultiple(answers, users, starts, ends, numUsers, length)
 
 

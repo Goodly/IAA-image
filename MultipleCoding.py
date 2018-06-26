@@ -1,5 +1,6 @@
 from KaOrdinalCoding import *
 
+
 def scoreMultiple(answers,numUsers):
     out = []
     length = max(answers)+1

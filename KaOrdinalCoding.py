@@ -11,16 +11,16 @@ def passToUnitizing(answers,users,starts,ends,numUsers,length,\
     highScore, winner, relevantUsers):
     if evalThresholdMatrix(highScore, numUsers) == 'H':
         goodIndices = filterIndexByAnswer(winner, answers)
-        print("goodIndices-from answer")
-        print(goodIndices)
-        print(starts)
+        # print("goodIndices-from answer")
+        # print(goodIndices)
+        # print(starts)
         #f for filtered
         starts,ends, users = np.array(starts), np.array(ends), np.array(users)
         fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
         if max(fEnds)>0:
-            uScore, units = scoreNickUnitizing(fStarts, fEnds,length, len(relevantUsers), relevantUsers)
+            uScore, units = scoreNickUnitizing(fStarts, fEnds, length, len(relevantUsers), relevantUsers, winner, answers)
         else:
-            uScore = 0
+            uScore = 'NA'
             units = []
         return winner, units, uScore
     else:
@@ -45,7 +45,7 @@ def scoreCoding(answers, users, dfunc):
         highscore, winner = getWinnersOrdinal(answers)
     else:
         highscore, winner = getWinnersNominal(answers)
-    print (winner)
+    print ('winner', winner)
     relevantUsers = getUsers(winner, users, answers)
     return highscore, winner, relevantUsers
 
@@ -59,11 +59,8 @@ def getWinnersOrdinal(answers):
         scores[a-1] = scores[a-1]+.35
         scores[a+1] = scores[a+1]+.35
         #.35 to avoid ties and don't want to overprivilige adjacent answers
-    #print(scores)
     winner = np.where(scores == scores.max())[0][0]
-    #print (winner)
     topScore = scores[winner]/(len(answers))
-    #print(topScore)
     return (topScore, winner)
 
 def getWinnersNominal(answers):
@@ -83,6 +80,7 @@ def getUsers(winner, users, answers):
     for i in range(len(users)):
         if answers[i] == winner:
             rightUsers.append(users[i])
+    print('users:', rightUsers)
     return rightUsers
 
 ans1 = [1,3,4,1,2,3,4,1,2,3,5,6,3,1,2,1,3,4,2,1,2,2,2,1,1,3,3]
