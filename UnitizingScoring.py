@@ -5,24 +5,25 @@ from ThresholdMatrix import *
 def scoreNickUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x'):
     if answers == 'x':
         answers = np.zeros(len(users))
-    answerMatrix = unitsToArray(starts,ends,length,numUsers)
+    print('inNick starts', starts,'users', users)
+    answerMatrix = toArray(starts,ends,length,numUsers, users)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
     #f for filtered
     fStarts,fEnds,fNumUsers,goodIndices = filteredData[0], filteredData[1], filteredData[2], filteredData[3]
     if len(fStarts)==0:
         return 'L', 'L'
-    filteredMatrix = unitsToArray(fStarts, fEnds,length, fNumUsers)
+    filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, users)
     score = scoreAlpha(filteredMatrix, 'nominal')
     return score, goodIndices
 
 
-def scoreAlphaUnitizing(starts,ends,length,numUsers,dFunc):
+def scoreAlphaUnitizing(starts,ends,length,numUsers,dFunc,users):
     """takes in iterables starts,and ends as well as length of the document
     and the total number of Users who were asked to annotate
     returns krippendorff unitizing score for the article, this method
     used mainly for testing and is not used in final algorithm for this"""
-    matrix = unitsToArray(starts,ends,length,numUsers)
+    matrix = toArray(starts,ends,length,numUsers, users)
     return scoreAlpha(matrix, distanceFunc = dFunc)
 
 def scoreAlpha(answerMatrix, distanceFunc):
@@ -57,6 +58,33 @@ def unitsToArray(starts, ends, length, numUsers):
         unitsMatrix[i][1] = numUsers
     for i in range(len(starts)):
         raiseMatrix(starts[i],ends[i])
+    return unitsMatrix
+
+def toArray(starts,ends,length,numUsers, users):
+    uniqueUsers = np.unique(np.array(users))
+    userBlocks = np.zeros((numUsers, length))
+    starts, ends = np.array(starts), np.array(ends)
+    for u in range(len(uniqueUsers)):
+        print('U',u)
+        print('UQUSERS',uniqueUsers)
+        print('USERS', users)
+        indices = getIndicesFromUser(users, uniqueUsers[u])
+        print('starts:', starts)
+        print('INDICES',indices)
+        userStarts = starts[indices]
+        userEnds = ends[indices]
+        for start in range(len(userStarts)):
+            for i in range(userStarts[start], userEnds[start]):
+                userBlocks[u][i] = 1
+    #Now there are arrays of 1s and 0s, gotta collapse them
+    #and make the possibilities column
+    col1 = np.zeros(length)
+    for userBlock in userBlocks:
+        col1 = col1+userBlock
+    col2 = np.zeros(length)
+    for i in range(len(col2)):
+        col2[i] = numUsers-col1[i]
+    unitsMatrix = np.stack((col1, col2), axis=0).T
     return unitsMatrix
 
 
@@ -122,6 +150,18 @@ def filterIndexByAnswer(winner, answers):
             goodIndices.append(i)
     return np.array(goodIndices)
 
+def getIndicesFromUser(users, goodDog):
+    """Takes in array of all users ordered
+    the same as the starts and ends lists and an array
+    of unique users who had an agreed upon highlight and
+    returns array of all the indices that any user with
+    an agreed upon highlight had highlighted """
+    goodUserIndices = []
+    for i in range(len(users)):
+        if users[i] == goodDog:
+            goodUserIndices.append(i)
+    return np.array(goodUserIndices)
+
 
 def getGoodIndices(users,goodDogs, answers, winner):
     """Takes in array of all users ordered
@@ -150,3 +190,5 @@ nuA= 20
 
 matC = unitsToArray(sA,eA,lA,12)
 matD = unitsToArray(sA,eA,12,nuA)
+
+matE = toArray(sA,eA,lA,12, uA)

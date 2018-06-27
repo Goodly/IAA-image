@@ -18,7 +18,7 @@ def passToUnitizing(answers,users,starts,ends,numUsers,length,\
         starts,ends, users = np.array(starts), np.array(ends), np.array(users)
         fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
         if max(fEnds)>0:
-            uScore, units = scoreNickUnitizing(fStarts, fEnds, length, len(relevantUsers), relevantUsers, winner, answers)
+            uScore, units = scoreNickUnitizing(fStarts, fEnds, length, len(fUsers), fUsers, winner, answers)
         else:
             uScore = 'NA'
             units = []
