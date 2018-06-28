@@ -10,10 +10,12 @@ def scoreNickUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
     #f for filtered
-    fStarts,fEnds,fNumUsers,goodIndices = filteredData[0], filteredData[1], filteredData[2], filteredData[3]
+    print("filtered data", filteredData)
+    fStarts,fEnds,fNumUsers,goodIndices, fUsers = filteredData[0], filteredData[1], \
+                                                  filteredData[2], filteredData[3], filteredData[4]
     if len(fStarts)==0:
         return 'L', 'L'
-    filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, users)
+    filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, fUsers)
     score = scoreAlpha(filteredMatrix, 'nominal')
     return score, goodIndices
 
@@ -61,18 +63,19 @@ def unitsToArray(starts, ends, length, numUsers):
     return unitsMatrix
 
 def toArray(starts,ends,length,numUsers, users):
+    print('Input Starts', starts)
     uniqueUsers = np.unique(np.array(users))
     userBlocks = np.zeros((numUsers, length))
-    starts, ends = np.array(starts), np.array(ends)
+    astarts, aends = np.array(starts), np.array(ends)
     for u in range(len(uniqueUsers)):
         print('U',u)
         print('UQUSERS',uniqueUsers)
         print('USERS', users)
         indices = getIndicesFromUser(users, uniqueUsers[u])
-        print('starts:', starts)
+        print('starts:', astarts, starts)
         print('INDICES',indices)
-        userStarts = starts[indices]
-        userEnds = ends[indices]
+        userStarts = astarts[indices]
+        userEnds = aends[indices]
         for start in range(len(userStarts)):
             for i in range(userStarts[start], userEnds[start]):
                 userBlocks[u][i] = 1
@@ -104,12 +107,14 @@ def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, w
     goodUsers = getGoodUsers(passingIndexes, users, starts, ends)
     goodIndices =getGoodIndices(users, goodUsers, answers, winner)
     if  len(goodIndices)<1:
-        return ([],[],0,[])
-    starts, ends = np.array(starts), np.array(ends)
+        return ([],[],0,[],[])
+    starts, ends, users = np.array(starts), np.array(ends), np.array(users)
     numGoodUsers = len(goodUsers)
     starts = starts[goodIndices]
     ends = ends[goodIndices]
-    return starts, ends, numGoodUsers, passingIndexes
+    users = users[goodIndices]
+    out = [starts, ends, numGoodUsers, passingIndexes, users]
+    return out
 
 def filterMultiple(percentageScoresArray, answerMatrix,numUsers,users,starts,ends, winner):
     """
