@@ -4,8 +4,9 @@ from ThresholdMatrix import *
 
 def evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = None):
     highScore, winner, relevantUsers = scoreCoding(answers, users, dfunc)
-    return passToUnitizing(answers,users,starts,ends,numUsers,length,\
+    winner, units, uScore = passToUnitizing(answers,users,starts,ends,numUsers,length,\
         highScore, winner, relevantUsers)
+    return winner, units,uScore, highScore
 
 def passToUnitizing(answers,users,starts,ends,numUsers,length,\
     highScore, winner, relevantUsers):
@@ -50,17 +51,19 @@ def scoreCoding(answers, users, dfunc):
     return highscore, winner, relevantUsers
 
 def getWinnersOrdinal(answers):
-    length = max(answers)+2
+    #Shannon Entropy ordinal metric
+    length = max(answers)
     #index 1 refers to answer 1, 0 and the last item are not answer choices, but
     # deal with corner cases that would cause errors
-    scores = np.zeros(length)
-    for a in answers:
-        scores[a] = scores[a]+1
-        scores[a-1] = scores[a-1]+.35
-        scores[a+1] = scores[a+1]+.35
-        #.35 to avoid ties and don't want to overprivilige adjacent answers
-    winner = np.where(scores == scores.max())[0][0]
-    topScore = scores[winner]/(len(answers))
+    original_arr = np.array(answers)
+    aggregate_arr = np.zeros(length)
+    for i in original_arr:
+        aggregate_arr[i - 1] += 1
+    prob_arr = aggregate_arr / sum(aggregate_arr)
+    x_mean = np.mean(original_arr)
+    total_dist = len(aggregate_arr)
+    winner = np.where(aggregate_arr == aggregate_arr.max())[0][0]
+    topScore = 1 + np.dot(prob_arr, np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist))
     return (topScore, winner)
 
 def getWinnersNominal(answers):
