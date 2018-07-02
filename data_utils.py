@@ -22,6 +22,7 @@ def data_storer(path):
             answers.append([article.loc[article['question_number']== x, 'start_pos']])
             answers.append([article.loc[article['question_number']== x, 'end_pos']])
             answers.append([article.loc[article['question_number']== x, 'source_text_length']])
+            answers.append([article.loc[article['question_number'] == x, 'answer_type']])
             array.append(answers)
 
             new_dict[x] = array
@@ -56,6 +57,8 @@ def get_text_length(data, article_num, question_num):
 def get_num_users(data, article_num, question_num):
     return len(np.unique(get_question_userid(data, article_num, question_num)))
 
+def get_question_type(data, article_num, question_num):
+    return data[article_num][question_num][1][5][0].iloc[0]
 #Retuns dictionary of cleaned up data
 def cleanForUnitization(data, article_num, question_num):
     """Retuns dictionary of cleaned up data. Keys are Offsets, Lengths, Categories, Raters, and Ends

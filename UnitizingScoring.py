@@ -5,12 +5,12 @@ from ThresholdMatrix import *
 def scoreNickUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x'):
     if answers == 'x':
         answers = np.zeros(len(users))
-    print('inNick starts', starts,'users', users)
+    #print('inNick starts', starts,'users', users)
     answerMatrix = toArray(starts,ends,length,numUsers, users)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
     #f for filtered
-    print("filtered data", filteredData)
+   # print("filtered data", filteredData)
     fStarts,fEnds,fNumUsers,goodIndices, fUsers = filteredData[0], filteredData[1], \
                                                   filteredData[2], filteredData[3], filteredData[4]
     if len(fStarts)==0:
@@ -63,17 +63,11 @@ def unitsToArray(starts, ends, length, numUsers):
     return unitsMatrix
 
 def toArray(starts,ends,length,numUsers, users):
-    print('Input Starts', starts)
     uniqueUsers = np.unique(np.array(users))
     userBlocks = np.zeros((numUsers, length))
     astarts, aends = np.array(starts), np.array(ends)
     for u in range(len(uniqueUsers)):
-        print('U',u)
-        print('UQUSERS',uniqueUsers)
-        print('USERS', users)
         indices = getIndicesFromUser(users, uniqueUsers[u])
-        print('starts:', astarts, starts)
-        print('INDICES',indices)
         userStarts = astarts[indices]
         userEnds = aends[indices]
         for start in range(len(userStarts)):

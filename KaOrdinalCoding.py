@@ -4,8 +4,9 @@ from ThresholdMatrix import *
 
 def evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = None):
     highScore, winner, relevantUsers = scoreCoding(answers, users, dfunc)
-    return passToUnitizing(answers,users,starts,ends,numUsers,length,\
+    winner, units, uScore = passToUnitizing(answers,users,starts,ends,numUsers,length,\
         highScore, winner, relevantUsers)
+    return winner, units,uScore, highScore
 
 def passToUnitizing(answers,users,starts,ends,numUsers,length,\
     highScore, winner, relevantUsers):
