@@ -62,7 +62,7 @@ def getWinnersOrdinal(answers):
     prob_arr = aggregate_arr / sum(aggregate_arr)
     x_mean = np.mean(original_arr)
     total_dist = len(aggregate_arr)
-    winner = np.where(aggregate_arr == aggregate_arr.max())[0][0]
+    winner = int(np.argwhere(result == top_score))
     topScore = 1 + np.dot(prob_arr, np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist))
     return (topScore, winner)
 
