@@ -56,7 +56,6 @@ def score(article, ques, data):
 
     print('Scoring article: ', article, ' question: ', ques)
     type = get_question_type(data,article, ques)
-    print(type)
     #TODO: change this to be not hard-coded
     if type == 'interval':
         return run_2step_unitization(data, article, ques)

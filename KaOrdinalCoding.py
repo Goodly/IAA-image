@@ -12,14 +12,12 @@ def passToUnitizing(answers,users,starts,ends,numUsers,length,\
     highScore, winner, relevantUsers):
     if evalThresholdMatrix(highScore, numUsers) == 'H':
         goodIndices = filterIndexByAnswer(winner, answers)
-        # print("goodIndices-from answer")
-        # print(goodIndices)
-        # print(starts)
         #f for filtered
         starts,ends, users = np.array(starts), np.array(ends), np.array(users)
         fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
+        fNumUsers = len(np.unique(fUsers))
         if max(fEnds)>0:
-            uScore, units = scoreNickUnitizing(fStarts, fEnds, length, len(fUsers), fUsers, winner, answers)
+            uScore, units = scoreNickUnitizing(fStarts, fEnds, length, fNumUsers, fUsers, winner, answers)
         else:
             uScore = 'NA'
             units = []
@@ -46,26 +44,32 @@ def scoreCoding(answers, users, dfunc):
         highscore, winner = getWinnersOrdinal(answers)
     else:
         highscore, winner = getWinnersNominal(answers)
-    print ('winner', winner)
     relevantUsers = getUsers(winner, users, answers)
     return highscore, winner, relevantUsers
 
 def getWinnersOrdinal(answers):
     #Shannon Entropy ordinal metric
-    length = max(answers)
+    length = 5
     #index 1 refers to answer 1, 0 and the last item are not answer choices, but
     # deal with corner cases that would cause errors
-    original_arr = np.array(answers)
+    original_arr = np.array(answers) - 1
     aggregate_arr = np.zeros(length)
     for i in original_arr:
-        aggregate_arr[i - 1] += 1
+        aggregate_arr[i] += 1
+    topScore, winner = shannon_ordinal_metric(original_arr, aggregate_arr)
+    return (topScore, winner + 1)
+
+def shannon_ordinal_metric(original_arr, aggregate_arr):
+    original_arr = np.array(original_arr)
+    aggregate_arr = np.array(aggregate_arr)
     prob_arr = aggregate_arr / sum(aggregate_arr)
     x_mean = np.mean(original_arr)
     total_dist = len(aggregate_arr)
+    score = 1 + np.dot(prob_arr, np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist))
+    print('Winner: ' + str(np.where(aggregate_arr == aggregate_arr.max())[0][0]))
+    print('Top Score: ' + str(score))
     winner = np.where(aggregate_arr == aggregate_arr.max())[0][0]
-    topScore = 1 + np.dot(prob_arr, np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist))
-    return (topScore, winner)
-
+    return score, winner
 def getWinnersNominal(answers):
     length = max(answers)+1
     #index 1 refers to answer 1, 0 and the last item are not answerable
@@ -77,13 +81,10 @@ def getWinnersNominal(answers):
     return (topScore, winner)
 
 def getUsers(winner, users, answers):
-    print('answer:', winner)
-    print(answers)
     rightUsers = []
     for i in range(len(users)):
         if answers[i] == winner:
             rightUsers.append(users[i])
-    print('users:', rightUsers)
     return rightUsers
 
 ans1 = [1,3,4,1,2,3,4,1,2,3,5,6,3,1,2,1,3,4,2,1,2,2,2,1,1,3,3]

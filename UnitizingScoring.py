@@ -5,14 +5,14 @@ from ThresholdMatrix import *
 def scoreNickUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x'):
     if answers == 'x':
         answers = np.zeros(len(users))
-    #print('inNick starts', starts,'users', users)
     answerMatrix = toArray(starts,ends,length,numUsers, users)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
+    print(numUsers)
     filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
     #f for filtered
-   # print("filtered data", filteredData)
     fStarts,fEnds,fNumUsers,goodIndices, fUsers = filteredData[0], filteredData[1], \
                                                   filteredData[2], filteredData[3], filteredData[4]
+    print('fStarts', fStarts)
     if len(fStarts)==0:
         return 'L', 'L'
     filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, fUsers)
@@ -121,7 +121,6 @@ def filterMultiple(percentageScoresArray, answerMatrix,numUsers,users,starts,end
     output is tuple(starts,ends,numGoodUsers)
     """
     passingIndexes = []
-    print('percScoreArraylength', len(percentageScoresArray))
     for i in range(len(percentageScoresArray)):
         # TODO: develop functional threshold matrix for more robust analysis
         if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':

@@ -8,11 +8,8 @@ def scoreMultiple(answers,numUsers):
     scores = np.zeros(length)
     for a in answers:
         scores[a] = scores[a]+1
-    #print(scores)
     for i in range(len(scores)):
         out.append(scores[i]/numUsers)
-    #print (winner)
-    #print(topScore)
     return out
 
 def evaluateMultiple(answers, users, starts, ends, numUsers, length, dfunc = None):
