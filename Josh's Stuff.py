@@ -77,7 +77,7 @@ def get_question_answer_ratios(dictionary):
     kappa = 50 *( 1- exp(-num_of_users/15))
     omega = 1/1+exp(-kappa*(percentage -.5))
     deriv = (kappa * exp(-kappa*(percentage)))/(exp(-kappa*(percentage-.5))+1)**2
-    if (deriv < 1):
+    if (deriv > 1):
         return 'M'
     elif (x>=.5):
         return 'H'
