@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import csv
 from UnitizingScoring import *
-from MultipleCoding import *
+from ChecklistCoding import *
 from data_utils import *
 
 path = './test/TestJuntos.csv'
@@ -11,7 +11,7 @@ path = './test/TestJuntos.csv'
 def calc_scores(filename):
     uberDict = data_storer(filename)
     data = [["Article Number", "Question Number", "Agreed Answer", "Coding Score", "HighlightedIndices",\
-             "Alpha Unitizing Score", "Agreement Score"]]
+             "Alpha Unitizing Score", "Alpha Unitizing Score Inclusive", "Agreement Score"]]
 
     for article in uberDict.keys(): #Iterates thrguh each article
         for ques in uberDict[article].keys(): #Iterates through each question in an article
@@ -19,17 +19,18 @@ def calc_scores(filename):
             #if it's a list then it was a multiple q
             if type(agreements) is list:
                 for i in range(len(agreements)):
-                    codingScore, unitizingScore = agreements[i][3], agreements[i][2]
+                    codingScore, unitizingScore = agreements[i][4], agreements[i][2]
                     totalScore = calcAgreement(codingScore, unitizingScore)
                     data.append([article, ques, agreements[i][0], codingScore, agreements[i][1], \
-                                 unitizingScore, totalScore])
+                                 unitizingScore, agreements[i][3], totalScore])
             else:
-                codingScore, unitizingScore = agreements[3], agreements[2]
+                codingScore, unitizingScore = agreements[4], agreements[2]
                 totalScore = calcAgreement(codingScore, unitizingScore)
-                data.append([article,ques, agreements[0], codingScore, agreements[1], unitizingScore, totalScore])
+                data.append([article,ques, agreements[0], codingScore, agreements[1], unitizingScore, agreements[3],
+                             totalScore])
     #@TODO return the csv, or make sure it's pushed out of the womb and into the world
     print('exporting to csv')
-    scores = open('question_scores.csv', 'w')
+    scores = open('agreement_scores.csv', 'w')
 
     with scores:
         writer = csv.writer(scores)
@@ -43,8 +44,6 @@ def score(article, ques, data):
     ifit's an interval question it'll return a random number
 
     returns a tuple, element 0 is winning answer, element 1 is the disagreement score """
-
-
 
     """ Commnted code below previously denoted different types of questions for hard-coding,
     can still be used for hard-coding but eventually will be phased out by a line of code that
@@ -70,8 +69,9 @@ def score(article, ques, data):
         return evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = 'ordinal')
     elif type == 'nominal':
         return evaluateCoding(answers, users, starts, ends, numUsers, length)
-    elif type == 'multiple':
-        return evaluateMultiple(answers, users, starts, ends, numUsers, length)
+    elif type == 'checklist':
+        return evaluateChecklist(answers, users, starts, ends, numUsers, length)
+
 
 
 
@@ -92,8 +92,8 @@ def calcAgreement(codingScore, unitizingScore):
 def run_2step_unitization(data, article, question):
         starts,ends,length,numUsers, users = get_question_start(data,article,question).tolist(),get_question_end(data,article,question).tolist(),\
                         get_text_length(data,article,question), get_num_users(data,article,question),  get_question_userid(data, article, question).tolist()
-        score, indices = scoreNickUnitizing(starts,ends,length,numUsers, users)
-        return 'NA',  indices, score, 'NA'
+        score, indices, iScore = scoreNickUnitizing(starts,ends,length,numUsers, users)
+        return 'NA',  indices, score, score, 'NA'
 
 #TEST STUFF
 calc_scores(path)

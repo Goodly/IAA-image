@@ -1,12 +1,18 @@
-import numpy as np
 from UnitizingScoring import *
 from ThresholdMatrix import *
 
 def evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = None):
     highScore, winner, relevantUsers = scoreCoding(answers, users, dfunc)
-    winner, units, uScore = passToUnitizing(answers,users,starts,ends,numUsers,length,\
+    if dfunc == 'ordinal':
+        # This functions as an outlier test, if 4 users categorizes as 'very likely' and one categorizes as
+        # 'very not likely', it will fail the threshold matrix test, this method, while not rigorous, provides
+        # some defense against outliers that likely were produced by trolls, misunderstandings of the question,
+        # and misclicks
+        if evalThresholdMatrix(highScore, numUsers)!='H':
+            highScore, winner, relevantUsers = scoreCoding(answers, users, 'nominal')
+    winner, units, uScore, iScore = passToUnitizing(answers,users,starts,ends,numUsers,length,\
         highScore, winner, relevantUsers)
-    return winner, units,uScore, highScore
+    return winner, units, uScore, iScore, highScore
 
 def passToUnitizing(answers,users,starts,ends,numUsers,length,\
     highScore, winner, relevantUsers):
@@ -17,14 +23,15 @@ def passToUnitizing(answers,users,starts,ends,numUsers,length,\
         fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
         fNumUsers = len(np.unique(fUsers))
         if max(fEnds)>0:
-            uScore, units = scoreNickUnitizing(fStarts, fEnds, length, fNumUsers, fUsers, winner, answers)
+            uScore, iScore, units = scoreNickUnitizing(fStarts, fEnds, length, fNumUsers, fUsers, winner, answers)
         else:
             uScore = 'NA'
+            iScore = 'NA'
             units = []
-        return winner, units, uScore
+        return winner, units, uScore, iScore
     else:
         status = evalThresholdMatrix(highScore, numUsers)
-        return status,status,status
+        return status,status,status, status
 
 
 def scoreCoding(answers, users, dfunc):
@@ -70,6 +77,7 @@ def shannon_ordinal_metric(original_arr, aggregate_arr):
     print('Top Score: ' + str(score))
     winner = np.where(aggregate_arr == aggregate_arr.max())[0][0]
     return score, winner
+
 def getWinnersNominal(answers):
     length = max(answers)+1
     #index 1 refers to answer 1, 0 and the last item are not answerable
@@ -86,9 +94,3 @@ def getUsers(winner, users, answers):
         if answers[i] == winner:
             rightUsers.append(users[i])
     return rightUsers
-
-ans1 = [1,3,4,1,2,3,4,1,2,3,5,6,3,1,2,1,3,4,2,1,2,2,2,1,1,3,3]
-ans2 = [1,1,1,2,2,2,1,1,1]
-ans3 = [1,1,1,1,1,4,4,4,4,4]
-ans4 = [1,2,2,1,2,3]
-users= [6,5,4,3,2,1]

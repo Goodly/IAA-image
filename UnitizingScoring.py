@@ -7,17 +7,17 @@ def scoreNickUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 
         answers = np.zeros(len(users))
     answerMatrix = toArray(starts,ends,length,numUsers, users)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
-    print(numUsers)
     filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
     #f for filtered
     fStarts,fEnds,fNumUsers,goodIndices, fUsers = filteredData[0], filteredData[1], \
                                                   filteredData[2], filteredData[3], filteredData[4]
-    print('fStarts', fStarts)
     if len(fStarts)==0:
-        return 'L', 'L'
+        return 'L', 'L', 'L'
     filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, fUsers)
+    inclusiveMatrix = toArray(starts, ends, length, numUsers, users)
     score = scoreAlpha(filteredMatrix, 'nominal')
-    return score, goodIndices
+    inclusiveScore = scoreAlpha(inclusiveMatrix, 'nominal')
+    return score, inclusiveScore, goodIndices
 
 
 def scoreAlphaUnitizing(starts,ends,length,numUsers,dFunc,users):
@@ -95,7 +95,6 @@ def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, w
     """
     passingIndexes = []
     for i in range(len(percentageScoresArray)):
-        #TODO: develop functional threshold matrix for more robust analysis
         if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
             passingIndexes.append(i)
     goodUsers = getGoodUsers(passingIndexes, users, starts, ends)
@@ -110,22 +109,6 @@ def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, w
     out = [starts, ends, numGoodUsers, passingIndexes, users]
     return out
 
-def filterMultiple(percentageScoresArray, answerMatrix,numUsers,users,starts,ends, winner):
-    """
-    filters the data so that only users who highlighted units that passed the
-    thresholdmatrix after their percentage agreement was calculated get scored
-    by the krippendorff unitizing measurement
-    Used when users select multiple answer choices, differs from method for
-    singular answer choices by only incorporating data from each user for
-    the answer choice they chose
-    output is tuple(starts,ends,numGoodUsers)
-    """
-    passingIndexes = []
-    for i in range(len(percentageScoresArray)):
-        # TODO: develop functional threshold matrix for more robust analysis
-        if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
-            passingIndexes.append(i)
-    indices = filterIndexByAnswer
 def getGoodUsers(passingIndexes, users, starts, ends):
     """returns array of unique users who highlighted
     anything that passed the agreement threshold Matrix
@@ -173,20 +156,3 @@ def getGoodIndices(users,goodDogs, answers, winner):
             goodUserIndices.append(i)
     return np.array(goodUserIndices)
 
-
-
-
-##TEST DATA below
-matA = np.array([[3,0,0],[0,3,0],[0,0,3]])
-matB = np.array([[1,2,0],[2,0,1],[0,0,3]])
-#starts,ends,length,numUsers
-sA = [1,4,8,1,2,9]
-eA = [6,12,12,6,10,12]
-lA = 22
-uA = [1,2,3,4,1,2]
-nuA= 20
-
-matC = unitsToArray(sA,eA,lA,12)
-matD = unitsToArray(sA,eA,12,nuA)
-
-matE = toArray(sA,eA,lA,12, uA)
