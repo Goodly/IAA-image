@@ -5,7 +5,7 @@ import numpy as np
 #from jnius import autoclass
 import csv
 from UnitizingScoring import *
-from KaOrdinalCoding import *
+from CodingScoring import *
 #
 # CAS = autoclass('org.dkpro.statistics.agreement.coding.CodingAnnotationStudy')
 # UAS = autoclass('org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy')

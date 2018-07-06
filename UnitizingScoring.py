@@ -2,7 +2,7 @@ import krippendorff
 import numpy as np
 from ThresholdMatrix import *
 
-def scoreNickUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x'):
+def scoreNuUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x'):
     if answers == 'x':
         answers = np.zeros(len(users))
     answerMatrix = toArray(starts,ends,length,numUsers, users)
@@ -97,7 +97,7 @@ def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, w
     for i in range(len(percentageScoresArray)):
         if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
             passingIndexes.append(i)
-    goodUsers = getGoodUsers(passingIndexes, users, starts, ends)
+    goodUsers = getMajorityUsers(passingIndexes, users, starts, ends)
     goodIndices =getGoodIndices(users, goodUsers, answers, winner)
     if  len(goodIndices)<1:
         return ([],[],0,[],[])
@@ -109,19 +109,19 @@ def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, w
     out = [starts, ends, numGoodUsers, passingIndexes, users]
     return out
 
-def getGoodUsers(passingIndexes, users, starts, ends):
+def getMajorityUsers(passingIndexes, users, starts, ends):
     """returns array of unique users who highlighted
     anything that passed the agreement threshold Matrix
     """
-    goodDogs = []
+    majorityUsers = []
     for i in range(len(starts)):
-        if users[i] not in goodDogs:
+        if users[i] not in majorityUsers:
             for j in range(starts[i], ends[i]):
                 if j in passingIndexes:
-                    goodDogs.append(users[i])
-    goodDogs = np.array(goodDogs)
-    goodDogs = np.unique(goodDogs)
-    return goodDogs
+                    majorityUsers.append(users[i])
+    majorityUsers = np.array(majorityUsers)
+    majorityUsers = np.unique(majorityUsers)
+    return majorityUsers
 
 
 def filterIndexByAnswer(winner, answers):
@@ -131,7 +131,7 @@ def filterIndexByAnswer(winner, answers):
             goodIndices.append(i)
     return np.array(goodIndices)
 
-def getIndicesFromUser(users, goodDog):
+def getIndicesFromUser(users, majorityUser):
     """Takes in array of all users ordered
     the same as the starts and ends lists and an array
     of unique users who had an agreed upon highlight and
@@ -139,12 +139,12 @@ def getIndicesFromUser(users, goodDog):
     an agreed upon highlight had highlighted """
     goodUserIndices = []
     for i in range(len(users)):
-        if users[i] == goodDog:
+        if users[i] == majorityUser:
             goodUserIndices.append(i)
     return np.array(goodUserIndices)
 
 
-def getGoodIndices(users,goodDogs, answers, winner):
+def getGoodIndices(users,majorityUsers, answers, winner):
     """Takes in array of all users ordered
     the same as the starts and ends lists and an array
     of unique users who had an agreed upon highlight and
@@ -152,7 +152,7 @@ def getGoodIndices(users,goodDogs, answers, winner):
     an agreed upon highlight had highlighted """
     goodUserIndices = []
     for i in range(len(users)):
-        if users[i] in goodDogs and answers[i] == winner:
+        if users[i] in majorityUsers and answers[i] == winner:
             goodUserIndices.append(i)
     return np.array(goodUserIndices)
 

@@ -1,4 +1,4 @@
-from KaOrdinalCoding import *
+from CodingScoring import *
 
 
 def scoreChecklist(answers,numUsers):
@@ -16,8 +16,7 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, dfunc = No
     percArray = scoreChecklist(answers, numUsers)
     out = []
     for i in range(1,len(percArray)):
-        relevantUsers = getUsers(i, users, answers)
         codingScore = percArray[i]
-        winner, units, uScore, iScore = passToUnitizing(answers,users,starts,ends,numUsers,length, codingScore, i, relevantUsers)
+        winner, units, uScore, iScore = passToUnitizing(answers,users,starts,ends,numUsers,length, codingScore, i)
         out.append([winner,units,uScore,iScore, codingScore])
     return out

@@ -1,7 +1,4 @@
-import pandas as pd
-import numpy as np
 import csv
-from UnitizingScoring import *
 from ChecklistCoding import *
 from data_utils import *
 
@@ -13,10 +10,10 @@ def calc_scores(filename):
     data = [["Article Number", "Question Number", "Agreed Answer", "Coding Score", "HighlightedIndices",\
              "Alpha Unitizing Score", "Alpha Unitizing Score Inclusive", "Agreement Score"]]
 
-    for article in uberDict.keys(): #Iterates thrguh each article
+    for article in uberDict.keys(): #Iterates throuh each article
         for ques in uberDict[article].keys(): #Iterates through each question in an article
             agreements = score(article, ques, uberDict)
-            #if it's a list then it was a multiple q
+            #if it's a list then it was a checklist question
             if type(agreements) is list:
                 for i in range(len(agreements)):
                     codingScore, unitizingScore = agreements[i][4], agreements[i][2]
@@ -28,7 +25,7 @@ def calc_scores(filename):
                 totalScore = calcAgreement(codingScore, unitizingScore)
                 data.append([article,ques, agreements[0], codingScore, agreements[1], unitizingScore, agreements[3],
                              totalScore])
-    #@TODO return the csv, or make sure it's pushed out of the womb and into the world
+    #push out of womb, into world
     print('exporting to csv')
     scores = open('agreement_scores.csv', 'w')
 
@@ -39,11 +36,11 @@ def calc_scores(filename):
     print("Table complete")
 
 def score(article, ques, data):
-    """Call this to get what you want
-    It'll check for different types of questionsAnswered
-    ifit's an interval question it'll return a random number
-
-    returns a tuple, element 0 is winning answer, element 1 is the disagreement score """
+    """calculates the relevant scores for the article
+    returns a tuple (question answer most chosen, units passing the threshold,
+        the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
+        among all users who coded the question the same way (referred to as the inclusive unitizing score),
+         the percentage agreement of the category with the highest percentage agreement """
 
     """ Commnted code below previously denoted different types of questions for hard-coding,
     can still be used for hard-coding but eventually will be phased out by a line of code that
@@ -55,7 +52,6 @@ def score(article, ques, data):
 
     print('Scoring article: ', article, ' question: ', ques)
     type = get_question_type(data,article, ques)
-    #TODO: change this to be not hard-coded
     if type == 'interval':
         return run_2step_unitization(data, article, ques)
 
@@ -77,6 +73,8 @@ def score(article, ques, data):
 
 
 def calcAgreement(codingScore, unitizingScore):
+    """averages coding and unitizing agreement scores to create a final agreement score to be used elsewhere in the
+    Public Editor algorithm"""
     if codingScore == 'NA':
         return unitizingScore
     elif codingScore == 'L' or codingScore == 'M':
@@ -92,7 +90,7 @@ def calcAgreement(codingScore, unitizingScore):
 def run_2step_unitization(data, article, question):
         starts,ends,length,numUsers, users = get_question_start(data,article,question).tolist(),get_question_end(data,article,question).tolist(),\
                         get_text_length(data,article,question), get_num_users(data,article,question),  get_question_userid(data, article, question).tolist()
-        score, indices, iScore = scoreNickUnitizing(starts,ends,length,numUsers, users)
+        score, indices, iScore = scoreNuUnitizing(starts,ends,length,numUsers, users)
         return 'NA',  indices, score, score, 'NA'
 
 #TEST STUFF
