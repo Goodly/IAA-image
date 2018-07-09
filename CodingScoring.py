@@ -1,5 +1,7 @@
 from UnitizingScoring import *
 from ThresholdMatrix import *
+from data_utils import *
+from math import floor
 
 def evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = None):
     """ calculate all scores for any coding question
@@ -17,29 +19,52 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = None)
         agreement score.  The variable 'iScore' refers to the unitizing agreement score calculated using Krippendorff's
         alpha including users who never highlighted any characters that passed the threshold matrix
     """
-    highScore, winner = scoreCoding(answers, users, dfunc)
+    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users)
+    highScore, winner, weights = scoreCoding(repScaledAnswers, repScaledUsers, dfunc)
     if dfunc == 'ordinal':
         # This functions as an outlier test, if 4 users categorizes as 'very likely' and one categorizes as
         # 'very not likely', it will fail the threshold matrix test, this method, while not rigorous, provides
         # some defense against outliers that likely were produced by trolls, misunderstandings of the question,
         # and misclicks
         if evalThresholdMatrix(highScore, numUsers)!='H':
-            highScore, winner = scoreCoding(answers, users, 'nominal')
-    winner, units, uScore, iScore = passToUnitizing(answers,users,starts,ends,numUsers,length,\
-        highScore, winner)
+            highScore, winner, weights = scoreCoding(answers, users, 'nominal')
+    # These all return tuples (array of answers, amount of scaling done), element at index 1 is same for all
+    weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
+                                            weightScaledEnds, \
+                                            weightScaledNumUsers = weightScaleEverything(answers, weights, users,
+                                                                                         starts,ends)
+    winner, units, uScore, iScore = passToUnitizing(weightScaledAnswers,weightScaledUsers,weightScaledStarts,
+                                                    weightScaledEnds,numUsers,length, highScore, winner,
+                                                    weightScaledNumUsers)
     return winner, units, uScore, iScore, highScore
 
+def repScaleAnsUsers(answers, users):
+    repScaledAnswers, repScaledUsers = scaleFromRep(answers, users), scaleFromRep(users, users)
+    return repScaledAnswers, repScaledUsers
+
+def weightScaleEverything(answers,weights, users, starts, ends):
+    weightScaledAnswers, weightScaledStarts, weightScaledEnds, \
+    weightScaledUsers = scaleFromWeights(answers, answers, weights, users), \
+                        scaleFromWeights(starts, answers, weights, users), \
+                        scaleFromWeights(ends, answers, weights, users), \
+                        scaleFromWeights(users, answers, weights, users),
+    ans, ends, starts, users = weightScaledAnswers[0], weightScaledEnds[0], weightScaledStarts[0], weightScaledUsers[0]
+    numUsers = weightScaledUsers[1]
+    return ans, users, starts, ends, numUsers
+
 def passToUnitizing(answers,users,starts,ends,numUsers,length,\
-    highScore, winner):
+    highScore, winner, scaledNumUsers):
     """ calculates unitizing agreement for any coding question after verifying that it passes the threshold matrix
     Only calculates unitizing agreement amongst users who selected the most agreed-upon answer"""
     if evalThresholdMatrix(highScore, numUsers) == 'H':
         goodIndices = filterIndexByAnswer(winner, answers)
         #f for filtered
         starts,ends, users = np.array(starts), np.array(ends), np.array(users)
-        fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
-        fNumUsers = len(np.unique(fUsers))
-        #If nobody highlighted anything
+        #fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
+        fStarts, fEnds, fUsers = starts, ends, users
+        #fNumUsers = len(np.unique(fUsers))
+        fNumUsers = scaledNumUsers
+        #If somebody highlights something
         if max(fEnds)>0:
             uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fUsers, winner, answers)
         else:
@@ -67,26 +92,28 @@ def scoreCoding(answers, users, dfunc):
     """
     answers = [int(a) for a in answers]
     if dfunc == 'ordinal':
-        highscore, winner = getWinnersOrdinal(answers)
+        highscore, winner, weights = getWinnersOrdinal(answers)
     else:
-        highscore, winner = getWinnersNominal(answers)
-    return highscore, winner
+        highscore, winner, weights = getWinnersNominal(answers)
+    return highscore, winner, weights
 
-def getWinnersOrdinal(answers):
-    #Todo:confirm that I said the right thing about Shannon
+def getWinnersOrdinal(answers, num_choices = 5):
+    # Todo:confirm that I said the right thing about Shannon
     """Calculates the most-common answer and assigns it an agreement score
     uses Jensen-Shannon Distance to assign weights to different answers"""
-    #Shannon Entropy ordinal metric
-    #Todo: get number of possible answers as an input so we don't have to assume it's 5
-    length = 5
-    #index 1 refers to answer 1, 0 and the last item are not answer choices, but
+    # Shannon Entropy ordinal metric
+    # Todo: get number of possible answers as an input so we don't have to assume it's 5
+    length = num_choices
+    # index 1 refers to answer 1, 0 and the last item are not answer choices, but
     # deal with corner cases that would cause errors
     original_arr = np.array(answers) - 1
     aggregate_arr = np.zeros(length)
     for i in original_arr:
         aggregate_arr[i] += 1
-    topScore, winner = shannon_ordinal_metric(original_arr, aggregate_arr)
-    return (topScore, winner + 1)
+    topScore, winner, weights = shannon_ordinal_metric(original_arr, aggregate_arr)
+    # shift array so indexes consistent across ordinal and nominal data
+    weights = np.append(0, weights)
+    return topScore, winner + 1, weights
 
 def shannon_ordinal_metric(original_arr, aggregate_arr):
     """"calculates Jensen-Shannon Metric """
@@ -97,16 +124,55 @@ def shannon_ordinal_metric(original_arr, aggregate_arr):
     total_dist = len(aggregate_arr)
     score = 1 + np.dot(prob_arr, np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist))
     winner = np.where(aggregate_arr == aggregate_arr.max())[0][0]
-    return score, winner
+    weights= 1+np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist)
+    print(aggregate_arr)
+    print(prob_arr)
+    print(1+(np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist)))
+    return score, winner, weights
 
-def getWinnersNominal(answers):
+def getWinnersNominal(answers, num_choices = 5):
     """returns the most-chosen answer and the percentage of users that chose that answer"""
-    length = max(answers)+1
+    length = num_choices+1
     #index 1 refers to answer 1, 0 and the last item are not answerable
     scores = np.zeros(length)
     for a in answers:
         scores[a] = scores[a]+1
     winner = np.where(scores == scores.max())[0][0]
     topScore = scores[winner]/(len(answers))
-    return (topScore, winner)
+    weights = np.zeros(length)
+    weights[winner] = 1
+    return topScore, winner, weights
+
+def scaleFromRep(arr, users):
+    """Scales the array based on user reps"""
+    scaled = np.zeros(0)
+    checked = []
+    for i in range(len(arr)):
+        if (arr[i], users[i]) not in checked:
+            checked.append((arr[i], users[i]))
+            addition = np.array(arr[i])
+            rep = floor(get_user_rep(users[i]))
+            addition = np.repeat(addition, rep)
+            scaled = np.append(scaled, addition)
+    return scaled
+
+def scaleFromWeights(arr,answers,weights, users):
+    """Scales the array based on the weights and the user reps"""
+    #weights is array of fractions now
+    weights = weights
+    scaled = np.zeros(0)
+    sumTotalScaling = 0
+    checked = []
+    for i in range(len(arr)):
+        if (arr[i], users[i]) not in checked:
+            checked.append((arr[i], users[i]))
+            addition = np.array(arr[i])
+            rep = get_user_rep(users[i])
+            ans = answers[i]
+            weight = weights[ans]
+            scaleBy = floor(weight*rep)
+            sumTotalScaling += scaleBy
+            addition = np.repeat(addition, scaleBy)
+            scaled = np.append(scaled, addition)
+    return scaled.astype(int), sumTotalScaling
 
