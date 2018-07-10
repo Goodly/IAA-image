@@ -18,7 +18,7 @@ def calc_scores(filename):
                 for i in range(len(agreements)):
                     codingScore, unitizingScore = agreements[i][4], agreements[i][2]
                     totalScore = calcAgreement(codingScore, unitizingScore)
-                    data.append([article, ques, agreements[i][0], codingScore, agreements[i][1],
+                    data.append([article, ques, agreements[i][0], codingScore, agreements[i][1], \
                                  unitizingScore, agreements[i][3], totalScore])
             else:
                 codingScore, unitizingScore = agreements[4], agreements[2]
