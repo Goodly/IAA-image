@@ -2,11 +2,11 @@ import krippendorff
 import numpy as np
 from ThresholdMatrix import *
 
-def scoreNuUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x'):
+def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, winner = 0, answers = 'x'):
     # Todo: resolve one user making overlapping highlights that skew data
     if answers == 'x':
         answers = np.zeros(len(users))
-    answerMatrix = toArray(starts,ends,length,numUsers, users)
+    answerMatrix = toArray(starts,ends,length,numUsers, users, userWeightDict)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
     #f for filtered
@@ -14,8 +14,8 @@ def scoreNuUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x
                                                   filteredData[2], filteredData[3], filteredData[4]
     if len(fStarts)==0:
         return 'L', 'L', 'L'
-    filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, fUsers)
-    inclusiveMatrix = toArray(starts, ends, length, numUsers, users)
+    filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, fUsers, userWeightDict)
+    inclusiveMatrix = toArray(starts, ends, length, numUsers, users, userWeightDict)
     score = scoreAlpha(filteredMatrix, 'nominal')
     inclusiveScore = scoreAlpha(inclusiveMatrix, 'nominal')
     return score, inclusiveScore, goodIndices
@@ -63,7 +63,7 @@ def unitsToArray(starts, ends, length, numUsers):
         raiseMatrix(starts[i],ends[i])
     return unitsMatrix
 
-def toArray(starts,ends,length,numUsers, users):
+def toArray(starts,ends,length,numUsers, users, userWeightDict):
     uniqueUsers = np.unique(np.array(users))
     userBlocks = np.zeros((numUsers, length))
     astarts, aends = np.array(starts), np.array(ends)
