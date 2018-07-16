@@ -26,16 +26,17 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = None)
         # 'very not likely', it will fail the threshold matrix test, this method, while not rigorous, provides
         # some defense against outliers that likely were produced by trolls, misunderstandings of the question,
         # and misclicks
-        if evalThresholdMatrix(highScore, numUsers)!='H':
-            highScore, winner, weights = scoreCoding(answers, users, 'nominal')
+        if evalThresholdMatrix(highScore, numUsers)!= 'H':
+            highScore, winner, weights = scoreCoding(answers, users, 'ordinal', scale = 2)
     # These all return tuples (array of answers, amount of scaling done), element at index 1 is same for all
     weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
                                             weightScaledEnds, \
-                                            weightScaledNumUsers = weightScaleEverything(answers, weights, users,
+                                            weightScaledNumUsers,\
+                                            userWeightDict= weightScaleEverything(answers, weights, users,
                                                                                          starts,ends)
     winner, units, uScore, iScore = passToUnitizing(weightScaledAnswers,weightScaledUsers,weightScaledStarts,
                                                     weightScaledEnds,numUsers,length, highScore, winner,
-                                                    weightScaledNumUsers)
+                                                    weightScaledNumUsers, userWeightDict)
     return winner, units, uScore, iScore, highScore
 
 def repScaleAnsUsers(answers, users):
@@ -43,17 +44,18 @@ def repScaleAnsUsers(answers, users):
     return repScaledAnswers, repScaledUsers
 
 def weightScaleEverything(answers,weights, users, starts, ends):
-    weightScaledAnswers, weightScaledStarts, weightScaledEnds, \
-    weightScaledUsers = scaleFromWeights(answers, answers, weights, users), \
-                        scaleFromWeights(starts, answers, weights, users), \
-                        scaleFromWeights(ends, answers, weights, users), \
-                        scaleFromWeights(users, answers, weights, users),
+    weightScaledAnswers= scaleFromWeights(answers, answers, weights, users)
+    weightScaledStarts = scaleFromWeights(starts, answers, weights, users)
+    weightScaledEnds =scaleFromWeights(ends, answers, weights, users)
+    weightScaledUsers  = scaleFromWeights(users, answers, weights, users)
     ans, ends, starts, users = weightScaledAnswers[0], weightScaledEnds[0], weightScaledStarts[0], weightScaledUsers[0]
     numUsers = weightScaledUsers[1]
-    return ans, users, starts, ends, numUsers
+    userWeightDict = weightScaledUsers[2]
+    return ans, users, starts, ends, numUsers, userWeightDict
+
 
 def passToUnitizing(answers,users,starts,ends,numUsers,length,\
-    highScore, winner, scaledNumUsers):
+    highScore, winner, scaledNumUsers, userWeightDict):
     """ calculates unitizing agreement for any coding question after verifying that it passes the threshold matrix
     Only calculates unitizing agreement amongst users who selected the most agreed-upon answer"""
     if evalThresholdMatrix(highScore, numUsers) == 'H':
@@ -66,7 +68,8 @@ def passToUnitizing(answers,users,starts,ends,numUsers,length,\
         fNumUsers = scaledNumUsers
         #If somebody highlights something
         if max(fEnds)>0:
-            uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fUsers, winner, answers)
+            uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fUsers, winner, answers,
+                                                     userWeightDict)
         else:
             uScore = 'NA'
             iScore = 'NA'
@@ -77,7 +80,7 @@ def passToUnitizing(answers,users,starts,ends,numUsers,length,\
         return status, status, status, status
 
 
-def scoreCoding(answers, users, dfunc):
+def scoreCoding(answers, users, dfunc, scale = 1):
     """scores coding questions using an ordinal distance
     function(defined in getWinners method)
     inputs:
@@ -92,18 +95,18 @@ def scoreCoding(answers, users, dfunc):
     """
     answers = [int(a) for a in answers]
     if dfunc == 'ordinal':
-        highscore, winner, weights = getWinnersOrdinal(answers)
+        highscore, winner, weights = getWinnersOrdinal(answers, scale = scale)
     else:
         highscore, winner, weights = getWinnersNominal(answers)
     return highscore, winner, weights
 
-def getWinnersOrdinal(answers, num_choices = 5):
+def getWinnersOrdinal(answers, num_choices = 5, scale = 1):
     # Todo:confirm that I said the right thing about Shannon
     """Calculates the most-common answer and assigns it an agreement score
-    uses Jensen-Shannon Distance to assign weights to different answers"""
+    uses shannon's thingy-ma-jig to assign weights to different answers"""
     # Shannon Entropy ordinal metric
     # Todo: get number of possible answers as an input so we don't have to assume it's 5
-    length = num_choices
+    length = num_choices * scale
     # index 1 refers to answer 1, 0 and the last item are not answer choices, but
     # deal with corner cases that would cause errors
     original_arr = np.array(answers) - 1
@@ -116,7 +119,7 @@ def getWinnersOrdinal(answers, num_choices = 5):
     return topScore, winner + 1, weights
 
 def shannon_ordinal_metric(original_arr, aggregate_arr):
-    """"calculates Jensen-Shannon Metric """
+    """"calculates ordinal metric (Thanks Shannon) """
     original_arr = np.array(original_arr)
     aggregate_arr = np.array(aggregate_arr)
     prob_arr = aggregate_arr / sum(aggregate_arr)
@@ -127,7 +130,7 @@ def shannon_ordinal_metric(original_arr, aggregate_arr):
     weights= 1+np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist)
     print(aggregate_arr)
     print(prob_arr)
-    print(1+(np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist)))
+    print(1+(np.log2(1-abs(np.arange(total_dist) - x_mean) / total_dist)))
     return score, winner, weights
 
 def getWinnersNominal(answers, num_choices = 5):
@@ -163,16 +166,21 @@ def scaleFromWeights(arr,answers,weights, users):
     scaled = np.zeros(0)
     sumTotalScaling = 0
     checked = []
+    userWeightDict = {}
     for i in range(len(arr)):
-        if (arr[i], users[i]) not in checked:
-            checked.append((arr[i], users[i]))
+        if (arr[i], users[i], answers[i]) not in checked:
+            checked.append((arr[i], users[i], answers[i]))
             addition = np.array(arr[i])
             rep = get_user_rep(users[i])
             ans = answers[i]
             weight = weights[ans]
             scaleBy = floor(weight*rep)
+            setUserWeightDict(users[i], scaleBy, userWeightDict)
             sumTotalScaling += scaleBy
             addition = np.repeat(addition, scaleBy)
             scaled = np.append(scaled, addition)
-    return scaled.astype(int), sumTotalScaling
+    return scaled.astype(int), sumTotalScaling, userWeightDict
 
+def setUserWeightDict(index, value, dict):
+    if index not in dict.keys() or value > dict[index]:
+        dict[index] = value

@@ -1,3 +1,5 @@
+from data_utils import *
+
 def get_user_arrays(data, article_num, question_num):
     returnDict = dict()
     users = get_question_userid(data, article_num, question_num)

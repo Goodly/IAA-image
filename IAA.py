@@ -61,16 +61,11 @@ def score(article, ques, data):
     starts,ends,length= get_question_start(data,article,ques).tolist(),get_question_end(data,article,ques).tolist(),\
                         get_text_length(data,article,ques)
     if type == 'ordinal':
-
         return evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = 'ordinal')
     elif type == 'nominal':
         return evaluateCoding(answers, users, starts, ends, numUsers, length)
     elif type == 'checklist':
         return evaluateChecklist(answers, users, starts, ends, numUsers, length)
-
-
-
-
 
 def calcAgreement(codingScore, unitizingScore):
     """averages coding and unitizing agreement scores to create a final agreement score to be used elsewhere in the
@@ -90,7 +85,11 @@ def calcAgreement(codingScore, unitizingScore):
 def run_2step_unitization(data, article, question):
         starts,ends,length,numUsers, users = get_question_start(data,article,question).tolist(),get_question_end(data,article,question).tolist(),\
                         get_text_length(data,article,question), get_num_users(data,article,question),  get_question_userid(data, article, question).tolist()
-        score, indices, iScore = scoreNuUnitizing(starts,ends,length,numUsers, users)
+        uqU = np.unique(users)
+        userWeightDict = {}
+        for u in uqU:
+            userWeightDict[u] = get_user_rep(u)
+        score, indices, iScore = scoreNuUnitizing(starts,ends,length,numUsers, users, userWeightDict)
         return 'NA',  indices, score, score, 'NA'
 
 #TEST STUFF
