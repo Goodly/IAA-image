@@ -1,5 +1,5 @@
 from CodingScoring import *
-
+from repScores import *
 
 def scoreChecklist(answers,numUsers):
     out = []
@@ -29,6 +29,9 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, dfu
         winner, units, uScore, iScore = passToUnitizing(weightScaledAnswers,weightScaledUsers,weightScaledStarts,
                                                         weightScaledEnds,numUsers,length, codingScore, i,
                                                         weightScaledNumUsers, userWeightDict)
+        #TODO: get actual number of answer choices
+        num_choices = 5
+        do_rep_calculation_nominal(users, answers, out[0], repDF, checkListScale=(1/num_choices))
         out.append([winner,units,uScore,iScore, codingScore])
     return out
 

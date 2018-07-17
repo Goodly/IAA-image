@@ -3,7 +3,7 @@ from ChecklistCoding import *
 from data_utils import *
 from repScores import *
 
-path = './test/rep_series/series_test_5.csv'
+path = './test/rep_series/series_test_9.csv'
 
 
 def calc_scores(filename, repCSV = None):

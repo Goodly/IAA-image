@@ -15,43 +15,48 @@ def create_user_dataframe(data,csvPath = None):
             users_q = get_question_userid(data, article_num, question_num)
             for ids in users_q:
                 ids = int(ids)
-                if ids not in data1.loc[: ,'Users']:
+                if ids not in data1.loc[:, 'Users'].tolist():
                     data1 = data1.append({"Users" :ids, "Score" :5, "Questions": 1, "Influence":1}, ignore_index = True)
     return data1
-def do_rep_calculation_nominal(userID, answers, answer_choice, data):
+def do_rep_calculation_nominal(userID, answers, answer_choice, data, checkListScale = 1):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
     such that if the user in the list of USERID gets their answer right, they add 1 to their score, and 0 if they are
     wrong."""
-    tups = list()
-    for ids in userID:
-        for a in answers:
-            pair = (ids, a)
-            if pair not in tups:
-                tups.append(pair)
-    for t in tups:
-        user = t[0]
-        answer = t[1]
+    if type(answer_choice) == str:
+        return 0
+    checked = checkDuplicates(userID, answers)
+    print(checked)
+    for t in checked:
+        user = t[1]
+        answer = t[0]
         print(answer, answer_choice, user)
         if (answer == answer_choice):
-            do_math(data, user, 1)
+            do_math(data, user, checkListScale)
         else:
             do_math(data, user, 0)
 def do_rep_calculation_ordinal(userID, answers, answer_aggregated ,num_of_choices, data):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
     such that the they recieve the distance from the average answer chosen as a ratio of 0 to 1,
     and that is added to their rep score."""
-    tups = list()
-    for ids in userID:
-        for a in answers:
-            pair = (ids, a)
-            if pair not in tups:
-                tups.append(pair)
-    answer_choice = np.mean(answer_aggregated)
-    for t in tups:
-        user = t[0]
-        answer = t[1]
+    if type(answer_aggregated) == str:
+        return 0
+    checked = checkDuplicates(userID, answers)
+    answers_passed = list()
+    for i in checked:
+        answers_passed.append(checked[i][1])
+    answer_choice = np.mean(answers_passed)
+    for t in checked:
+        user = t[1]
+        answer = t[0]
         points = (1 - abs(answer_choice - answer ) /num_of_choices)
         do_math(data, user, points)
+
+def checkDuplicates(userID, answers):
+    checked = []
+    for i in range(len(answers)):
+        if (answers[i], userID[i]) not in checked:
+            checked.append((answers[i], userID[i]))
+    return checked
 def do_math(data, userID, reward):
     """This function takes in the points added to one user and changes the dataframe to update that one user's score
     using the equations set for calculating reputation."""
