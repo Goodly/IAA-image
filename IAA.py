@@ -3,7 +3,7 @@ from ChecklistCoding import *
 from data_utils import *
 from repScores import *
 
-path = './test/rep_series/series_test_3.csv'
+path = './test/rep_series/series_test_5.csv'
 
 
 def calc_scores(filename, repCSV = None):
@@ -13,7 +13,7 @@ def calc_scores(filename, repCSV = None):
     repDF =  create_user_dataframe(uberDict)
     for article in uberDict.keys(): #Iterates throuh each article
         for ques in uberDict[article].keys(): #Iterates through each question in an article
-            print(repDF)
+            #print(repDF)
 
             agreements = score(article, ques, uberDict, repDF)
             #if it's a list then it was a checklist question

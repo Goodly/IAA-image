@@ -14,6 +14,7 @@ def create_user_dataframe(data,csvPath = None):
         for question_num in data[article_num].keys():
             users_q = get_question_userid(data, article_num, question_num)
             for ids in users_q:
+                ids = int(ids)
                 if ids not in data1.loc[: ,'Users']:
                     data1 = data1.append({"Users" :ids, "Score" :5, "Questions": 1, "Influence":1}, ignore_index = True)
     return data1
@@ -30,6 +31,7 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, data):
     for t in tups:
         user = t[0]
         answer = t[1]
+        print(answer, answer_choice, user)
         if (answer == answer_choice):
             do_math(data, user, 1)
         else:
@@ -54,6 +56,8 @@ def do_math(data, userID, reward):
     """This function takes in the points added to one user and changes the dataframe to update that one user's score
     using the equations set for calculating reputation."""
     user = data.loc[data['Users' ]== userID]
+    print('inDoMath uID', userID)
+    print()
     r = float(user['Score'].iloc[0])
     n = float(user['Questions'].iloc[0])
     q_score = 10* (1 - exp(-n/.7))
@@ -64,7 +68,8 @@ def do_math(data, userID, reward):
     data.loc[data['Users'] == userID,'Questions'] = n
     data.loc[data['Users'] == userID, 'Score'] = (points / n) * q_score
     data.loc[data['Users'] == userID, 'Influence'] = 2 / (1 + 1*exp(-.7*(points / n) * q_score + 5))
-    #print(data)
+    print(reward)
+    print(data)
 
 def calc_influence(data, userID):
     """Taking in a list of UserID's, this will take the repuation score of each User and output a list of their influence
