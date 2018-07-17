@@ -1,18 +1,21 @@
 import csv
 from ChecklistCoding import *
 from data_utils import *
+from repScores import *
 
-path = './test/TestJuntos.csv'
+path = './test/rep_series/series_test_3.csv'
 
 
-def calc_scores(filename):
+def calc_scores(filename, repCSV = None):
     uberDict = data_storer(filename)
     data = [["Article Number", "Question Number", "Agreed Answer", "Coding Score", "HighlightedIndices",\
              "Alpha Unitizing Score", "Alpha Unitizing Score Inclusive", "Agreement Score"]]
-
+    repDF =  create_user_dataframe(uberDict)
     for article in uberDict.keys(): #Iterates throuh each article
         for ques in uberDict[article].keys(): #Iterates through each question in an article
-            agreements = score(article, ques, uberDict)
+            print(repDF)
+
+            agreements = score(article, ques, uberDict, repDF)
             #if it's a list then it was a checklist question
             if type(agreements) is list:
                 for i in range(len(agreements)):
@@ -25,7 +28,11 @@ def calc_scores(filename):
                 totalScore = calcAgreement(codingScore, unitizingScore)
                 data.append([article,ques, agreements[0], codingScore, agreements[1], unitizingScore, agreements[3],
                              totalScore])
+
     #push out of womb, into world
+    print('exporting rep_scores')
+    print(repDF)
+    userid_to_CSV(repDF)
     print('exporting to csv')
     scores = open('agreement_scores.csv', 'w')
 
@@ -35,7 +42,7 @@ def calc_scores(filename):
 
     print("Table complete")
 
-def score(article, ques, data):
+def score(article, ques, data, repDF):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -53,7 +60,8 @@ def score(article, ques, data):
     print('Scoring article: ', article, ' question: ', ques)
     type = get_question_type(data,article, ques)
     if type == 'interval':
-        return run_2step_unitization(data, article, ques)
+        #TODO: user rep score for unitizing only questions
+        return run_2step_unitization(data, article, ques, repDF)
 
     answers, users,  numUsers = get_question_answers(data, article, ques).tolist(), \
         get_question_userid(data, article, ques).tolist(), \
@@ -61,11 +69,18 @@ def score(article, ques, data):
     starts,ends,length= get_question_start(data,article,ques).tolist(),get_question_end(data,article,ques).tolist(),\
                         get_text_length(data,article,ques)
     if type == 'ordinal':
-        return evaluateCoding(answers, users, starts, ends, numUsers, length, dfunc = 'ordinal')
+        out =  evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, dfunc = 'ordinal')
+        #TODO: find actual number of choices
+        num_choices = 5
+        do_rep_calculation_ordinal(users, answers, out[0], num_choices, repDF)
+        return out
     elif type == 'nominal':
-        return evaluateCoding(answers, users, starts, ends, numUsers, length)
+        out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF)
+        do_rep_calculation_nominal(users, answers, out[0], repDF)
+        return out
     elif type == 'checklist':
-        return evaluateChecklist(answers, users, starts, ends, numUsers, length)
+        #TODO: figure out a way to evaluate rep for checklist questions
+        return evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF)
 
 def calcAgreement(codingScore, unitizingScore):
     """averages coding and unitizing agreement scores to create a final agreement score to be used elsewhere in the
@@ -82,13 +97,13 @@ def calcAgreement(codingScore, unitizingScore):
     return (float(codingScore)+float(unitizingScore))/2
 
 #TODO: make this return a tuple with agreed upon answer as first statement and agreed upon score as second
-def run_2step_unitization(data, article, question):
+def run_2step_unitization(data, article, question, repDF):
         starts,ends,length,numUsers, users = get_question_start(data,article,question).tolist(),get_question_end(data,article,question).tolist(),\
                         get_text_length(data,article,question), get_num_users(data,article,question),  get_question_userid(data, article, question).tolist()
         uqU = np.unique(users)
         userWeightDict = {}
         for u in uqU:
-            userWeightDict[u] = get_user_rep(u)
+            userWeightDict[u] = get_user_rep(u, repDF)
         score, indices, iScore = scoreNuUnitizing(starts,ends,length,numUsers, users, userWeightDict)
         return 'NA',  indices, score, score, 'NA'
 
