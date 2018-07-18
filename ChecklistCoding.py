@@ -1,5 +1,5 @@
 from CodingScoring import *
-
+from repScores import *
 
 def scoreChecklist(answers,numUsers):
     out = []
@@ -12,8 +12,8 @@ def scoreChecklist(answers,numUsers):
         out.append(scores[i]/numUsers)
     return out
 
-def evaluateChecklist(answers, users, starts, ends, numUsers, length, dfunc = None):
-    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users)
+def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, dfunc = None):
+    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
     percArray = scoreChecklist(repScaledAnswers.astype(int), len(repScaledUsers.astype(int)))
     out = []
     for i in range(1,len(percArray)):
@@ -25,10 +25,13 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, dfunc = No
         weightScaledEnds, \
         weightScaledNumUsers, \
         userWeightDict = weightScaleEverything(answers, weights, users,
-                                               starts, ends)
+                                               starts, ends, repDF)
         winner, units, uScore, iScore = passToUnitizing(weightScaledAnswers,weightScaledUsers,weightScaledStarts,
                                                         weightScaledEnds,numUsers,length, codingScore, i,
                                                         weightScaledNumUsers, userWeightDict)
+        #TODO: get actual number of answer choices
+        num_choices = 5
+        do_rep_calculation_nominal(users, answers, out[0], repDF, checkListScale=(1/num_choices))
         out.append([winner,units,uScore,iScore, codingScore])
     return out
 

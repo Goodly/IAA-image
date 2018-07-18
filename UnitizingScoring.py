@@ -65,7 +65,7 @@ def unitsToArray(starts, ends, length, numUsers):
 
 def toArray(starts,ends,length,numUsers, users, userWeightDict):
     uniqueUsers = np.unique(np.array(users))
-    userBlocks = np.zeros((numUsers, length))
+    userBlocks = np.zeros((int(numUsers), length))
     astarts, aends = np.array(starts), np.array(ends)
     for u in range(len(uniqueUsers)):
         indices = getIndicesFromUser(users, uniqueUsers[u])

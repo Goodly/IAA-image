@@ -51,7 +51,7 @@ def get_question_end(data, article_num, question_num):
     return data[article_num][question_num][1][3][0]
 
 def get_text_length(data, article_num, question_num):
-    return max(data[article_num][question_num][1][4][0])
+    return int(max(data[article_num][question_num][1][4][0]))
     #.iloc[0]
 
 def get_num_users(data, article_num, question_num):
@@ -99,5 +99,10 @@ def get_user_arrays(data, article_num, question_num):
         index +=1
     return returnDict
 
-def get_user_rep(id):
-    return 100
+def get_user_rep(id, repDF):
+    #print(repDF.loc[repDF['Users']==id]['Score'])
+    if repDF.loc[repDF['Users']==id]['Questions'].iloc[0]<30:
+        influence = .8
+    else:
+        influence = float(repDF.loc[repDF['Users']==id]['Influence'].iloc[0])
+    return influence*50
