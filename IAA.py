@@ -112,4 +112,4 @@ def run_2step_unitization(data, article, question, repDF):
         return 'NA',  indices, score, score, 'NA'
 
 #TEST STUFF
-#calc_scores(path, None)
+calc_scores(path)
