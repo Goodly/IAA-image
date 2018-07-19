@@ -79,7 +79,6 @@ def score(article, ques, data, repDF):
         do_rep_calculation_nominal(users, answers, out[0], repDF)
         return out
     elif type == 'checklist':
-        #TODO: figure out a way to evaluate rep for checklist questions
         return evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF)
 
 def calcAgreement(codingScore, unitizingScore):
@@ -96,7 +95,6 @@ def calcAgreement(codingScore, unitizingScore):
 
     return (float(codingScore)+float(unitizingScore))/2
 
-#TODO: make this return a tuple with agreed upon answer as first statement and agreed upon score as second
 def run_2step_unitization(data, article, question, repDF):
         starts,ends,length,numUsers, users = get_question_start(data,article,question).tolist(),get_question_end(data,article,question).tolist(),\
                         get_text_length(data,article,question), get_num_users(data,article,question),  get_question_userid(data, article, question).tolist()

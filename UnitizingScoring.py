@@ -3,12 +3,11 @@ import numpy as np
 from ThresholdMatrix import *
 
 def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, winner = 0, answers = 'x'):
-    # Todo: resolve one user making overlapping highlights that skew data
     if answers == 'x':
         answers = np.zeros(len(users))
     answerMatrix = toArray(starts,ends,length,numUsers, users, userWeightDict)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
-    filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
+    filteredData = filterSingular(percentageArray, numUsers,users,starts,ends, winner)
     #f for filtered
     fStarts,fEnds,fNumUsers,goodIndices, fUsers = filteredData[0], filteredData[1], \
                                                   filteredData[2], filteredData[3], filteredData[4]
@@ -85,7 +84,7 @@ def toArray(starts,ends,length,numUsers, users, userWeightDict):
     unitsMatrix = np.stack((col1, col2), axis=0).T
     return unitsMatrix
 
-def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, winner):
+def filterSingular(percentageScoresArray,  numUsers,users,starts,ends, winner):
     """
     filters the data so that only users who highlighted units that passed the
     thresholdmatrix after their percentage agreement was calculated get scored
@@ -98,7 +97,7 @@ def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, w
         if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
             passingIndexes.append(i)
     majorityUsersUnique = getMajorityUsers(passingIndexes, users, starts, ends)
-    goodIndices =getIndicesFromMajorityUsers(users, majorityUsersUnique)
+    goodIndices = getIndicesFromMajorityUsers(users, majorityUsersUnique)
     if  len(goodIndices)<1:
         return ([],[],0,[],[])
     starts, ends, users = np.array(starts), np.array(ends), np.array(users)
