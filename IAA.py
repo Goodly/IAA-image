@@ -7,10 +7,15 @@ path = './test/rep_series/series_test_9.csv'
 
 
 def calc_scores(filename, repCSV = None):
+    print(repCSV)
     uberDict = data_storer(filename)
     data = [["Article Number", "Question Number", "Agreed Answer", "Coding Score", "HighlightedIndices",\
              "Alpha Unitizing Score", "Alpha Unitizing Score Inclusive", "Agreement Score"]]
-    repDF =  create_user_dataframe(uberDict)
+    if repCSV != None:
+        print('8===============================================================================D')
+        repDF = CSV_to_userid(repCSV)
+    else:
+        repDF =  create_user_dataframe(uberDict)
     for article in uberDict.keys(): #Iterates throuh each article
         for ques in uberDict[article].keys(): #Iterates through each question in an article
             #print(repDF)
@@ -31,7 +36,8 @@ def calc_scores(filename, repCSV = None):
 
     #push out of womb, into world
     print('exporting rep_scores')
-    print(repDF)
+    #print(repDF)
+    repDF.to_csv('RepScores/Repscore5.csv', mode = 'a', header = False)
     userid_to_CSV(repDF)
     print('exporting to csv')
     scores = open('agreement_scores.csv', 'w')
@@ -106,4 +112,4 @@ def run_2step_unitization(data, article, question, repDF):
         return 'NA',  indices, score, score, 'NA'
 
 #TEST STUFF
-calc_scores(path)
+#calc_scores(path, None)

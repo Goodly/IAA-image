@@ -52,7 +52,7 @@ def calcArgImportanceMultiplier(argUnitization, ptsRecUnitization, argVal):
         return calcImportanceMultiplier(argVal, argValToWeightDict)
     else:
         return 1
-def checkAgreement(arr1, arr2):
+def checkAgreement(arr1, arr2, threshold = .9):
     """arr1 and arr2 are lists of every unitization
     Raw score might be best indicator, highest percentage of aunits in agreement with either of the unitizaitons"""
     length = max(max(arr1), (max(arr2)))+1
@@ -62,7 +62,7 @@ def checkAgreement(arr1, arr2):
     passingIndices = np.nonzero(percentageArray == 1)[0]
     numPasses = len(passingIndices)
     rawScore = max((numPasses/len(arr1), numPasses/len(arr2)))
-    doesPass = rawScore > .9
+    doesPass = rawScore > threshold
     return doesPass, passingIndices
 
 def indicesToMatrix(arr1, arr2, length):
