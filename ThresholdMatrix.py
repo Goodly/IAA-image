@@ -1,8 +1,19 @@
 from math import exp
-def evalThresholdMatrix(percentage, num_of_users, scale = 1):
+def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1):
+    """
+
+    :param percentage: percentage agreement
+    :param num_of_users: number of users
+    :param scale: scales percentage, higher scale is a friendlier function, lower scale is stricter
+    :param q: adjusting q adjusts the midpoint of the logistic curve, higher Qs willyield more H,
+    but can make M almost never return
+    :return: a code denoting the success of the inputs in this funciton, 'U' means too few leaders, while
+    H, M, and L denote the degree  of agreement
+    """
+    if num_of_users<3:
+        return 'U'
     percentage = percentage*scale
     kappa = 2+1 *(1 - exp((-num_of_users)/50))
-    q = 1
     #omega = 1/1+exp(-kappa*(percentage -.5))
     deriv = ((kappa * q*exp(-kappa*(percentage)))/(q*(exp(-kappa*(percentage-.5))+1))**2)*5.7
     if (deriv > 1):
@@ -18,3 +29,6 @@ def checkThreshold():
             print(str(p)+"%", u, 'users')
             print(evalThresholdMatrix(p, u))
             print(evalThresholdMatrix(p, u, 1.4))
+            print(evalThresholdMatrix(p, u, 1.4,1.2))
+            print(evalThresholdMatrix(p, u, 1.4, 1.2))
+checkThreshold()

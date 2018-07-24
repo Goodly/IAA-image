@@ -7,20 +7,23 @@ from math import floor
 path1 = 'SemanticsTriager1.3C2-2018-07-19T17.csv'
 path2 = 'FormTriager1.2C2-2018-07-19T17.csv'
 
-def scoreTriager(starts,ends, users, numUsers, inFlags, length, flagExclusions):
+def scoreTriager(starts,ends, users, numUsers, inFlags, length, globalExclusion):
 
     #TODO: do this for each category
     passers = findPassingIndices(starts, ends, numUsers, users, length)
-    #catExclusions = exclusionList(users, flags, minU = 5)
-    #flagExclusions.append()
+    catExclusions = exclusionList(users, inFlags, minU = 4)
+    flagExclusions = np.unique(np.append(globalExclusion,catExclusions))
+    print('exclusions', flagExclusions)
     excl = findExcludedIndices(flagExclusions, users)
-    print(excl)
+    #print(excl)
     if len(excl > 1):
         inFlags = exclude(excl, inFlags)
-        coded = exclude(excl, coded)
+        users = exclude(excl, users)
+        #ok to clip starts, ends because already know what passed
+        starts, ends = exclude(excl,starts), exclude(excl, ends)
     codetoUser, userToCode= codeNameDict(users)
     coded = codeUsers(userToCode, users)
-    print(coded, numUsers)
+    #print(coded, numUsers)
 
     newStarts, newEnds = toStartsEnds(passers)
     #Exclude flags from users who didn't use case flags
@@ -45,7 +48,7 @@ def importData(path):
         flags = art_data['case_number'].tolist()
         cats = art_data['topic_name'].tolist()
         flagExclusions = exclusionList(users, flags, cats)
-        print(flagExclusions)
+        #print(flagExclusions)
         if annotator_count >= 2:
             cats = np.unique(art_data['topic_name'])
             for c in cats:
@@ -63,12 +66,14 @@ def importData(path):
     print("DONE")
 
 def findExcludedIndices(exclusions, users):
+    #print(exclusions, users)
     indices = np.array(())
     for u in np.unique(users):
         if u in exclusions:
             uIndices = np.nonzero(users == u)
-            np.append(indices,uIndices)
-    #print(indices)
+            #print(uIndices)
+            indices = np.append(indices,uIndices)
+    #print('indices', indices)
     return indices
 def exclude(indices, arr):
     # print(flags, len(flags))
@@ -140,23 +145,16 @@ def toStartsEnds(passers):
     return starts, ends
 
 def toFlagMatrix(starts, ends, nStarts, nEnds, codedUsers, flags):
-    """returns a dictionary that has the new starts as the keys, and a list of every index of user that had a highlight
-    overlap the agreed upon unitization """
-    def addToStartsIndex(start, index):
-        if start not in startsUsersDict.keys():
-            startsUsersDict[start] = [(index, index)]
-        else:
-            startsUsersDict[start] = startsUsersDict[start].append(index)
-
-    startsUsersDict = {}
     if len(nStarts)>0 and len(np.unique(codedUsers)>0):
         flagMatrix = np.zeros((len(nStarts), len(np.unique(codedUsers))))
         #i corresponds tot he code of a user
 
         for i in np.arange(len(starts)):
+            #print('i',i)
             for j in np.arange(len(nStarts)):
+                #print(j)
                 if (starts[i] < nStarts[j] and ends[i] > nStarts[j]) or \
-                        (starts[i]< nEnds[j] and starts[i] > nStarts[j]):
+                        (starts[i]< nEnds[j] and ends[i] > nEnds[j]):
                     flagMatrix[j][codedUsers[i]] = flags[i]
         return flagMatrix.T
     return []
@@ -189,6 +187,7 @@ def assignFlags(matrix):
 
 def determineFlags(starts, ends, nStarts, nEnds, codedUsers, flags):
     matrix = toFlagMatrix(starts, ends, nStarts,nEnds, codedUsers, flags)
+    print(matrix)
     #print(matrix)
     if len(matrix)>0 and len(matrix[0]>0):
         outFlags = assignFlags(matrix)
@@ -201,8 +200,8 @@ importData(path1)
 
 print()
 print()
-#print("#####FORM TRIAGER AGREED UPON DATA!!!#####")
-#importData(path2)
+print("#####FORM TRIAGER AGREED UPON DATA!!!#####")
+importData(path2)
 # s = [5, 45, 3, 80, 6, 65]
 #
 # e1 = [30,100, 30,100, 30,100]
