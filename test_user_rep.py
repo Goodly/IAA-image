@@ -51,16 +51,12 @@ def weighted_random_question(agreement_val, correct_ans):
     return int(rand.choice(my_list))
 
 def weighted_random_pos(agreement_val, correct_ans, source_length):
-    """Approximates the start or end pos of a given user according to their given agreement value."""
-    pos_range = int((1 - agreement_val) * source_length)
-    start = correct_ans - pos_range
-    end = correct_ans + pos_range + 1
-    if start < 0:
-        start = 0
-    if end > source_length:
-        end = source_length
-    interval = np.arange(start, end)
-    return rand.choice(interval)
+    normal = np.random.normal(correct_ans, (1 - agreement_val) * 2 * source_length ** 0.5, 10000)
+    return int(rand.choice(normal))
+
+def get_highlight_length():
+    normal = np.random.normal(50, 12, 10000)
+    return int(rand.choice(normal))
 
 def create_series(agreement_arr):
     """Parameters: agreement_arr - a 2D array of agreement values with length = number of runs. Each
