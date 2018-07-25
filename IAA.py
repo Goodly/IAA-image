@@ -3,7 +3,7 @@ from ChecklistCoding import *
 from data_utils import *
 from repScores import *
 
-path = './test/rep_series/series_test_9.csv'
+#path = './test/rep_series/series_test_9.csv'
 
 
 def calc_scores(filename, repCSV = None):
@@ -37,7 +37,7 @@ def calc_scores(filename, repCSV = None):
     #push out of womb, into world
     print('exporting rep_scores')
     #print(repDF)
-    repDF.to_csv('RepScores/Repscore7.csv', mode = 'a', header = False)
+    repDF.to_csv('RepScores/Repscore9.csv', mode = 'a', header = False)
     userid_to_CSV(repDF)
     print('exporting to csv')
     scores = open('agreement_scores.csv', 'w')
@@ -112,4 +112,4 @@ def run_2step_unitization(data, article, question, repDF):
         return 'NA',  indices, score, score, 'NA'
 
 #TEST STUFF
-calc_scores(path)
+#calc_scores(path)
