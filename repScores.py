@@ -25,7 +25,6 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, data, checkListSc
     if type(answer_choice) == str:
         return 0
     checked = checkDuplicates(userID, answers)
-    print(checked)
     for t in checked:
         user = t[1]
         answer = t[0]
@@ -36,23 +35,24 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, data, checkListSc
             do_math(data, user, 0)
 def do_rep_calculation_ordinal(userID, answers, answer_aggregated ,num_of_choices, data):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
-    such that the they recieve the distance from the average answer chosen as a ratio of 0 to 1,
+    such that the they receive the distance from the average answer chosen as a ratio of 0 to 1,
     and that is added to their rep score."""
     if type(answer_aggregated) == str:
         return 0
     checked = checkDuplicates(userID, answers)
     answers_passed = list()
     for i in checked:
-        answers_passed.append(checked[i][1])
+        answers_passed.append(i[1])
     answer_choice = np.mean(answers_passed)
     for t in checked:
         user = t[1]
         answer = t[0]
-        points = (1 - abs(answer_choice - answer ) /num_of_choices)
+        points = (1 - abs(answer_choice - answer ) / num_of_choices)
         do_math(data, user, points)
 
 def checkDuplicates(userID, answers):
     checked = []
+    print(userID, answers)
     for i in range(len(answers)):
         if (answers[i], userID[i]) not in checked:
             checked.append((answers[i], userID[i]))
