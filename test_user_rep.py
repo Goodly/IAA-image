@@ -63,7 +63,7 @@ def create_series(agreement_arr):
     sub-array is a list of agreement values with length = num_users.
     Returns a series of runs, saved as .csv that describes the answers and highlights of users according
     to their given agreement values."""
-    frames =[]
+    frames = []
     for i in np.arange(len(agreement_arr)):
         current = create_run(agreement_arr[i], i)
         frames.append(current)

@@ -37,7 +37,7 @@ def calc_scores(filename, repCSV = None):
     #push out of womb, into world
     print('exporting rep_scores')
     #print(repDF)
-    repDF.to_csv('RepScores/Repscore6.csv', mode = 'a', header = False)
+    repDF.to_csv('RepScores/Repscore7.csv', mode = 'a', header = False)
     userid_to_CSV(repDF)
     print('exporting to csv')
     scores = open('agreement_scores.csv', 'w')
