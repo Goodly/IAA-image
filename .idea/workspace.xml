@@ -2,15 +2,64 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/IAA-image.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Create Run-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Create Run-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Create Run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Create Run.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IAA.py" beforeDir="false" afterPath="$PROJECT_DIR$/IAA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepScores/Repscore9.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RepScores/Repscore9.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run0.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run0.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run1.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run10.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run10.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run11.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run11.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run12.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run12.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run13.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run13.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run14.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run14.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run15.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run16.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run16.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run17.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run17.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run18.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run18.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run19.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run19.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run20.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run20.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run21.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run21.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run22.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run22.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run23.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run23.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run24.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run24.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run25.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run25.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run26.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run26.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run27.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run27.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run28.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run28.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run29.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run29.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run30.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run30.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run31.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run31.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run32.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run32.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run33.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run33.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run34.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run34.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run35.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run35.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run36.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run36.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run37.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run37.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run38.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run38.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run39.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run39.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run40.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run40.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run41.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run41.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run42.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run42.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run43.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run43.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run44.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run44.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run45.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run45.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run46.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run46.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run47.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run47.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run48.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run48.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run49.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run49.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run6.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run6.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run7.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run7.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run8.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run8.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Series_Output/Run9.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run9.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserRepScores.csv" beforeDir="false" afterPath="$PROJECT_DIR$/UserRepScores.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User_Rep_EDA.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/User_Rep_EDA.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agreement_scores.csv" beforeDir="false" afterPath="$PROJECT_DIR$/agreement_scores.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_user_rep.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_user_rep.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,8 +73,8 @@
       <file leaf-file-name="IAA.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/IAA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-144">
-              <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
+            <state relative-caret-position="240">
+              <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -33,11 +82,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_user_rep.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CodingScoring.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CodingScoring.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="134">
+              <caret line="122" column="41" lean-forward="true" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="repScores.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/repScores.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="67" column="14" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_user_rep.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_user_rep.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
-              <caret line="76" column="56" lean-forward="true" selection-start-line="76" selection-start-column="56" selection-end-line="76" selection-end-column="56" />
+            <state relative-caret-position="342">
+              <caret line="77" column="19" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -53,8 +123,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/IAA.py" />
         <option value="$PROJECT_DIR$/test_user_rep.py" />
+        <option value="$PROJECT_DIR$/repScores.py" />
+        <option value="$PROJECT_DIR$/IAA.py" />
+        <option value="$PROJECT_DIR$/CodingScoring.py" />
       </list>
     </option>
   </component>
@@ -62,7 +134,7 @@
     <option name="x" value="85" />
     <option name="y" value="25" />
     <option name="width" value="1750" />
-    <option name="height" value="969" />
+    <option name="height" value="970" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -84,6 +156,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="evaluateCo&#9;null&#9;null&#10;evaluate&#9;null&#9;null" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
@@ -143,27 +216,94 @@
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22526042" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32965517" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32965517" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32965517" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32965517" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32965517" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/IAA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repScores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="50" column="77" selection-start-line="50" selection-start-column="77" selection-end-line="50" selection-end-column="77" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="992">
+          <caret line="65" column="13" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="36" column="78" selection-start-line="36" selection-start-column="78" selection-end-line="36" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repScores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="50" column="53" selection-start-line="50" selection-start-column="53" selection-end-line="50" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1168">
+          <caret line="76" column="56" selection-start-line="76" selection-start-column="56" selection-end-line="76" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test_user_rep.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -184,23 +324,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ChecklistCoding.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10">
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1384" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA_raw/CodingScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="77" column="19" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repScores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="67" column="14" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/IAA.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-144">
-          <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
+        <state relative-caret-position="240">
+          <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
+    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="76" column="56" lean-forward="true" selection-start-line="76" selection-start-column="56" selection-end-line="76" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="134">
+          <caret line="122" column="41" lean-forward="true" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="41" />
         </state>
       </provider>
     </entry>
