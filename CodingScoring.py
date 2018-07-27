@@ -171,6 +171,8 @@ def scaleFromWeights(arr,answers,weights, users, repDF):
             rep = get_user_rep(users[i], repDF)
             ans = answers[i]
             weight = weights[int(ans)]
+            if weight < 0:
+                weight = 0
             scaleBy = floor(weight*rep)
             setUserWeightDict(users[i], scaleBy, userWeightDict)
             sumTotalScaling += scaleBy
