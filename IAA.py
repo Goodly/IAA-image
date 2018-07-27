@@ -7,7 +7,6 @@ from repScores import *
 
 
 def calc_scores(filename, repCSV = None):
-    print(repCSV)
     uberDict = data_storer(filename)
     data = [["Article Number", "Question Number", "Agreed Answer", "Coding Score", "HighlightedIndices",\
              "Alpha Unitizing Score", "Alpha Unitizing Score Inclusive", "Agreement Score"]]
@@ -78,11 +77,13 @@ def score(article, ques, data, repDF):
         out =  evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, dfunc = 'ordinal')
         #TODO: find actual number of choices
         num_choices = 5
-        do_rep_calculation_ordinal(users, answers, out[0], num_choices, repDF)
+        print("ORDINAL", out[1], starts, ends)
+        do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], starts, ends, repDF)
         return out
     elif type == 'nominal':
-        out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF)
+        out = evaluateCoding(answers, users, starts, ends, numUsers, length, out[1], starts, ends, repDF)
         do_rep_calculation_nominal(users, answers, out[0], repDF)
+        print("NOMINAL", out[1], starts, ends)
         return out
     elif type == 'checklist':
         return evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF)
@@ -109,6 +110,7 @@ def run_2step_unitization(data, article, question, repDF):
         for u in uqU:
             userWeightDict[u] = get_user_rep(u, repDF)
         score, indices, iScore = scoreNuUnitizing(starts,ends,length,numUsers, users, userWeightDict)
+       
         return 'NA',  indices, score, score, 'NA'
 
 #TEST STUFF

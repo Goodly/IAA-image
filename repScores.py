@@ -18,7 +18,7 @@ def create_user_dataframe(data,csvPath = None):
                 if ids not in data1.loc[:, 'Users'].tolist():
                     data1 = data1.append({"Users" :ids, "Score" :5, "Questions": 1, "Influence":1}, ignore_index = True)
     return data1
-def do_rep_calculation_nominal(userID, answers, answer_choice, data, checkListScale = 1):
+def do_rep_calculation_nominal(userID, answers, answer_choice,highlight_answer, starts, ends, data, checkListScale = 1):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
     such that if the user in the list of USERID gets their answer right, they add 1 to their score, and 0 if they are
     wrong."""
@@ -34,7 +34,7 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, data, checkListSc
             do_math(data, user, checkListScale)
         else:
             do_math(data, user, 0)
-def do_rep_calculation_ordinal(userID, answers, answer_aggregated ,num_of_choices, data):
+def do_rep_calculation_ordinal(userID, answers, answer_aggregated ,num_of_choices, highlight_answer, starts, ends, data):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
     such that the they receive the distance from the average answer chosen as a ratio of 0 to 1,
     and that is added to their rep score."""

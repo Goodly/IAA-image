@@ -78,6 +78,6 @@ def create_runs(agreement_arr):
 def test_rep(path):
     for i in range(50):
         if i == 0:
-            calc_scores(path + '\Run' + str(i) + '.csv')
+            calc_scores(path + 'Run' + str(i) + '.csv')
         else:
-            calc_scores(path + '\Run' + str(i) + '.csv', 'UserRepScores.csv')
+            calc_scores(path + 'Run' + str(i) + '.csv', 'UserRepScores.csv')
