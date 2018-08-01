@@ -11,7 +11,6 @@ def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, winner =
     #f for filtered
     fStarts,fEnds,fNumUsers,goodIndices, fUsers = filteredData[0], filteredData[1], \
                                                   filteredData[2], filteredData[3], filteredData[4]
-    print(filteredData)
     if len(fStarts)==0:
         return 'L', 'L', 'L'
     filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, fUsers, userWeightDict)
