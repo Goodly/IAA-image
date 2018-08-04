@@ -2,10 +2,11 @@ import krippendorff
 import numpy as np
 from ThresholdMatrix import *
 
-def scoreNuUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x'):
+def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, winner = 0, answers = 'x'):
+    # Todo: resolve one user making overlapping highlights that skew data
     if answers == 'x':
         answers = np.zeros(len(users))
-    answerMatrix = toArray(starts,ends,length,numUsers, users)
+    answerMatrix = toArray(starts,ends,length,numUsers, users, userWeightDict)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     filteredData = filterSingular(percentageArray, answers,numUsers,users,starts,ends, winner)
     #f for filtered
@@ -13,8 +14,8 @@ def scoreNuUnitizing(starts,ends,length,numUsers,users, winner = 0, answers = 'x
                                                   filteredData[2], filteredData[3], filteredData[4]
     if len(fStarts)==0:
         return 'L', 'L', 'L'
-    filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, fUsers)
-    inclusiveMatrix = toArray(starts, ends, length, numUsers, users)
+    filteredMatrix = toArray(fStarts, fEnds,length, fNumUsers, fUsers, userWeightDict)
+    inclusiveMatrix = toArray(starts, ends, length, numUsers, users, userWeightDict)
     score = scoreAlpha(filteredMatrix, 'nominal')
     inclusiveScore = scoreAlpha(inclusiveMatrix, 'nominal')
     return score, inclusiveScore, goodIndices
@@ -62,7 +63,7 @@ def unitsToArray(starts, ends, length, numUsers):
         raiseMatrix(starts[i],ends[i])
     return unitsMatrix
 
-def toArray(starts,ends,length,numUsers, users):
+def toArray(starts,ends,length,numUsers, users, userWeightDict):
     uniqueUsers = np.unique(np.array(users))
     userBlocks = np.zeros((numUsers, length))
     astarts, aends = np.array(starts), np.array(ends)
@@ -72,7 +73,7 @@ def toArray(starts,ends,length,numUsers, users):
         userEnds = aends[indices]
         for start in range(len(userStarts)):
             for i in range(userStarts[start], userEnds[start]):
-                userBlocks[u][i] = 1
+                userBlocks[u][i] += 1
     #Now there are arrays of 1s and 0s, gotta collapse them
     #and make the possibilities column
     col1 = np.zeros(length)
@@ -83,7 +84,6 @@ def toArray(starts,ends,length,numUsers, users):
         col2[i] = numUsers-col1[i]
     unitsMatrix = np.stack((col1, col2), axis=0).T
     return unitsMatrix
-
 
 def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, winner):
     """
@@ -97,15 +97,16 @@ def filterSingular(percentageScoresArray, answers, numUsers,users,starts,ends, w
     for i in range(len(percentageScoresArray)):
         if evalThresholdMatrix(percentageScoresArray[i], numUsers) == 'H':
             passingIndexes.append(i)
-    goodUsers = getMajorityUsers(passingIndexes, users, starts, ends)
-    goodIndices =getGoodIndices(users, goodUsers, answers, winner)
+    majorityUsersUnique = getMajorityUsers(passingIndexes, users, starts, ends)
+    goodIndices =getIndicesFromMajorityUsers(users, majorityUsersUnique)
     if  len(goodIndices)<1:
         return ([],[],0,[],[])
     starts, ends, users = np.array(starts), np.array(ends), np.array(users)
-    numGoodUsers = len(goodUsers)
+
     starts = starts[goodIndices]
     ends = ends[goodIndices]
     users = users[goodIndices]
+    numGoodUsers = len(users)
     out = [starts, ends, numGoodUsers, passingIndexes, users]
     return out
 
@@ -115,21 +116,17 @@ def getMajorityUsers(passingIndexes, users, starts, ends):
     """
     majorityUsers = []
     for i in range(len(starts)):
-        if users[i] not in majorityUsers:
-            for j in range(starts[i], ends[i]):
-                if j in passingIndexes:
+        for j in range(starts[i], ends[i]):
+            if j in passingIndexes:
+                if users[i] not in majorityUsers:
                     majorityUsers.append(users[i])
     majorityUsers = np.array(majorityUsers)
-    majorityUsers = np.unique(majorityUsers)
     return majorityUsers
 
 
 def filterIndexByAnswer(winner, answers):
-    goodIndices = []
-    for i in range(len(answers)):
-        if answers[i]==winner:
-            goodIndices.append(i)
-    return np.array(goodIndices)
+    majorityIndices = np.nonzero(answers == winner)
+    return majorityIndices
 
 def getIndicesFromUser(users, majorityUser):
     """Takes in array of all users ordered
@@ -137,14 +134,11 @@ def getIndicesFromUser(users, majorityUser):
     of unique users who had an agreed upon highlight and
     returns array of all the indices that any user with
     an agreed upon highlight had highlighted """
-    goodUserIndices = []
-    for i in range(len(users)):
-        if users[i] == majorityUser:
-            goodUserIndices.append(i)
-    return np.array(goodUserIndices)
+    majorityIndices = np.nonzero(users == majorityUser)
+    return majorityIndices
 
 
-def getGoodIndices(users,majorityUsers, answers, winner):
+def getIndicesFromMajorityUsers(users,majorityUsers):
     """Takes in array of all users ordered
     the same as the starts and ends lists and an array
     of unique users who had an agreed upon highlight and
@@ -152,7 +146,7 @@ def getGoodIndices(users,majorityUsers, answers, winner):
     an agreed upon highlight had highlighted """
     goodUserIndices = []
     for i in range(len(users)):
-        if users[i] in majorityUsers and answers[i] == winner:
+        if users[i] in majorityUsers:
             goodUserIndices.append(i)
     return np.array(goodUserIndices)
 

@@ -13,10 +13,22 @@ def scoreChecklist(answers,numUsers):
     return out
 
 def evaluateChecklist(answers, users, starts, ends, numUsers, length, dfunc = None):
-    percArray = scoreChecklist(answers, numUsers)
+    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users)
+    percArray = scoreChecklist(repScaledAnswers.astype(int), len(repScaledUsers.astype(int)))
     out = []
     for i in range(1,len(percArray)):
         codingScore = percArray[i]
-        winner, units, uScore, iScore = passToUnitizing(answers,users,starts,ends,numUsers,length, codingScore, i)
+        #scaledNumUsers and weighted stuff needs to change for each answer choice
+        weights = np.zeros(len(percArray))
+        weights[i] = 1
+        weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
+        weightScaledEnds, \
+        weightScaledNumUsers, \
+        userWeightDict = weightScaleEverything(answers, weights, users,
+                                               starts, ends)
+        winner, units, uScore, iScore = passToUnitizing(weightScaledAnswers,weightScaledUsers,weightScaledStarts,
+                                                        weightScaledEnds,numUsers,length, codingScore, i,
+                                                        weightScaledNumUsers, userWeightDict)
         out.append([winner,units,uScore,iScore, codingScore])
     return out
+
