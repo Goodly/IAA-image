@@ -1,0 +1,94 @@
+js.keys()
+Index(['article_number', 'batch_name', 'highlight_tasks', 'id', 'metadata',
+       'sha256', 'text', 'uri'],
+'article_number' is a list of every article number (164)
+'highlight_tasks' is home to what we want, it is a list of 164 lists, all of which contain a single dictionary
+we'll call that dictionary htask
+htask.keys()
+dict_keys(['id', 'uuid', 'generator', 'highlight_taskruns'])
+I don't know what 'generator' is, seems to be info about the article that doesn't seem relevant
+'highlight_taskruns' contains more data that is useful
+calling that hruns, it's a list containing a single dictionary
+
+{1732: {'starts': [583, 327, 1853, 587, 415, 1853, 583, 449, 768, 1558, 2982, 2789, 3823, 3400, 1344, 2431, 1853, 1428, 327, 1326, 327, 2431, 3371, 327, 327, 679, 1009, 1853, 3695, 
+583, 3617, 1853, 583, 415, 1219, 1836, 3371, 1326, 1159, 1853, 3479, 3617, 1258, 1853, 2506, 1853], 'ends': [595, 469, 2428, 595, 469, 2428, 595, 469, 1006, 1625, 2997, 2820, 3838, 3461, 
+1379, 2605, 1966, 1555, 469, 1343, 469, 2605, 3476, 327, 469, 765, 1216, 2279, 3838, 595, 3691, 2997, 595, 469, 1323, 1852, 3374, 1343, 1216, 2762, 3613, 3691, 1323, 2428, 2605, 1933], 
+'users': ['25', '25', '25', '2', '2', '2', '129', '129', '129', '129', 'Quang Gold', 'Quang Gold', 'Quang Gold', 'Quang Gold', 'Quang Gold', 'Quang Gold', 'Quang Gold', 'Quang Gold', 
+'Quang Gold', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '17', '17', '17', '130', '130', '130', '133', '133', '133', '133', '133', '23', '23', '23', '23', '23', 
+'Eric Gold Standard'], 'flags': [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 3, 1, 2, 1, 2, 3, 4, 1, 1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 1, 1, 1, 1, 1, 1, 2, 3, 1, 1, 1, 2, 1, 1, 2, 1], 'cats': 
+['Language', 'Reasoning', 'Evidence', 'Language', 'Reasoning', 'Evidence', 'Language', 'Reasoning', 'Evidence', 'Evidence', 'Language', 'Language', 'Language', 'Reasoning', 'Reasoning', 
+'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Language', 'Reasoning', 'Reasoning', 'Reasoning', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Language', 
+'Reasoning', 'Evidence', 'Language', 'Reasoning', 'Evidence', 'Language', 'Language', 'Language', 'Reasoning', 'Evidence', 'Language', 'Language', 'Reasoning', 'Evidence', 'Evidence', 
+'Evidence']}, 
+
+1730: {'starts': [7255, 286, 7, 2472, 1373, 1659, 4800, 622, 622, 2570, 4949, 2454, 6398, 262, 4209, 110, 2900, 5334, 1373, 110, 262, 449, 622, 882, 1373, 1659, 1955, 2062, 2900, 3861, 
+4163, 4394, 4633, 4949, 5226, 6398, 6833, 7209, 8454, 9027, 271, 571, 622, 774, 991, 1373, 1754, 1955, 2252, 4163, 5365, 5828, 7073, 7351, 9027], 'ends': [7275, 326, 56, 2566, 1469, 1952,
+ 4945, 1343, 642, 2699, 5222, 2566, 6525, 446, 4231, 259, 3414, 5806, 1469, 259, 446, 619, 879, 1119, 1656, 1952, 2059, 2898, 3143, 4159, 4391, 4629, 4945, 5222, 5969, 6753, 7206, 8179, 
+8924, 9510, 326, 619, 772, 879, 1119, 1656, 1952, 2059, 2438, 4391, 5445, 5929, 7206, 7429, 9090], 'users': ['25', '25', '23', '23', '23', '23', '23', '23', '17', '17', '17', '17', '17',
+ '17', '129', '129', '129', '129', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', 'Eric Gold Standard',
+ 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold 
+Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard'], 'flags': [1, 1, 1, 2, 1, 2, 3, 1, 1, 1, 2, 3, 6, 1, 1, 1, 2, 3, 1,
+ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 'cats': ['Language', 'Evidence', 'Language', 'Language', 
+'Reasoning', 'Reasoning', 'Reasoning', 'Evidence', 'Language', 'Reasoning', 'Reasoning', 'Reasoning', 'Reasoning', 'Evidence', 'Language', 'Evidence', 'Evidence', 'Evidence', 'Reasoning', 
+'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 
+'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence',
+ 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence']}, 
+
+1737: {'starts': [633, 113, 422, 633, 304, 644, 2049, 2311, 43, 304, 1252, 600, 268, 331, 422, 1252, 1709], 
+'ends': [641, 230, 641, 641, 420, 861, 2062, 2320, 70, 1034, 1594, 641, 298, 420, 641, 1380, 2003], 'users': ['17', '17', '17', 'Caroline', 'Caroline', '25', '129', '129', '129', '129',
+ '129', '36', '36', '36', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard'], 'flags': [1, 1, 1, 1, 1, 1, 1, 2, 3, 1, 2, 1, 1, 1, 1, 2, 3], 'cats': ['Language', 'Reasoning',
+ 'Evidence', 'Language', 'Evidence', 'Evidence', 'Language', 'Language', 'Language', 'Evidence', 'Evidence', 'Language', 'Reasoning', 'Evidence', 'Evidence', 'Evidence', 'Evidence']}, 
+
+1740: {'starts': [186, 677, 1057], 'ends': [197, 722, 1375], 'users': ['Caroline', 'Caroline', 'Caroline'], 'flags': [1, 1, 1], 'cats': ['Language', 'Reasoning', 'Evidence']}, 
+
+1739: {'starts': [1221, 8259, 1805, 2342, 7516], 'ends': [1232, 8259, 2040, 2633, 7651], 'users': ['Caroline', 'Caroline', 'Caroline', 'Caroline', 'Caroline'], 'flags': [1, 1, 1, 2, 3], 
+'cats': ['Language', 'Reasoning', 'Evidence', 'Evidence', 'Evidence']}, 1731: {'starts': [185, 2089, 3103, 6325, 6056, 7082, 1234, 2718, 3782, 771, 1544], 'ends': [205, 2172, 3427, 7507,
+ 6100, 7190, 1359, 2848, 3849, 1230, 2715], 'users': ['Caroline', 'Caroline', 'Caroline', 'Caroline', '25', '25', '25', '25', '25', '25', '25'], 'flags': [1, 1, 2, 3, 1, 2, 1, 2, 3, 1, 2],
+ 'cats': ['Language', 'Evidence', 'Evidence', 'Evidence', 'Language', 'Language', 'Reasoning', 'Reasoning', 'Reasoning', 'Evidence', 'Evidence']}, 
+
+1727: {'starts': [587], 'ends': [742], 'users': ['Caroline'], 'flags': [1], 'cats': ['Evidence']}, 1733: {'starts': [1987, 5646, 1142, 5102, 5496, 5726, 2016, 2752, 2916, 3358, 3954, 453, 
+3164, 4831, 5549, 5646, 5756, 277, 3771, 3954, 4386], 'ends': [2005, 5721, 1789, 5176, 5721, 5911, 2378, 2912, 3053, 3651, 4932, 460, 3313, 4932, 5583, 5721, 5777, 564, 3951, 4159, 4506], 
+'users': ['25', '25', '25', '25', '25', '25', '25', '25', '25', '25', '25', '17', '17', '17', '129', '129', '129', '129', '129', 'Eric Gold Standard', 'Eric Gold Standard'], 'flags': 
+[1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 1, 1, 1, 2, 3, 1, 2, 1, 2], 'cats': ['Language', 'Language', 'Reasoning', 'Reasoning', 'Reasoning', 'Reasoning', 'Evidence', 'Evidence', 'Evidence', 
+'Evidence', 'Evidence', 'Language', 'Reasoning', 'Evidence', 'Language', 'Language', 'Language', 'Evidence', 'Evidence', 'Evidence', 'Evidence']}, 
+
+1734: {'starts': [325, 2744, 1325, 200, 697, 992, 1842, 279, 251, 3352, 122, 1325, 697, 983, 1325, 279, 342, 438, 492, 632, 806, 1183, 549, 852, 983, 1224, 1658, 1842, 2257, 2744, 3352,
+ 279, 3101, 2257, 1510, 992, 697, 122, 386, 2063, 2150, 3318, 413, 697, 122, 386, 697, 983, 1325, 1658, 2257, 2461, 3161, 3352, 697, 2257], 'ends': [383, 3053, 1506, 218, 849, 1221, 
+2059, 299, 383, 3475, 135, 1506, 849, 1221, 1506, 323, 351, 447, 520, 646, 814, 1197, 646, 980, 1221, 1322, 1838, 2059, 2740, 3349, 3705, 290, 3158, 2458, 1632, 1221, 804, 125, 546,
+ 2078, 2153, 3349, 472, 2059, 125, 546, 849, 1322, 1506, 1838, 2458, 3158, 3349, 3475, 849, 2458], 'users': ['130', '130', '130', '25', '25', '25', '25', '17', '17', '17', 'Caroline',
+ 'Caroline', 'Caroline', 'Caroline', 'Caroline', '129', '129', '129', '129', '129', '129', '129', '129', '129', '129', '129', '129', '129', '129', '129', '129', 'Quang Gold',
+ 'Quang Gold', 'Quang Gold', 'Quang Gold', 'Quang Gold', 'Quang Gold', '133', '133', '133', '133', '133', '133', '133', '22', '22', '22', '22', '22', '22', '22', '22', '22', '22', 
+'Eric Gold Standard', 'Eric Gold Standard'], 'flags': [1, 1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 1, 1, 2, 3, 1, 2, 3, 4, 5, 6, 7, 1, 2, 1, 2, 3, 4, 5, 6, 7, 1, 1, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 1,
+ 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2], 'cats': ['Language', 'Reasoning', 'Evidence', 'Language', 'Evidence', 'Evidence', 'Evidence', 'Language', 'Reasoning', 'Evidence', 'Language', 
+'Reasoning', 'Evidence', 'Evidence', 'Evidence', 'Language', 'Language', 'Language', 'Language', 'Language', 'Language', 'Language', 'Reasoning', 'Reasoning', 'Evidence', 'Evidence',
+ 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Language', 'Reasoning', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Language', 'Language', 'Language', 'Language', 
+'Reasoning', 'Reasoning', 'Evidence', 'Language', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence']}, 
+
+1728: {'starts': [506, 1572, 383, 634, 2673, 3086, 3592, 3356, 1572, 162, 1572, 1936, 2213, 3204], 'ends': [523, 2395, 631, 905, 2851, 3352, 3600, 3478, 2395, 379, 1933, 2041, 2265, 
+3352], 'users': ['Caroline', 'Caroline', '25', '25', '25', '25', '17', '17', '17', '129', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard', 'Eric Gold Standard'], 
+'flags': [1, 1, 1, 2, 3, 4, 1, 1, 1, 1, 1, 2, 3, 4], 'cats': ['Language', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Evidence', 'Language', 'Reasoning', 'Evidence', 'Evidence',
+ 'Evidence', 'Evidence', 'Evidence', 'Evidence']}}
+
+
+
+{article_nums: , highlight_tasks: [{}] }
+article_nums can be the same list of articles from before, or it might be easier for every article to be the key to a dictionary of further post-IAA data about the 
+	article, this mini-write up assumes it's its own list and has its own home
+highlight_tasks is a list of dictionaries, one dictionary refers back to one article, each dictionary is outlined below
+	Right now each highlight task is a list of 0..N dictionaries, and I don't understand what each different one refers to
+highlight_tasks: {uuid: , highlight_taskruns: [{}] }
+There's 5 uuids from the highlight_tasks right now and I don't know why thre's so many so might be an issue condensing that to just one
+highlight_taskruns is a list of dictionaries, each dictionary is data from an individual user's input 
+highlight_taskruns: {contributor , highlights: }
+#I'm also assuming that we will include everything in the IAA so won't include that in the next setup
+contributor should just evaluate to their unique_label, cause I don't think we need anything else that's in contributor (correct me if that's wrong)
+highlights is a dictionary mapping to all the useful info coming out of this triager interface
+highlights: {start, end, 'topic_name', case_number}
+start and end are similar to your offsets variables you had in this input
+topic_name and case_number are what htey were in the input
+
+
+
+
+
+

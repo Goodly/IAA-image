@@ -133,8 +133,14 @@ def getIndicesFromUser(users, majorityUser):
     of unique users who had an agreed upon highlight and
     returns array of all the indices that any user with
     an agreed upon highlight had highlighted """
-    majorityIndices = np.nonzero(users == majorityUser)
-    return majorityIndices
+    if type(users[0])!= str:
+        return np.nonzero(users == majorityUser)
+    else:
+        indices = []
+        for i in range(len(users)):
+            if users[i] == majorityUser:
+                indices.append(i)
+        return np.array(indices)
 
 
 def getIndicesFromMajorityUsers(users,majorityUsers):

@@ -1,19 +1,132 @@
 import numpy as np
 from UnitizingScoring import *
 from ThresholdMatrix import *
+from data_utils import *
 import pandas as pd
 from math import floor
+import csv
 
-path1 = 'SemanticsTriager1.3C2-2018-07-19T17.csv'
-path2 = 'FormTriager1.2C2-2018-07-19T17.csv'
+path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
+path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
+jpath1 = 'FormTriager1.2C2-2018-07-25T23.json'
+jpath2 = 'SemanticsTriager1.3C2-2018-07-25T23.json'
+def evalTriage(path):
+    """JSON INPUT"""
+    bigDict, articles = fetch_for_triage(path)
+    out = [['task_uuid', 'article_num', 'start', 'end', 'category', 'case_number']]
+    for a in articles:
+        starts = bigDict[a]['starts']
+        #print('bigstart prints',len(starts),starts)
+        ends = bigDict[a]['ends']
+        #print('bigend prints', len(ends),ends)
+        users = bigDict[a]['users']
+        #print('bigusers prints', len(users),users)
+        flags = bigDict[a]['flags']
+        #print('bigflags prints', len(flags),flags)
+        cats = bigDict[a]['cats']
+        #print(len(starts))
+        #print(cats)
+        #print('bigcats prints', len(cats),cats)
+        annotator_count = len(np.unique(users))
+        flagExclusions = exclusionList(users, flags, cats)
+        # print(flagExclusions)
+        if annotator_count >= 2:
+            uqcats = np.unique(cats)
+            for c in uqcats:
+                #print('c', c)
+                #print(cats)
+                cat_indices = getIndices(c,cats)
+                #print(cat_indices)
+                c_starts = np.array(starts)[cat_indices]
+                c_ends = np.array(ends)[cat_indices]
+                c_users = np.array(users)[cat_indices]
+                c_flags = np.array(flags)[cat_indices]
+                length = 0
+                # print('cat-based')
+                # print('start', c_starts)
+                # print('ends', c_ends)
+                if len(c_ends)>0:
+                    length = max(c_ends)
+                    numUsers = len(np.unique(c_users))
+                    print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
+                    pstarts, pends, pflags = scoreTriager(c_starts, c_ends, c_users, numUsers, c_flags, length, flagExclusions)
+                    out = appendData(a, pstarts, pends, pflags, c, out)
+    print('exporting to csv')
+    scores = open('triager_agreement_scores.csv', 'w')
 
-def scoreTriager(starts,ends, users, numUsers, inFlags, length, globalExclusion):
+    with scores:
+        writer = csv.writer(scores)
+        writer.writerows(out)
 
+    print("Table complete")
+
+
+def importData(path):
+    """CSV INPUT"""
+    data = pd.read_csv(path)
+    article_shas = np.unique(data['article_sha256'])
+
+    out = [['article_filename','article_sha256', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
+    for a in article_shas:
+        print('---------------------------')
+        art_data = data.loc[data['article_sha256'] == a]
+
+        filename = art_data['article_filename'].tolist()
+        users = art_data['contributor_uuid'].tolist()
+        annotator_count = len(np.unique(users))
+        flags = art_data['case_number'].tolist()
+        cats = art_data['topic_name'].tolist()
+        length = art_data['source_text_length'].iloc[0]
+        #print(length)
+        source_text = makeList(length)
+        flagExclusions = exclusionList(users, flags, cats)
+        #print(flagExclusions)
+        if annotator_count >= 2:
+            cats = np.unique(art_data['topic_name'])
+            for c in cats:
+                cat_data = art_data.loc[art_data['topic_name'] == c]
+                starts = [int(s) for s in cat_data['start_pos'].tolist()]
+                ends = [int(e) for e in cat_data['end_pos'].tolist()]
+                users = cat_data['contributor_uuid'].tolist()
+                flags = cat_data['case_number'].tolist()
+                namespaces = cat_data['namespace'].tolist()
+                length = floor(cat_data['source_text_length'].tolist()[0])
+                texts = cat_data['target_text'].tolist()
+                numUsers = len(np.unique(users))
+                print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
+                source_text = addToSourceText(starts, ends, texts, source_text)
+                pstarts, pends, pflags = scoreTriager(starts, ends, users, numUsers, flags, length, c, flagExclusions)
+                out = appendData(filename[0], a, namespaces, pstarts, pends, c, pflags, out, source_text)
+    print('exporting to csv')
+    scores = open('T_IAA_'+path, 'w')
+
+    with scores:
+        writer = csv.writer(scores)
+        writer.writerows(out)
+
+    print("Table complete")
+
+def appendData(article_filename, article_sha256, namespaces,start_pos_list, end_pos_list, topic_name, case_numbers, data, source_text):
+    for i in range(len(start_pos_list)):
+        text = getText(start_pos_list[i], end_pos_list[i],source_text)
+        data.append([article_filename, article_sha256, namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
+    return data
+def getIndices(c, cats):
+    indices = []
+    for i in range(len(cats)):
+        if cats[i] == c:
+            indices.append(i)
+    return indices
+def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, globalExclusion):
     #TODO: do this for each category
-    passers = findPassingIndices(starts, ends, numUsers, users, length)
+    #print(users)
+    passers = determinePassingIndices(starts, ends, numUsers, users, length, category)
+    #print('glob', globalExclusion)
+    #Bug: sometimes users aren't being excluded when they should, not a huge deal, happens one time in all the data
     catExclusions = exclusionList(users, inFlags, minU = 4)
+    #print('cat', catExclusions)
     flagExclusions = np.unique(np.append(globalExclusion,catExclusions))
-    print('exclusions', flagExclusions)
+    #print('exclusions', flagExclusions)
     excl = findExcludedIndices(flagExclusions, users)
     #print(excl)
     if len(excl > 1):
@@ -22,13 +135,11 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, globalExclusion)
         #ok to clip starts, ends because already know what passed
         starts, ends = exclude(excl,starts), exclude(excl, ends)
     codetoUser, userToCode= codeNameDict(users)
+    print(codetoUser)
     coded = codeUsers(userToCode, users)
     #print(coded, numUsers)
-
     newStarts, newEnds = toStartsEnds(passers)
     #Exclude flags from users who didn't use case flags
-
-
     flags = determineFlags(starts, ends, newStarts, newEnds, coded, inFlags)
     print('Starts:',newStarts)
     print('Ends:',newEnds)
@@ -36,41 +147,12 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, globalExclusion)
     print('---------------------------')
     return newStarts, newEnds,flags
 
-def importData(path):
-    data = pd.read_csv(path)
-    article_nums = np.unique(data['task_pybossa_id'])
-
-    for a in article_nums:
-        print('---------------------------')
-        art_data = data.loc[data['task_pybossa_id'] == a]
-        annotator_count = len(np.unique(art_data['contributor_id']))
-        users = art_data['contributor_id'].tolist()
-        flags = art_data['case_number'].tolist()
-        cats = art_data['topic_name'].tolist()
-        flagExclusions = exclusionList(users, flags, cats)
-        #print(flagExclusions)
-        if annotator_count >= 2:
-            cats = np.unique(art_data['topic_name'])
-            for c in cats:
-
-                cat_data = art_data.loc[art_data['topic_name'] == c]
-                starts = [int(s) for s in cat_data['start_pos'].tolist()]
-                ends = [int(e) for e in cat_data['end_pos'].tolist()]
-                users = cat_data['contributor_id'].tolist()
-                flags = cat_data['case_number'].tolist()
-                length = floor(cat_data['source_text_length'].tolist()[0])
-                numUsers = len(np.unique(users))
-                print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
-                scoreTriager(starts, ends, users, numUsers, flags, length, flagExclusions)
-
-    print("DONE")
-
 def findExcludedIndices(exclusions, users):
     #print(exclusions, users)
     indices = np.array(())
     for u in np.unique(users):
         if u in exclusions:
-            uIndices = np.nonzero(users == u)
+            uIndices = getIndicesFromUser(users, u)
             #print(uIndices)
             indices = np.append(indices,uIndices)
     #print('indices', indices)
@@ -82,8 +164,9 @@ def exclude(indices, arr):
     return np.delete(arr, indices)
 def exclusionList(users, flags,cats = None, minU= 8):
     excluded = []
+    flags = np.array(flags)
     for u in np.unique(users):
-        myUserIndices = np.nonzero(users == u)[0]
+        myUserIndices = getIndicesFromUser(users, u)
         # print(myUserIndices)
         # print(np.array(users)[myUserIndices])
         oneCount = 0
@@ -92,12 +175,12 @@ def exclusionList(users, flags,cats = None, minU= 8):
         #print(myUserIndices)
         for i in myUserIndices:
             #print(i)
-            if cats!=None and cats[i]!= 'Language':
+            if cats==None or cats[i]!= 'Language':
                 if flags[i] == 1:
                     oneCount+=1
                 pot = pot +1
-            if pot>0:
-                score = oneCount/pot
+        if pot>0:
+            score = oneCount/pot
         if score>.8 and pot > minU:
             excluded.append(u)
     #print('excl', excluded,'users', np.unique(users))
@@ -117,17 +200,78 @@ def codeUsers(userDict, users):
     for u in users:
         coded.append(userDict[u])
     return coded
+def determinePassingIndices(starts, ends, numUsers, users, length, category):
+    # actionDeterminant = {
+    #     'Language':
+    #         {
+    #             'passingFunc':evalThresholdMatrix,
+    #             'scale':1.4
+    #         },
+    #     #hard to do, should be more lenient
+    #     'Reasoning':
+    #         {
+    #             'passingFunc': evalThresholdMatrix,
+    #             'scale': 1.7
+    #         },
+    #     #specialist can be stricter
+    #     #be more clear
+    #     'Evidence':
+    #         {
+    #             'passingFunc': minPercent,
+    #             'scale': .35
+    #         },
+    #     'Quoted Sources':
+    #         {
+    #             'passingFunc': evalThresholdMatrix,
+    #             'scale': 1.2
+    #         },
+    #     #keepstrict
+    #     'Fact-check':
+    #         {
+    #             'passingFunc': evalThresholdMatrix,
+    #             'scale': 1.4
+    #         },
+    #     #wait formore training, see what happens
+    #     'Arguments':
+    #         {
+    #             'passingFunc': evalThresholdMatrix,
+    #             'scale': 1.4
+    #         }
+    # }
+    # passFunc = actionDeterminant[category]['passingFunc']
+    # scale = actionDeterminant[category]['scale']
+    passFunc = evalThresholdMatrix
+    scale = 1.4
+    return findPassingIndices(starts, ends, numUsers, users, length, passFunc , scale)
 
-def findPassingIndices(starts, ends, numUsers, users, length):
+def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = evalThresholdMatrix, scale = 1.4):
+    """passingFunc must take in 3 arguments, first is a percentage, second is numberof users, 3rd is the scale
+        what the scale is can very for different methods of evaluating passes/fails"""
     #print(starts)
     answerMatrix = toArray(starts, ends, length, numUsers, users, None)
     percentageArray = scorePercentageUnitizing(answerMatrix, length, numUsers)
     passersArray = np.zeros(len(percentageArray))
     # TODO: instead of passing to threshold matrix each time, just find out minScoretoPass
     for i in range(len(percentageArray)):
-        if evalThresholdMatrix(percentageArray[i], numUsers, 1.4) == 'H':
+        if passingFunc(percentageArray[i], numUsers, scale) == 'H':
             passersArray[i] = 1
     return passersArray
+def minPercent(percent, totalNumUsers, scale):
+    if percent>=scale:
+        return 'H'
+    elif percent+.2>=scale:
+        return 'M'
+    else:
+        return 'L'
+def minNumUsers(percent, totalNumUsers, scale):
+    """Scale is the minimum number of users required to call it a pass"""
+    numInAgreement = percent*totalNumUsers
+    if numInAgreement >= scale:
+        return 'H'
+    elif numInAgreement +2 >= scale:
+        return 'M'
+    else:
+        return 'L'
 
 def toStartsEnds(passers):
     prev = 0
@@ -138,7 +282,7 @@ def toStartsEnds(passers):
             if prev == 0:
                 starts.append(i)
             elif prev == 1:
-                ends.append(i-1)
+                ends.append(i)
             prev = 1-prev
     if len(ends)<len(starts):
         ends.append[passers[-1]]
@@ -188,19 +332,36 @@ def assignFlags(matrix):
 def determineFlags(starts, ends, nStarts, nEnds, codedUsers, flags):
     matrix = toFlagMatrix(starts, ends, nStarts,nEnds, codedUsers, flags)
     print(matrix)
-    #print(matrix)
     if len(matrix)>0 and len(matrix[0]>0):
         outFlags = assignFlags(matrix)
         return outFlags
     return []
 
+def addToSourceText(starts, ends, texts, sourceText):
+    for i in range(len(starts)):
+        pointer = 0
+        for c in range(starts[i], ends[i]):
+            sourceText[c] = texts[i][pointer]
+            pointer +=1
+    return sourceText
+def makeList(size):
+    out = []
+    for i in range(size):
+        out.append(0)
+    return out
 
+def getText(start,end, sourceText):
+    out = ''
+    for i in range(start,end):
+        out = out+sourceText[i]
+    return out
 print("#####SEMANTICS TRIAGER AGREED UPON DATA!!!#####")
 importData(path1)
-
+#evalTriage(jpath2)
 print()
 print()
 print("#####FORM TRIAGER AGREED UPON DATA!!!#####")
+#evalTriage(jpath1)
 importData(path2)
 # s = [5, 45, 3, 80, 6, 65]
 #

@@ -31,4 +31,4 @@ def checkThreshold():
             print(evalThresholdMatrix(p, u, 1.4))
             print(evalThresholdMatrix(p, u, 1.4,1.2))
             print(evalThresholdMatrix(p, u, 1.4, 1.2))
-checkThreshold()
+#checkThreshold()
