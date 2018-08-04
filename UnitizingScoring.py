@@ -17,6 +17,7 @@ def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, winner =
     inclusiveMatrix = toArray(starts, ends, length, numUsers, users, userWeightDict)
     score = scoreAlpha(filteredMatrix, 'nominal')
     inclusiveScore = scoreAlpha(inclusiveMatrix, 'nominal')
+    print(score, inclusiveScore, goodIndices)
     return score, inclusiveScore, goodIndices
 
 
