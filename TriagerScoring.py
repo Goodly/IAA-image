@@ -63,7 +63,7 @@ def evalTriage(path):
 
 def importData(path):
     """CSV INPUT"""
-    data = pd.read_csv(path)
+    data = pd.read_csv(path, encoding = 'utf-8')
     article_shas = np.unique(data['article_sha256'])
 
     out = [['article_filename','article_sha256', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
@@ -98,7 +98,7 @@ def importData(path):
                 pstarts, pends, pflags = scoreTriager(starts, ends, users, numUsers, flags, length, c, flagExclusions)
                 out = appendData(filename[0], a, namespaces, pstarts, pends, c, pflags, out, source_text)
     print('exporting to csv')
-    scores = open('T_IAA_'+path, 'w')
+    scores = open('T_IAA_'+path, 'w', encoding = 'utf-8')
 
     with scores:
         writer = csv.writer(scores)
