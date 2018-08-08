@@ -74,7 +74,7 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     for t in checked:
         user = t[1]
         answer = t[0]
-        points = 1 - (abs(answer_choice - answer)) / num_of_choices
+
         do_math(data, user, points)
         score_dict[user] = points
     for x in int_users:
