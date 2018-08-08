@@ -65,7 +65,7 @@ def importData(path):
     """CSV INPUT"""
     data = pd.read_csv(path, encoding = 'utf-8')
     article_shas = np.unique(data['article_sha256'])
-
+#here i am i am cinnaman
     out = [['article_filename','article_sha256', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
     for a in article_shas:
         print('---------------------------')
