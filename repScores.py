@@ -21,34 +21,54 @@ def create_user_dataframe(data, csvPath=None):
     return data1
 
 
-def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer, starts, ends, article_length, data,
-                               checkListScale=1):
+def gaussian_mean(answers):
+    result = []
+    std = np.std(answers)
+    mean = np.mean(answers)
+    total = 0
+    for i in answers:
+        gauss = 1 / (std * np.sqrt(2 * np.pi)) * np.exp(-0.5 * ((i - mean) / std) ** 2)
+        result.append(i * (gauss * 10) ** 2)
+        total += (gauss * 10) ** 2
+    print(result)
+    print(answers)
+    print(np.mean(answers))
+    print(sum(result) / total)
+    return sum(result) / total
+
+def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choices, highlight_answer, starts, ends,
+                               article_length, data):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
-    such that if the user in the list of USERID gets their answer right, they add 1 to their score, and 0 if they are
-    wrong."""
-    if type(answer_choice)  == str or type(highlight_answer)  == str:
+    such that the they receive the distance from the average answer chosen as a ratio of 0 to 1,
+    and that is added to their rep score."""
+    print(answer_aggregated)
+    if type(answer_aggregated)  == str or type(highlight_answer) == str:
         return 0
     checked, int_users = checkDuplicates(answers, userID, starts, ends, article_length)
-    print(checked)
-    print(int_users)
+    answers_passed = list()
     highlight_answer_array = np.zeros(article_length)
-    winners = []
+    score_dict = {}
+    print(checked)
+    for i in checked:
+        answers_passed.append(i[1])
+    answer_choice = gaussian_mean(answers)
+
+    for h in highlight_answer:
+        print(h)
+        highlight_answer_array[h] = 1
+
     for t in checked:
         user = t[1]
         answer = t[0]
-        print(answer, answer_choice, user)
-        if (answer == answer_choice):
-            do_math(data, user, checkListScale)
-            winners.append(user)
-        else:
-            do_math(data, user, 0)
-    for h in highlight_answer:
-        highlight_answer_array[h] = 1
+        points = (1 - abs(answer_choice - answer) / num_of_choices) ** 3
+        do_math(data, user, points)
+        score_dict[user] = points
     for x in int_users:
-        if x in winners:
-            highlight = np.array(int_users[x])
-            score = 1 - np.sum(np.absolute(highlight_answer_array - highlight)) / article_length
-            do_math(data, x, score)
+        points = score_dict[x]
+        highlight = np.array(int_users[x])
+
+        score = points * (1 - np.sum(np.absolute(highlight_answer_array - highlight)) / article_length)
+        do_math(data, x, score)
 
 
 def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choices, highlight_answer, starts, ends,
