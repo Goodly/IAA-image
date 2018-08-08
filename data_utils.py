@@ -1,7 +1,36 @@
 import pandas as pd
 import numpy as np
 
-
+def fetch_for_triage(path):
+    js = pd.read_json(path)
+    articles = js['article_number'].tolist()
+    bigDict = {}
+    for i in range(len(articles)):
+        art = articles[i]
+        htasks = js['highlight_tasks']
+        for t in range(len(htasks[i])):
+            htask = htasks[i][t]
+            hruns = htask['highlight_taskruns']
+            flags = []
+            starts, ends = [], []
+            cats,users = [], []
+            for run in hruns:
+                include_in_IAA = run['include_in_IAA']
+                if include_in_IAA:
+                    highlights = run['highlights']
+                    for highlight in highlights:
+                        flags.append(highlight['case_number'])
+                        starts.append(highlight['offsets'][0][0])
+                        ends.append(highlight['offsets'][0][1])
+                        cats.append(highlight['topic_name'])
+                        users.append(run['contributor']['unique_label'])
+        bigDict[art] = {'starts':starts,
+                        'ends': ends,
+                        'users': users,
+                        'flags': flags,
+                        'cats': cats
+                    }
+    return bigDict, articles
 def data_storer(path):
     """Function that turns csv data. Input the path name for the csv file.
     This will return a super dictionary that is used with other abstraction functions."""
@@ -106,3 +135,6 @@ def get_user_rep(id, repDF):
     else:
         influence = float(repDF.loc[repDF['Users']==id]['Influence'].iloc[0])
     return influence*50
+
+
+#fetch_for_triage('SemanticsTriager1.3C2-2018-07-25T23.json')
