@@ -51,6 +51,21 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer,
             do_math(data, x, score)
 
 
+def gaussian_mean(answers):
+    result = []
+    std = np.std(answers)
+    mean = np.mean(answers)
+    total = 0
+    for i in answers:
+        gauss = 1 / (std * np.sqrt(2 * np.pi)) * np.exp(-0.5 * ((i - mean) / std) ** 2)
+        result.append(i * (gauss * 10) ** 2)
+        total += (gauss * 10) ** 2
+    print(result)
+    print(answers)
+    print(np.mean(answers))
+    print(sum(result) / total)
+    return sum(result) / total
+
 def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choices, highlight_answer, starts, ends,
                                article_length, data):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
@@ -63,9 +78,10 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     answers_passed = list()
     highlight_answer_array = np.zeros(article_length)
     score_dict = {}
+    print(checked)
     for i in checked:
         answers_passed.append(i[1])
-    answer_choice = np.mean(answers_passed)
+    answer_choice = gaussian_mean(answers)
 
     for h in highlight_answer:
         print(h)
@@ -74,7 +90,7 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     for t in checked:
         user = t[1]
         answer = t[0]
-
+        points = (1 - abs(answer_choice - answer) / num_of_choices) ** 3
         do_math(data, user, points)
         score_dict[user] = points
     for x in int_users:
