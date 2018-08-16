@@ -174,7 +174,12 @@ def get_type_hard(type, ques):
         'Language Specialist V2':
             {
                 1:['checklist',9],
-                6:['checklist', 8]
+                6:['checklist', 8],
+
+            },
+        'CausalitySpecialist_2018_07_19':
+            {
+                5:[]
             }
 
     }

@@ -1,5 +1,4 @@
 import csv
-
 from ChecklistCoding import *
 from ExtraInfo import *
 from repScores import *
@@ -29,6 +28,7 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
                 for i in range(len(agreements)):
                     codingScore, unitizingScore = agreements[i][4], agreements[i][2]
                     totalScore = calcAgreement(codingScore, unitizingScore)
+                    answer_text = get_answer_content(uberDict,article, ques, i)
                     answer_text = get_answer_content(uberDict,article, ques, agreements[i][0])
                     data.append([article_num, article, ques, agreements[i][0], codingScore, agreements[i][1],
                                  unitizingScore, agreements[i][3], totalScore, agreements[i][5], agreements[i][6],
@@ -66,7 +66,7 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
 
     """ Commnted code below previously denoted different types of questions for hard-coding,
     can still be used for hard-coding but eventually will be phased out by a line of code that
-    checks the type based off the table data"""
+    checks the question_type based off the table data"""
     # ordinal_questions = [1,2,4,12,13,14,15,16,17,18,19,20,21,25]
     # nominal_questions = [7,22]
     # unit_questions = [9,10,11, 24] #asks users to highlight, nothing else OR they highlight w/ txt answer
@@ -83,14 +83,14 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
     sourceText = addToSourceText(starts, ends, texts, sourceText)
     # TODO: find actual number of choices always
     num_choices = 5
-    type = get_question_type(data, article, ques)
+    question_type = get_question_type(data, article, ques)
     if hardCodedTypes:
-        type, num_choices = get_type_hard(type, ques)
+        question_type, num_choices = get_type_hard(question_type, ques)
     #This block for scoring only a single article, iuseful for debugging
     # print()
     # if article!= '171SSSArticle.txt':
-    #     #print(type)
-    #     if type == 'checklist':
+    #     #print(question_type)
+    #     if question_type == 'checklist':
     #         return [
     #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -105,24 +105,24 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
     #
     #         ]
     #     return(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-    if type == 'interval':
+    if question_type == 'interval':
         # TODO: verify if these still exist, if they do, bring up to speed with new output formats
         return run_2step_unitization(data, article, ques, repDF)
 
     answers, users, numUsers = get_question_answers(data, article, ques).tolist(), \
                                get_question_userid(data, article, ques).tolist(), \
                                get_num_users(data, article, ques)
-    if type == 'ordinal':
+    if question_type == 'ordinal':
         out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, sourceText, dfunc='ordinal')
         #print("ORDINAL", out[1], starts, ends)
         #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], starts, ends, length, repDF)
         return out
-    elif type == 'nominal':
+    elif question_type == 'nominal':
         out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, sourceText)
         do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF)
         #print("NOMINAL", out[1], starts, ends)
         return out
-    elif type == 'checklist':
+    elif question_type == 'checklist':
         return evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, num_choices = num_choices)
 
 
