@@ -169,18 +169,25 @@ def getIndicesFromUserAnswer(users, majorityUser, answers, winner):
     returns array of all the indices that any user with
     an agreed upon highlight had highlighted
     Does same filter based on answers and winner, necesary fix for checklist questions"""
-    #if type(users[0])!= str:
-        #TODO: make this work for intersection of answers and winner
-        #return np.nonzero(users == majorityUser)
-    if 1 == 2:
-        print('woops')
-    else:
-        indices = []
-        for i in range(len(users)):
-            if users[i] == majorityUser and answers[i] == winner:
-                indices.append(i)
-        return np.array(indices)
 
+    indices = []
+    for i in range(len(users)):
+        if users[i] == majorityUser and answers[i] == winner:
+            indices.append(i)
+    return np.array(indices)
+def getIndicesFromUser(users, majorityUser):
+    """Takes in array of all users ordered
+    the same as the starts and ends lists and an array
+    of unique users who had an agreed upon highlight and
+    returns array of all the indices that any user with
+    an agreed upon highlight had highlighted
+    """
+
+    indices = []
+    for i in range(len(users)):
+        if users[i] == majorityUser:
+            indices.append(i)
+    return np.array(indices)
 def getIndicesFromMajorityUsers(users,majorityUsers):
     """Takes in array of all users ordered
     the same as the starts and ends lists and an array

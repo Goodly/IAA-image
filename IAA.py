@@ -8,9 +8,9 @@ path = 'data_pull_8_10/PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv'
 
 def calc_scores(filename, hardCodedTypes = False, repCSV=None):
     uberDict = data_storer(filename)
-    data = [["article_num", "article_sha256", "question_Number", "agreed_Answer", "coding_Score", "highlighted_indices", \
-             "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score", "num_users", "target_text",
-             'question_text', 'answer_content']]
+    data = [["article_num", "article_sha256", "question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
+             "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance"
+             "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
     if repCSV != None:
         repDF = CSV_to_userid(repCSV)
     else:
@@ -25,21 +25,29 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, article, ques)
             if type(agreements) is list:
+                #Checklist Question
                 for i in range(len(agreements)):
-                    codingScore, unitizingScore = agreements[i][4], agreements[i][2]
-                    totalScore = calcAgreement(codingScore, unitizingScore)
-                    answer_text = get_answer_content(uberDict,article, ques, i)
+                    codingPercentAgreement, unitizingScore = agreements[i][4], agreements[i][2]
+                    num_users = agreements[i][5]
+                    num_choices = agreements[i][9]
+                    totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                     answer_text = get_answer_content(uberDict,article, ques, agreements[i][0])
-                    data.append([article_num, article, ques, agreements[i][0], codingScore, agreements[i][1],
-                                 unitizingScore, agreements[i][3], totalScore, agreements[i][5], agreements[i][6],
+                    bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
+                    #Treat each q as a binary yes/no
+                    chance_odds = bin_chance_odds
+                    data.append([article_num, article[:8], ques, agreements[i][8], agreements[i][0], codingPercentAgreement, agreements[i][7], agreements[i][1],
+                                 unitizingScore, agreements[i][3], totalScore, chance_odds, bin_chance_odds, num_users, agreements[i][9],agreements[i][6],
                                 question_text, answer_text])
             else:
-                codingScore, unitizingScore = agreements[4], agreements[2]
+                codingPercentAgreement, unitizingScore = agreements[4], agreements[2]
+                num_users = agreements[5]
+                num_choices = agreements[9]
                 #winner, units, uScore, iScore, highScore, numUsers
                 answer_text = get_answer_content(uberDict, article, ques, agreements[0])
-                totalScore = calcAgreement(codingScore, unitizingScore)
-                data.append([article_num, article, ques, agreements[0], codingScore, agreements[1], unitizingScore, agreements[3],
-                             totalScore, agreements[5], agreements[6], question_text, answer_text])
+                totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
+                data.append([article_num, article[:8], ques, agreements[8], agreements[0], codingPercentAgreement, agreements[7],
+                             agreements[1], unitizingScore, agreements[3],
+                             totalScore, chance_odds, bin_chance_odds, num_users, agreements[9], agreements[6], question_text, answer_text])
 
     # push out of womb, into world
     print('exporting rep_scores')
@@ -116,14 +124,15 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
         out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, sourceText, dfunc='ordinal')
         #print("ORDINAL", out[1], starts, ends)
         #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], starts, ends, length, repDF)
-        return out
+        out = out+(question_type, num_choices)
     elif question_type == 'nominal':
         out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, sourceText)
         do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF)
         #print("NOMINAL", out[1], starts, ends)
-        return out
+        out = out+(question_type, num_choices)
     elif question_type == 'checklist':
-        return evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, num_choices = num_choices)
+        out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, num_choices = num_choices)
+    return out
 
 
 def calcAgreement(codingScore, unitizingScore):
@@ -168,6 +177,6 @@ def get_path(fileName):
 
 # TEST STUFF
 calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
-#calc_scores(path, hardCodedTypes=True)
+calc_scores(path, hardCodedTypes=True)
 #in sss file I renamed the filenamecolumn to be sha256 so it fits in with the other mechanisms for extracting data
 #calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)

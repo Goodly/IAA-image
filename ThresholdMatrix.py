@@ -23,7 +23,7 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1.0, q = 1, giveMin = 
         #(k * e^(-k*(p))/(e^(-k*(p-0.5))+1)^2)*5.7
         deriv = logistic_derivative(percentage, kappa)
         #print(deriv, derivOld)
-        assert deriv == derivOld
+#        assert deriv == derivOld
         if (deriv > 1):
             out =  'M'
         elif (percentage >.5):
@@ -41,7 +41,7 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1.0, q = 1, giveMin = 
 def logistic_derivative(percentage, kappa, n = 0):
     q = 1
     #print(kappa, percentage)
-    deriv = ((kappa * q * exp(-kappa * (percentage))) / (q * (exp(-kappa * (percentage - .5)) + 1)) ** 2) * 5.7
+    deriv = ((kappa * exp(kappa * (percentage-.5))) / ((exp(kappa * (percentage - .5)) + 1)) ** 2)
     return deriv
 
 def parabThreshold(percentage, num_of_users, scale = 1, q = 1):
@@ -68,10 +68,10 @@ def parabThreshold(percentage, num_of_users, scale = 1, q = 1):
 def findMinPass(percentage, num_users, scale, q):
     if evalThresholdMatrix(percentage, num_users, scale, q) == 'H':
         if evalThresholdMatrix(percentage-.1, num_users, scale, q) != 'H':
-            print(percentage, num_users)
+            #print(percentage, num_users)
             return percentage
         return findMinPass(percentage-.1, num_users, scale, q)
-    print(percentage)
+    #print(percentage)
     return findMinPass(percentage+.1, num_users, scale, q)
 #def findMinPass(equation, percentage, kappa, scale, num_users = 5):
 
@@ -94,6 +94,8 @@ def checkThreshold():
             p = i/10
             print(str(p)+"%", u, 'users')
             print(evalThresholdMatrix(p,u))
+            print('1.4',evalThresholdMatrix(p, u, scale=1.4))
+            print('1.7', evalThresholdMatrix(p,u,scale=1.7))
             #print(parabThreshold(p, u, 1.7, .85))
             # print(evalThresholdMatrix(p, u, 1.4))
             # print(evalThresholdMatrix(p, u, 1.4,1.2))

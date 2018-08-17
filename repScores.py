@@ -15,7 +15,7 @@ def create_user_dataframe(data, csvPath=None):
         for question_num in data[article_num].keys():
             users_q = get_question_userid(data, article_num, question_num)
             for ids in users_q:
-                ids = int(ids)
+#                ids = int(ids)
                 if ids not in data1.loc[:, 'Users'].tolist():
                     data1 = data1.append({"Users": ids, "Score": 5, "Questions": 1, "Influence": 1}, ignore_index=True)
     return data1
@@ -29,14 +29,14 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer,
     if type(answer_choice)  == str or type(highlight_answer)  == str:
         return 0
     checked, int_users = checkDuplicates(answers, userID, starts, ends, article_length)
-    print(checked)
-    print(int_users)
+    #print(checked)
+    #print(int_users)
     highlight_answer_array = np.zeros(article_length)
     winners = []
     for t in checked:
         user = t[1]
         answer = t[0]
-        print(answer, answer_choice, user)
+        #print(answer, answer_choice, user)
         if (answer == answer_choice):
             do_math(data, user, checkListScale)
             winners.append(user)
@@ -56,7 +56,7 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
     such that the they receive the distance from the average answer chosen as a ratio of 0 to 1,
     and that is added to their rep score."""
-    print(answer_aggregated)
+    #print(answer_aggregated)
     if type(answer_aggregated)  == str or type(highlight_answer) == str:
         return 0
     checked, int_users = checkDuplicates(answers, userID, starts, ends, article_length)
@@ -68,7 +68,7 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     answer_choice = np.mean(answers_passed)
 
     for h in highlight_answer:
-        print(h)
+        #print(h)
         highlight_answer_array[h] = 1
 
     for t in checked:
@@ -94,7 +94,7 @@ def checkDuplicates(answers, userID, starts, ends, article_length):
     for x in checked:
         article_array = np.zeros(article_length).tolist()
         if x[0] not in int_users.keys():
-            print("HELLO THERE", x[2], x[3])
+            #print("HELLO THERE", x[2], x[3])
             article_array[x[2]:x[3] + 1] = np.ones(x[3] - x[2]+1).tolist()
             int_users[x[0]] = article_array
         else:

@@ -21,16 +21,17 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, source
         alpha including users who never highlighted any characters that passed the threshold matrix
     """
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
-    highScore, winner, weights = scoreCoding(repScaledAnswers, repScaledUsers, dfunc, num_choices)
+    highScore, winner, weights, firstSecondScoreDiff = scoreCoding(repScaledAnswers, repScaledUsers, dfunc, num_choices)
     if dfunc == 'ordinal':
         # This functions as an outlier test, if 4 users categorizes as 'very likely' and one categorizes as
         # 'very not likely', it will fail the threshold matrix test, this method, while not rigorous, provides
         # some defense against outliers that likely were produced by trolls, misunderstandings of the question,
         # and misclicks
 
-        #TODO: i feell like this made every test more lenient
-        if evalThresholdMatrix(highScore, numUsers)!= 'H':
-            highScore, winner, weights = scoreCoding(answers, users, 'ordinal', scale = 2)
+        #TODO: verify with Alex that the update to the if statement helps
+        #It seemed like this made every ordinal q way more lenient without the extra clause
+        if evalThresholdMatrix(highScore, numUsers)!= 'H' and (num_choices > 3 and winner == 1 or winner == num_choices):
+            highScore, winner, weights, firstSecondScoreDiff = scoreCoding(answers, users, 'ordinal', scale = 2)
     # These all return tuples (array of answers, amount of scaling done), element at index 1 is same for all
     weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
                                             weightScaledEnds, \
@@ -38,10 +39,11 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, source
                                             userWeightDict= weightScaleEverything(answers, weights, users,
                                                                                          starts,ends, repDF)
     #print('weightScaledEnds', weightScaledEnds)
+    #TOPTWO metric add the score diference
     winner, units, uScore, iScore, selectedText= passToUnitizing(weightScaledAnswers,weightScaledUsers,weightScaledStarts,
                                                     weightScaledEnds,numUsers,length, highScore, winner,
                                                     weightScaledNumUsers, userWeightDict, sourceText)
-    return winner, units, uScore, iScore, highScore, numUsers, selectedText
+    return winner, units, uScore, iScore, highScore, numUsers, selectedText, firstSecondScoreDiff
 
 def repScaleAnsUsers(answers, users, repDF):
     repScaledAnswers, repScaledUsers = scaleFromRep(answers, users, repDF), scaleFromRep(users, users, repDF)
@@ -66,12 +68,13 @@ def weightScaleEverything(answers,weights, users, starts, ends, repDF):
         return scaledArrs[0], scaledArrs[1], scaledArrs[2], scaledArrs[3], sumTotalScaling, userWeightDict
     return [0],[0],[0],[0],sumTotalScaling, userWeightDict
 
-
+#TOPTWO metric add the top two score difference as  an input
 def passToUnitizing(answers,users,starts,ends,numUsers,length,\
     highScore, winner, scaledNumUsers, userWeightDict, sourceText):
     """ calculates unitizing agreement for any coding question after verifying that it passes the threshold matrix
     Only calculates unitizing agreement amongst users who selected the most agreed-upon answer"""
     assert len(starts) == len(users), 'starts, users mismatched'
+    #TOPTWO metric change next line to have the score difference as an arg
     if evalThresholdMatrix(highScore, numUsers) == 'H':
         goodIndices = filterIndexByAnswer(winner, answers)
         #f for filtered
@@ -116,10 +119,11 @@ def scoreCoding(answers, users, dfunc, scale = 1, num_choices = 5):
     """
     answers = [int(a) for a in answers]
     if dfunc == 'ordinal':
-        highscore, winner, weights = getWinnersOrdinal(answers, num_choices = num_choices, scale = scale)
+        highscore, winner, weights, secondWinner, secondScore = getWinnersOrdinal(answers, num_choices = num_choices, scale = scale)
     else:
-        highscore, winner, weights = getWinnersNominal(answers)
-    return highscore, winner, weights
+        highscore, winner, weights, secondWinner, secondScore = getWinnersNominal(answers)
+    firstSecDiff = highscore - secondScore
+    return highscore, winner, weights, firstSecDiff
 
 def getWinnersOrdinal(answers, num_choices = 5, scale = 1):
     # Todo:confirm that I said the right thing about Shannon
@@ -134,13 +138,15 @@ def getWinnersOrdinal(answers, num_choices = 5, scale = 1):
     aggregate_arr = np.zeros(length)
     for i in original_arr:
         aggregate_arr[i] += 1
-    topScore, winner, weights = shannon_ordinal_metric(original_arr, aggregate_arr)
+    topScore, winner, weights, secondTop, secondTopScore = shannon_ordinal_metric(original_arr, aggregate_arr)
     # shift array so indexes consistent across ordinal and nominal data
     weights = np.append(0, weights)
-    return topScore, winner + 1, weights
+    ntp = 0
+    return topScore, winner + 1, weights, secondTop, secondTopScore
 
 def shannon_ordinal_metric(original_arr, aggregate_arr):
     """"calculates ordinal metric (Thanks Shannon) """
+
     original_arr = np.array(original_arr)
     aggregate_arr = np.array(aggregate_arr)
     prob_arr = aggregate_arr / sum(aggregate_arr)
@@ -148,8 +154,15 @@ def shannon_ordinal_metric(original_arr, aggregate_arr):
     total_dist = len(aggregate_arr)
     score = 1 + np.dot(prob_arr, np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist))
     winner = np.where(aggregate_arr == aggregate_arr.max())[0][0]
+    #Now exclude the winner
+    aggregate_arr[winner] = 0
+    second = np.where(aggregate_arr == aggregate_arr.max())[0][0]
+    #TODO: work out a way to compare first and second best options for ordinal data
+    #might be best to just not do first v second and just have a stricter threshold matrix that's solely based
+    #on the shannon metric
+    secondScore = 0
     weights= 1+np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist)
-    return score, winner, weights
+    return score, winner, weights, second, secondScore
 
 def getWinnersNominal(answers, num_choices = 5):
     """returns the most-chosen answer and the percentage of users that chose that answer"""
@@ -159,10 +172,14 @@ def getWinnersNominal(answers, num_choices = 5):
     for a in answers:
         scores[a] = scores[a]+1
     winner = np.where(scores == scores.max())[0][0]
-    topScore = scores[winner]/(len(answers))
-    weights = np.zeros(length)
+    topScore = scores[winner] / (len(answers))
+    #Now get second best, exclude winnerScore
+    scores[winner] = 0
+    winnerSecond = np.where(scores == scores.max())[0][0]
+    secondScore = scores[winnerSecond] / len(answers)
+    weights = np.zeros(num_choices)
     weights[winner] = 1
-    return topScore, winner, weights
+    return topScore, winner, weights, winnerSecond, secondScore
 
 def scaleFromRep(arr, users, repDF):
     """Scales the array based on user reps"""

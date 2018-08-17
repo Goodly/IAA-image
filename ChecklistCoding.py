@@ -32,8 +32,8 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sou
         winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers,weightScaledUsers,weightScaledStarts,
                                                         weightScaledEnds,numUsers,length, codingScore, i,
                                                         weightScaledNumUsers, userWeightDict, sourceText)
-
-        out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText])
+        firstSecondDiff = 1 - codingScore
+        out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText, firstSecondDiff, 'checklist', num_choices])
         do_rep_calculation_nominal(users, answers, out[0], units, starts, ends, length, repDF, checkListScale=(1/num_choices))
 
     return out
