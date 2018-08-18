@@ -2,6 +2,7 @@ import csv
 from ChecklistCoding import *
 from ExtraInfo import *
 from repScores import *
+from data_utils import initRep
 
 path = 'data_pull_8_10/PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv'
 
@@ -11,10 +12,8 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
     data = [["article_num", "article_sha256", "question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance"
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
-    if repCSV != None:
-        repDF = CSV_to_userid(repCSV)
-    else:
-        repDF = create_user_dataframe(uberDict)
+
+    repDF = initRep(repCSV, uberDict)
     for article in uberDict.keys():  # Iterates throuh each article
         article_num = get_article_num(uberDict, article)
 
@@ -175,8 +174,11 @@ def get_path(fileName):
             name = ''
     return path, name
 
-# TEST STUFF
-calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
-calc_scores(path, hardCodedTypes=True)
+# # TEST STUFF
+# calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
+# calc_scores(path, hardCodedTypes=True)
 #in sss file I renamed the filenamecolumn to be sha256 so it fits in with the other mechanisms for extracting data
 #calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)
+calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')

@@ -71,14 +71,20 @@ def unitsToArray(starts, ends, length, numUsers):
         raiseMatrix(starts[i],ends[i])
     return unitsMatrix
 
-def toArray(starts,ends,length, users, userWeightDict, answers, winner):
+def toArray(starts,ends,length, users, userWeightDict = None, answers = None, winner = None):
     uniqueUsers = np.unique(np.array(users))
     userBlocks = np.zeros((len(uniqueUsers), length))
     astarts, aends = np.array(starts), np.array(ends)
     totalWeight = 0
     for u in range(len(uniqueUsers)):
-        weight = userWeightDict[uniqueUsers[u]]
-        totalWeight = totalWeight + weight
+        if userWeightDict is not None:
+            weight = userWeightDict[uniqueUsers[u]]
+            print(userWeightDict)
+            print(weight)
+            totalWeight = totalWeight + weight
+        else:
+            totalWeight = len(uniqueUsers)
+            weight = 1
         #print(uniqueUsers[u])
         indices = getIndicesFromUserAnswer(users, uniqueUsers[u], answers, winner)
         #can't use np.unique, possible to highlight to same endpoint from 2 diff starts
@@ -172,7 +178,7 @@ def getIndicesFromUserAnswer(users, majorityUser, answers, winner):
 
     indices = []
     for i in range(len(users)):
-        if users[i] == majorityUser and answers[i] == winner:
+        if users[i] == majorityUser and (answers is None or answers[i] == winner):
             indices.append(i)
     return np.array(indices)
 def getIndicesFromUser(users, majorityUser):

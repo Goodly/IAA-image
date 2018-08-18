@@ -217,6 +217,7 @@ def scaleFromWeights(arr,answers,weights, users, repDF):
             addition = np.repeat(addition, scaleBy)
             scaled = np.append(scaled, addition)
     return scaled, sumTotalScaling, userWeightDict
+
 def scaleManyFromWeights(arr,answers,weights, users, repDF):
     """Scales the array based on the weights and the user reps"""
     #weights is array of fractions now

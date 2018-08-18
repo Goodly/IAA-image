@@ -1,11 +1,10 @@
-from data_utils import *
 from ThresholdMatrix import *
 from math import exp
 import numpy as np
 import pandas as pd
 
 
-def create_user_dataframe(data, csvPath=None):
+def create_user_dataframe(data, source = 'specialist',csvPath=None):
     """This function creates a DataFrame of User ID's, Reputation Scores, and number of questions answered."""
     if csvPath:
         data1 = CSV_to_userid(csvPath)
@@ -13,13 +12,20 @@ def create_user_dataframe(data, csvPath=None):
         data1 = pd.DataFrame(columns=['Users', 'Score', 'Questions', 'Influence'])
     for article_num in data.keys():
         for question_num in data[article_num].keys():
-            users_q = get_question_userid(data, article_num, question_num)
+            if source == 'specialist':
+                users_q = get_question_userid(data, article_num, question_num)
+            else:
+                art_data = data.loc[data['article_sha256'] == article_num]
+                users_q = art_data['contributor_uuid'].tolist()
             for ids in users_q:
 #                ids = int(ids)
                 if ids not in data1.loc[:, 'Users'].tolist():
                     data1 = data1.append({"Users": ids, "Score": 5, "Questions": 1, "Influence": 1}, ignore_index=True)
     return data1
 
+
+def get_question_userid(data, article_num, question_num):
+    return data[article_num][question_num][1][1][0]
 
 def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer, starts, ends, article_length, data,
                                checkListScale=1):
@@ -139,6 +145,7 @@ def calc_influence(data, userID):
 def userid_to_CSV(dataframe):
     """This function will save the User Rep Score dataframe as UserRepScores.csv"""
     dataframe.to_csv("UserRepScores.csv")
+
 
 
 def CSV_to_userid(path):

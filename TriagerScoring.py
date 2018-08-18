@@ -90,8 +90,8 @@ def importData(path, excludedUsers = []):
                 out = appendData(filename[0], a, namespaces, pstarts, pends, c, pflags, out, source_text)
     print('exporting to csv')
 
-    path, name = get_path(filename)
-    scores = open(path+'T_IAA'+name, 'w', encoding = 'utf-8')
+    outPath, name = get_path(path)
+    scores = open(outPath+'T_IAA'+name, 'w', encoding = 'utf-8')
 
     with scores:
         writer = csv.writer(scores)
@@ -100,8 +100,11 @@ def importData(path, excludedUsers = []):
     print("Table complete")
 
 def appendData(article_filename, article_sha256, namespaces,start_pos_list, end_pos_list, topic_name, case_numbers, data, source_text):
+    if len(case_numbers) == 0:
+        case_numbers = np.zeros(len(start_pos_list))
     for i in range(len(start_pos_list)):
         text = getText(start_pos_list[i], end_pos_list[i],source_text)
+        print(len(namespaces), len(start_pos_list), len(end_pos_list), len(case_numbers))
         data.append([article_filename, article_sha256, namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
     return data
 def getIndices(c, cats):
@@ -122,6 +125,7 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, global
     #print('exclusions', flagExclusions)
     excl = findExcludedIndices(flagExclusions, users)
     #print(excl)
+    print('flagspreExcl', inFlags)
     if len(excl > 1):
         inFlags = exclude(excl, inFlags)
         users = exclude(excl, users)
@@ -214,6 +218,11 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
                 'passingFunc': minPercent,
                 'scale': .35
             },
+        'Probability':
+            {
+                'passingFunc': evalThresholdMatrix,
+                'scale': 1.4
+            },
         'Quoted Sources':
             {
                 'passingFunc': evalThresholdMatrix,
@@ -241,7 +250,7 @@ def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = eval
     """passingFunc must take in 3 arguments, first is a percentage, second is numberof users, 3rd is the scale
         what the scale is can very for different methods of evaluating passes/fails"""
     #print(starts)
-    answerMatrix = toArray(starts, ends, length, numUsers, users, None)
+    answerMatrix = toArray(starts, ends, length, users)
     percentageArray = scorePercentageUnitizing(answerMatrix, length, numUsers)
     passersArray = np.zeros(len(percentageArray))
     # TODO: instead of passing to threshold matrix each time, just find out minScoretoPass
@@ -323,8 +332,9 @@ def assignFlags(matrix):
 
 
 def determineFlags(starts, ends, nStarts, nEnds, codedUsers, flags):
+    print('flags', flags)
     matrix = toFlagMatrix(starts, ends, nStarts,nEnds, codedUsers, flags)
-    #print(matrix)
+    print(matrix)
     if len(matrix)>0 and len(matrix[0]>0):
         outFlags = assignFlags(matrix)
         return outFlags
@@ -349,7 +359,7 @@ def getText(start,end, sourceText):
         out = out+sourceText[i]
     return out
 print("#####Form TRIAGER AGREED UPON DATA!!!#####")
-importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
+#importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
 importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
 
 #evalTriage(jpath2)
