@@ -3,62 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Create Run-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Create Run-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/User_Rep_EDA-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/User_Rep_EDA-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Create Run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Create Run.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run0.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run0.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run10.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run10.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run11.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run11.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run12.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run12.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run13.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run13.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run14.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run14.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run15.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run15.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run16.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run16.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run17.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run17.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run18.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run18.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run19.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run19.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run20.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run20.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run21.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run21.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run22.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run22.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run23.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run23.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run24.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run24.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run25.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run25.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run26.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run26.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run27.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run27.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run28.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run28.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run29.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run29.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run3.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run30.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run30.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run31.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run31.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run32.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run32.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run33.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run33.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run34.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run34.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run35.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run35.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run36.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run36.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run37.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run37.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run38.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run38.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run39.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run39.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run4.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run40.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run40.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run41.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run41.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run42.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run42.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run43.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run43.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run44.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run44.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run45.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run45.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run46.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run46.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run47.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run47.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run48.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run48.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run49.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run49.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run6.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run6.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run7.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run7.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run8.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run8.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Series_Output/Run9.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Series_Output/Run9.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserRepScores.csv" beforeDir="false" afterPath="$PROJECT_DIR$/UserRepScores.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User_Rep_EDA.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/User_Rep_EDA.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_user_rep.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_user_rep.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -68,15 +12,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="test_user_rep.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test_user_rep.py">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="IAA.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/IAA.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="repScores.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/repScores.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="320">
+              <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -93,12 +39,13 @@
         <option value="$PROJECT_DIR$/CodingScoring.py" />
         <option value="$PROJECT_DIR$/repScores.py" />
         <option value="$PROJECT_DIR$/test_user_rep.py" />
+        <option value="$PROJECT_DIR$/ThresholdMatrix.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-380" />
-    <option name="y" value="-18" />
+    <option name="y" value="-20" />
     <option name="width" value="1750" />
     <option name="height" value="970" />
   </component>
@@ -107,6 +54,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -118,7 +66,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -179,16 +126,16 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22526042" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.203125" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32965517" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32965517" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32965517" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32965517" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.30068967" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -202,13 +149,41 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/IAA.py">
+    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="800">
+          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/repScores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1264">
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThresholdMatrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="800">
+          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py" />
     <entry file="file://$PROJECT_DIR$/CodingScoring.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1984">
@@ -236,13 +211,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py" />
     <entry file="file://$PROJECT_DIR$/CodingScoring.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1984">
@@ -270,13 +239,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py" />
     <entry file="file://$PROJECT_DIR$/CodingScoring.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2736">
@@ -301,13 +264,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="30" column="17" lean-forward="true" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py" />
     <entry file="file://$PROJECT_DIR$/CodingScoring.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2736">
@@ -332,13 +289,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py" />
     <entry file="file://$PROJECT_DIR$/repScores.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1040">
@@ -363,13 +314,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py" />
     <entry file="file://$PROJECT_DIR$/repScores.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="768">
@@ -394,13 +339,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py" />
     <entry file="file://$PROJECT_DIR$/repScores.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="768">
@@ -428,13 +367,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py" />
     <entry file="file://$PROJECT_DIR$/ChecklistCoding.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-10" />
@@ -452,20 +385,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="88" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Desktop/test_user_rep.py" />
     <entry file="file://$USER_HOME$/Desktop/repScores.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1210" />
@@ -478,23 +398,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-42">
-          <caret line="73" column="71" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/test_user_rep.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
+        <state relative-caret-position="800">
           <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThresholdMatrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repScores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
         </state>
       </provider>
     </entry>
