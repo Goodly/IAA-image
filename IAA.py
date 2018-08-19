@@ -1,21 +1,19 @@
 import csv
-
 from ChecklistCoding import *
 from ExtraInfo import *
 from repScores import *
+from data_utils import initRep
 
 path = 'data_pull_8_10/PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv'
 
 
 def calc_scores(filename, hardCodedTypes = False, repCSV=None):
     uberDict = data_storer(filename)
-    data = [["article_num", "article_sha256", "question_Number", "agreed_Answer", "coding_Score", "highlighted_indices", \
-             "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score", "num_users", "target_text",
-             'question_text', 'answer_content']]
-    if repCSV != None:
-        repDF = CSV_to_userid(repCSV)
-    else:
-        repDF = create_user_dataframe(uberDict)
+    data = [["article_num", "article_sha256", "question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
+             "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance"
+             "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
+
+    repDF = initRep(repCSV, uberDict)
     for article in uberDict.keys():  # Iterates throuh each article
         article_num = get_article_num(uberDict, article)
 
@@ -26,26 +24,37 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, article, ques)
             if type(agreements) is list:
+                #Checklist Question
                 for i in range(len(agreements)):
-                    codingScore, unitizingScore = agreements[i][4], agreements[i][2]
-                    totalScore = calcAgreement(codingScore, unitizingScore)
+                    codingPercentAgreement, unitizingScore = agreements[i][4], agreements[i][2]
+                    num_users = agreements[i][5]
+                    num_choices = agreements[i][9]
+                    totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                     answer_text = get_answer_content(uberDict,article, ques, agreements[i][0])
-                    data.append([article_num, article, ques, agreements[i][0], codingScore, agreements[i][1],
-                                 unitizingScore, agreements[i][3], totalScore, agreements[i][5], agreements[i][6],
+                    bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
+                    #Treat each q as a binary yes/no
+                    chance_odds = bin_chance_odds
+                    data.append([article_num, article[:8], ques, agreements[i][8], agreements[i][0], codingPercentAgreement, agreements[i][7], agreements[i][1],
+                                 unitizingScore, agreements[i][3], totalScore, chance_odds, bin_chance_odds, num_users, agreements[i][9],agreements[i][6],
                                 question_text, answer_text])
             else:
-                codingScore, unitizingScore = agreements[4], agreements[2]
+                codingPercentAgreement, unitizingScore = agreements[4], agreements[2]
+                num_users = agreements[5]
+                num_choices = agreements[9]
                 #winner, units, uScore, iScore, highScore, numUsers
+                bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
+                chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
                 answer_text = get_answer_content(uberDict, article, ques, agreements[0])
-                totalScore = calcAgreement(codingScore, unitizingScore)
-                data.append([article_num, article, ques, agreements[0], codingScore, agreements[1], unitizingScore, agreements[3],
-                             totalScore, agreements[5], agreements[6], question_text, answer_text])
+                totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
+                data.append([article_num, article[:8], ques, agreements[8], agreements[0], codingPercentAgreement, agreements[7],
+                             agreements[1], unitizingScore, agreements[3],
+                             totalScore, chance_odds, bin_chance_odds, num_users, agreements[9], agreements[6], question_text, answer_text])
 
     # push out of womb, into world
     print('exporting rep_scores')
     # print(repDF)
-    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
-    userid_to_CSV(repDF)
+#    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
+ #   userid_to_CSV(repDF)
     print('exporting to csv')
     path, name = get_path(filename)
     scores = open(path+'S_IAA_'+name, 'w', encoding = 'utf-8')
@@ -66,7 +75,7 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
 
     """ Commnted code below previously denoted different types of questions for hard-coding,
     can still be used for hard-coding but eventually will be phased out by a line of code that
-    checks the type based off the table data"""
+    checks the question_type based off the table data"""
     # ordinal_questions = [1,2,4,12,13,14,15,16,17,18,19,20,21,25]
     # nominal_questions = [7,22]
     # unit_questions = [9,10,11, 24] #asks users to highlight, nothing else OR they highlight w/ txt answer
@@ -83,14 +92,14 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
     sourceText = addToSourceText(starts, ends, texts, sourceText)
     # TODO: find actual number of choices always
     num_choices = 5
-    type = get_question_type(data, article, ques)
+    question_type = get_question_type(data, article, ques)
     if hardCodedTypes:
-        type, num_choices = get_type_hard(type, ques)
+        question_type, num_choices = get_type_hard(question_type, ques)
     #This block for scoring only a single article, iuseful for debugging
     # print()
     # if article!= '171SSSArticle.txt':
-    #     #print(type)
-    #     if type == 'checklist':
+    #     #print(question_type)
+    #     if question_type == 'checklist':
     #         return [
     #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -105,25 +114,26 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
     #
     #         ]
     #     return(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-    if type == 'interval':
+    if question_type == 'interval':
         # TODO: verify if these still exist, if they do, bring up to speed with new output formats
         return run_2step_unitization(data, article, ques, repDF)
 
     answers, users, numUsers = get_question_answers(data, article, ques).tolist(), \
                                get_question_userid(data, article, ques).tolist(), \
                                get_num_users(data, article, ques)
-    if type == 'ordinal':
+    if question_type == 'ordinal':
         out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, sourceText, dfunc='ordinal')
         #print("ORDINAL", out[1], starts, ends)
         #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], starts, ends, length, repDF)
-        return out
-    elif type == 'nominal':
+        out = out+(question_type, num_choices)
+    elif question_type == 'nominal':
         out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, sourceText)
         do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF)
         #print("NOMINAL", out[1], starts, ends)
-        return out
-    elif type == 'checklist':
-        return evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, num_choices = num_choices)
+        out = out+(question_type, num_choices)
+    elif question_type == 'checklist':
+        out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, num_choices = num_choices)
+    return out
 
 
 def calcAgreement(codingScore, unitizingScore):
@@ -166,8 +176,12 @@ def get_path(fileName):
             name = ''
     return path, name
 
-# TEST STUFF
-calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
-#calc_scores(path, hardCodedTypes=True)
+# # TEST STUFF
+calc_scores('data_pull_8_10/PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv', hardCodedTypes= True)
+# calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
+# calc_scores(path, hardCodedTypes=True)
 #in sss file I renamed the filenamecolumn to be sha256 so it fits in with the other mechanisms for extracting data
 #calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)
+# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')

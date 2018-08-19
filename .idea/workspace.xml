@@ -2,7 +2,46 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Inter_q_dependencies.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Inter_q_dependencies.ods" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuestionDependencies.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/T_IAAFormTriager1.2C2-2018-07-28T21.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.CorrCauseSpecialist1.0C2-2018-08-10T0215-DataHuntHighlights.csv#" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv#" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv#" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.S_IAA_PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv#" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.S_IAA_PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv#" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv#" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.S_IAA_SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv#" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/FactRelevance1.0C2-2018-08-17T2013-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/Language1.4C2-2018-08-17T2011-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/PreAlphaHolistic2-2018-08-17T2010-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/PreAlphaSources2-2018-08-17T2013-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/ReasoningSpecialist1.1C-2018-08-17T2012-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/T_IAAFormTriager1.2C2-2018-08-17T2009-Highlighter.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_pull_8_17/T_IAASemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pe_data/PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pe_data/S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/IAA-image.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IAA-image.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChecklistCoding.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChecklistCoding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CodingScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/CodingScoring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExtraInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExtraInfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA.py" beforeDir="false" afterPath="$PROJECT_DIR$/IAA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepScores/Repscore10.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RepScores/Repscore10.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TriagerScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/TriagerScoring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnitizingScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/UnitizingScoring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserRepScores.csv" beforeDir="false" afterPath="$PROJECT_DIR$/UserRepScores.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_pull_8_10/S_IAA_SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_pull_8_10/S_IAA_SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,12 +82,6 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-380" />
-    <option name="y" value="-20" />
-    <option name="width" value="1750" />
-    <option name="height" value="970" />
-  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -67,11 +100,6 @@
         </subPane>
       </pane>
     </panes>
-  </component>
-  <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="evaluateCo&#9;null&#9;null&#10;evaluate&#9;null&#9;null" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">

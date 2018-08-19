@@ -2,6 +2,7 @@ import numpy as np
 from UnitizingScoring import *
 from ThresholdMatrix import *
 from data_utils import *
+from IAA import get_path
 import pandas as pd
 from math import floor
 import csv
@@ -16,35 +17,21 @@ def evalTriage(path):
     out = [['task_uuid', 'article_num', 'start', 'end', 'category', 'case_number']]
     for a in articles:
         starts = bigDict[a]['starts']
-        #print('bigstart prints',len(starts),starts)
         ends = bigDict[a]['ends']
-        #print('bigend prints', len(ends),ends)
         users = bigDict[a]['users']
-        #print('bigusers prints', len(users),users)
         flags = bigDict[a]['flags']
-        #print('bigflags prints', len(flags),flags)
         cats = bigDict[a]['cats']
-        #print(len(starts))
-        #print(cats)
-        #print('bigcats prints', len(cats),cats)
         annotator_count = len(np.unique(users))
         flagExclusions = exclusionList(users, flags, cats)
-        # print(flagExclusions)
         if annotator_count >= 2:
             uqcats = np.unique(cats)
             for c in uqcats:
-                #print('c', c)
-                #print(cats)
                 cat_indices = getIndices(c,cats)
-                #print(cat_indices)
                 c_starts = np.array(starts)[cat_indices]
                 c_ends = np.array(ends)[cat_indices]
                 c_users = np.array(users)[cat_indices]
                 c_flags = np.array(flags)[cat_indices]
                 length = 0
-                # print('cat-based')
-                # print('start', c_starts)
-                # print('ends', c_ends)
                 if len(c_ends)>0:
                     length = max(c_ends)
                     numUsers = len(np.unique(c_users))
@@ -52,7 +39,7 @@ def evalTriage(path):
                     pstarts, pends, pflags = scoreTriager(c_starts, c_ends, c_users, numUsers, c_flags, length, flagExclusions)
                     out = appendData(a, pstarts, pends, pflags, c, out)
     print('exporting to csv')
-    scores = open('triager_agreement_scores.csv', 'w')
+    scores = open('T_IAA_'+path, 'w', encoding = 'utf-8')
 
     with scores:
         writer = csv.writer(scores)
@@ -61,11 +48,13 @@ def evalTriage(path):
     print("Table complete")
 
 
-def importData(path):
+def importData(path, excludedUsers = []):
     """CSV INPUT"""
     data = pd.read_csv(path, encoding = 'utf-8')
+    #only excluding users for purpose of cleaner test data
+    #Quang Gold--Duplicate Data from the real Quang
+    excludedUsers.append('40bbbf7e-a77b-498d-bb44-2ef6601061ef')
     article_shas = np.unique(data['article_sha256'])
-#here i am i am cinnaman
     out = [['article_filename','article_sha256', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
     for a in article_shas:
         print('---------------------------')
@@ -76,6 +65,8 @@ def importData(path):
         annotator_count = len(np.unique(users))
         flags = art_data['case_number'].tolist()
         cats = art_data['topic_name'].tolist()
+        art_users = art_data['contributor_uuid'].tolist()
+        numUsers = len(np.unique(art_users))
         length = art_data['source_text_length'].iloc[0]
         #print(length)
         source_text = makeList(length)
@@ -92,13 +83,15 @@ def importData(path):
                 namespaces = cat_data['namespace'].tolist()
                 length = floor(cat_data['source_text_length'].tolist()[0])
                 texts = cat_data['target_text'].tolist()
-                numUsers = len(np.unique(users))
+
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
                 source_text = addToSourceText(starts, ends, texts, source_text)
                 pstarts, pends, pflags = scoreTriager(starts, ends, users, numUsers, flags, length, c, flagExclusions)
                 out = appendData(filename[0], a, namespaces, pstarts, pends, c, pflags, out, source_text)
     print('exporting to csv')
-    scores = open('T_IAA_'+path, 'w', encoding = 'utf-8')
+
+    outPath, name = get_path(path)
+    scores = open(outPath+'T_IAA'+name, 'w', encoding = 'utf-8')
 
     with scores:
         writer = csv.writer(scores)
@@ -107,8 +100,11 @@ def importData(path):
     print("Table complete")
 
 def appendData(article_filename, article_sha256, namespaces,start_pos_list, end_pos_list, topic_name, case_numbers, data, source_text):
+    if len(case_numbers) == 0:
+        case_numbers = np.zeros(len(start_pos_list))
     for i in range(len(start_pos_list)):
         text = getText(start_pos_list[i], end_pos_list[i],source_text)
+        print(len(namespaces), len(start_pos_list), len(end_pos_list), len(case_numbers))
         data.append([article_filename, article_sha256, namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
     return data
 def getIndices(c, cats):
@@ -129,6 +125,7 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, global
     #print('exclusions', flagExclusions)
     excl = findExcludedIndices(flagExclusions, users)
     #print(excl)
+    print('flagspreExcl', inFlags)
     if len(excl > 1):
         inFlags = exclude(excl, inFlags)
         users = exclude(excl, users)
@@ -201,54 +198,59 @@ def codeUsers(userDict, users):
         coded.append(userDict[u])
     return coded
 def determinePassingIndices(starts, ends, numUsers, users, length, category):
-    # actionDeterminant = {
-    #     'Language':
-    #         {
-    #             'passingFunc':evalThresholdMatrix,
-    #             'scale':1.4
-    #         },
-    #     #hard to do, should be more lenient
-    #     'Reasoning':
-    #         {
-    #             'passingFunc': evalThresholdMatrix,
-    #             'scale': 1.7
-    #         },
-    #     #specialist can be stricter
-    #     #be more clear
-    #     'Evidence':
-    #         {
-    #             'passingFunc': minPercent,
-    #             'scale': .35
-    #         },
-    #     'Quoted Sources':
-    #         {
-    #             'passingFunc': evalThresholdMatrix,
-    #             'scale': 1.2
-    #         },
-    #     #keepstrict
-    #     'Fact-check':
-    #         {
-    #             'passingFunc': evalThresholdMatrix,
-    #             'scale': 1.4
-    #         },
-    #     #wait formore training, see what happens
-    #     'Arguments':
-    #         {
-    #             'passingFunc': evalThresholdMatrix,
-    #             'scale': 1.4
-    #         }
-    # }
-    # passFunc = actionDeterminant[category]['passingFunc']
-    # scale = actionDeterminant[category]['scale']
-    passFunc = evalThresholdMatrix
-    scale = 1.4
+    #Defaults are evalThresholdmatrix, 1.4
+    actionDeterminant = {
+        'Language':
+            {
+                'passingFunc':evalThresholdMatrix,
+                'scale':1.4
+            },
+        #hard to do, should be more lenient
+        'Reasoning':
+            {
+                'passingFunc': evalThresholdMatrix,
+                'scale': 1.7
+            },
+        #specialist can be stricter
+        #be more clear
+        'Evidence':
+            {
+                'passingFunc': minPercent,
+                'scale': .35
+            },
+        'Probability':
+            {
+                'passingFunc': evalThresholdMatrix,
+                'scale': 1.4
+            },
+        'Quoted Sources':
+            {
+                'passingFunc': evalThresholdMatrix,
+                'scale': 1.2
+            },
+        #keepstrict
+        'Fact-check':
+            {
+                'passingFunc': evalThresholdMatrix,
+                'scale': 1.4
+            },
+        #wait formore training, see what happens
+        'Arguments':
+            {
+                'passingFunc': evalThresholdMatrix,
+                'scale': 1.4
+            }
+    }
+    passFunc = actionDeterminant[category]['passingFunc']
+    scale = actionDeterminant[category]['scale']
+
     return findPassingIndices(starts, ends, numUsers, users, length, passFunc , scale)
 
 def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = evalThresholdMatrix, scale = 1.4):
     """passingFunc must take in 3 arguments, first is a percentage, second is numberof users, 3rd is the scale
         what the scale is can very for different methods of evaluating passes/fails"""
     #print(starts)
-    answerMatrix = toArray(starts, ends, length, numUsers, users, None)
+    answerMatrix = toArray(starts, ends, length, users)
     percentageArray = scorePercentageUnitizing(answerMatrix, length, numUsers)
     passersArray = np.zeros(len(percentageArray))
     # TODO: instead of passing to threshold matrix each time, just find out minScoretoPass
@@ -330,6 +332,7 @@ def assignFlags(matrix):
 
 
 def determineFlags(starts, ends, nStarts, nEnds, codedUsers, flags):
+    print('flags', flags)
     matrix = toFlagMatrix(starts, ends, nStarts,nEnds, codedUsers, flags)
     print(matrix)
     if len(matrix)>0 and len(matrix[0]>0):
@@ -355,12 +358,14 @@ def getText(start,end, sourceText):
     for i in range(start,end):
         out = out+sourceText[i]
     return out
-print("#####SEMANTICS TRIAGER AGREED UPON DATA!!!#####")
-importData(path1)
+print("#####Form TRIAGER AGREED UPON DATA!!!#####")
+#importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
+importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
+
 #evalTriage(jpath2)
 print()
 print()
-print("#####FORM TRIAGER AGREED UPON DATA!!!#####")
+print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
 #evalTriage(jpath1)
 importData(path2)
 # s = [5, 45, 3, 80, 6, 65]

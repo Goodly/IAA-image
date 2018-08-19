@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from repScores import CSV_to_userid
+from repScores import create_user_dataframe
 
 def fetch_for_triage(path):
     js = pd.read_json(path)
@@ -31,6 +33,7 @@ def fetch_for_triage(path):
                         'cats': cats
                     }
     return bigDict, articles
+
 def data_storer(path):
     """Function that turns csv data. Input the path name for the csv file.
     This will return a super dictionary that is used with other abstraction functions."""
@@ -93,17 +96,22 @@ def data_storer(path):
 def get_question_answers(data, article_num, question_num):
     return data[article_num][question_num][1][0]
 
+
 def get_question_userid(data, article_num, question_num):
     return data[article_num][question_num][1][1][0]
+
 
 def get_question_start(data, article_num, question_num):
     return data[article_num][question_num][1][2][0]
 
+
 def get_responses(article, question, csv_dict):
     return csv_dict[article][question][1:]
 
+
 def get_user_count(article,question, csv_dict):
     return csv_dict[article][question][0]
+
 
 def get_question_end(data, article_num, question_num):
     return data[article_num][question_num][1][3][0]
@@ -174,13 +182,28 @@ def get_type_hard(type, ques):
         'Language Specialist V2':
             {
                 1:['checklist',9],
-                6:['checklist', 8]
+                6:['checklist', 8],
+
+            },
+        'Evidence':
+            {
+                5:['ordinal', 3],
+                6:['checklist', 7],
+                12:['nominal', 1]
+
             }
 
     }
 
     out = typing_dict[type][ques]
     return out[0], out[1]
+
+def initRep(repCSV, data, source = 'specialist'):
+    if repCSV != None:
+        repDF = CSV_to_userid(repCSV)
+    else:
+        repDF = create_user_dataframe(data, source = source)
+    return repDF
 
 def cleanForUnitization(data, article_num, question_num):
     """Retuns dictionary of cleaned up data. Keys are Offsets, Lengths, Categories, Raters, and Ends
