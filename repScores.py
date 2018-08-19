@@ -21,6 +21,7 @@ def create_user_dataframe(data, source = 'specialist',csvPath=None):
 #                ids = int(ids)
                 if ids not in data1.loc[:, 'Users'].tolist():
                     data1 = data1.append({"Users": ids, "Score": 5, "Questions": 1, "Influence": 1}, ignore_index=True)
+    print(data1)
     return data1
 
 

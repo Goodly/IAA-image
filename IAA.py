@@ -42,6 +42,8 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
                 num_users = agreements[5]
                 num_choices = agreements[9]
                 #winner, units, uScore, iScore, highScore, numUsers
+                bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
+                chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
                 answer_text = get_answer_content(uberDict, article, ques, agreements[0])
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                 data.append([article_num, article[:8], ques, agreements[8], agreements[0], codingPercentAgreement, agreements[7],
@@ -51,8 +53,8 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
     # push out of womb, into world
     print('exporting rep_scores')
     # print(repDF)
-    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
-    userid_to_CSV(repDF)
+#    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
+ #   userid_to_CSV(repDF)
     print('exporting to csv')
     path, name = get_path(filename)
     scores = open(path+'S_IAA_'+name, 'w', encoding = 'utf-8')
@@ -175,10 +177,11 @@ def get_path(fileName):
     return path, name
 
 # # TEST STUFF
+calc_scores('data_pull_8_10/PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv', hardCodedTypes= True)
 # calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
 # calc_scores(path, hardCodedTypes=True)
 #in sss file I renamed the filenamecolumn to be sha256 so it fits in with the other mechanisms for extracting data
 #calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)
-calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')

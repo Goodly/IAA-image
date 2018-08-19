@@ -185,9 +185,12 @@ def get_type_hard(type, ques):
                 6:['checklist', 8],
 
             },
-        'CausalitySpecialist_2018_07_19':
+        'Evidence':
             {
-                5:[]
+                5:['ordinal', 3],
+                6:['checklist', 7],
+                12:['nominal', 1]
+
             }
 
     }
@@ -200,6 +203,7 @@ def initRep(repCSV, data, source = 'specialist'):
         repDF = CSV_to_userid(repCSV)
     else:
         repDF = create_user_dataframe(data, source = source)
+    return repDF
 
 def cleanForUnitization(data, article_num, question_num):
     """Retuns dictionary of cleaned up data. Keys are Offsets, Lengths, Categories, Raters, and Ends

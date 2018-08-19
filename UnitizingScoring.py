@@ -194,6 +194,7 @@ def getIndicesFromUser(users, majorityUser):
         if users[i] == majorityUser:
             indices.append(i)
     return np.array(indices)
+
 def getIndicesFromMajorityUsers(users,majorityUsers):
     """Takes in array of all users ordered
     the same as the starts and ends lists and an array
