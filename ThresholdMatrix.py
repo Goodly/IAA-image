@@ -12,9 +12,10 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1):
     """
     if num_of_users<3:
         return 'U'
-    percentage = percentage*scale
-    kappa = num_of_users
-    deriv = kappa * (exp(kappa * (percentage - 0.5))) / (1 + exp(kappa * (percentage - 0.5)))**2
+    percentage = percentage * scale
+    kappa = num_of_users + 3
+    q = 3**(-0.2 * num_of_users + 1.9) + 1
+    deriv = kappa * q * exp(-kappa * (percentage - 0.5)) / (1 + q * exp(-kappa * (percentage - 0.5)))**2
     if (deriv > 1):
         return 'M'
     elif (percentage >.5):
