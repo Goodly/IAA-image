@@ -1,10 +1,11 @@
+from data_utils import *
 from ThresholdMatrix import *
 from math import exp
 import numpy as np
 import pandas as pd
 
 
-def create_user_dataframe(data, source = 'specialist',csvPath=None):
+def create_user_dataframe(data, csvPath=None):
     """This function creates a DataFrame of User ID's, Reputation Scores, and number of questions answered."""
     if csvPath:
         data1 = CSV_to_userid(csvPath)
@@ -12,21 +13,12 @@ def create_user_dataframe(data, source = 'specialist',csvPath=None):
         data1 = pd.DataFrame(columns=['Users', 'Score', 'Questions', 'Influence'])
     for article_num in data.keys():
         for question_num in data[article_num].keys():
-            if source == 'specialist':
-                users_q = get_question_userid(data, article_num, question_num)
-            else:
-                art_data = data.loc[data['article_sha256'] == article_num]
-                users_q = art_data['contributor_uuid'].tolist()
+            users_q = get_question_userid(data, article_num, question_num)
             for ids in users_q:
-#                ids = int(ids)
                 if ids not in data1.loc[:, 'Users'].tolist():
                     data1 = data1.append({"Users": ids, "Score": 5, "Questions": 1, "Influence": 1}, ignore_index=True)
-    print(data1)
     return data1
 
-
-def get_question_userid(data, article_num, question_num):
-    return data[article_num][question_num][1][1][0]
 
 def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer, starts, ends, article_length, data,
                                checkListScale=1):
@@ -36,14 +28,14 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer,
     if type(answer_choice)  == str or type(highlight_answer)  == str:
         return 0
     checked, int_users = checkDuplicates(answers, userID, starts, ends, article_length)
-    #print(checked)
-    #print(int_users)
+    print(checked)
+    print(int_users)
     highlight_answer_array = np.zeros(article_length)
     winners = []
     for t in checked:
         user = t[1]
         answer = t[0]
-        #print(answer, answer_choice, user)
+        print(answer, answer_choice, user)
         if (answer == answer_choice):
             do_math(data, user, checkListScale)
             winners.append(user)
@@ -58,30 +50,46 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer,
             do_math(data, x, score)
 
 
+def gaussian_mean(answers):
+    result = []
+    std = np.std(answers)
+    mean = np.mean(answers)
+    total = 0
+    for i in answers:
+        gauss = 1 / (std * np.sqrt(2 * np.pi)) * np.exp(-0.5 * ((i - mean) / std) ** 2)
+        result.append(i * (gauss * 10) ** 2)
+        total += (gauss * 10) ** 2
+    print(result)
+    print(answers)
+    print(np.mean(answers))
+    print(sum(result) / total)
+    return sum(result) / total
+
 def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choices, highlight_answer, starts, ends,
                                article_length, data):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
     such that the they receive the distance from the average answer chosen as a ratio of 0 to 1,
     and that is added to their rep score."""
-    #print(answer_aggregated)
+    print(answer_aggregated)
     if type(answer_aggregated)  == str or type(highlight_answer) == str:
         return 0
     checked, int_users = checkDuplicates(answers, userID, starts, ends, article_length)
     answers_passed = list()
     highlight_answer_array = np.zeros(article_length)
     score_dict = {}
+    print(checked)
     for i in checked:
         answers_passed.append(i[1])
-    answer_choice = np.mean(answers_passed)
+    answer_choice = gaussian_mean(answers)
 
     for h in highlight_answer:
-        #print(h)
+        print(h)
         highlight_answer_array[h] = 1
 
     for t in checked:
         user = t[1]
         answer = t[0]
-
+        points = (1 - abs(answer_choice - answer) / num_of_choices) ** 3
         do_math(data, user, points)
         score_dict[user] = points
     for x in int_users:
@@ -101,7 +109,7 @@ def checkDuplicates(answers, userID, starts, ends, article_length):
     for x in checked:
         article_array = np.zeros(article_length).tolist()
         if x[0] not in int_users.keys():
-            #print("HELLO THERE", x[2], x[3])
+            print("HELLO THERE", x[2], x[3])
             article_array[x[2]:x[3] + 1] = np.ones(x[3] - x[2]+1).tolist()
             int_users[x[0]] = article_array
         else:
@@ -146,7 +154,6 @@ def calc_influence(data, userID):
 def userid_to_CSV(dataframe):
     """This function will save the User Rep Score dataframe as UserRepScores.csv"""
     dataframe.to_csv("UserRepScores.csv")
-
 
 
 def CSV_to_userid(path):
