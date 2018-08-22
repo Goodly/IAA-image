@@ -7,20 +7,22 @@ from data_utils import initRep
 path = 'data_pull_8_10/PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv'
 
 
-def calc_scores(filename, hardCodedTypes = False, repCSV=None):
+def calc_scores(filename, hardCodedTypes = False, repCSV=None, last30= None):
     uberDict = data_storer(filename)
     data = [["article_num", "article_sha256", "question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance"
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
 
     repDF = initRep(repCSV, uberDict)
+    last30 = initLast30(last30, uberDict)
+
     for article in uberDict.keys():  # Iterates throuh each article
         article_num = get_article_num(uberDict, article)
 
         for ques in uberDict[article].keys():  # Iterates through each question in an article
             # print(repDF)
 
-            agreements = score(article, ques, uberDict, repDF, hardCodedTypes = hardCodedTypes)
+            agreements = score(article, ques, uberDict, repDF,last30, hardCodedTypes = hardCodedTypes)
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, article, ques)
             if type(agreements) is list:
@@ -53,8 +55,9 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
     # push out of womb, into world
     print('exporting rep_scores')
     # print(repDF)
-#    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
- #   userid_to_CSV(repDF)
+    repDF.to_csv('RepScores/Repscore14.csv', mode='a', header=False)
+    userid_to_CSV(repDF)
+    last30_to_CSV(last30)
     print('exporting to csv')
     path, name = get_path(filename)
     scores = open(path+'S_IAA_'+name, 'w', encoding = 'utf-8')
@@ -66,7 +69,7 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
     print("Table complete")
 
 
-def score(article, ques, data, repDF, hardCodedTypes = False):
+def score(article, ques, data, repDF, last30, hardCodedTypes = False):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -124,15 +127,15 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
     if question_type == 'ordinal':
         out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, sourceText, dfunc='ordinal')
         #print("ORDINAL", out[1], starts, ends)
-        #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], starts, ends, length, repDF)
+        do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], starts, ends, length, repDF, last30)
         out = out+(question_type, num_choices)
     elif question_type == 'nominal':
         out = evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, sourceText)
-        do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF)
+        do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF, last30)
         #print("NOMINAL", out[1], starts, ends)
         out = out+(question_type, num_choices)
     elif question_type == 'checklist':
-        out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, num_choices = num_choices)
+        out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,last30, sourceText, num_choices = num_choices)
     return out
 
 
