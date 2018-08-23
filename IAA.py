@@ -3,10 +3,6 @@ from ChecklistCoding import *
 from ExtraInfo import *
 from repScores import *
 from data_utils import initRep
-from QuestionDependencies import getDependencies
-from QuestionDependencies import evaluateDependencies
-import os
-path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
 def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, dependencyCSV = 'Inter_q_dependencies.csv', answersFile = None):
     for root, dir, files in os.walk(directory):
@@ -21,16 +17,14 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, dep
                     #we'll save that dream for another day
                     print("ERROR OCCURRED")
 
-def calc_scores(filename, hardCodedTypes = False, repCSV=None, dependencyCSV = 'Inter_q_dependencies.csv', answersFile = None):
-    uberDict = data_storer(filename, answersFile)
+
+def calc_scores(filename, hardCodedTypes = False, repCSV=None):
+    uberDict = data_storer(filename)
     data = [["article_num", "article_sha256", "question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
-    #initialize rep
+
     repDF = initRep(repCSV, uberDict)
-    #initialize inter-question dependencies
-    storedForDepend = None
-    dependenciesDF = getDependencies(dependencyCSV)
     for article in uberDict.keys():  # Iterates throuh each article
         article_num = get_article_num(uberDict, article)
 
@@ -44,10 +38,6 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None, dependencyCSV = '
                 #Checklist Question
                 for i in range(len(agreements)):
                     codingPercentAgreement, unitizingScore = agreements[i][4], agreements[i][2]
-                    winner, units = agreements[i][0], agreements[i][1]
-                    inclusiveUnitizing = agreements[i][3]
-                    selectedText, firstSecondScoreDiff = agreements[i][6], agreements[i][7]
-                    question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]
                     storedForDepend, units, unitizingScore, inclusiveUnitizing, selectedText = evaluateDependencies(question_type,
                                                                                                 article, ques, winner,
@@ -66,13 +56,7 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None, dependencyCSV = '
                                  unitizingScore, agreements[i][3], totalScore, chance_odds, bin_chance_odds, num_users, agreements[i][9],agreements[i][6],
                                 question_text, answer_text])
             else:
-                #winner, units, uScore, iScore, highScore, numUsers, selectedText, firstSecondScoreDiff
-                winner, units = agreements[0], agreements[1]
-                inclusiveUnitizing, numUsers = agreements[3], agreements[5]
-                selectedText, firstSecondScoreDiff = agreements[6], agreements[7]
-                question_type, num_choices = agreements[8], agreements[9]
                 codingPercentAgreement, unitizingScore = agreements[4], agreements[2]
-
                 num_users = agreements[5]
                 storedForDepend, units, unitizingScore, inclusiveUnitizing, selectedText = evaluateDependencies(question_type,
                                                                                                   article, ques, winner,
@@ -225,5 +209,5 @@ calc_agreement_directory('sss_pull_8_22', hardCodedTypes=True)
 # #in sss file I renamed the filenamecolumn to be sha256 so it fits in with the other mechanisms for extracting data
 # calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)
 # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-# # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-# # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')

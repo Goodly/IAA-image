@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-from repScores import CSV_to_userid
-from repScores import create_user_dataframe
+from repScores import *
 
 def fetch_for_triage(path):
     js = pd.read_json(path)
@@ -286,7 +285,12 @@ def initRep(repCSV, data, source = 'specialist'):
     else:
         repDF = create_user_dataframe(data)
     return repDF
-
+def initLast30(last30CSV, data):
+    if last30CSV != None:
+        last30 = CSV_to_last30(last30CSV)
+    else:
+        last30 = create_last30_dataframe(data)
+    return last30
 def cleanForUnitization(data, article_num, question_num):
     """Retuns dictionary of cleaned up data. Keys are Offsets, Lengths, Categories, Raters, and Ends
     and each value is an array of the data. DEPRECATED."""
