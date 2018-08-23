@@ -229,7 +229,7 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
                 'scale': 1.2
             },
         #keepstrict
-        'Fact-check':
+        'Needs Fact-check':
             {
                 'passingFunc': evalThresholdMatrix,
                 'scale': 1.4
@@ -239,7 +239,12 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
             {
                 'passingFunc': evalThresholdMatrix,
                 'scale': 1.4
-            }
+            },
+        'Assertions':
+            {
+                'passingFunc': evalThresholdMatrix,
+                'scale': 1.4
+            },
     }
     passFunc = actionDeterminant[category]['passingFunc']
     scale = actionDeterminant[category]['scale']
@@ -366,8 +371,9 @@ importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv
 print()
 print()
 print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
+importData('./demo1/Demo1_ForTri-2018-08-23T0240-Highlighter.csv')
 #evalTriage(jpath1)
-importData(path2)
+#importData(path2)
 # s = [5, 45, 3, 80, 6, 65]
 #
 # e1 = [30,100, 30,100, 30,100]

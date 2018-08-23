@@ -99,6 +99,9 @@ def filterDuplicatedAnswers(answersDF):
 
 
 def get_question_answers(data, article_num, question_num):
+    question_labels = data[article_num][question_num][1][0]
+    print('labs', question_labels)
+    print(type(question_labels))
     question_nums = [parse(q, 'A') for q in question_labels]
     return question_nums
 

@@ -1,6 +1,6 @@
 from UnitizingScoring import *
 import numpy as np
-
+import os
 
 sourceDatabase = {}
 JournalistDatabase = {}
@@ -10,6 +10,13 @@ argValToWeightDict= {1:3, 2:2, 3:1, 4:.5, 5:1, 6:1}
 sourceValToWeightDict= {1:2, 2:1, 3:.5, 4:.25, 5:.5, 6:.5, 7:.5}
 
 #IMPORTANTNOTE: THIS ASSUMES pts reocmmended are positive, as in we subtract those points from 100 later!!!!
+
+def getSources(directory):
+    #NEEDS: WeightingOutputs, sourceTriagerIAA, arg Source IAA
+    for root, dir, files in os.walk(directory):
+        for file in files:
+            if file.endswith('.csv') and 'IAA' not in file:
+                print("Checking Agreement for "+directory+'/'+file)
 
 def assignPoints(ptsRec, ptsRecUnitization, sourceUnitization, argUnitization, argVal, sourceVal, article, journalist):
     doesPass, passingIndices = checkAgreement(ptsRecUnitization, sourceUnitization)
