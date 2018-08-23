@@ -1,11 +1,11 @@
 import pandas as pd
 #add more input args if they are necessary for future use cases
 def evaluateDependencies(schema, article, question, answer, dependenciesDF, stored,
-                         indices, alphaAgreement, alphaInclusive):
+                         indices, alphaAgreement, alphaInclusive, selectedText):
     depTo = checkDepended(schema, question, dependenciesDF, answer)
     if depTo:
         if depTo[depTo['dependency_type'] == 'unitizing']:
-            dataTo = [indices, alphaAgreement, alphaInclusive]
+            dataTo = [indices, alphaAgreement, alphaInclusive, selectedText]
             stored = stashDepended(schema, article, question, answer, dataTo, stored)
         else:
             print('dependency type not recognized')
@@ -13,10 +13,10 @@ def evaluateDependencies(schema, article, question, answer, dependenciesDF, stor
     if depFrom:
         if depFrom[depFrom['dependency_type'] == 'unitizing']:
             dataTransfer = fetchDependent(schema,article, question, answer, stored)
-            indices, alphaAgreement, alphaInclusive = unPackDependent(dataTransfer)
+            indices, alphaAgreement, alphaInclusive, selectedText = unPackDependent(dataTransfer)
         else:
             print('dependency type not recognized')
-    return 'foo'
+    return stored, indices, alphaAgreement, alphaInclusive, selectedText
 
 def stashDepended(schema, article, question, answer, dataPassing, stored):
     if stored is None:
@@ -67,12 +67,19 @@ def checkDepended(schema, question, dependenciesDF, answer = -1):
 
 def checkContained(schema, question, dependenciesDF, answer, quesHead, ansHead):
     thisSchema = dependenciesDF[dependenciesDF['schema'] == schema]
-    thisQ = thisSchema[thisSchema[quesHead] == question]
-    if len(thisQ < 1):
+    print('thisschema',thisSchema)
+    print('ques',question)
+    if thisSchema.shape[0]<1:
         return False
-    if thisQ['answer'].iloc[0] == -1:
-        return thisQ
-    match = thisQ[thisQ[ansHead] == answer]
-    if len(match > 0):
-        return match
+    thisQ = thisSchema[thisSchema[quesHead] == question]
+    if thisQ.shape[0] >0:
+        print('passed shapeliness')
+        if thisQ[ansHead].iloc[0] == -1:
+            print('we in boooyyzzz')
+            return thisQ
+        match = thisQ[thisQ[ansHead] == answer]
+        if match.shape[0] > 0:
+            return match
+        return False
     return False
+

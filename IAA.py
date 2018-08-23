@@ -3,17 +3,34 @@ from ChecklistCoding import *
 from ExtraInfo import *
 from repScores import *
 from data_utils import initRep
+from QuestionDependencies import getDependencies
+from QuestionDependencies import evaluateDependencies
+import os
+path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
-path = 'data_pull_8_10/PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv'
+def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, dependencyCSV = 'Inter_q_dependencies.csv', answersFile = None):
+    for root, dir, files in os.walk(directory):
+        for file in files:
+            if file.endswith('.csv') and 'IAA' not in file:
+                print("Checking Agreement for "+directory+'/'+file)
+                try:
+                    calc_scores(directory+'/'+file, hardCodedTypes=hardCodedTypes, repCSV = repCSV, dependencyCSV = dependencyCSV,
+                            answersFile = answersFile)
+                except:
+                    #will be an error for every file that isn't the right file, there's a more graceful solution, but
+                    #we'll save that dream for another day
+                    print("ERROR OCCURRED")
 
-
-def calc_scores(filename, hardCodedTypes = False, repCSV=None):
-    uberDict = data_storer(filename)
+def calc_scores(filename, hardCodedTypes = False, repCSV=None, dependencyCSV = 'Inter_q_dependencies.csv', answersFile = None):
+    uberDict = data_storer(filename, answersFile)
     data = [["article_num", "article_sha256", "question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
-             "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance"
+             "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
-
+    #initialize rep
     repDF = initRep(repCSV, uberDict)
+    #initialize inter-question dependencies
+    storedForDepend = None
+    dependenciesDF = getDependencies(dependencyCSV)
     for article in uberDict.keys():  # Iterates throuh each article
         article_num = get_article_num(uberDict, article)
 
@@ -27,28 +44,52 @@ def calc_scores(filename, hardCodedTypes = False, repCSV=None):
                 #Checklist Question
                 for i in range(len(agreements)):
                     codingPercentAgreement, unitizingScore = agreements[i][4], agreements[i][2]
+                    winner, units = agreements[i][0], agreements[i][1]
+                    inclusiveUnitizing = agreements[i][3]
+                    selectedText, firstSecondScoreDiff = agreements[i][6], agreements[i][7]
+                    question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]
-                    num_choices = agreements[i][9]
+                    storedForDepend, units, unitizingScore, inclusiveUnitizing, selectedText = evaluateDependencies(question_type,
+                                                                                                article, ques, winner,
+                                                                                                dependenciesDF,
+                                                                                                storedForDepend, units,
+                                                                                                unitizingScore,
+                                                                                                inclusiveUnitizing,
+                                                                                                selectedText)
                     totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                     answer_text = get_answer_content(uberDict,article, ques, agreements[i][0])
                     bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
                     #Treat each q as a binary yes/no
                     chance_odds = bin_chance_odds
-                    data.append([article_num, article[:8], ques, agreements[i][8], agreements[i][0], codingPercentAgreement, agreements[i][7], agreements[i][1],
+                    ques_num = parse(ques,'Q')
+                    data.append([article_num, article[:8], ques_num, agreements[i][8], agreements[i][0], codingPercentAgreement, agreements[i][7], agreements[i][1],
                                  unitizingScore, agreements[i][3], totalScore, chance_odds, bin_chance_odds, num_users, agreements[i][9],agreements[i][6],
                                 question_text, answer_text])
             else:
+                #winner, units, uScore, iScore, highScore, numUsers, selectedText, firstSecondScoreDiff
+                winner, units = agreements[0], agreements[1]
+                inclusiveUnitizing, numUsers = agreements[3], agreements[5]
+                selectedText, firstSecondScoreDiff = agreements[6], agreements[7]
+                question_type, num_choices = agreements[8], agreements[9]
                 codingPercentAgreement, unitizingScore = agreements[4], agreements[2]
+
                 num_users = agreements[5]
-                num_choices = agreements[9]
-                #winner, units, uScore, iScore, highScore, numUsers
+                storedForDepend, units, unitizingScore, inclusiveUnitizing, selectedText = evaluateDependencies(question_type,
+                                                                                                  article, ques, winner,
+                                                                                                  dependenciesDF,
+                                                                                                  storedForDepend, units,
+                                                                                                  unitizingScore,
+                                                                                                  inclusiveUnitizing,
+                                                                                                  selectedText)
                 bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
                 chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
                 answer_text = get_answer_content(uberDict, article, ques, agreements[0])
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
-                data.append([article_num, article[:8], ques, agreements[8], agreements[0], codingPercentAgreement, agreements[7],
-                             agreements[1], unitizingScore, agreements[3],
-                             totalScore, chance_odds, bin_chance_odds, num_users, agreements[9], agreements[6], question_text, answer_text])
+                ques_num = parse(ques, 'Q')
+                data.append([article_num, article[:8], ques_num, agreements[8], winner, codingPercentAgreement, agreements[7],
+                             units, unitizingScore, inclusiveUnitizing,
+                             totalScore, chance_odds, bin_chance_odds, num_users, agreements[9], selectedText,
+                             question_text, answer_text])
 
     # push out of womb, into world
     print('exporting rep_scores')
@@ -118,7 +159,7 @@ def score(article, ques, data, repDF, hardCodedTypes = False):
         # TODO: verify if these still exist, if they do, bring up to speed with new output formats
         return run_2step_unitization(data, article, ques, repDF)
 
-    answers, users, numUsers = get_question_answers(data, article, ques).tolist(), \
+    answers, users, numUsers = get_question_answers(data, article, ques), \
                                get_question_userid(data, article, ques).tolist(), \
                                get_num_users(data, article, ques)
     if question_type == 'ordinal':
@@ -177,11 +218,12 @@ def get_path(fileName):
     return path, name
 
 # # TEST STUFF
-calc_scores('data_pull_8_10/PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv', hardCodedTypes= True)
-# calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
-# calc_scores(path, hardCodedTypes=True)
-#in sss file I renamed the filenamecolumn to be sha256 so it fits in with the other mechanisms for extracting data
-#calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)
+calc_agreement_directory('sss_pull_8_22', hardCodedTypes=True)
+# calc_scores('data_pull_8_10/PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv', hardCodedTypes= True)
+# # calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
+# #calc_scores(path, hardCodedTypes=True)
+# #in sss file I renamed the filenamecolumn to be sha256 so it fits in with the other mechanisms for extracting data
+# calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)
 # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+# # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')

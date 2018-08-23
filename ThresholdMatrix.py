@@ -23,9 +23,9 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1):
     else:
         return 'L'
 def checkThreshold():
-    for i in range(1,10):
+    for i in range(1,101):
         for u in range(3,11):
-            p = i/10
+            p = float(i)/100
             print(str(p)+"%", u, 'users')
             print(evalThresholdMatrix(p, u))
             # print(evalThresholdMatrix(p, u, 1.4))

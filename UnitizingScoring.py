@@ -125,7 +125,7 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
     passingIndexes = np.zeros(len(percentageScoresArray))
     #adjust so user count isn't inflated by reps
     num_reals = len(np.unique(users))
-    codeZero, minPassPercent = evalThresholdMatrix(max(percentageScoresArray), num_reals, giveMin = True)
+    codeZero, minPassPercent = evalThresholdMatrix(max(percentageScoresArray), num_reals), 'N/A'
     print('minPass', minPassPercent)
     if minPassPercent == 'U':
         return 'U','U','U','U','U'
@@ -133,7 +133,9 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
     for i in range(len(percentageScoresArray)):
         if type(percentageScoresArray[i]) == 'numpy.ndarray':
             print("OOOOO")
-        if percentageScoresArray[i]>minPassPercent:
+#TODO: get math done for minpasspercent
+#        if percentageScoresArray[i]>minPassPercent:
+        if evalThresholdMatrix(percentageScoresArray[i], num_reals) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
     majorityUsersUnique = getMajorityUsers(passingIndexes, users, starts, ends)

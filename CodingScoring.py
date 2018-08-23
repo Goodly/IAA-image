@@ -38,7 +38,6 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, repDF, source
                                             weightScaledNumUsers,\
                                             userWeightDict= weightScaleEverything(answers, weights, users,
                                                                                          starts,ends, repDF)
-    #print('weightScaledEnds', weightScaledEnds)
     #TOPTWO metric add the score diference
     winner, units, uScore, iScore, selectedText= passToUnitizing(weightScaledAnswers,weightScaledUsers,weightScaledStarts,
                                                     weightScaledEnds,numUsers,length, highScore, winner,
@@ -50,16 +49,7 @@ def repScaleAnsUsers(answers, users, repDF):
     return repScaledAnswers, repScaledUsers
 
 def weightScaleEverything(answers,weights, users, starts, ends, repDF):
-    # weightScaledAnswers= scaleFromWeights(answers, answers, weights, users, repDF)
-    # weightScaledStarts = scaleFromWeights(starts, answers, weights, users, repDF)
-    # weightScaledEnds =scaleFromWeights(ends, answers, weights, users, repDF)
-    # assert len(weightScaledStarts[0]) == len(weightScaledEnds[0]), 'starts, ends mismatched'
-    # weightScaledUsers  = scaleFromWeights(users, answers, weights, users, repDF)
-    # print('starts, users', len(weightScaledStarts[0]), len(weightScaledUsers[0]))
-    # assert len(weightScaledStarts[0]) == len(weightScaledUsers[0]), 'starts, users mismatched'
-    # ans, ends, starts, users = weightScaledAnswers[0], weightScaledEnds[0], weightScaledStarts[0], weightScaledUsers[0]
-    # numUsers = weightScaledUsers[1]
-    # userWeightDict = weightScaledUsers[2]
+
     arrs = [answers, users, starts, ends]
     scaledArrs, sumTotalScaling, userWeightDict = scaleManyFromWeights(arrs,answers, weights, users, repDF)
 

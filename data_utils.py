@@ -34,33 +34,35 @@ def fetch_for_triage(path):
                     }
     return bigDict, articles
 
-def data_storer(path):
+def data_storer(path, answerspath):
     """Function that turns csv data. Input the path name for the csv file.
     This will return a super dictionary that is used with other abstraction functions."""
 
-    data = pd.read_csv(path, encoding = 'utf-8')
-    article_nums = np.unique(data['article_sha256'])
+    highlightData = pd.read_csv(path, encoding = 'utf-8')
+    if answerspath is not None:
+        answersData = pd.read_csv(answerspath, encoding = 'utf-8')
+    article_nums = np.unique(highlightData['article_sha256'])
     dict_of_article_df = dict()
     for i in article_nums:
-        article =data[data['article_sha256'] == i]
-        question_nums = np.unique(article['question_number'])
+        article =highlightData[highlightData['article_sha256'] == i]
+        question_nums = np.unique(article['question_label'])
         new_dict = dict()
         for x in question_nums:
             array = []
-            array.append(article.loc[article['question_number']== x, 'question_text'][0:1])
-
-            answers = [article.loc[article['question_number']== x, 'answer_number']]
-            answers.append([article.loc[article['question_number']== x, 'contributor_uuid']])
-            answers.append([article.loc[article['question_number']== x, 'start_pos']])
-            answers.append([article.loc[article['question_number']== x, 'end_pos']])
-            answers.append([article.loc[article['question_number']== x, 'source_text_length']])
+            array.append(article.loc[article['question_label']== x, 'question_text'][0:1])
+            #previously this was 'answer_number'
+            answers = [article.loc[article['question_label']== x, 'answer_label']]
+            answers.append([article.loc[article['question_label']== x, 'contributor_uuid']])
+            answers.append([article.loc[article['question_label']== x, 'start_pos']])
+            answers.append([article.loc[article['question_label']== x, 'end_pos']])
+            answers.append([article.loc[article['question_label']== x, 'source_text_length']])
             #Change topic_name to answer_type when we get that feature request
-            answers.append([article.loc[article['question_number'] == x, 'topic_name']])
-            answers.append([article.loc[article['question_number'] == x, 'article_number']])
-            answers.append([article.loc[article['question_number'] == x, 'namespace']])
-            answers.append([article.loc[article['question_number'] == x, 'target_text']])
-            answers.append([article.loc[article['question_number'] == x, 'question_text']])
-            answers.append([article.loc[article['question_number'] == x, 'answer_content']])
+            answers.append([article.loc[article['question_label'] == x, 'topic_name']])
+            answers.append([article.loc[article['question_label'] == x, 'article_number']])
+            answers.append([article.loc[article['question_label'] == x, 'schema_namespace']])
+            answers.append([article.loc[article['question_label'] == x, 'target_text']])
+            answers.append([article.loc[article['question_label'] == x, 'question_text']])
+            answers.append([article.loc[article['question_label'] == x, 'answer_content']])
 
             array.append(answers)
 
@@ -92,10 +94,21 @@ def data_storer(path):
 #         dict_of_article_df[i] = new_dict
 #     return dict_of_article_df
 
+def filterDuplicatedAnswers(answersDF):
+    return answersDF
 #Abstraction functions for the data structure
-def get_question_answers(data, article_num, question_num):
-    return data[article_num][question_num][1][0]
 
+
+def get_question_answers(data, article_num, question_num):
+    question_nums = [parse(q, 'A') for q in question_labels]
+    return question_nums
+
+    #old version before we had to parse out the answer_num
+    #return data[article_num][question_num][1][0]
+def parse(label, field):
+    aSpot = label.index(field)
+    ansString = label[aSpot+1:]
+    return int(ansString)
 
 def get_question_userid(data, article_num, question_num):
     return data[article_num][question_num][1][1][0]
@@ -145,8 +158,7 @@ def get_answer_content(data, article_num, question_num, answer_num):
     if answer_num == 'U' or answer_num == 'L' or answer_num == 'M' or answer_num == 'N/A':
         return answer_num
 
-    answers = get_question_answers(data, article_num, question_num).tolist()
-
+    answers = get_question_answers(data, article_num, question_num)
     index = finder(answers, answer_num)
 
     if index<0:
@@ -164,6 +176,7 @@ def finder(ser, a):
     return -1
 
 def get_type_hard(type, ques):
+    ques = parse(ques, 'Q')
     #TODO:verify all of this against the schema
     typing_dict = {
         'Source relevance':
@@ -172,6 +185,7 @@ def get_type_hard(type, ques):
                 2: ['checklist', 8],
                 3: ['ordinal', 5]
             },
+        #OLD
         'Science and Causality Questions for SSS Students V2':
             {
                 5:['nominal', 1],
@@ -179,11 +193,79 @@ def get_type_hard(type, ques):
                 9:['ordinal', 4],
                 10:['nominal', 1]
             },
+        #OLD
         'Language Specialist V2':
             {
                 1:['checklist',9],
                 6:['checklist', 8],
 
+            },
+        'Language Specialist V3':
+            {
+                1:['checklist', 13],
+                2:['ordinal', 5],
+                3:['ordinal', 5],
+                5:['ordinal', 5],
+                6:['nominal', 8],
+                7:['nominal',1],
+                #TODO: is this ordinal?
+                8:['ordinal', 4],
+                9:['ordinal', 5],
+                10: ['ordinal', 4],
+                11: ['ordinal', 5],
+                12: ['ordinal', 3],
+                13: ['ordinal', 5],
+                15: ['ordinal', 10],
+                14: ['ordinal', 10]
+            },
+        'Confidence':
+            {
+                1:['ordinal', 3],
+                2:['ordinal', 5],
+                4:['ordinal', 3],
+                5:['ordinal', 3],
+                6:['nominal', 5],
+                7:['ordinal', 3],
+                8:['ordinal', 5],
+                9:['ordinal', 5],
+                10:['ordinal', 3],
+                11:['ordinal', 4],
+                12:['checklist', 4],
+                13:['ordinal', 10],
+                14:['ordinal', 10]
+            },
+        'Evidence Specialist':
+            {
+                2:['checklist', 3],
+                3:['checklist', 8],
+                #TODO: this is an interval quesiton, prob gonna get ignored l8r though
+                4:['nominal', 1],
+                5:['ordinal', 6],
+                6:['ordinal', 5],
+                7:['nominal', 3],
+                8:['nominal', 1],
+                9:['ordinal', 5],
+                11:['ordinal', 3],
+                12:['ordinal', 5],
+                13:['ordinal', 5],
+                14:['ordinal', 4],
+                15:['ordinal', 10],
+                16:['ordinal', 10]
+            },
+        'Beginner Reasoning Specialist Structured':
+            {
+                1:['checklist', 4],
+                2:['checklist', 5],
+                3:['checklist', 6],
+                4:['ordinal', 3],
+                5:['ordinal', 3],
+                6:['checklist', 8],
+                7:['ordinal', 5],
+                8:['nominal', 1],
+                #hardness
+                9:['ordinal', 10],
+                #confidence
+                10:['ordinal', 10]
             },
         'Evidence':
             {
@@ -202,7 +284,7 @@ def initRep(repCSV, data, source = 'specialist'):
     if repCSV != None:
         repDF = CSV_to_userid(repCSV)
     else:
-        repDF = create_user_dataframe(data, source = source)
+        repDF = create_user_dataframe(data)
     return repDF
 
 def cleanForUnitization(data, article_num, question_num):
@@ -245,7 +327,6 @@ def get_user_arrays(data, article_num, question_num):
     return returnDict
 
 def get_user_rep(id, repDF):
-    #print(repDF.loc[repDF['Users']==id]['Score'])
     if repDF.loc[repDF['Users']==id]['Questions'].iloc[0]<30:
         influence = .8
     else:

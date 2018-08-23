@@ -48,7 +48,7 @@ def getText(start,end, sourceText):
 
 def oddsDueToChance(percentage, num_users = 5, num_choices = 2):
     """Simulates the odds that agreement is due to chance based off of a coinflip"""
-    print('simulating chance')
+    #print('simulating chance')
     if percentage<.5:
         return 1
     percentages = np.zeros(0)
@@ -62,5 +62,5 @@ def oddsDueToChance(percentage, num_users = 5, num_choices = 2):
         percentages = np.append(percentages, highScore)
         #print(flips, counts, highCount,highScore, percentages)
     winRate = np.sum(percentages>=percentage)/10000
-    print('Done')
+    #print('Done')
     return winRate
