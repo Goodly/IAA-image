@@ -2,7 +2,7 @@ from data_utils import *
 from math import exp
 import numpy as np
 import pandas as pd
-
+from dataV2 import *
 
 
 def create_user_dataframe(data, csvPath=None):
@@ -12,10 +12,15 @@ def create_user_dataframe(data, csvPath=None):
     else:
         data1 = pd.DataFrame(columns=['Users', 'Score', 'Questions', 'Influence'])
     for article_num in data.keys():
+        print('scanning article', article_num)
         for question_num in data[article_num].keys():
+            print('checking q', question_num)
             #TODO make this not hardCoded, it's identical to data_utils get quesiton userid but we had importerror
-            users_q = data[article_num][question_num][1][1][0]
+            #users_q = data[article_num][question_num][1][1][0]
+            users_q = get_question_userid(data, article_num, question_num)
+            print('users_q', users_q)
             for ids in users_q:
+                print(ids)
                 if ids not in data1.loc[:, 'Users'].tolist():
                     data1 = data1.append({"Users": ids, "Score": 5, "Questions": 1, "Influence": 1}, ignore_index=True)
     return data1

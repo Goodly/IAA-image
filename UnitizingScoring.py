@@ -3,7 +3,7 @@ import numpy as np
 from ThresholdMatrix import *
 
 def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner):
-    assert len(starts) == len(users), 'starts, users mismatched'
+    #assert len(starts) == len(users), 'starts, users mismatched'
     #print('scoringNu')
     #print('nu', userWeightDict)
     answerMatrix = toArray(starts,ends,length, users, userWeightDict, answers, winner)
@@ -77,12 +77,12 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
     astarts, aends = np.array(starts), np.array(ends)
     totalWeight = 0
     for u in range(len(uniqueUsers)):
-        if userWeightDict is not None:
+        try:
             weight = userWeightDict[uniqueUsers[u]]
             print(userWeightDict)
             print(weight)
             totalWeight = totalWeight + weight
-        else:
+        except:
             totalWeight = len(uniqueUsers)
             weight = 1
         #print(uniqueUsers[u])
@@ -125,7 +125,7 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
     passingIndexes = np.zeros(len(percentageScoresArray))
     #adjust so user count isn't inflated by reps
     num_reals = len(np.unique(users))
-    codeZero, minPassPercent = evalThresholdMatrix(max(percentageScoresArray), num_reals), 'N/A'
+    codeZero, minPassPercent = evalThresholdMatrix(max(percentageScoresArray), num_reals, scale=1.5), 'N/A'
     print('minPass', minPassPercent)
     if minPassPercent == 'U':
         return 'U','U','U','U','U'
@@ -135,7 +135,7 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
             print("OOOOO")
 #TODO: get math done for minpasspercent
 #        if percentageScoresArray[i]>minPassPercent:
-        if evalThresholdMatrix(percentageScoresArray[i], num_reals) == 'H':
+        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 1.5) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
     majorityUsersUnique = getMajorityUsers(passingIndexes, users, starts, ends)

@@ -2,85 +2,239 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Inter_q_dependencies.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Inter_q_dependencies.ods" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QuestionDependencies.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/T_IAAFormTriager1.2C2-2018-07-28T21.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.CorrCauseSpecialist1.0C2-2018-08-10T0215-DataHuntHighlights.csv#" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv#" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv#" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.S_IAA_PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv#" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.S_IAA_PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv#" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv#" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/.~lock.S_IAA_SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv#" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaCorrCause-2018-08-14T1853-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/FactRelevance1.0C2-2018-08-17T2013-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/Language1.4C2-2018-08-17T2011-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/PreAlphaHolistic2-2018-08-17T2010-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/PreAlphaSources2-2018-08-17T2013-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/ReasoningSpecialist1.1C-2018-08-17T2012-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/T_IAAFormTriager1.2C2-2018-08-17T2009-Highlighter.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_pull_8_17/T_IAASemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pe_data/PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pe_data/S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/IAA-image.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IAA-image.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dependency.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dataV2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChecklistCoding.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChecklistCoding.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CodingScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/CodingScoring.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ExtraInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExtraInfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FormTriager1.2C2-2018-07-25T23.json.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/IAA.py" beforeDir="false" afterPath="$PROJECT_DIR$/IAA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepScores/Repscore10.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RepScores/Repscore10.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuestionDependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/QuestionDependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThresholdMatrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/ThresholdMatrix.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TriagerScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/TriagerScoring.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnitizingScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/UnitizingScoring.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserRepScores.csv" beforeDir="false" afterPath="$PROJECT_DIR$/UserRepScores.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_pull_8_10/S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_pull_8_10/S_IAA_SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_pull_8_10/S_IAA_SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_pull_8_17/T_IAASemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_pull_8_17/T_IAASemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pointAssignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/pointAssignment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repScores.py" beforeDir="false" afterPath="$PROJECT_DIR$/repScores.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/.~lock.S_IAA_SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv#" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/S_IAA_SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sss_pull_8_22/S_IAA_SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1244811360">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="12" />
+          <entry key="project.open.time.10" value="3" />
+          <entry key="project.open.time.11" value="2" />
+          <entry key="project.open.time.12" value="3" />
+          <entry key="project.open.time.14" value="1" />
+          <entry key="project.open.time.15" value="2" />
+          <entry key="project.open.time.18" value="1" />
+          <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.23" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="19" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Python Console" value="36" />
+          <entry key="dummy" value="4" />
+          <entry key="py" value="33398" />
+          <entry key="txt" value="17" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="21" />
+          <entry key="Python" value="33434" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="41" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="41" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="IAA.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/IAA.py">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="121">
+              <caret line="139" selection-start-line="139" selection-end-line="139" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
-      <file leaf-file-name="repScores.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/repScores.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataV2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
+            <state relative-caret-position="-4710">
+              <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <marker date="1535963815896" expanded="true" signature="3263:3389" ph="..." />
+                <marker date="1535963815896" expanded="true" signature="5137:5205" ph="..." />
+                <marker date="1535963815896" expanded="true" signature="5241:5297" ph="..." />
+                <marker date="1535963815896" expanded="true" signature="12765:12914" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CodingScoring.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-390">
+              <caret line="106" column="10" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="10" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/IAA.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="23" column="53" selection-start-line="13" selection-start-column="4" selection-end-line="23" selection-end-column="53" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pointAssignment.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+                <marker date="1535967588625" expanded="true" signature="1214:4193" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="2791:2868" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="2899:2937" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="3070:3092" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="3121:3157" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="3190:3469" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="3496:3845" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="3876:4193" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="4217:4222" ph="..." />
+                <marker date="1535967588625" expanded="true" signature="5183:5312" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Weighting Algorithm (updated).py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1665">
+              <caret line="111" column="27" lean-forward="true" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+                <marker date="1535965623327" expanded="true" signature="125:477" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>dep Here</find>
+      <find>ISNTITFUN True</find>
+      <find>ISNT</find>
+      <find>ISNTITFUN TRUE</find>
+      <find>UNITSLENGTH</find>
+      <find>dep</find>
+      <find>UNITSLEN</find>
+      <find>thois</find>
+      <find>threshold</find>
+      <find>lang</find>
+      <find>launch</find>
+      <find>SRK</find>
+      <find>INDS</find>
+      <find>findS</find>
+      <find>[]</find>
+      <find>PUPD</find>
+      <find>FOR Y</find>
+      <find>WOI</find>
+      <find>gotA</find>
+      <find>GOTA</find>
+      <find>thresh</find>
+      <find>GOTANS</find>
+      <find>GOTAN</find>
+      <find>launching</find>
+      <find>newCH</find>
+      <find>ind</find>
+      <find>mjr</find>
+      <find>scoreC</find>
+      <find>NA</find>
+      <find>digit</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/IAA.py" />
-        <option value="$PROJECT_DIR$/CodingScoring.py" />
-        <option value="$PROJECT_DIR$/repScores.py" />
         <option value="$PROJECT_DIR$/test_user_rep.py" />
+        <option value="$PROJECT_DIR$/CausalityWeighting.py" />
+        <option value="$PROJECT_DIR$/TriagerScoring.py" />
+        <option value="$PROJECT_DIR$/repScores.py" />
+        <option value="$PROJECT_DIR$/data_utils.py" />
+        <option value="$PROJECT_DIR$/ExtraInfo.py" />
+        <option value="$PROJECT_DIR$/ChecklistCoding.py" />
+        <option value="$PROJECT_DIR$/QuestionDependencies.py" />
+        <option value="$PROJECT_DIR$/UnitizingScoring.py" />
+        <option value="$PROJECT_DIR$/IAA.py" />
         <option value="$PROJECT_DIR$/ThresholdMatrix.py" />
+        <option value="$PROJECT_DIR$/CodingScoring.py" />
+        <option value="$PROJECT_DIR$/Dependency.py" />
+        <option value="$PROJECT_DIR$/dataV2.py" />
+        <option value="$PROJECT_DIR$/Weighting Algorithm (updated).py" />
+        <option value="$PROJECT_DIR$/pointAssignment.py" />
       </list>
     </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="67" />
+    <option name="y" value="25" />
+    <option name="width" value="767" />
+    <option name="height" value="875" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -94,6 +248,11 @@
             <path>
               <item name="IAA-image" type="b2602c69:ProjectViewProjectNode" />
               <item name="IAA-image" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IAA-image" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IAA-image" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -113,8 +272,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="test_user_rep" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.Weighting Algorithm (updated)">
+    <configuration name="Dependency" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="IAA-image" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -126,15 +285,113 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_user_rep.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Dependency.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
     </configuration>
+    <configuration name="IAA" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/IAA.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Weighting Algorithm (updated)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Weighting Algorithm (updated).py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dataV2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataV2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pointAssignment" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pointAssignment.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.IAA" />
+      <item itemvalue="Python.dataV2" />
+      <item itemvalue="Python.pointAssignment" />
+      <item itemvalue="Python.Dependency" />
+      <item itemvalue="Python.Weighting Algorithm (updated)" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test_user_rep" />
+        <item itemvalue="Python.Weighting Algorithm (updated)" />
+        <item itemvalue="Python.Dependency" />
+        <item itemvalue="Python.IAA" />
+        <item itemvalue="Python.dataV2" />
+        <item itemvalue="Python.pointAssignment" />
       </list>
     </recent_temporary>
   </component>
@@ -149,263 +406,172 @@
       <option name="presentableId" value="Default" />
       <updated>1532152400476</updated>
     </task>
+    <task id="LOCAL-00001" summary="Updates For Josh">
+      <created>1534992899028</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1534992899028</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="67" y="25" width="1533" height="875" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.203125" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32965517" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32965517" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12847683" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.30068967" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32885906" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4986755" visible="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32797858" />
+      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32885906" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.2966443" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32885906" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5013245" side_tool="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32965517" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12847683" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32965517" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4986755" visible="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.29798657" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32885906" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5013245" side_tool="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updates For Josh" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updates For Josh" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="astarts[0] == 5084" language="Python" />
+          <url>file://$PROJECT_DIR$/UnitizingScoring.py</url>
+          <line>89</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dataV2.py</url>
+          <line>138</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Dependency.py</url>
+          <line>74</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="task == 'ef335a02-a550-4d8b-9cbd-fb6622ad8c8f'" language="Python" />
+          <url>file://$PROJECT_DIR$/IAA.py</url>
+          <line>51</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="ch == 2" language="Python" />
+          <url>file://$PROJECT_DIR$/Dependency.py</url>
+          <line>40</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Dependency.py</url>
+          <line>72</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>ch == 2</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ch ==2</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>codingScore &gt;.5</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>task == 'ef335a02-a550-4d8b-9cbd-fb6622ad8c8f'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>schema_namespace ==</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>task = 'ef335a02-a550-4d8b-9cbd-fb6622ad8c8f'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(answers)&gt;0</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(indices)&gt;0</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(questions)&gt;1</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="800">
-          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1264">
-          <caret line="83" selection-start-line="83" selection-end-line="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ThresholdMatrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="800">
-          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py" />
-    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1984">
-          <caret line="127" column="77" selection-start-line="127" selection-start-column="77" selection-end-line="127" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="55" column="36" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1136">
-          <caret line="73" column="71" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py" />
-    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1984">
-          <caret line="127" column="77" selection-start-line="127" selection-start-column="77" selection-end-line="127" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="55" column="36" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1136">
-          <caret line="73" column="71" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py" />
-    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2736">
-          <caret line="174" column="26" selection-start-line="174" selection-start-column="26" selection-end-line="174" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1184">
-          <caret line="77" column="19" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="35" column="34" lean-forward="true" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py" />
-    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2736">
-          <caret line="174" column="26" selection-start-line="174" selection-start-column="26" selection-end-line="174" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1040">
-          <caret line="67" column="14" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1184">
-          <caret line="77" column="19" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py" />
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1040">
-          <caret line="67" column="14" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1184">
-          <caret line="77" column="19" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1904">
-          <caret line="122" column="41" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py" />
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="768">
-          <caret line="50" column="77" selection-start-line="50" selection-start-column="77" selection-end-line="50" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="992">
-          <caret line="65" column="13" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="36" column="78" selection-start-line="36" selection-start-column="78" selection-end-line="36" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py" />
-    <entry file="file://$PROJECT_DIR$/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="768">
-          <caret line="50" column="53" selection-start-line="50" selection-start-column="53" selection-end-line="50" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1168">
-          <caret line="76" column="56" selection-start-line="76" selection-start-column="56" selection-end-line="76" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py" />
-    <entry file="file://$PROJECT_DIR$/ChecklistCoding.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1384" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/IAA_raw/CodingScoring.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="32">
@@ -414,45 +580,238 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Desktop/test_user_rep.py" />
-    <entry file="file://$USER_HOME$/Desktop/repScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1210" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="127" column="77" selection-start-line="127" selection-start-column="77" selection-end-line="127" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$USER_HOME$/Desktop/repScores.py" />
     <entry file="file://$PROJECT_DIR$/test_user_rep.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="800">
           <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/indexing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="798">
+          <caret line="1784" selection-start-line="1784" selection-end-line="1784" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/datascience/tables.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/datascience/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CausalityWeighting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1005">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TriagerScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="168" column="32" lean-forward="true" selection-start-line="168" selection-start-column="32" selection-end-line="168" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/numpy/lib/arraysetops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="230" selection-start-line="230" selection-end-line="230" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA_OLD/UnitizingScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="211" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/QuestionDependencies.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/series.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7320">
+          <caret line="565" selection-start-line="565" selection-end-line="565" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2355">
+          <caret line="159" column="4" selection-start-line="159" selection-start-column="4" selection-end-line="160" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExtraInfo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="37" column="12" lean-forward="true" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repScores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="1179" selection-start-line="1179" selection-end-line="1179" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/frame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="2664" selection-start-line="2664" selection-end-line="2664" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="406" selection-start-line="406" selection-end-line="406" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dependency.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="145" selection-start-line="145" selection-end-line="145" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1535963792792" expanded="true" signature="999:1004" ph="..." />
+            <marker date="1535963792792" expanded="true" signature="4560:4772" ph="..." />
+            <marker date="1535963792792" expanded="true" signature="4963:5447" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChecklistCoding.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ThresholdMatrix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+        <state relative-caret-position="15">
+          <caret line="1" column="60" selection-start-line="1" selection-start-column="60" selection-end-line="1" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="139" selection-start-line="139" selection-end-line="139" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-390">
+          <caret line="106" column="10" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repScores.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
+        <state relative-caret-position="300">
+          <caret line="23" column="53" selection-start-line="13" selection-start-column="4" selection-end-line="23" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/io/parsers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="832">
+          <caret line="1707" selection-start-line="1707" selection-end-line="1707" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataV2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4710">
+          <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1535963815896" expanded="true" signature="3263:3389" ph="..." />
+            <marker date="1535963815896" expanded="true" signature="5137:5205" ph="..." />
+            <marker date="1535963815896" expanded="true" signature="5241:5297" ph="..." />
+            <marker date="1535963815896" expanded="true" signature="12765:12914" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weighting Algorithm (updated).py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1665">
+          <caret line="111" column="27" lean-forward="true" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <marker date="1535965623327" expanded="true" signature="125:477" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pointAssignment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+            <marker date="1535967588625" expanded="true" signature="1214:4193" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="2791:2868" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="2899:2937" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="3070:3092" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="3121:3157" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="3190:3469" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="3496:3845" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="3876:4193" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="4217:4222" ph="..." />
+            <marker date="1535967588625" expanded="true" signature="5183:5312" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

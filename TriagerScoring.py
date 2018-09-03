@@ -53,7 +53,7 @@ def importData(path, excludedUsers = []):
     data = pd.read_csv(path, encoding = 'utf-8')
     #only excluding users for purpose of cleaner test data
     #Quang Gold--Duplicate Data from the real Quang
-    excludedUsers.append('40bbbf7e-a77b-498d-bb44-2ef6601061ef')
+    #excludedUsers.append('40bbbf7e-a77b-498d-bb44-2ef6601061ef')
     article_shas = np.unique(data['article_sha256'])
     out = [['article_filename','article_sha256', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
     for a in article_shas:
@@ -119,18 +119,19 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, global
     passers = determinePassingIndices(starts, ends, numUsers, users, length, category)
     #print('glob', globalExclusion)
     #Bug: sometimes users aren't being excluded when they should, not a huge deal, happens one time in all the data
-    catExclusions = exclusionList(users, inFlags, minU = 4)
+    #catExclusions = exclusionList(users, inFlags, minU = 6)
     #print('cat', catExclusions)
-    flagExclusions = np.unique(np.append(globalExclusion,catExclusions))
-    #print('exclusions', flagExclusions)
-    excl = findExcludedIndices(flagExclusions, users)
+    #flagExclusions = np.unique(np.append(globalExclusion,catExclusions))
+    #print('total exclusions', flagExclusions)
+    #excl = findExcludedIndices(flagExclusions, users)
     #print(excl)
     print('flagspreExcl', inFlags)
-    if len(excl > 1):
-        inFlags = exclude(excl, inFlags)
-        users = exclude(excl, users)
-        #ok to clip starts, ends because already know what passed
-        starts, ends = exclude(excl,starts), exclude(excl, ends)
+   # #/ if len(excl > 1):
+   #      inFlags = exclude(excl, inFlags)
+   #      users = exclude(excl, users)
+   #      #ok to clip starts, ends because already know what passed
+   #      starts, ends = exclude(excl,starts), exclude(excl, ends)
+   #  #
     codetoUser, userToCode= codeNameDict(users)
     print(codetoUser)
     coded = codeUsers(userToCode, users)
@@ -180,7 +181,7 @@ def exclusionList(users, flags,cats = None, minU= 8):
             score = oneCount/pot
         if score>.8 and pot > minU:
             excluded.append(u)
-    #print('excl', excluded,'users', np.unique(users))
+    print('excl', excluded,'users', np.unique(users))
     return excluded
 
 def codeNameDict(users):
@@ -203,13 +204,13 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
         'Language':
             {
                 'passingFunc':evalThresholdMatrix,
-                'scale':1.4
+                'scale':2.5
             },
         #hard to do, should be more lenient
         'Reasoning':
             {
                 'passingFunc': evalThresholdMatrix,
-                'scale': 1.7
+                'scale': 2.5
             },
         #specialist can be stricter
         #be more clear
@@ -221,29 +222,34 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
         'Probability':
             {
                 'passingFunc': evalThresholdMatrix,
-                'scale': 1.4
+                'scale': 1.7
+            },
+        'Confidence':
+            {
+                'passingFunc': evalThresholdMatrix,
+                'scale': 2.1
             },
         'Quoted Sources':
             {
                 'passingFunc': evalThresholdMatrix,
-                'scale': 1.2
+                'scale': 1.6
             },
         #keepstrict
         'Needs Fact-check':
             {
                 'passingFunc': evalThresholdMatrix,
-                'scale': 1.4
+                'scale': 1.6
             },
         #wait formore training, see what happens
         'Arguments':
             {
                 'passingFunc': evalThresholdMatrix,
-                'scale': 1.4
+                'scale': 2.5
             },
         'Assertions':
             {
                 'passingFunc': evalThresholdMatrix,
-                'scale': 1.4
+                'scale': 1.8
             },
     }
     passFunc = actionDeterminant[category]['passingFunc']
@@ -330,7 +336,7 @@ def assignFlags(matrix):
                             potential += 1
                             if matrix[u][i] == matrix[u][j]:
                               score += 1
-                    if potential > 0 and score/potential >= .5:
+                    if potential > 0 and score/potential >= .15:
                         flags[j] = flags[i]
                         sortedNStarts.append(j)
     return flags
@@ -365,13 +371,13 @@ def getText(start,end, sourceText):
     return out
 print("#####Form TRIAGER AGREED UPON DATA!!!#####")
 #importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
-importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
+#importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
 
 #evalTriage(jpath2)
 print()
 print()
 print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
-importData('./demo1/Demo1_ForTri-2018-08-23T0240-Highlighter.csv')
+importData('./demo1/Demo1_ForTri-2018-08-29T0335-Highlighter.csv')
 #evalTriage(jpath1)
 #importData(path2)
 # s = [5, 45, 3, 80, 6, 65]

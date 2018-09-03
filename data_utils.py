@@ -100,8 +100,8 @@ def filterDuplicatedAnswers(answersDF):
 
 def get_question_answers(data, article_num, question_num):
     question_labels = data[article_num][question_num][1][0]
-    print('labs', question_labels)
-    print(type(question_labels))
+    #print('labs', question_labels)
+    #print(type(question_labels))
     question_nums = [parse(q, 'A') for q in question_labels]
     return question_nums
 
@@ -178,7 +178,8 @@ def finder(ser, a):
     return -1
 
 def get_type_hard(type, ques):
-    ques = parse(ques, 'Q')
+    #ques = parse(ques, 'Q')
+    print('type', type, ques)
     #TODO:verify all of this against the schema
     typing_dict = {
         'Source relevance':
@@ -235,6 +236,22 @@ def get_type_hard(type, ques):
                 12:['checklist', 4],
                 13:['ordinal', 10],
                 14:['ordinal', 10]
+            },
+        'Probability Specialist':
+            {
+                1: ['ordinal', 3],
+                2: ['ordinal', 5],
+                4: ['ordinal', 3],
+                5: ['ordinal', 3],
+                6: ['nominal', 3],
+                7: ['nominal', 5],
+                8: ['ordinal', 5],
+                9: ['ordinal', 5],
+                10: ['ordinal', 3],
+                11: ['ordinal', 4],
+                12: ['nominal', 4],
+                13: ['ordinal', 10],
+                14: ['ordinal', 10]
             },
         'Evidence Specialist':
             {

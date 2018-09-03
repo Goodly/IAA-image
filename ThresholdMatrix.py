@@ -1,5 +1,5 @@
 from math import exp
-def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1):
+def evalThresholdMatrix(percentage, num_of_users, scale = 1.2, q = 1):
     """
 
     :param percentage: percentage agreement
@@ -31,4 +31,6 @@ def checkThreshold():
             # print(evalThresholdMatrix(p, u, 1.4))
             # print(evalThresholdMatrix(p, u, 1.4,1.2))
             # print(evalThresholdMatrix(p, u, 1.4, 1.2))
-checkThreshold()
+
+
+#checkThreshold()
