@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="Updates For Josh">
-      <change afterPath="$PROJECT_DIR$/Master.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Separator.py" afterDir="false" />
+    <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="Demo Updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dependency.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dependency.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IAA.py" beforeDir="false" afterPath="$PROJECT_DIR$/IAA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnitizingScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/UnitizingScoring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Master.py" beforeDir="false" afterPath="$PROJECT_DIR$/Master.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Separator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Separator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataV2.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataV2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pointAssignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/pointAssignment.py" afterDir="false" />
     </list>
@@ -21,9 +20,9 @@
     <session id="-1244811360">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="13" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.10" value="3" />
-          <entry key="project.open.time.11" value="3" />
+          <entry key="project.open.time.11" value="4" />
           <entry key="project.open.time.12" value="3" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="2" />
@@ -32,21 +31,21 @@
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="20" />
+          <entry key="project.opened" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="71" />
           <entry key="dummy" value="32" />
-          <entry key="py" value="44875" />
-          <entry key="txt" value="17" />
+          <entry key="py" value="46206" />
+          <entry key="txt" value="29" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="49" />
-          <entry key="Python" value="44946" />
+          <entry key="PLAIN_TEXT" value="61" />
+          <entry key="Python" value="46277" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -68,7 +67,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1789">
+            <state relative-caret-position="2130">
               <caret line="144" column="75" selection-start-line="144" selection-start-column="75" selection-end-line="144" selection-end-column="75" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -80,19 +79,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataV2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="391" column="20" selection-start-line="391" selection-start-column="4" selection-end-line="391" selection-end-column="20" />
+            <state relative-caret-position="943">
+              <caret line="710" column="1" selection-start-line="710" selection-start-column="1" selection-end-line="710" selection-end-column="1" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1536027447151" expanded="true" signature="3354:3480" ph="..." />
-                <marker date="1536027447151" expanded="true" signature="5228:5296" ph="..." />
-                <marker date="1536027447151" expanded="true" signature="5332:5388" ph="..." />
-                <marker date="1536027447151" expanded="true" signature="9715:10141" ph="..." />
-                <marker date="1536027447151" expanded="true" signature="11127:11163" ph="..." />
-                <marker date="1536027447151" expanded="true" signature="11196:11389" ph="..." />
-                <marker date="1536027447151" expanded="true" signature="11416:11520" ph="..." />
-                <marker date="1536027447151" expanded="true" signature="13856:14072" ph="..." />
-                <marker date="1536027447151" expanded="true" signature="16909:16956" ph="..." />
+                <marker date="1536033101277" expanded="true" signature="3354:3480" ph="..." />
+                <marker date="1536033101277" expanded="true" signature="5228:5296" ph="..." />
+                <marker date="1536033101277" expanded="true" signature="5332:5388" ph="..." />
               </folding>
             </state>
           </provider>
@@ -101,27 +94,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/IAA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1783">
-              <caret line="144" column="21" selection-start-line="144" selection-start-column="21" selection-end-line="144" selection-end-column="21" />
+            <state relative-caret-position="-1397">
+              <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <marker date="1536026584546" expanded="true" signature="7764:8071" ph="..." />
-                <marker date="1536026584546" expanded="true" signature="8140:8145" ph="..." />
+                <marker date="1536032793154" expanded="true" signature="7790:8097" ph="..." />
+                <marker date="1536032793154" expanded="true" signature="8166:8171" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pointAssignment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+            <state relative-caret-position="273">
+              <caret line="103" column="20" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
               <folding>
-                <marker date="1536027447143" expanded="true" signature="577:578" ph="..." />
-                <marker date="1536027447143" expanded="true" signature="7326:7371" ph="..." />
-                <marker date="1536027447143" expanded="true" signature="7405:7441" ph="..." />
-                <marker date="1536027447143" expanded="true" signature="16927:17041" ph="..." />
+                <element signature="e#0#30#0" expanded="true" />
+                <marker date="1536033717851" expanded="true" signature="577:578" ph="..." />
+                <marker date="1536033717851" expanded="true" signature="4558:4764" ph="..." />
+                <marker date="1536033717851" expanded="true" signature="8081:8126" ph="..." />
+                <marker date="1536033717851" expanded="true" signature="8160:8196" ph="..." />
+                <marker date="1536033717851" expanded="true" signature="17616:17733" ph="..." />
               </folding>
             </state>
           </provider>
@@ -130,11 +125,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Weighting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="838">
-              <caret line="111" column="116" selection-start-line="111" selection-start-column="116" selection-end-line="111" selection-end-column="116" />
+            <state relative-caret-position="75">
+              <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
-                <marker date="1536014809219" expanded="true" signature="4646:4732" ph="..." />
+                <marker date="1536032793166" expanded="true" signature="4678:4764" ph="..." />
               </folding>
             </state>
           </provider>
@@ -143,11 +138,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Master.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+            <state relative-caret-position="255">
+              <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
               <folding>
-                <element signature="e#0#40#0" expanded="true" />
-                <marker date="1536026859533" expanded="true" signature="240:245" ph="..." />
+                <element signature="e#0#17#0" expanded="true" />
+                <marker date="1536033077254" expanded="true" signature="205:210" ph="..." />
               </folding>
             </state>
           </provider>
@@ -156,27 +151,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dependency.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="100" column="80" selection-start-line="100" selection-start-column="80" selection-end-line="100" selection-end-column="80" />
+            <state relative-caret-position="-1787">
+              <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <marker date="1536025231742" expanded="true" signature="1048:1053" ph="..." />
-                <marker date="1536025231742" expanded="true" signature="4871:5014" ph="..." />
+                <marker date="1536032793170" expanded="true" signature="1081:1086" ph="..." />
+                <marker date="1536032793170" expanded="true" signature="4904:5047" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Separator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+            <state relative-caret-position="330">
+              <caret line="22" column="18" lean-forward="true" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1536017185020" expanded="true" signature="97:462" ph="..." />
-                <marker date="1536017185020" expanded="true" signature="488:489" ph="..." />
-                <marker date="1536017185020" expanded="true" signature="488:493" ph="..." />
               </folding>
             </state>
           </provider>
@@ -193,11 +185,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>newCH</find>
-      <find>mjr</find>
-      <find>scoreC</find>
-      <find>digit</find>
-      <find>ind</find>
       <find>ssss</find>
       <find>sss</find>
       <find>getSche</find>
@@ -216,13 +203,18 @@
       <find>ast</find>
       <find>sourceDic</find>
       <find>mergeBy</find>
-      <find>getTUA</find>
       <find>indicesfromString</find>
       <find>checked</find>
       <find>indicesTOStart</find>
       <find>codeZer</find>
       <find>indicesT</find>
       <find>indicesFrom</find>
+      <find>WEIGH</find>
+      <find>starrt</find>
+      <find>starr</find>
+      <find>getTUA</find>
+      <find>Table</find>
+      <find>exporting to</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -244,13 +236,13 @@
         <option value="$PROJECT_DIR$/CodingScoring.py" />
         <option value="$PROJECT_DIR$/Weighting Algorithm (updated).py" />
         <option value="$PROJECT_DIR$/UnitizingScoring.py" />
-        <option value="$PROJECT_DIR$/Weighting.py" />
-        <option value="$PROJECT_DIR$/Separator.py" />
-        <option value="$PROJECT_DIR$/Dependency.py" />
         <option value="$PROJECT_DIR$/IAA.py" />
+        <option value="$PROJECT_DIR$/Dependency.py" />
+        <option value="$PROJECT_DIR$/Weighting.py" />
         <option value="$PROJECT_DIR$/Master.py" />
         <option value="$PROJECT_DIR$/dataV2.py" />
         <option value="$PROJECT_DIR$/pointAssignment.py" />
+        <option value="$PROJECT_DIR$/Separator.py" />
       </list>
     </option>
   </component>
@@ -265,7 +257,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -277,6 +268,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="RunDashboard">
@@ -355,7 +347,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="dataV2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Separator" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="IAA-image" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -367,7 +359,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataV2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Separator.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -402,15 +394,15 @@
       <item itemvalue="Python.pointAssignment" />
       <item itemvalue="Python.Dependency" />
       <item itemvalue="Python.Master" />
-      <item itemvalue="Python.dataV2" />
+      <item itemvalue="Python.Separator" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Master" />
+        <item itemvalue="Python.Separator" />
         <item itemvalue="Python.pointAssignment" />
         <item itemvalue="Python.IAA" />
         <item itemvalue="Python.Dependency" />
-        <item itemvalue="Python.dataV2" />
       </list>
     </recent_temporary>
   </component>
@@ -439,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535967613625</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Demo Updates">
+      <created>1536027459749</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1536027459749</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -453,18 +452,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1533" height="875" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12847683" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.12847683" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32885906" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4986755" visible="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986755" weight="0.32885906" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32797858" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32751676" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32885906" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.2966443" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32885906" />
@@ -479,14 +477,14 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32965517" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32885906" />
       <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4986755" visible="true" weight="0.32885906" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.29798657" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32751676" />
+      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32885906" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.2966443" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32885906" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5013245" side_tool="true" weight="0.32885906" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -500,7 +498,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updates For Josh" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates For Josh" />
+    <MESSAGE value="Demo Updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Demo Updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -519,31 +518,31 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="task == 'ef335a02-a550-4d8b-9cbd-fb6622ad8c8f'" language="Python" />
           <url>file://$PROJECT_DIR$/IAA.py</url>
-          <line>53</line>
+          <line>54</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="ch == 2" language="Python" />
           <url>file://$PROJECT_DIR$/Dependency.py</url>
-          <line>42</line>
+          <line>43</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="t == '99968e91-36d0-4be9-a40f-858fdc0451d0'" language="Python" />
           <url>file://$PROJECT_DIR$/pointAssignment.py</url>
-          <line>167</line>
+          <line>180</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="art == 1737" language="Python" />
           <url>file://$PROJECT_DIR$/pointAssignment.py</url>
-          <line>117</line>
+          <line>129</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="task == '025a8515-ff9b-4ce9-b56a-ab8bdf2ca8c1' and ques == 11" language="Python" />
           <url>file://$PROJECT_DIR$/IAA.py</url>
-          <line>63</line>
+          <line>64</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -558,6 +557,12 @@
           <line>42</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="indices[i] == 1273" language="Python" />
+          <url>file://$PROJECT_DIR$/pointAssignment.py</url>
+          <line>270</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -570,6 +575,11 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>indices[i] == 1273</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>qnum == 11</expression-string>
         <language-id>Python</language-id>
@@ -607,16 +617,6 @@
       </expression>
       <expression>
         <expression-string>i ==0</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>ptsRec &lt;0</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>ch == 2</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -772,9 +772,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="106" column="10" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -794,33 +791,9 @@
     <entry file="file://$PROJECT_DIR$/pred1/SortedPts_1712.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Separator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <marker date="1536017185020" expanded="true" signature="97:462" ph="..." />
-            <marker date="1536017185020" expanded="true" signature="488:489" ph="..." />
-            <marker date="1536017185020" expanded="true" signature="488:493" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weighting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="838">
-          <caret line="111" column="116" selection-start-line="111" selection-start-column="116" selection-end-line="111" selection-end-column="116" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <marker date="1536014809219" expanded="true" signature="4646:4732" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1789">
+        <state relative-caret-position="2130">
           <caret line="144" column="75" selection-start-line="144" selection-start-column="75" selection-end-line="144" selection-end-column="75" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -828,69 +801,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Master.py">
+    <entry file="file://$PROJECT_DIR$/Weighting.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+        <state relative-caret-position="75">
+          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
-            <marker date="1536026859533" expanded="true" signature="240:245" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1783">
-          <caret line="144" column="21" selection-start-line="144" selection-start-column="21" selection-end-line="144" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1536026584546" expanded="true" signature="7764:8071" ph="..." />
-            <marker date="1536026584546" expanded="true" signature="8140:8145" ph="..." />
+            <element signature="e#0#25#0" expanded="true" />
+            <marker date="1536032793166" expanded="true" signature="4678:4764" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Dependency.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="100" column="80" selection-start-line="100" selection-start-column="80" selection-end-line="100" selection-end-column="80" />
+        <state relative-caret-position="-1787">
+          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <marker date="1536025231742" expanded="true" signature="1048:1053" ph="..." />
-            <marker date="1536025231742" expanded="true" signature="4871:5014" ph="..." />
+            <marker date="1536032793170" expanded="true" signature="1081:1086" ph="..." />
+            <marker date="1536032793170" expanded="true" signature="4904:5047" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dataV2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="391" column="20" selection-start-line="391" selection-start-column="4" selection-end-line="391" selection-end-column="20" />
+        <state relative-caret-position="943">
+          <caret line="710" column="1" selection-start-line="710" selection-start-column="1" selection-end-line="710" selection-end-column="1" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1536027447151" expanded="true" signature="3354:3480" ph="..." />
-            <marker date="1536027447151" expanded="true" signature="5228:5296" ph="..." />
-            <marker date="1536027447151" expanded="true" signature="5332:5388" ph="..." />
-            <marker date="1536027447151" expanded="true" signature="9715:10141" ph="..." />
-            <marker date="1536027447151" expanded="true" signature="11127:11163" ph="..." />
-            <marker date="1536027447151" expanded="true" signature="11196:11389" ph="..." />
-            <marker date="1536027447151" expanded="true" signature="11416:11520" ph="..." />
-            <marker date="1536027447151" expanded="true" signature="13856:14072" ph="..." />
-            <marker date="1536027447151" expanded="true" signature="16909:16956" ph="..." />
+            <marker date="1536033101277" expanded="true" signature="3354:3480" ph="..." />
+            <marker date="1536033101277" expanded="true" signature="5228:5296" ph="..." />
+            <marker date="1536033101277" expanded="true" signature="5332:5388" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1397">
+          <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <marker date="1536032793154" expanded="true" signature="7790:8097" ph="..." />
+            <marker date="1536032793154" expanded="true" signature="8166:8171" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pointAssignment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+        <state relative-caret-position="273">
+          <caret line="103" column="20" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
           <folding>
-            <marker date="1536027447143" expanded="true" signature="577:578" ph="..." />
-            <marker date="1536027447143" expanded="true" signature="7326:7371" ph="..." />
-            <marker date="1536027447143" expanded="true" signature="7405:7441" ph="..." />
-            <marker date="1536027447143" expanded="true" signature="16927:17041" ph="..." />
+            <element signature="e#0#30#0" expanded="true" />
+            <marker date="1536033717851" expanded="true" signature="577:578" ph="..." />
+            <marker date="1536033717851" expanded="true" signature="4558:4764" ph="..." />
+            <marker date="1536033717851" expanded="true" signature="8081:8126" ph="..." />
+            <marker date="1536033717851" expanded="true" signature="8160:8196" ph="..." />
+            <marker date="1536033717851" expanded="true" signature="17616:17733" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Master.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+            <marker date="1536033077254" expanded="true" signature="205:210" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Separator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="18" lean-forward="true" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>

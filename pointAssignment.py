@@ -21,6 +21,7 @@ sourceValToWeightDict= {1:2, 2:1, 3:.5, 4:.25, 5:.5, 6:.5, 7:.5, -1:1}
 
 
 def pointSort(directory):
+    print("SORTING STARTING")
     sourceFile, argRelevanceFile, weightFile = getFiles(directory)
 
     print(weightFile)
@@ -32,75 +33,86 @@ def pointSort(directory):
         print(weightSet)
         dataDict = storeData(sourceFile, argRelevanceFile, weightSet, './demo1/allTUAS.csv')
         articles = dataDict.keys()
-
+        mergeWeightFiles(weightFile)
         for art in articles:
-            print("WIPEDOUT")
 
-            counter= 0
-            artNum = retrieveArtNum(dataDict, art)
-            argDic = retrieveArgDict(dataDict, art)
-            sorcDic = retrieveSourceDict(dataDict, art)
-            print(sorcDic)
-            weightQ, weightA = getweightQA(dataDict, art)
-            pointRecs = getpointRec(dataDict, art)
-            weightInds = getweightIndices(dataDict, art)
-            labels = getLabels(dataDict,art)
-            schema =getSchema(dataDict, art)
-            print("SCHEMING")
-            for i in range(len(pointRecs)):
-                #print("ONSTEP", i)
-                wu = weightInds[i]
-                if isinstance(wu, str):
-                    get_indices_hard
-                bestSourceTask = findBestMatch(wu, sorcDic)
-                bestArgTask = findBestMatch(wu, argDic)
-                ptsRec = pointRecs[i]
-                print('PREC', ptsRec)
-                print(labels[i])
-                print(schema)
-                print(weightQ[i], weightA[i], art)
-                # it's zero when there's no answers that passed the specialist IAA
-                # -1 is default answer value, it'll pass the ptsrec to the final score
-                if bestSourceTask!=0:
-                    sourceData = sorcDic[bestSourceTask]
-                    sourceUnits, sourceAns = sourceData[1], sourceData[0]
-                else:
-                    sourceUnits = 0
-                    sourceAns = -1
-                if bestArgTask!=0:
-                    argData = argDic[bestArgTask]
-                    argUnits, argAns = argData[1], argData[0]
-                else:
-                    argUnits = []
-                    argAns = -1
-                journalist = 'Joe The Journalist'
-                pts = assignPoints(ptsRec,wu, sourceUnits, argUnits, argAns, sourceAns, art, journalist)
+                print("WIPEDOUT")
+
+                counter= 0
+                artNum = retrieveArtNum(dataDict, art)
+                argDic = retrieveArgDict(dataDict, art)
+                sorcDic = retrieveSourceDict(dataDict, art)
+                print(sorcDic)
+                weightQ, weightA = getweightQA(dataDict, art)
+                pointRecs = getpointRec(dataDict, art)
+                weightInds = getweightIndices(dataDict, art)
+                labels = getLabels(dataDict,art)
+                schema =getSchema(dataDict, art)
+                print("SCHEMING")
+                for i in range(len(pointRecs)):
+                    #print("ONSTEP", i)
+                    wu = weightInds[i]
+                    if isinstance(wu, str):
+                        wu = get_indices_hard(wu)
+                    bestSourceTask = findBestMatch(wu, sorcDic)
+                    bestArgTask = findBestMatch(wu, argDic)
+                    ptsRec = pointRecs[i]
+                    print('PREC', ptsRec)
+                    print(labels[i])
+                    print(schema)
+                    print(weightQ[i], weightA[i], art)
+                    # it's zero when there's no answers that passed the specialist IAA
+                    # -1 is default answer value, it'll pass the ptsrec to the final score
+                    if bestSourceTask!=0:
+                        sourceData = sorcDic[bestSourceTask]
+                        sourceUnits, sourceAns = sourceData[1], sourceData[0]
+                    else:
+                        sourceUnits = 0
+                        sourceAns = -1
+                    if bestArgTask!=0:
+                        argData = argDic[bestArgTask]
+                        argUnits, argAns = argData[1], argData[0]
+                    else:
+                        argUnits = []
+                        argAns = -1
+                    journalist = 'Joe The Journalist'
+                    pts = assignPoints(ptsRec,wu, sourceUnits, argUnits, argAns, sourceAns, art, journalist)
 
 
-                print(schema)
-                #credId = counter
-                credId = schema[0]+str(counter)
-                counter+=1
-                starts, ends = indicesToStartEnd(wu)
-                addendum = [art, credId, schema, labels[i], pts, wu, starts[0], ends[0]]
-                outData.append(addendum)
-                starts.pop(0)
-                ends.pop(0)
-                #TODO: figure out how visualization handles stuff with multiple starts and ends
-                for i in range(len(starts)):
-                    print('addendum', addendum)
-                    print(labels)
-                    print(len(ends), len(starts))
-                    addendum = [art, credId, schema, labels[i], 0, wu, starts[0], ends[0]]
+                    print(schema)
+                    #credId = counter
+                    credId = schema[0]+str(counter)
+                    counter+=1
+                    starts, ends = indicesToStartEnd(wu)
+                    addendum = [art, credId, schema, labels[i], pts, wu, starts[0], ends[0]]
                     outData.append(addendum)
-    print('exporting to csv')
-    scores = open(directory + '/SortedPts_'+str(artNum)+'.csv', 'w', encoding='utf-8')
-    print(directory + '/SortedPts_Master.csv')
-    with scores:
-        writer = csv.writer(scores)
-        writer.writerows(outData)
+                    #TODO: figure out how visualization handles stuff with multiple starts and ends
+                    for i in range(len(starts)-1):
+                        print('addendum', addendum)
+                        print(labels)
+                        print(len(ends), len(starts))
+                        addendum = [art, credId, schema, labels[i+1], 0, wu, starts[i+1], ends[i+1]]
+                        outData.append(addendum)
+                print('exporting to csv')
+                scores = open(directory + '/SortedPts_'+str(artNum)+'.csv', 'w', encoding='utf-8')
+                print(directory + '/SortedPts_Master.csv')
+                with scores:
+                   writer = csv.writer(scores)
+                   writer.writerows(outData)
 
     print("Table complete")
+    print('Sources')
+    print(sourceDatabase)
+    print('Journalists')
+    print(JournalistDatabase)
+    print('Article Scores')
+    print(ArticleDatabase)
+def mergeWeightFiles(weightSet):
+    df = pd.read_csv(weightSet[0])
+    for i in range(1, len(weightSet)):
+        weights = pd.read_csv(weightSet[i])
+        df.append(weights, ignore_index = True)
+    df.to_csv('combined_weights.csv')
 
 def storeData(sourceFile, argRelFile, weightFile, allTuas):
     print(argRelFile)
@@ -131,7 +143,8 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
         artWeights = artWeights[artWeights['article_sha256'] == art]
         weightTasks = artWeights['task_uuid'].tolist()
         labels = artWeights['Label'].tolist()
-        weightInds = artWeights['highlighted_indices'].apply(runjson).tolist()
+        weightInds = artWeights['highlighted_indices'].apply(get_indices_hard).tolist()
+        print("WEIGHTINDS", weightInds)
         weightRec = artWeights['Points'].tolist()
         weightQs = artWeights['Question_Number'].tolist()
         weightAnswers = artWeights['Answer_Number'].tolist()
@@ -248,23 +261,20 @@ def getStartsEndsFromString(bigStr):
     return np.unique(indices).tolist()
 
 def indicesToStartEnd(indices):
-    print("toSE")
-    print(indices)
-    if len(indices) == 0:
-        return [-1],[-1]
-    starts = [indices[0]]
+    starts = []
     ends = []
-    last = False
+    last = -1
+    arr = np.array(indices)
+    if len(indices)<1:
+        return [-1],[-1]
     for i in range(len(indices)):
-        if last:
-            print(indices[i], last)
-            if indices[i]-last>1:
-                starts.append(indices[i])
+        if indices[i]-last>1 and indices[i] not in starts:
+            starts.append(indices[i])
+            ends.append(indices[i-1])
         last = indices[i]
-    ends.append(indices[-1])
-    if len(ends)< len(starts):
-        ends.append(999999)
-    return starts, ends
+    #ends.append(indices[len(indices)-1])
+    print('starrt',starts, ends)
+    return sorted(starts), sorted(ends)
 
 
 def getSchema(data, article):
@@ -464,26 +474,17 @@ def checkAgreement(arr1, arr2, threshold = .9):
 
 
 def calcOverlap(arr1, arr2):
-    try:
-        if len(arr1)<1 or len(arr2)<1:
-            return 0,[]
-    except:
+    if isinstance(arr1, int) or isinstance(arr2, int) or len(arr1)<1 or len(arr2)<1:
         return 0,[]
 
-    try:
-        arr2 = json.loads(arr2)
-    except:
-        pass
-    try:
-        arr1 = json.loads(arr1)
-    except:
-        pass
+    arr1 = get_indices_hard(str(arr1))
+    arr2 = get_indices_hard((str(arr2)))
     print('arr1', arr1)
     print('arr2', arr2)
     arr1 = checkOneString(arr1)
     arr2 = checkOneString(arr2)
     print(type(arr1), type(arr2))
-    print(type(arr1[0]), type(arr2[0]))
+    #print(type(arr1[0]), type(arr2[0]))
     length = max(max(arr1), (max(arr2))) + 1
 
     answerMatrix = indicesToMatrix(arr1, arr2, length)
@@ -495,7 +496,7 @@ def calcOverlap(arr1, arr2):
 def checkOneString(arr):
     if len(arr) == 1:
         if isinstance(arr[0], str):
-            return json.loads(arr[0])
+            return get_indices_hard(arr)
     return arr
 
 
@@ -552,7 +553,7 @@ def getSource(sourceUnitizaiton):
 # #source,args,weight = getFiles('./demo1')
 # #data = (storeData(source,args,weight))
 # #print(data)
-pointSort('./pred1')
+#pointSort('./pred1')
 # print(sourceDatabase)
 # print(ArticleDatabase)
 # print(JournalistDatabase)

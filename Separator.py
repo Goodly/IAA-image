@@ -3,10 +3,11 @@ import numpy as np
 import os
 
 def splitcsv(directory):
-    print('splitting')
+    #print('splitting')
     pointsFile = findMaster(directory)
+    #print(pointsFile)
     pointsdf = pd.read_csv(directory+'/'+pointsFile)
-    print(pointsdf)
+    #print(pointsdf)
     articles = np.unique(pointsdf['Article ID'])
     for art in articles:
         artdf = pointsdf[pointsdf['Article ID'] == art]
@@ -18,3 +19,5 @@ def findMaster(directory):
         for file in files:
             if file.endswith('.csv') and 'SortedPts_' in file:
                 return file
+
+#splitcsv('pred1')

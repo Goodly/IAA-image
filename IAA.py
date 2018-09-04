@@ -10,6 +10,7 @@ import json
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
 def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, answersFile = None):
+    print("IAA STARTING")
     highlights = []
     answers = []
     schema = []
@@ -269,7 +270,7 @@ def run_2step_unitization(data, article, question, repDF):
     return 'NA', indices, score, score, 'NA'
 
 # # # TEST STUFF
-calc_agreement_directory('./demo1', hardCodedTypes= True)
+#calc_agreement_directory('./demo1', hardCodedTypes= True)
 # calc_scores('./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntAnswers.csv',
 #             schemaFile = './demo1/Demo1ArgRel3-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
 # calc_scores('./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntAnswers.csv',

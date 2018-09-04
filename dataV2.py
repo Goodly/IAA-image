@@ -390,6 +390,9 @@ def get_q_type(schemaData, qLabel):
 
     return schemaData[schemaData['question_label'] == qLabel].iloc[0]['question_type']
 def get_indices_hard(string):
+    if isinstance(string, list):
+        if len(string == 1) and isinstance(string[0], str):
+            string = string[0]
     out = []
     num = 0
     for i in range(len(string)):
@@ -705,4 +708,4 @@ def get_path(fileName):
 # parseMany(first, 'Q', ',')
 # print(get_questions(ans))
 
-data_storer('testhl.csv', 'testans.csv', 'testsch.csv')
+#data_storer('testhl.csv', 'testans.csv', 'testsch.csv')

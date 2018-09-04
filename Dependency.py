@@ -11,6 +11,7 @@ import json
 from dataV2 import readIndices
 
 def eval_depenency(directory):
+    print("DEPENDENCY STARTING")
     schema = []
     iaa = []
     for root, dir, files in os.walk(directory):
@@ -153,4 +154,4 @@ def find_index(df, targetVals,col):
                 indices.append(i)
     return indices
 
-eval_depenency('./demo1')
+#eval_depenency('./demo1')
