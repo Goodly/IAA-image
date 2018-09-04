@@ -1,5 +1,8 @@
 import pandas as pd
 import numpy as np
+import ast
+from math import floor
+import json
 
 def data_storer(path, answerspath, schemapath):
     """Function that turns csv data. Input the path name for the csv file.
@@ -33,6 +36,7 @@ def data_storer(path, answerspath, schemapath):
             'dependencies': dependencies
         }
         print('dependencies dict', dependencies)
+        numUsersD = makeNumUsersDict(task_ans)
         qDict = {}
         for i in range(len(qNums)):
             qnum = qNums[i]
@@ -40,7 +44,7 @@ def data_storer(path, answerspath, schemapath):
             #print(qlabels, qNums)
             #print('qnum',qnum)
             #print('qlab', qlabel)
-            numUsers = findNumUsers(task_schema, qlabel)
+            numUsers = findNumUsers(numUsersD, qlabel)
             q_type = get_q_type(task_schema, qlabel)
             answer_contents = find_answer_contents(task_schema, qlabel)
             question_text = find_question_text(task_schema, qlabel)
@@ -223,40 +227,102 @@ def find_question_text(schemadata,qlabel):
     questiondf = schemadata[schemadata['question_label'] == qlabel]
     qText = questiondf['question_text'].iloc[0]
     return qText
+
+
 def find_answer_contents(schemadata, qlabel):
     questiondf = schemadata[schemadata['question_label'] == qlabel]
     pot_answers = questiondf['answer_content'].tolist()
     pot_answers.insert(0,'zero')
     print(pot_answers)
     return pot_answers
+
+
 def find_article_data(task_ans):
     return task_ans['article_number'].iloc[0], task_ans['article_sha256'].iloc[0]
+
+
+def indicesFromString(indices):
+    print(indices)
+    indices = clearBogusChars(indices)
+    print(indices)
+    try:
+        return json.loads(indices)
+    except TypeError:
+        return json.loads((str(indices).replace(' ', ', ')))
+    except:
+        filtered = []
+        for s in indices:
+            f = s.replace('\n', '')
+            if ',' not in f:
+                f = f.replace(' ', ', ')
+            f = ast.literal_eval(f)
+            filtered.append(f)
+    return filtered
+def clearBogusChars(string):
+    if not isinstance(string, str):
+        string = str(string)
+    string = string.replace("\\", "")
+    string = string.replace("\n", '')
+    string = string.replace('n', '')
+    string = string.replace("'", '')
+    string = string.replace('"', '')
+    string = string.replace(' , ', '')
+    print('prestrip', string)
+    string = string.strip()
+    print('poststrip', string)
+    string = string.replace(',,',',')
+    i = 1
+    while not string[i].isdigit():
+        i+=1
+    string = string[0]+string[i:]
+    return string
 def findStartsEnds(schemadata, qlabel, highlightdata):
     questiondf = schemadata[schemadata['question_label'] == qlabel]
-    hasHighlight = max(questiondf['nohighlight'])<1
-    if hasHighlight:
-        question_hl = highlightdata[highlightdata['question_label'] == qlabel]
-        starts = question_hl['start_pos'].tolist()
-        ends = question_hl['end_pos'].tolist()
-        users = question_hl['contributor_uuid'].tolist()
-        length = question_hl['source_text_length']
-        answerText = question_hl['target_text']
-        answer_labels = question_hl['answer_label']
-        answer_nums = [parse(ans, 'A') for ans in answer_labels]
-        return starts, ends, users, length, answerText, answer_nums
-    else:
-        return [0], [0], [0], 0, '',[0]
+    # hasHighlight = max(questiondf['nohighlight'])<1
+    # if hasHighlight:
+    #TODO: implement a check to see if people thought there should've been a highlight
+    question_hl = highlightdata[highlightdata['question_label'] == qlabel]
+    starts = question_hl['start_pos'].tolist()
+    ends = question_hl['end_pos'].tolist()
+    users = question_hl['contributor_uuid'].tolist()
+    length = question_hl['source_text_length']
+    answerText = question_hl['target_text']
+    answer_labels = question_hl['answer_label']
+    answer_nums = [parse(ans, 'A') for ans in answer_labels]
+    return starts, ends, users, length, answerText, answer_nums
+    #else:
+        #return [0], [0], [0], 0, '',[0]
 
-def findNumUsers(schemadata, qlabel):
+
+def checkIfHighlight(answers, qlabel, questiondf):
+    numAns = len(answers)
+    ansLabels = [AnstoLabel(ans) for ans in answers]
+
+
+def AnstoLabel(answer, qlabel):
+    return qlabel+'.A'+str(answer)
+def makeNumUsersDict(answerData):
+    queue = answerData['final_queue']
+    d = {}
+    for ro in queue:
+        lis = parseMany(ro, separator=',')
+        for label in lis:
+            d = dictIncrement(d, label)
+    return d
+def dictIncrement(dict, k):
+    if not k in dict.keys():
+        dict[k] = 1
+    else:
+        dict[k] = dict[k]+1
+    return dict
+def findNumUsers(numUsersDict, qlabel):
     """
 
     :param schemadata: df from current schema
     :param qlabel: questionlabel of current question
     :return: numUsers,
     """
-    questiondf = schemadata[schemadata['question_label'] == qlabel]
-    numUsers = questiondf['answer_count'].iloc[0]
-    return numUsers
+    return numUsersDict[qlabel]
 
 
 def find_answers_radio(ansData, qlabel, schemaData):
@@ -323,7 +389,16 @@ def find_matching_columns(cols, qnum):
 def get_q_type(schemaData, qLabel):
 
     return schemaData[schemaData['question_label'] == qLabel].iloc[0]['question_type']
-
+def get_indices_hard(string):
+    out = []
+    num = 0
+    for i in range(len(string)):
+        if string[i].isdigit():
+            num = 10*num+int(string[i])
+        elif num!=0:
+            out.append(num)
+            num = 0
+    return out
 
 def find_schema_topic(schemaData):
 
@@ -347,7 +422,7 @@ def readIndices(strIndices):
     print(strIndices)
     #end = strIndices.index(']')
     separated = parseMany(strIndices[1:-1], separator = ' ')
-    fin = [int(i) for i in separated]
+    fin = [int(floor(float(i))) for i in separated]
     return fin
 
 def parseMany(base, field = None, separator = None):
@@ -415,9 +490,10 @@ def get_text_length(data, task_id, question_num):
     except:
         return data[task_id]['quesData'][question_num]['length']
 
-
+def printType(iterable):
+    for i in iterable:
+        print(type(i))
 def get_num_users(data, task_id, question_num):
-    print("6666 this got caled")
     return data[task_id]['quesData'][question_num]['numUsers']
 
 def get_answer_texts(data, task_id, question_num):

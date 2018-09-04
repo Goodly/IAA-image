@@ -1,14 +1,16 @@
 import math
-
+import ast
 import pandas as pd
 import numpy as np
 import os
 from math import isnan
 from dataV2 import create_dependencies_dict
 from dataV2 import get_path
+from dataV2 import indicesFromString
+import json
 from dataV2 import readIndices
 
-def calc_get_files_depenency(directory):
+def eval_depenency(directory):
     schema = []
     iaa = []
     for root, dir, files in os.walk(directory):
@@ -48,21 +50,16 @@ def handleDependencies(schemaPath, iaaPath):
                 #check if this question even got a score
                 iaaQ = iaaTask[(iaaTask['question_Number']) == (ch)]
                 answers = iaaQ['agreed_Answer'].tolist()
-                if len(answers)>0:
-                    print("GOTANS")
-                    print(answers)
                 answers = find_real_answers(answers)
-                print("WHERE")
-                if len(answers)>0:
-                    print("WOITYDOO")
                 rows = find_index(iaaQ, answers, 'agreed_Answer')
-                print(rows)
+                validParent = False
                 if len(answers)>0:
                     #questions the child depends on
                     for par in child.keys():
                         print('newPar')
                         iaaPar = iaaTask[iaaTask['question_Number'] == (par)]
                         neededAnswers = child[par]
+
                         for ans in neededAnswers:
                             iaaparAns = iaaPar[iaaPar['agreed_Answer'] == str(ans)]
                             print(ans, iaaPar['agreed_Answer'].tolist())
@@ -70,10 +67,13 @@ def handleDependencies(schemaPath, iaaPath):
                             print(iaaparAns)
                             if len(iaaparAns>0):
                                 print("GOTONEMATEY")
-                                newInds = iaaparAns['highlighted_indices'].tolist()
-                                newInds = readIndices(newInds[0])
+                                validParent = True
+                                newInds = iaaparAns['highlighted_indices'].apply(json.loads).tolist()
+                                print('newi', newInds)
+                                #newInds = parseList(newInds)
                                 newAlph = iaaparAns['alpha_unitizing_score'].tolist()
                                 newIncl = iaaparAns['alpha_unitizing_score_inclusive'].tolist()
+                                print(len(newInds))
                                 for i in range(len(newInds)):
                                     print(newInds, newInds[i])
                                     indices = np.append(indices, newInds[i])
@@ -82,6 +82,12 @@ def handleDependencies(schemaPath, iaaPath):
                                 print('mjrpupdate')
                                 print(indices)
                                 print(alpha)
+                #If parent didn't pass, this question should not of been asked
+                if not validParent:
+                    for row in rows:
+                        print("DEADROW", row)
+                        iaaData.at[row,'agreed_Answer'] = -1
+                        iaaData.at[row, 'coding_perc_agreement'] = -1
                 indices = np.unique(indices).tolist()
                 print(alpha)
                 alpha = np.mean(alpha)
@@ -92,7 +98,7 @@ def handleDependencies(schemaPath, iaaPath):
                     print("UCROSSRIVER")
                 for row in rows:
                     print('doing Transfer')
-                    iaaData.at[row, 'highlighted_indices'] = indices
+                    iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
                     iaaData.at[row, 'alpha_unitizing_score'] = alpha
                     iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
                     print("PUPDATED")
@@ -104,7 +110,12 @@ def handleDependencies(schemaPath, iaaPath):
 
     print("Table complete")
 
-
+def parseList(iterable):
+    out = []
+    for i in range(len(iterable)):
+        addendum = indicesFromString(iterable[i])
+        out.append(addendum)
+    return out
 def checkNeedsLove(df, qNum):
     qdf = df[df['question_Number'] == qNum]
     alphas = (qdf['alpha_unitizing_score'])
@@ -142,5 +153,4 @@ def find_index(df, targetVals,col):
                 indices.append(i)
     return indices
 
-handleDependencies('./demo1/DemoLang-2018-09-01T2240-Schema.csv', './demo1/S_IAA_DemoLang-2018-09-01T2240-DataHuntHighlights.csv')
-calc_get_files_depenency('./demo1')
+eval_depenency('./demo1')

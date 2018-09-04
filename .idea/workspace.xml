@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Dependency.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dataV2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="Updates For Josh">
+      <change afterPath="$PROJECT_DIR$/Master.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Separator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChecklistCoding.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChecklistCoding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CodingScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/CodingScoring.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExtraInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExtraInfo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FormTriager1.2C2-2018-07-25T23.json.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dependency.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dependency.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IAA.py" beforeDir="false" afterPath="$PROJECT_DIR$/IAA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuestionDependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/QuestionDependencies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ThresholdMatrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/ThresholdMatrix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TriagerScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/TriagerScoring.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnitizingScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/UnitizingScoring.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_pull_8_17/T_IAASemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data_pull_8_17/T_IAASemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataV2.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataV2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pointAssignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/pointAssignment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repScores.py" beforeDir="false" afterPath="$PROJECT_DIR$/repScores.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/.~lock.S_IAA_SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv#" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/S_IAA_SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sss_pull_8_22/S_IAA_SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,9 +21,9 @@
     <session id="-1244811360">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
+          <entry key="project.closed" value="13" />
           <entry key="project.open.time.10" value="3" />
-          <entry key="project.open.time.11" value="2" />
+          <entry key="project.open.time.11" value="3" />
           <entry key="project.open.time.12" value="3" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="2" />
@@ -43,31 +32,33 @@
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="19" />
+          <entry key="project.opened" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="36" />
-          <entry key="dummy" value="4" />
-          <entry key="py" value="33398" />
+          <entry key="Python Console" value="71" />
+          <entry key="dummy" value="32" />
+          <entry key="py" value="44875" />
           <entry key="txt" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="21" />
-          <entry key="Python" value="33434" />
+          <entry key="PLAIN_TEXT" value="49" />
+          <entry key="Python" value="44946" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="41" />
+          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="Python" value="47" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="41" />
+          <entry key="csv" value="3" />
+          <entry key="py" value="47" />
         </counts>
       </usages-collector>
     </session>
@@ -77,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="139" selection-start-line="139" selection-end-line="139" />
+            <state relative-caret-position="1789">
+              <caret line="144" column="75" selection-start-line="144" selection-start-column="75" selection-end-line="144" selection-end-column="75" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -89,26 +80,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataV2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4710">
-              <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
+            <state relative-caret-position="178">
+              <caret line="391" column="20" selection-start-line="391" selection-start-column="4" selection-end-line="391" selection-end-column="20" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1535963815896" expanded="true" signature="3263:3389" ph="..." />
-                <marker date="1535963815896" expanded="true" signature="5137:5205" ph="..." />
-                <marker date="1535963815896" expanded="true" signature="5241:5297" ph="..." />
-                <marker date="1535963815896" expanded="true" signature="12765:12914" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-390">
-              <caret line="106" column="10" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
+                <marker date="1536027447151" expanded="true" signature="3354:3480" ph="..." />
+                <marker date="1536027447151" expanded="true" signature="5228:5296" ph="..." />
+                <marker date="1536027447151" expanded="true" signature="5332:5388" ph="..." />
+                <marker date="1536027447151" expanded="true" signature="9715:10141" ph="..." />
+                <marker date="1536027447151" expanded="true" signature="11127:11163" ph="..." />
+                <marker date="1536027447151" expanded="true" signature="11196:11389" ph="..." />
+                <marker date="1536027447151" expanded="true" signature="11416:11520" ph="..." />
+                <marker date="1536027447151" expanded="true" signature="13856:14072" ph="..." />
+                <marker date="1536027447151" expanded="true" signature="16909:16956" ph="..." />
               </folding>
             </state>
           </provider>
@@ -117,10 +101,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/IAA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="23" column="53" selection-start-line="13" selection-start-column="4" selection-end-line="23" selection-end-column="53" />
+            <state relative-caret-position="1783">
+              <caret line="144" column="21" selection-start-line="144" selection-start-column="21" selection-end-line="144" selection-end-column="21" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
+                <marker date="1536026584546" expanded="true" signature="7764:8071" ph="..." />
+                <marker date="1536026584546" expanded="true" signature="8140:8145" ph="..." />
               </folding>
             </state>
           </provider>
@@ -129,33 +115,68 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pointAssignment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+            <state relative-caret-position="90">
+              <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
               <folding>
-                <element signature="e#0#30#0" expanded="true" />
-                <marker date="1535967588625" expanded="true" signature="1214:4193" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="2791:2868" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="2899:2937" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="3070:3092" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="3121:3157" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="3190:3469" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="3496:3845" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="3876:4193" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="4217:4222" ph="..." />
-                <marker date="1535967588625" expanded="true" signature="5183:5312" ph="..." />
+                <marker date="1536027447143" expanded="true" signature="577:578" ph="..." />
+                <marker date="1536027447143" expanded="true" signature="7326:7371" ph="..." />
+                <marker date="1536027447143" expanded="true" signature="7405:7441" ph="..." />
+                <marker date="1536027447143" expanded="true" signature="16927:17041" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Weighting Algorithm (updated).py">
+        <entry file="file://$PROJECT_DIR$/Weighting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1665">
-              <caret line="111" column="27" lean-forward="true" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+            <state relative-caret-position="838">
+              <caret line="111" column="116" selection-start-line="111" selection-start-column="116" selection-end-line="111" selection-end-column="116" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
-                <marker date="1535965623327" expanded="true" signature="125:477" ph="..." />
+                <marker date="1536014809219" expanded="true" signature="4646:4732" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Master.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+                <marker date="1536026859533" expanded="true" signature="240:245" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dependency.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="604">
+              <caret line="100" column="80" selection-start-line="100" selection-start-column="80" selection-end-line="100" selection-end-column="80" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <marker date="1536025231742" expanded="true" signature="1048:1053" ph="..." />
+                <marker date="1536025231742" expanded="true" signature="4871:5014" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Separator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <marker date="1536017185020" expanded="true" signature="97:462" ph="..." />
+                <marker date="1536017185020" expanded="true" signature="488:489" ph="..." />
+                <marker date="1536017185020" expanded="true" signature="488:493" ph="..." />
               </folding>
             </state>
           </provider>
@@ -172,36 +193,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>dep Here</find>
-      <find>ISNTITFUN True</find>
-      <find>ISNT</find>
-      <find>ISNTITFUN TRUE</find>
-      <find>UNITSLENGTH</find>
-      <find>dep</find>
-      <find>UNITSLEN</find>
-      <find>thois</find>
-      <find>threshold</find>
-      <find>lang</find>
-      <find>launch</find>
-      <find>SRK</find>
-      <find>INDS</find>
-      <find>findS</find>
-      <find>[]</find>
-      <find>PUPD</find>
-      <find>FOR Y</find>
-      <find>WOI</find>
-      <find>gotA</find>
-      <find>GOTA</find>
-      <find>thresh</find>
-      <find>GOTANS</find>
-      <find>GOTAN</find>
-      <find>launching</find>
       <find>newCH</find>
-      <find>ind</find>
       <find>mjr</find>
       <find>scoreC</find>
-      <find>NA</find>
       <find>digit</find>
+      <find>ind</find>
+      <find>ssss</find>
+      <find>sss</find>
+      <find>getSche</find>
+      <find>schemer</find>
+      <find>task</find>
+      <find>taskid</find>
+      <find>size</find>
+      <find>NA</find>
+      <find>arrim</find>
+      <find>taski</find>
+      <find>findNum</find>
+      <find>rooo</find>
+      <find>thresho</find>
+      <find>addendum</find>
+      <find>get_num</find>
+      <find>ast</find>
+      <find>sourceDic</find>
+      <find>mergeBy</find>
+      <find>getTUA</find>
+      <find>indicesfromString</find>
+      <find>checked</find>
+      <find>indicesTOStart</find>
+      <find>codeZer</find>
+      <find>indicesT</find>
+      <find>indicesFrom</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -219,13 +240,16 @@
         <option value="$PROJECT_DIR$/ExtraInfo.py" />
         <option value="$PROJECT_DIR$/ChecklistCoding.py" />
         <option value="$PROJECT_DIR$/QuestionDependencies.py" />
-        <option value="$PROJECT_DIR$/UnitizingScoring.py" />
-        <option value="$PROJECT_DIR$/IAA.py" />
         <option value="$PROJECT_DIR$/ThresholdMatrix.py" />
         <option value="$PROJECT_DIR$/CodingScoring.py" />
-        <option value="$PROJECT_DIR$/Dependency.py" />
-        <option value="$PROJECT_DIR$/dataV2.py" />
         <option value="$PROJECT_DIR$/Weighting Algorithm (updated).py" />
+        <option value="$PROJECT_DIR$/UnitizingScoring.py" />
+        <option value="$PROJECT_DIR$/Weighting.py" />
+        <option value="$PROJECT_DIR$/Separator.py" />
+        <option value="$PROJECT_DIR$/Dependency.py" />
+        <option value="$PROJECT_DIR$/IAA.py" />
+        <option value="$PROJECT_DIR$/Master.py" />
+        <option value="$PROJECT_DIR$/dataV2.py" />
         <option value="$PROJECT_DIR$/pointAssignment.py" />
       </list>
     </option>
@@ -249,11 +273,6 @@
               <item name="IAA-image" type="b2602c69:ProjectViewProjectNode" />
               <item name="IAA-image" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="IAA-image" type="b2602c69:ProjectViewProjectNode" />
-              <item name="IAA-image" type="462c0819:PsiDirectoryNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -272,7 +291,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Weighting Algorithm (updated)">
+  <component name="RunManager" selected="Python.Master">
     <configuration name="Dependency" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="IAA-image" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -315,7 +334,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Weighting Algorithm (updated)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Master" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="IAA-image" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -327,7 +346,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Weighting Algorithm (updated).py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Master.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -380,18 +399,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.IAA" />
-      <item itemvalue="Python.dataV2" />
       <item itemvalue="Python.pointAssignment" />
       <item itemvalue="Python.Dependency" />
-      <item itemvalue="Python.Weighting Algorithm (updated)" />
+      <item itemvalue="Python.Master" />
+      <item itemvalue="Python.dataV2" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Weighting Algorithm (updated)" />
-        <item itemvalue="Python.Dependency" />
-        <item itemvalue="Python.IAA" />
-        <item itemvalue="Python.dataV2" />
+        <item itemvalue="Python.Master" />
         <item itemvalue="Python.pointAssignment" />
+        <item itemvalue="Python.IAA" />
+        <item itemvalue="Python.Dependency" />
+        <item itemvalue="Python.dataV2" />
       </list>
     </recent_temporary>
   </component>
@@ -413,7 +432,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534992899028</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Updates For Josh">
+      <created>1535967613625</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1535967613625</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -487,30 +513,50 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/dataV2.py</url>
-          <line>138</line>
+          <line>142</line>
           <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Dependency.py</url>
-          <line>74</line>
-          <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="task == 'ef335a02-a550-4d8b-9cbd-fb6622ad8c8f'" language="Python" />
           <url>file://$PROJECT_DIR$/IAA.py</url>
-          <line>51</line>
+          <line>53</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="ch == 2" language="Python" />
           <url>file://$PROJECT_DIR$/Dependency.py</url>
-          <line>40</line>
+          <line>42</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Dependency.py</url>
-          <line>72</line>
-          <option name="timeStamp" value="48" />
+          <condition expression="t == '99968e91-36d0-4be9-a40f-858fdc0451d0'" language="Python" />
+          <url>file://$PROJECT_DIR$/pointAssignment.py</url>
+          <line>167</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="art == 1737" language="Python" />
+          <url>file://$PROJECT_DIR$/pointAssignment.py</url>
+          <line>117</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="task == '025a8515-ff9b-4ce9-b56a-ab8bdf2ca8c1' and ques == 11" language="Python" />
+          <url>file://$PROJECT_DIR$/IAA.py</url>
+          <line>63</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="task == '025a8515-ff9b-4ce9-b56a-ab8bdf2ca8c1'" language="Python" />
+          <url>file://$PROJECT_DIR$/dataV2.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="qnum == 11" language="Python" />
+          <url>file://$PROJECT_DIR$/dataV2.py</url>
+          <line>42</line>
+          <option name="timeStamp" value="61" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -525,47 +571,52 @@
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
       <expression>
+        <expression-string>qnum == 11</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>task == '025a8515-ff9b-4ce9-b56a-ab8bdf2ca8c1'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>task == '025a8515-ff9b-4ce9-b56a-ab8bdf2ca8c1' and ques == 11</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>art == 1737</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>t == '99968e91-36d0-4be9-a40f-858fdc0451d0'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>t == '5257406f-8cb8-42b8-b4dd-799e0a22931f'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>t = '5257406f-8cb8-42b8-b4dd-799e0a22931f'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>i ==0</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ptsRec &lt;0</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>ch == 2</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>ch ==2</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>codingScore &gt;.5</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>task == 'ef335a02-a550-4d8b-9cbd-fb6622ad8c8f'</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>schema_namespace ==</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>task = 'ef335a02-a550-4d8b-9cbd-fb6622ad8c8f'</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(answers)&gt;0</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(indices)&gt;0</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(questions)&gt;1</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -679,16 +730,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="1179" selection-start-line="1179" selection-end-line="1179" />
         </state>
       </provider>
     </entry>
@@ -706,19 +747,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dependency.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="145" selection-start-line="145" selection-end-line="145" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1535963792792" expanded="true" signature="999:1004" ph="..." />
-            <marker date="1535963792792" expanded="true" signature="4560:4772" ph="..." />
-            <marker date="1535963792792" expanded="true" signature="4963:5447" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChecklistCoding.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -733,36 +761,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="139" selection-start-line="139" selection-end-line="139" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-390">
-          <caret line="106" column="10" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IAA.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="23" column="53" selection-start-line="13" selection-start-column="4" selection-end-line="23" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/io/parsers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="832">
@@ -770,47 +768,129 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataV2.py">
+    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4710">
-          <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
+        <state relative-caret-position="15">
+          <caret line="106" column="10" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="10" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <marker date="1535963815896" expanded="true" signature="3263:3389" ph="..." />
-            <marker date="1535963815896" expanded="true" signature="5137:5205" ph="..." />
-            <marker date="1535963815896" expanded="true" signature="5241:5297" ph="..." />
-            <marker date="1535963815896" expanded="true" signature="12765:12914" ph="..." />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weighting Algorithm (updated).py">
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/ops.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="111" column="27" lean-forward="true" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+        <state relative-caret-position="140">
+          <caret line="1166" selection-start-line="1166" selection-end-line="1166" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pred1/SortedPts_1721.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pred1/SortedPts_1737.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pred1/SortedPts_1712.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Separator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1536017185020" expanded="true" signature="97:462" ph="..." />
+            <marker date="1536017185020" expanded="true" signature="488:489" ph="..." />
+            <marker date="1536017185020" expanded="true" signature="488:493" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weighting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="838">
+          <caret line="111" column="116" selection-start-line="111" selection-start-column="116" selection-end-line="111" selection-end-column="116" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
-            <marker date="1535965623327" expanded="true" signature="125:477" ph="..." />
+            <marker date="1536014809219" expanded="true" signature="4646:4732" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1789">
+          <caret line="144" column="75" selection-start-line="144" selection-start-column="75" selection-end-line="144" selection-end-column="75" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Master.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+            <marker date="1536026859533" expanded="true" signature="240:245" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1783">
+          <caret line="144" column="21" selection-start-line="144" selection-start-column="21" selection-end-line="144" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <marker date="1536026584546" expanded="true" signature="7764:8071" ph="..." />
+            <marker date="1536026584546" expanded="true" signature="8140:8145" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dependency.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="604">
+          <caret line="100" column="80" selection-start-line="100" selection-start-column="80" selection-end-line="100" selection-end-column="80" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1536025231742" expanded="true" signature="1048:1053" ph="..." />
+            <marker date="1536025231742" expanded="true" signature="4871:5014" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataV2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="391" column="20" selection-start-line="391" selection-start-column="4" selection-end-line="391" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1536027447151" expanded="true" signature="3354:3480" ph="..." />
+            <marker date="1536027447151" expanded="true" signature="5228:5296" ph="..." />
+            <marker date="1536027447151" expanded="true" signature="5332:5388" ph="..." />
+            <marker date="1536027447151" expanded="true" signature="9715:10141" ph="..." />
+            <marker date="1536027447151" expanded="true" signature="11127:11163" ph="..." />
+            <marker date="1536027447151" expanded="true" signature="11196:11389" ph="..." />
+            <marker date="1536027447151" expanded="true" signature="11416:11520" ph="..." />
+            <marker date="1536027447151" expanded="true" signature="13856:14072" ph="..." />
+            <marker date="1536027447151" expanded="true" signature="16909:16956" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pointAssignment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        <state relative-caret-position="90">
+          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
-            <marker date="1535967588625" expanded="true" signature="1214:4193" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="2791:2868" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="2899:2937" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="3070:3092" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="3121:3157" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="3190:3469" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="3496:3845" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="3876:4193" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="4217:4222" ph="..." />
-            <marker date="1535967588625" expanded="true" signature="5183:5312" ph="..." />
+            <marker date="1536027447143" expanded="true" signature="577:578" ph="..." />
+            <marker date="1536027447143" expanded="true" signature="7326:7371" ph="..." />
+            <marker date="1536027447143" expanded="true" signature="7405:7441" ph="..." />
+            <marker date="1536027447143" expanded="true" signature="16927:17041" ph="..." />
           </folding>
         </state>
       </provider>

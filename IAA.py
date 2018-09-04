@@ -5,6 +5,8 @@ from repScores import *
 from data_utils import initRep
 from dataV2 import *
 import os
+import json
+
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
 def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, answersFile = None):
@@ -83,8 +85,10 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
                     #Treat each q as a binary yes/no
                     chance_odds = bin_chance_odds
                     ques_num = ques
+                    units = str(units).replace('\n', '')
+                    units = units.replace(' ', ', ')
                     data.append([article_num, article_sha, task_id, schema_namespace, ques_num, agreements[i][8], winner,
-                                 codingPercentAgreement, agreements[i][7], units,
+                                 codingPercentAgreement, agreements[i][7], json.dumps(units),
                                  unitizingScore, inclusiveUnitizing, totalScore, chance_odds, bin_chance_odds, num_users, agreements[i][9],agreements[i][6],
                                 question_text, answer_text])
 
@@ -107,8 +111,10 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                 #ques_num = parse(ques, 'Q')
                 ques_num = ques
+                units = str(units).replace('\n', '')
+                units = units.replace(' ', ', ')
                 data.append([article_num, article_sha,task_id,schema_namespace, ques_num, agreements[8], winner, codingPercentAgreement, agreements[7],
-                             units, unitizingScore, inclusiveUnitizing,
+                             json.dumps(units), unitizingScore, inclusiveUnitizing,
                              totalScore, chance_odds, bin_chance_odds, num_users, agreements[9], selectedText,
                              question_text, answer_text])
 
@@ -127,6 +133,21 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
         writer.writerows(data)
 
     print("Table complete")
+def adjustForJson(units):
+    units = str(units)
+    out = '['
+    prev = False
+    for u in range(len(units)):
+        if units[u].isdigit():
+            out+=units[u]
+            prev = True
+        elif units[u] == ' ' and prev == True:
+            out+=', '
+        else:
+            prev = False
+    out+=']'
+    return out
+
 
 
 def score(article, ques, data, repDF = None, hardCodedTypes = False):
@@ -194,10 +215,9 @@ def score(article, ques, data, repDF = None, hardCodedTypes = False):
     answers = get_question_answers(data, article, ques)
     print('fetchig userdata')
     users =get_question_userid(data, article, ques)
-    #TODO: more rigorous number ofusers
     print(users)
     print(np.unique(users))
-    numUsers = len(np.unique(users))
+    numUsers = get_num_users(data, article, ques)
     print ('got', numUsers,'users')
 
     if question_type == 'ordinal':
