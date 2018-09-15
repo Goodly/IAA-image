@@ -70,7 +70,8 @@ def importData(path, excludedUsers = []):
         length = art_data['source_text_length'].iloc[0]
         #print(length)
         source_text = makeList(length)
-        flagExclusions = exclusionList(users, flags, cats)
+        #flagExclusions = exclusionList(users, flags, cats)
+        flagExclusions = []
         #print(flagExclusions)
         if annotator_count >= 2:
             cats = np.unique(art_data['topic_name'])
@@ -307,11 +308,15 @@ def toFlagMatrix(starts, ends, nStarts, nEnds, codedUsers, flags):
         #i corresponds tot he code of a user
 
         for i in np.arange(len(starts)):
-            #print('i',i)
+            #print('i',i, codedUsers[i])
+            l = starts[i]
+            k = ends[i]
+
             for j in np.arange(len(nStarts)):
                 #print(j)
-                if (starts[i] < nStarts[j] and ends[i] > nStarts[j]) or \
-                        (starts[i]< nEnds[j] and ends[i] > nEnds[j]):
+                o = nStarts[j]
+                if (starts[i] <= nStarts[j] and ends[i] >= nStarts[j]) or \
+                        (starts[i] <= nEnds[j] and ends[i] >= nEnds[j]):
                     flagMatrix[j][codedUsers[i]] = flags[i]
         return flagMatrix.T
     return []
@@ -336,14 +341,16 @@ def assignFlags(matrix):
                             potential += 1
                             if matrix[u][i] == matrix[u][j]:
                               score += 1
-                    if potential > 0 and score/potential >= .15:
+                    if potential > 0 and score/potential >= .5:
                         flags[j] = flags[i]
                         sortedNStarts.append(j)
     return flags
 
 
 def determineFlags(starts, ends, nStarts, nEnds, codedUsers, flags):
-    print('flags', flags)
+    print('flags')
+    print(flags)
+    print(codedUsers)
     matrix = toFlagMatrix(starts, ends, nStarts,nEnds, codedUsers, flags)
     print(matrix)
     if len(matrix)>0 and len(matrix[0]>0):

@@ -24,43 +24,36 @@ def pointSort(directory):
     print("SORTING STARTING")
     sourceFile, argRelevanceFile, weightFile = getFiles(directory)
 
-    print(weightFile)
     outData = [['Article ID', 'Credibility Indicator ID ', 'Credibilty Indicator Category',
+                'Credibility Indicator Name',
+                'Points', 'Indices of Label in Article', 'Start', 'End']]
+    tst = [['Article ID', 'Credibility Indicator ID ', 'Credibilty Indicator Category',
                 'Credibility Indicator Name',
                 'Points', 'Indices of Label in Article', 'Start', 'End']]
     artNum = 0000
     for weightSet in weightFile:
-        print(weightSet)
         dataDict = storeData(sourceFile, argRelevanceFile, weightSet, './demo1/allTUAS.csv')
         articles = dataDict.keys()
         mergeWeightFiles(weightFile)
         for art in articles:
 
-                print("WIPEDOUT")
 
                 counter= 0
                 artNum = retrieveArtNum(dataDict, art)
                 argDic = retrieveArgDict(dataDict, art)
                 sorcDic = retrieveSourceDict(dataDict, art)
-                print(sorcDic)
                 weightQ, weightA = getweightQA(dataDict, art)
                 pointRecs = getpointRec(dataDict, art)
                 weightInds = getweightIndices(dataDict, art)
                 labels = getLabels(dataDict,art)
                 schema =getSchema(dataDict, art)
-                print("SCHEMING")
                 for i in range(len(pointRecs)):
-                    #print("ONSTEP", i)
                     wu = weightInds[i]
                     if isinstance(wu, str):
                         wu = get_indices_hard(wu)
                     bestSourceTask = findBestMatch(wu, sorcDic)
                     bestArgTask = findBestMatch(wu, argDic)
                     ptsRec = pointRecs[i]
-                    print('PREC', ptsRec)
-                    print(labels[i])
-                    print(schema)
-                    print(weightQ[i], weightA[i], art)
                     # it's zero when there's no answers that passed the specialist IAA
                     # -1 is default answer value, it'll pass the ptsrec to the final score
                     if bestSourceTask!=0:
@@ -79,20 +72,20 @@ def pointSort(directory):
                     pts = assignPoints(ptsRec,wu, sourceUnits, argUnits, argAns, sourceAns, art, journalist)
 
 
-                    print(schema)
                     #credId = counter
                     credId = schema[0]+str(counter)
                     counter+=1
                     starts, ends = indicesToStartEnd(wu)
-                    addendum = [art, credId, schema, labels[i], pts, wu, starts[0], ends[0]]
+                    addendum = [artNum, credId, schema, labels[i], pts, wu, starts[0], ends[0]]
                     outData.append(addendum)
+                    tst.append(addendum[1:5])
                     #TODO: figure out how visualization handles stuff with multiple starts and ends
-                    for i in range(len(starts)-1):
-                        print('addendum', addendum)
-                        print(labels)
-                        print(len(ends), len(starts))
-                        addendum = [art, credId, schema, labels[i+1], 0, wu, starts[i+1], ends[i+1]]
+                    for k in range(1, len(starts)-1):
+
+                        addendum = [artNum, credId, schema, labels[i], 0, wu, starts[k], ends[k]]
                         outData.append(addendum)
+                        tst.append(addendum[1:5])
+
                 print('exporting to csv')
                 scores = open(directory + '/SortedPts_'+str(artNum)+'.csv', 'w', encoding='utf-8')
                 print(directory + '/SortedPts_Master.csv')
@@ -115,7 +108,6 @@ def mergeWeightFiles(weightSet):
     df.to_csv('combined_weights.csv')
 
 def storeData(sourceFile, argRelFile, weightFile, allTuas):
-    print(argRelFile)
     sourceData = pd.read_csv(sourceFile)
     argData = pd.read_csv(argRelFile)
     weightData = pd.read_csv(weightFile)
@@ -135,16 +127,11 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
         #there's many questions, only q 4 is relevant
         artQSourceData = artSourceData[artSourceData['question_Number'] == 4]
         taskAnsSource = getAnswersTask(artQSourceData)
-        print(weightData.head(0))
-        print(weightData['article_sha256'])
-        print('betterartthanfart',art, type(art))
-        printType(weightData['article_sha256'])
         artWeights = weightData[weightData['article_sha256'].notnull()]
         artWeights = artWeights[artWeights['article_sha256'] == art]
         weightTasks = artWeights['task_uuid'].tolist()
         labels = artWeights['Label'].tolist()
         weightInds = artWeights['highlighted_indices'].apply(get_indices_hard).tolist()
-        print("WEIGHTINDS", weightInds)
         weightRec = artWeights['Points'].tolist()
         weightQs = artWeights['Question_Number'].tolist()
         weightAnswers = artWeights['Answer_Number'].tolist()
@@ -156,10 +143,7 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
                 'label':labels[t],
 
             }
-        #print('here')
-        #print(artWeights['schema'])
         s = artWeights['schema']
-        print('schemer',s)
         try:
             schema = s.iloc[0]
         except:
@@ -167,19 +151,13 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
         argtasks = artArgData['task_uuid']
         taskTuaArg = {}
         for t in argtasks:
-            #print('arg', t)
             tua = getTUA(t, tuas)
-            #print(tua)
             taskTuaArg[t] = tua
         sorctasks = artQSourceData['task_uuid']
-        print(sorctasks)
         taskTuaSourc = {}
-        print('size',len(sorctasks))
-        print(len(argtasks))
+
         for t in sorctasks:
-            print('taskid',t)
             tua = getTUA(t, tuas)
-            print(tua)
             taskTuaSourc[t] = tua
         argDict = mergeByTask(taskAnsArg, taskTuaArg)
         sorcDict = mergeByTask(taskAnsSource, taskTuaSourc)
@@ -197,7 +175,6 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
         }
     return bigDict
 def runjson(targ):
-    print(targ)
     return json.loads(targ)
 def retrieveArtNum(data, article):
     return data[article]['artNum']
@@ -257,7 +234,6 @@ def getStartsEndsFromString(bigStr):
     for i in range(len(ends)):
         for n in range(starts[i], ends[i]):
             indices.append(n)
-    print(indices)
     return np.unique(indices).tolist()
 
 def indicesToStartEnd(indices):
@@ -273,7 +249,6 @@ def indicesToStartEnd(indices):
             ends.append(indices[i-1])
         last = indices[i]
     #ends.append(indices[len(indices)-1])
-    print('starrt',starts, ends)
     return sorted(starts), sorted(ends)
 
 
@@ -388,15 +363,12 @@ def findBestMatch(ptsUnits, modDict):
     """
     bestTask =0
     bestScore = -1
-    print("FINDING MATCH")
     for i in modDict.keys():
-        print('key', i)
         modUnits = modDict[i][1]
         score, units = calcOverlap(modUnits, ptsUnits)
         if score>bestScore:
             bestScore = score
             bestTask = i
-    print('winner', bestTask)
     return bestTask
 
 
@@ -413,7 +385,6 @@ def assignPoints(ptsRec, ptsRecUnitization, sourceUnitization, argUnitization, a
     :param journalist:
     :return:
     """
-    print(ptsRecUnitization, sourceUnitization)
     doesPass, passingIndices = checkAgreement(ptsRecUnitization, sourceUnitization)
     if doesPass:
         print("IT'S A SOURCE")
@@ -451,25 +422,23 @@ def checkSpecialCase(argVal, sourceVal, ptsRec, article, journalist):
 
 
 def calcImportanceMultiplier(value, dict):
-    print('val', value)
-    print('keeee', dict.keys())
     return dict[int(value)]
 
 
 def calcArgImportanceMultiplier(argUnitization, ptsRecUnitization, argVal):
     doesPass, passingIndices = checkAgreement(ptsRecUnitization, argUnitization)
     if doesPass:
+        print("ARGONJARGON")
         return calcImportanceMultiplier(argVal, argValToWeightDict)
     else:
         return 1
 
 
-def checkAgreement(arr1, arr2, threshold = .9):
+def checkAgreement(arr1, arr2, threshold = .6):
     """arr1 and arr2 are lists of every unitization
     Raw score might be best indicator, highest percentage of aunits in agreement with either of the unitizaitons"""
     rawScore, passingIndices = calcOverlap(arr1, arr2)
     doesPass = rawScore > threshold
-    print('checkedoneself')
     return doesPass, passingIndices
 
 
@@ -479,12 +448,8 @@ def calcOverlap(arr1, arr2):
 
     arr1 = get_indices_hard(str(arr1))
     arr2 = get_indices_hard((str(arr2)))
-    print('arr1', arr1)
-    print('arr2', arr2)
     arr1 = checkOneString(arr1)
     arr2 = checkOneString(arr2)
-    print(type(arr1), type(arr2))
-    #print(type(arr1[0]), type(arr2[0]))
     length = max(max(arr1), (max(arr2))) + 1
 
     answerMatrix = indicesToMatrix(arr1, arr2, length)
@@ -502,7 +467,6 @@ def checkOneString(arr):
 
 def indicesToMatrix(arr1, arr2, length):
     """converts lists of the indices of unitizations to an answer matrix"""
-    print('arrimapirate',arr2)
     arr2 = [int(a) for a in arr2]
     arr1 = [int(a) for a in arr1]
     col1 = np.zeros(length)
@@ -553,7 +517,7 @@ def getSource(sourceUnitizaiton):
 # #source,args,weight = getFiles('./demo1')
 # #data = (storeData(source,args,weight))
 # #print(data)
-#pointSort('./pred1')
+pointSort('./pred1')
 # print(sourceDatabase)
 # print(ArticleDatabase)
 # print(JournalistDatabase)

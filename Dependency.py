@@ -78,8 +78,8 @@ def handleDependencies(schemaPath, iaaPath):
                                 for i in range(len(newInds)):
                                     print(newInds, newInds[i])
                                     indices = np.append(indices, newInds[i])
-                                alpha = np.append(alpha, float(newAlph[0]))
-                                alphainc = np.append(alphainc, float(newIncl[0]))
+                                alpha = np.append(alpha, (newAlph[0]))
+                                alphainc = np.append(alphainc, (newIncl[0]))
                                 print('mjrpupdate')
                                 print(indices)
                                 print(alpha)
@@ -91,8 +91,11 @@ def handleDependencies(schemaPath, iaaPath):
                         iaaData.at[row, 'coding_perc_agreement'] = -1
                 indices = np.unique(indices).tolist()
                 print(alpha)
-                alpha = np.mean(alpha)
-                alphainc = np.mean(alpha)
+                try:
+                    alpha = alpha[0]
+                    alphainc = alphainc[0]
+                except IndexError:
+                    alpha, alphainc = -1,-1
                 print("FOR YOUR BOAT")
                 print(rows)
                 if len(rows)>0:
