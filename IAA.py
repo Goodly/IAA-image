@@ -1,11 +1,8 @@
 import csv
 from ChecklistCoding import *
 from ExtraInfo import *
-from repScores import *
-from data_utils import initRep
 from dataV2 import *
 import os
-import json
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
@@ -89,7 +86,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
                     units = str(units).replace('\n', '')
                     units = units.replace(' ', ', ')
                     data.append([article_num, article_sha, task_id, schema_namespace, ques_num, agreements[i][8], winner,
-                                 codingPercentAgreement, agreements[i][7], json.dumps(units),
+                                 codingPercentAgreement, agreements[i][7], units,
                                  unitizingScore, inclusiveUnitizing, totalScore, chance_odds, bin_chance_odds, num_users, agreements[i][9],agreements[i][6],
                                 question_text, answer_text])
 
@@ -115,7 +112,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
                 units = str(units).replace('\n', '')
                 units = units.replace(' ', ', ')
                 data.append([article_num, article_sha,task_id,schema_namespace, ques_num, agreements[8], winner, codingPercentAgreement, agreements[7],
-                             json.dumps(units), unitizingScore, inclusiveUnitizing,
+                             units, unitizingScore, inclusiveUnitizing,
                              totalScore, chance_odds, bin_chance_odds, num_users, agreements[9], selectedText,
                              question_text, answer_text])
 
@@ -128,11 +125,9 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     print('exporting to csv')
     path, name = get_path(highlightfilename)
     scores = open(path+'S_IAA_'+name, 'w', encoding = 'utf-8')
-
     with scores:
         writer = csv.writer(scores)
         writer.writerows(data)
-
     print("Table complete")
 def adjustForJson(units):
     units = str(units)
