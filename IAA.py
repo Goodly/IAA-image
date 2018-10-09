@@ -258,8 +258,8 @@ def run_2step_unitization(data, article, question, repDF):
         data, article, question).tolist()
     uqU = np.unique(users)
     userWeightDict = {}
-    for u in uqU:
-        userWeightDict[u] = get_user_rep(u, repDF)
+    #for u in uqU:
+        #userWeightDict[u] = get_user_rep(u, repDF)
     score, indices, iScore = scoreNuUnitizing(starts, ends, length, numUsers, users, userWeightDict)
 
     return 'NA', indices, score, score, 'NA'

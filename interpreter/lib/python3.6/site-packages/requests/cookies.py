@@ -12,9 +12,10 @@ requests.utils imports from here, so be careful with imports.
 import copy
 import time
 import calendar
+import collections
 
 from ._internal_utils import to_native_string
-from .compat import cookielib, urlparse, urlunparse, Morsel, MutableMapping
+from .compat import cookielib, urlparse, urlunparse, Morsel
 
 try:
     import threading
@@ -168,7 +169,7 @@ class CookieConflictError(RuntimeError):
     """
 
 
-class RequestsCookieJar(cookielib.CookieJar, MutableMapping):
+class RequestsCookieJar(cookielib.CookieJar, collections.MutableMapping):
     """Compatibility class; is a cookielib.CookieJar, but exposes a dict
     interface.
 
@@ -414,13 +415,8 @@ class RequestsCookieJar(cookielib.CookieJar, MutableMapping):
     def copy(self):
         """Return a copy of this RequestsCookieJar."""
         new_cj = RequestsCookieJar()
-        new_cj.set_policy(self.get_policy())
         new_cj.update(self)
         return new_cj
-
-    def get_policy(self):
-        """Return the CookiePolicy instance used."""
-        return self._policy
 
 
 def _copy_cookie_jar(jar):

@@ -3,7 +3,7 @@ from Dependency import *
 from Weighting import *
 from pointAssignment import *
 from Separator import *
-def calculate_scores_master(directory, tua = 'allTUAS.csv'):
+def calculate_scores_master(directory):
     print("IAA PROPER")
     calc_agreement_directory(directory, hardCodedTypes=True)
     print("DEPENDENCY")

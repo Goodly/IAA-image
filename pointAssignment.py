@@ -17,7 +17,6 @@ ArticleDatabase = {}
 argValToWeightDict= {1:3, 2:2, 3:1, 4:.5, 5:1, 6:1, -1:1}
 sourceValToWeightDict= {1:2, 2:1, 3:.5, 4:.25, 5:.5, 6:.5, 7:.5, -1:1}
 
-#IMPORTANTNOTE: THIS ASSUMES pts reocmmended are positive, as in we subtract those points from 100 later!!!!
 
 
 def pointSort(directory):
@@ -78,14 +77,10 @@ def pointSort(directory):
                     starts, ends = indicesToStartEnd(wu)
                     addendum = [artNum, credId, schema, labels[i], pts, wu, starts[0], ends[0]]
                     outData.append(addendum)
-                    tst.append(addendum[1:5])
                     #TODO: figure out how visualization handles stuff with multiple starts and ends
                     for k in range(1, len(starts)-1):
-
                         addendum = [artNum, credId, schema, labels[i], 0, wu, starts[k], ends[k]]
                         outData.append(addendum)
-                        tst.append(addendum[1:5])
-
                 print('exporting to csv')
                 scores = open(directory + '/SortedPts_'+str(artNum)+'.csv', 'w', encoding='utf-8')
                 print(directory + '/SortedPts_Master.csv')
@@ -182,12 +177,16 @@ def retrieveweightDict(data, article):
     return data[article]['weightDict']
 def retrieveArgDict(data, article):
     return data[article]['argDict']
+
 def retrieveSourceDict(data, article):
     return data[article]['sourceDict']
+
 def retrievesorctaskTua(data, article):
     return data[article]['sorctua']
+
 def retrieveargtaskTua(data, article):
     return data[article]['argtua']
+
 def getTUA(task, tuaDF):
     taskDF = tuaDF[tuaDF['quiz_task_uuid'] == task]
     tuas = []
@@ -207,6 +206,7 @@ def getTUA(task, tuaDF):
     #print("TUAS", indices)
     #print('-------------------')
     return indices
+
 def getStartsEndsFromString(bigStr):
 
     onStart = True
@@ -396,18 +396,19 @@ def assignPoints(ptsRec, ptsRecUnitization, sourceUnitization, argUnitization, a
         sourceMult = calcImportanceMultiplier(sourceVal, sourceValToWeightDict)
         sourceAdjustedValue = sourceMult*ptsRec
         argMult = calcArgImportanceMultiplier(argUnitization, ptsRecUnitization, argVal)
-        sendArticleJournalistPoints(sourceAdjustedValue, argMult, article, journalist)
+        final_points = sendArticleJournalistPoints(sourceAdjustedValue, argMult, article, journalist)
     else:
         argMult = calcArgImportanceMultiplier(argUnitization, ptsRecUnitization, argVal)
-        sendArticleJournalistPoints(ptsRec, argMult, article, journalist)
-    return ptsRec*argMult
+        final_points = sendArticleJournalistPoints(ptsRec, argMult, article, journalist)
+    return final_points
 
 
 def sendArticleJournalistPoints(ptsrec, multiplier, article, journalist):
     points = ptsrec*multiplier
     sendPoints(article, points, ArticleDatabase)
     sendPoints(journalist, points, JournalistDatabase)
-
+    print("Sending ", points, "to ", article)
+    return points
 
 def checkSpecialCase(argVal, sourceVal, ptsRec, article, journalist):
     if argVal == 5 and (sourceVal == 5 or sourceVal == 6 or sourceVal == 7):
@@ -434,7 +435,7 @@ def calcArgImportanceMultiplier(argUnitization, ptsRecUnitization, argVal):
         return 1
 
 
-def checkAgreement(arr1, arr2, threshold = .6):
+def checkAgreement(arr1, arr2, threshold = 2):
     """arr1 and arr2 are lists of every unitization
     Raw score might be best indicator, highest percentage of aunits in agreement with either of the unitizaitons"""
     rawScore, passingIndices = calcOverlap(arr1, arr2)
@@ -517,7 +518,7 @@ def getSource(sourceUnitizaiton):
 # #source,args,weight = getFiles('./demo1')
 # #data = (storeData(source,args,weight))
 # #print(data)
-pointSort('./pred1')
+#pointSort('./pred1')
 # print(sourceDatabase)
 # print(ArticleDatabase)
 # print(JournalistDatabase)

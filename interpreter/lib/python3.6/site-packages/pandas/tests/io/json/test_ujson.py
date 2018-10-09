@@ -394,21 +394,21 @@ class TestUltraJSONTests(object):
         ]
         for test in tests:
             output = ujson.encode(test)
-            expected = '"{iso}"'.format(iso=test.isoformat())
+            expected = '"%s"' % test.isoformat()
             assert expected == output
 
     def test_encodeTimeConversion_pytz(self):
         # see gh-11473: to_json segfaults with timezone-aware datetimes
         test = datetime.time(10, 12, 15, 343243, pytz.utc)
         output = ujson.encode(test)
-        expected = '"{iso}"'.format(iso=test.isoformat())
+        expected = '"%s"' % test.isoformat()
         assert expected == output
 
     def test_encodeTimeConversion_dateutil(self):
         # see gh-11473: to_json segfaults with timezone-aware datetimes
         test = datetime.time(10, 12, 15, 343243, dateutil.tz.tzutc())
         output = ujson.encode(test)
-        expected = '"{iso}"'.format(iso=test.isoformat())
+        expected = '"%s"' % test.isoformat()
         assert expected == output
 
     def test_nat(self):
@@ -417,7 +417,7 @@ class TestUltraJSONTests(object):
 
     def test_npy_nat(self):
         from distutils.version import LooseVersion
-        if LooseVersion(np.__version__) < LooseVersion('1.7.0'):
+        if LooseVersion(np.__version__) < '1.7.0':
             pytest.skip("numpy version < 1.7.0, is "
                         "{0}".format(np.__version__))
 
@@ -425,7 +425,7 @@ class TestUltraJSONTests(object):
         assert ujson.encode(input) == 'null', "Expected null"
 
     def test_datetime_units(self):
-        from pandas._libs.tslib import Timestamp
+        from pandas._libs.lib import Timestamp
 
         val = datetime.datetime(2013, 8, 17, 21, 17, 12, 215504)
         stamp = Timestamp(val)
@@ -460,11 +460,11 @@ class TestUltraJSONTests(object):
     def test_encodeRecursionMax(self):
         # 8 is the max recursion depth
 
-        class O2(object):
+        class O2:
             member = 0
             pass
 
-        class O1(object):
+        class O1:
             member = 0
             pass
 
@@ -772,14 +772,14 @@ class TestUltraJSONTests(object):
         assert "[1,2,3]" == f.getvalue()
 
     def test_dumpToFileLikeObject(self):
-        class FileLike(object):
+        class filelike:
 
             def __init__(self):
                 self.bytes = ''
 
             def write(self, bytes):
                 self.bytes += bytes
-        f = FileLike()
+        f = filelike()
         ujson.dump([1, 2, 3], f)
         assert "[1,2,3]" == f.bytes
 
@@ -800,7 +800,7 @@ class TestUltraJSONTests(object):
             np.array([1, 2, 3, 4]), ujson.load(f, numpy=True))
 
     def test_loadFileLikeObject(self):
-        class FileLike(object):
+        class filelike:
 
             def read(self):
                 try:
@@ -808,10 +808,10 @@ class TestUltraJSONTests(object):
                 except AttributeError:
                     self.end = True
                     return "[1,2,3,4]"
-        f = FileLike()
+        f = filelike()
         assert [1, 2, 3, 4] == ujson.load(f)
 
-        f = FileLike()
+        f = filelike()
         tm.assert_numpy_array_equal(
             np.array([1, 2, 3, 4]), ujson.load(f, numpy=True))
 
@@ -837,7 +837,7 @@ class TestUltraJSONTests(object):
 
     def test_encodeNumericOverflowNested(self):
         for n in range(0, 100):
-            class Nested(object):
+            class Nested:
                 x = 12839128391289382193812939
 
             nested = Nested()
@@ -856,9 +856,9 @@ class TestUltraJSONTests(object):
         boundary2 = 2**32  # noqa
         docs = (
             '{"id": 3590016419}',
-            '{{"id": {low}}}'.format(low=2**31),
-            '{{"id": {high}}}'.format(high=2**32),
-            '{{"id": {one_less}}}'.format(one_less=(2**32) - 1),
+            '{"id": %s}' % 2**31,
+            '{"id": %s}' % 2**32,
+            '{"id": %s}' % ((2**32) - 1),
         )
         results = (3590016419, 2**31, 2**32, 2**32 - 1)
         for doc, result in zip(docs, results):
@@ -886,7 +886,7 @@ class TestUltraJSONTests(object):
     def test_toDict(self):
         d = {u("key"): 31337}
 
-        class DictTest(object):
+        class DictTest:
 
             def toDict(self):
                 return d
@@ -1643,4 +1643,4 @@ class TestPandasJSONTests(object):
 
 
 def _clean_dict(d):
-    return {str(k): v for k, v in compat.iteritems(d)}
+    return dict((str(k), v) for k, v in compat.iteritems(d))

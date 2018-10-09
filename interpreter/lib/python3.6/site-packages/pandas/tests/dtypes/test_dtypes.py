@@ -9,7 +9,6 @@ import pandas as pd
 from pandas import (
     Series, Categorical, CategoricalIndex, IntervalIndex, date_range)
 
-from pandas.compat import string_types
 from pandas.core.dtypes.dtypes import (
     DatetimeTZDtype, PeriodDtype,
     IntervalDtype, CategoricalDtype)
@@ -22,11 +21,6 @@ from pandas.core.dtypes.common import (
     is_datetime64_any_dtype, is_string_dtype,
     _coerce_to_dtype)
 import pandas.util.testing as tm
-
-
-@pytest.fixture(params=[True, False, None])
-def ordered(request):
-    return request.param
 
 
 class Base(object):
@@ -403,7 +397,7 @@ class TestIntervalDtype(Base):
         assert dtype2 == dtype
         assert dtype3 == dtype
         assert dtype is dtype2
-        assert dtype2 is dtype3
+        assert dtype2 is dtype
         assert dtype3 is dtype
         assert hash(dtype) == hash(dtype2)
         assert hash(dtype) == hash(dtype3)
@@ -421,52 +415,26 @@ class TestIntervalDtype(Base):
         assert hash(dtype2) == hash(dtype2)
         assert hash(dtype2) == hash(dtype3)
 
-    @pytest.mark.parametrize('subtype', [
-        'interval[int64]', 'Interval[int64]', 'int64', np.dtype('int64')])
-    def test_construction(self, subtype):
-        i = IntervalDtype(subtype)
-        assert i.subtype == np.dtype('int64')
-        assert is_interval_dtype(i)
-
-    @pytest.mark.parametrize('subtype', [None, 'interval', 'Interval'])
-    def test_construction_generic(self, subtype):
-        # generic
-        i = IntervalDtype(subtype)
-        assert i.subtype is None
-        assert is_interval_dtype(i)
-
-    @pytest.mark.parametrize('subtype', [
-        CategoricalDtype(list('abc'), False),
-        CategoricalDtype(list('wxyz'), True),
-        object, str, '<U10', 'interval[category]', 'interval[object]'])
-    def test_construction_not_supported(self, subtype):
-        # GH 19016
-        msg = ('category, object, and string subtypes are not supported '
-               'for IntervalDtype')
-        with tm.assert_raises_regex(TypeError, msg):
-            IntervalDtype(subtype)
-
-    def test_construction_errors(self):
-        msg = 'could not construct IntervalDtype'
-        with tm.assert_raises_regex(ValueError, msg):
+    def test_construction(self):
+        with pytest.raises(ValueError):
             IntervalDtype('xx')
 
-    def test_construction_from_string(self):
-        result = IntervalDtype('interval[int64]')
-        assert is_dtype_equal(self.dtype, result)
-        result = IntervalDtype.construct_from_string('interval[int64]')
-        assert is_dtype_equal(self.dtype, result)
+        for s in ['interval[int64]', 'Interval[int64]', 'int64']:
+            i = IntervalDtype(s)
+            assert i.subtype == np.dtype('int64')
+            assert is_interval_dtype(i)
 
-    @pytest.mark.parametrize('string', [
-        'foo', 'interval[foo]', 'foo[int64]', 0, 3.14, ('a', 'b'), None])
-    def test_construction_from_string_errors(self, string):
-        if isinstance(string, string_types):
-            error, msg = ValueError, 'could not construct IntervalDtype'
-        else:
-            error, msg = TypeError, 'a string needs to be passed, got type'
+    def test_construction_generic(self):
+        # generic
+        i = IntervalDtype('interval')
+        assert i.subtype == ''
+        assert is_interval_dtype(i)
+        assert str(i) == 'interval[]'
 
-        with tm.assert_raises_regex(error, msg):
-            IntervalDtype.construct_from_string(string)
+        i = IntervalDtype()
+        assert i.subtype is None
+        assert is_interval_dtype(i)
+        assert str(i) == 'interval'
 
     def test_subclass(self):
         a = IntervalDtype('interval[int64]')
@@ -491,50 +459,35 @@ class TestIntervalDtype(Base):
         assert not IntervalDtype.is_dtype(np.int64)
         assert not IntervalDtype.is_dtype(np.float64)
 
+    def test_identity(self):
+        assert (IntervalDtype('interval[int64]') ==
+                IntervalDtype('interval[int64]'))
+
     def test_coerce_to_dtype(self):
         assert (_coerce_to_dtype('interval[int64]') ==
                 IntervalDtype('interval[int64]'))
 
+    def test_construction_from_string(self):
+        result = IntervalDtype('interval[int64]')
+        assert is_dtype_equal(self.dtype, result)
+        result = IntervalDtype.construct_from_string('interval[int64]')
+        assert is_dtype_equal(self.dtype, result)
+        with pytest.raises(TypeError):
+            IntervalDtype.construct_from_string('foo')
+        with pytest.raises(TypeError):
+            IntervalDtype.construct_from_string('interval[foo]')
+        with pytest.raises(TypeError):
+            IntervalDtype.construct_from_string('foo[int64]')
+
     def test_equality(self):
         assert is_dtype_equal(self.dtype, 'interval[int64]')
+        assert is_dtype_equal(self.dtype, IntervalDtype('int64'))
         assert is_dtype_equal(self.dtype, IntervalDtype('int64'))
         assert is_dtype_equal(IntervalDtype('int64'), IntervalDtype('int64'))
 
         assert not is_dtype_equal(self.dtype, 'int64')
         assert not is_dtype_equal(IntervalDtype('int64'),
                                   IntervalDtype('float64'))
-
-        # invalid subtype comparisons do not raise when directly compared
-        dtype1 = IntervalDtype('float64')
-        dtype2 = IntervalDtype('datetime64[ns, US/Eastern]')
-        assert dtype1 != dtype2
-        assert dtype2 != dtype1
-
-    @pytest.mark.parametrize('subtype', [
-        None, 'interval', 'Interval', 'int64', 'uint64', 'float64',
-        'complex128', 'datetime64', 'timedelta64', PeriodDtype('Q')])
-    def test_equality_generic(self, subtype):
-        # GH 18980
-        dtype = IntervalDtype(subtype)
-        assert is_dtype_equal(dtype, 'interval')
-        assert is_dtype_equal(dtype, IntervalDtype())
-
-    @pytest.mark.parametrize('subtype', [
-        'int64', 'uint64', 'float64', 'complex128', 'datetime64',
-        'timedelta64', PeriodDtype('Q')])
-    def test_name_repr(self, subtype):
-        # GH 18980
-        dtype = IntervalDtype(subtype)
-        expected = 'interval[{subtype}]'.format(subtype=subtype)
-        assert str(dtype) == expected
-        assert dtype.name == 'interval'
-
-    @pytest.mark.parametrize('subtype', [None, 'interval', 'Interval'])
-    def test_name_repr_generic(self, subtype):
-        # GH 18980
-        dtype = IntervalDtype(subtype)
-        assert str(dtype) == 'interval'
-        assert dtype.name == 'interval'
 
     def test_basic(self):
         assert is_interval_dtype(self.dtype)
@@ -579,12 +532,17 @@ class TestIntervalDtype(Base):
 
 class TestCategoricalDtypeParametrized(object):
 
-    @pytest.mark.parametrize('categories', [
-        list('abcd'),
-        np.arange(1000),
-        ['a', 'b', 10, 2, 1.3, True],
-        [True, False],
-        pd.date_range('2017', periods=4)])
+    @pytest.mark.parametrize('categories, ordered', [
+        (['a', 'b', 'c', 'd'], False),
+        (['a', 'b', 'c', 'd'], True),
+        (np.arange(1000), False),
+        (np.arange(1000), True),
+        (['a', 'b', 10, 2, 1.3, True], False),
+        ([True, False], True),
+        ([True, False], False),
+        (pd.date_range('2017', periods=4), True),
+        (pd.date_range('2017', periods=4), False),
+    ])
     def test_basic(self, categories, ordered):
         c1 = CategoricalDtype(categories, ordered=ordered)
         tm.assert_index_equal(c1.categories, pd.Index(categories))
@@ -592,24 +550,21 @@ class TestCategoricalDtypeParametrized(object):
 
     def test_order_matters(self):
         categories = ['a', 'b']
-        c1 = CategoricalDtype(categories, ordered=True)
-        c2 = CategoricalDtype(categories, ordered=False)
-        c3 = CategoricalDtype(categories, ordered=None)
+        c1 = CategoricalDtype(categories, ordered=False)
+        c2 = CategoricalDtype(categories, ordered=True)
         assert c1 is not c2
-        assert c1 is not c3
 
-    @pytest.mark.parametrize('ordered', [False, None])
-    def test_unordered_same(self, ordered):
-        c1 = CategoricalDtype(['a', 'b'], ordered=ordered)
-        c2 = CategoricalDtype(['b', 'a'], ordered=ordered)
+    def test_unordered_same(self):
+        c1 = CategoricalDtype(['a', 'b'])
+        c2 = CategoricalDtype(['b', 'a'])
         assert hash(c1) == hash(c2)
 
     def test_categories(self):
         result = CategoricalDtype(['a', 'b', 'c'])
         tm.assert_index_equal(result.categories, pd.Index(['a', 'b', 'c']))
-        assert result.ordered is None
+        assert result.ordered is False
 
-    def test_equal_but_different(self, ordered):
+    def test_equal_but_different(self):
         c1 = CategoricalDtype([1, 2, 3])
         c2 = CategoricalDtype([1., 2., 3.])
         assert c1 is not c2
@@ -620,11 +575,9 @@ class TestCategoricalDtypeParametrized(object):
         ([1, 2, 3], [3, 2, 1]),
     ])
     def test_order_hashes_different(self, v1, v2):
-        c1 = CategoricalDtype(v1, ordered=False)
+        c1 = CategoricalDtype(v1)
         c2 = CategoricalDtype(v2, ordered=True)
-        c3 = CategoricalDtype(v1, ordered=None)
         assert c1 is not c2
-        assert c1 is not c3
 
     def test_nan_invalid(self):
         with pytest.raises(ValueError):
@@ -639,46 +592,26 @@ class TestCategoricalDtypeParametrized(object):
         c2 = CategoricalDtype(['b', 'a'], ordered=True)
         assert c1 is not c2
 
-    @pytest.mark.parametrize('ordered1', [True, False, None])
-    @pytest.mark.parametrize('ordered2', [True, False, None])
-    def test_categorical_equality(self, ordered1, ordered2):
-        # same categories, same order
-        # any combination of None/False are equal
-        # True/True is the only combination with True that are equal
-        c1 = CategoricalDtype(list('abc'), ordered1)
-        c2 = CategoricalDtype(list('abc'), ordered2)
-        result = c1 == c2
-        expected = bool(ordered1) is bool(ordered2)
-        assert result is expected
-
-        # same categories, different order
-        # any combination of None/False are equal (order doesn't matter)
-        # any combination with True are not equal (different order of cats)
-        c1 = CategoricalDtype(list('abc'), ordered1)
-        c2 = CategoricalDtype(list('cab'), ordered2)
-        result = c1 == c2
-        expected = (bool(ordered1) is False) and (bool(ordered2) is False)
-        assert result is expected
-
-        # different categories
-        c2 = CategoricalDtype([1, 2, 3], ordered2)
-        assert c1 != c2
-
-        # none categories
-        c1 = CategoricalDtype(list('abc'), ordered1)
-        c2 = CategoricalDtype(None, ordered2)
-        c3 = CategoricalDtype(None, ordered1)
-        assert c1 == c2
-        assert c2 == c1
-        assert c2 == c3
-
-    @pytest.mark.parametrize('categories', [list('abc'), None])
-    @pytest.mark.parametrize('other', ['category', 'not a category'])
-    def test_categorical_equality_strings(self, categories, ordered, other):
-        c1 = CategoricalDtype(categories, ordered)
+    @pytest.mark.parametrize('ordered, other, expected', [
+        (True, CategoricalDtype(['a', 'b'], True), True),
+        (False, CategoricalDtype(['a', 'b'], False), True),
+        (True, CategoricalDtype(['a', 'b'], False), False),
+        (False, CategoricalDtype(['a', 'b'], True), False),
+        (True, CategoricalDtype([1, 2], False), False),
+        (False, CategoricalDtype([1, 2], True), False),
+        (False, CategoricalDtype(None, True), True),
+        (True, CategoricalDtype(None, True), True),
+        (False, CategoricalDtype(None, False), True),
+        (True, CategoricalDtype(None, False), True),
+        (True, 'category', True),
+        (False, 'category', True),
+        (True, 'not a category', False),
+        (False, 'not a category', False),
+    ])
+    def test_categorical_equality(self, ordered, other, expected):
+        c1 = CategoricalDtype(['a', 'b'], ordered)
         result = c1 == other
-        expected = other == 'category'
-        assert result is expected
+        assert result == expected
 
     def test_invalid_raises(self):
         with tm.assert_raises_regex(TypeError, 'ordered'):
@@ -719,12 +652,12 @@ class TestCategoricalDtypeParametrized(object):
             c1, categories=[1, 2], ordered=False)
         assert result == CategoricalDtype([1, 2], ordered=False)
 
-    def test_str_vs_repr(self, ordered):
-        c1 = CategoricalDtype(['a', 'b'], ordered=ordered)
+    def test_str_vs_repr(self):
+        c1 = CategoricalDtype(['a', 'b'])
         assert str(c1) == 'category'
         # Py2 will have unicode prefixes
-        pat = r"CategoricalDtype\(categories=\[.*\], ordered={ordered}\)"
-        assert re.match(pat.format(ordered=ordered), repr(c1))
+        pat = r"CategoricalDtype\(categories=\[.*\], ordered=False\)"
+        assert re.match(pat, repr(c1))
 
     def test_categorical_categories(self):
         # GH17884
@@ -732,38 +665,3 @@ class TestCategoricalDtypeParametrized(object):
         tm.assert_index_equal(c1.categories, pd.Index(['a', 'b']))
         c1 = CategoricalDtype(CategoricalIndex(['a', 'b']))
         tm.assert_index_equal(c1.categories, pd.Index(['a', 'b']))
-
-    @pytest.mark.parametrize('new_categories', [
-        list('abc'), list('cba'), list('wxyz'), None])
-    @pytest.mark.parametrize('new_ordered', [True, False, None])
-    def test_update_dtype(self, ordered, new_categories, new_ordered):
-        dtype = CategoricalDtype(list('abc'), ordered)
-        new_dtype = CategoricalDtype(new_categories, new_ordered)
-
-        expected_categories = new_dtype.categories
-        if expected_categories is None:
-            expected_categories = dtype.categories
-
-        expected_ordered = new_dtype.ordered
-        if expected_ordered is None:
-            expected_ordered = dtype.ordered
-
-        result = dtype.update_dtype(new_dtype)
-        tm.assert_index_equal(result.categories, expected_categories)
-        assert result.ordered is expected_ordered
-
-    def test_update_dtype_string(self, ordered):
-        dtype = CategoricalDtype(list('abc'), ordered)
-        expected_categories = dtype.categories
-        expected_ordered = dtype.ordered
-        result = dtype.update_dtype('category')
-        tm.assert_index_equal(result.categories, expected_categories)
-        assert result.ordered is expected_ordered
-
-    @pytest.mark.parametrize('bad_dtype', [
-        'foo', object, np.int64, PeriodDtype('Q')])
-    def test_update_dtype_errors(self, bad_dtype):
-        dtype = CategoricalDtype(list('abc'), False)
-        msg = 'a CategoricalDtype must be passed to perform an update, '
-        with tm.assert_raises_regex(ValueError, msg):
-            dtype.update_dtype(bad_dtype)

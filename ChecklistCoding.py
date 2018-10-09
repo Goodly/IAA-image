@@ -1,5 +1,5 @@
 from CodingScoring import *
-from repScores import *
+#from repScores import *
 
 def scoreChecklist(answers,numUsers, num_choices):
     out = []
