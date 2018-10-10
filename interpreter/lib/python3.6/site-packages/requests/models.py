@@ -7,6 +7,7 @@ requests.models
 This module contains the primary objects that power Requests.
 """
 
+import collections
 import datetime
 import sys
 
@@ -36,7 +37,6 @@ from .utils import (
     stream_decode_response_unicode, to_key_val_list, parse_header_links,
     iter_slices, guess_json_utf, super_len, check_header_validity)
 from .compat import (
-    Callable, Mapping,
     cookielib, urlunparse, urlsplit, urlencode, str, bytes,
     is_py2, chardet, builtin_str, basestring)
 from .compat import json as complexjson
@@ -155,12 +155,8 @@ class RequestEncodingMixin(object):
 
             if isinstance(fp, (str, bytes, bytearray)):
                 fdata = fp
-            elif hasattr(fp, 'read'):
-                fdata = fp.read()
-            elif fp is None:
-                continue
             else:
-                fdata = fp
+                fdata = fp.read()
 
             rf = RequestField(name=k, data=fdata, filename=fn, headers=fh)
             rf.make_multipart(content_type=ft)
@@ -178,10 +174,10 @@ class RequestHooksMixin(object):
         if event not in self.hooks:
             raise ValueError('Unsupported event specified, with event name "%s"' % (event))
 
-        if isinstance(hook, Callable):
+        if isinstance(hook, collections.Callable):
             self.hooks[event].append(hook)
         elif hasattr(hook, '__iter__'):
-            self.hooks[event].extend(h for h in hook if isinstance(h, Callable))
+            self.hooks[event].extend(h for h in hook if isinstance(h, collections.Callable))
 
     def deregister_hook(self, event, hook):
         """Deregister a previously registered hook.
@@ -465,7 +461,7 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
 
         is_stream = all([
             hasattr(data, '__iter__'),
-            not isinstance(data, (basestring, list, tuple, Mapping))
+            not isinstance(data, (basestring, list, tuple, collections.Mapping))
         ])
 
         try:
@@ -690,11 +686,11 @@ class Response(object):
 
     @property
     def ok(self):
-        """Returns True if :attr:`status_code` is less than 400, False if not.
+        """Returns True if :attr:`status_code` is less than 400.
 
         This attribute checks if the status code of the response is between
         400 and 600 to see if there was a client error or a server error. If
-        the status code is between 200 and 400, this will return True. This
+        the status code, is between 200 and 400, this will return True. This
         is **not** a check to see if the response code is ``200 OK``.
         """
         try:
@@ -824,7 +820,7 @@ class Response(object):
             if self.status_code == 0 or self.raw is None:
                 self._content = None
             else:
-                self._content = b''.join(self.iter_content(CONTENT_CHUNK_SIZE)) or b''
+                self._content = bytes().join(self.iter_content(CONTENT_CHUNK_SIZE)) or bytes()
 
         self._content_consumed = True
         # don't need to release the connection; that's been handled by urllib3

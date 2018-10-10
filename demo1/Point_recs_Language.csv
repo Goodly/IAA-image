@@ -1,6 +1,3 @@
 ,article_num,article_sha256,task_uuid,Question_Number,Answer_Number,highlighted_indices,Point_Recommendation,Points,Label,schema
-0,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,ef335a02-a550-4d8b-9cbd-fb6622ad8c8f,2,4,[],-1.0,-1.0,Metaphor unhelpful,Language
-2,1737,c35844f62ee12d09c0450281624c89e2533bbb621f23dd1b7062a6ee26ae2b97,755877c4-7dc1-401e-894a-04b9d70e70e7,3,3,[],-2.5,-2.5,Exaggeration,Language
-3,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,ef335a02-a550-4d8b-9cbd-fb6622ad8c8f,3,3,[],-2.5,-2.341415987283015,Exaggeration,Language
-4,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,ef335a02-a550-4d8b-9cbd-fb6622ad8c8f,9,4,"[852.0, 853.0, 854.0, 855.0, 856.0, 857.0]",-1.25,-1.1405379245718936,Writing errors,Language
-5,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,ef335a02-a550-4d8b-9cbd-fb6622ad8c8f,10,4,"[852.0, 853.0, 854.0, 855.0, 856.0, 857.0]",-1.25,-1.1569438777443461,Other problematic tone,Language
+0,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,ef335a02-a550-4d8b-9cbd-fb6622ad8c8f,9,4,[],-1.25,-1.1405379245718936,Writing errors,Language
+1,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,ef335a02-a550-4d8b-9cbd-fb6622ad8c8f,10,4,[],-1.25,-1.1569438777443468,Other problematic tone,Language

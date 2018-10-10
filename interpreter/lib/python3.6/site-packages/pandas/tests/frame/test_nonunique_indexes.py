@@ -155,14 +155,14 @@ class TestDataFrameNonuniqueIndexes(TestData):
 
         # rename, GH 4403
         df4 = DataFrame(
-            {'RT': [0.0454],
-             'TClose': [22.02],
+            {'TClose': [22.02],
+             'RT': [0.0454],
              'TExg': [0.0422]},
             index=MultiIndex.from_tuples([(600809, 20130331)],
                                          names=['STK_ID', 'RPT_Date']))
 
-        df5 = DataFrame({'RPT_Date': [20120930, 20121231, 20130331],
-                         'STK_ID': [600809] * 3,
+        df5 = DataFrame({'STK_ID': [600809] * 3,
+                         'RPT_Date': [20120930, 20121231, 20130331],
                          'STK_Name': [u('饡驦'), u('饡驦'), u('饡驦')],
                          'TClose': [38.05, 41.66, 30.01]},
                         index=MultiIndex.from_tuples(
@@ -214,10 +214,9 @@ class TestDataFrameNonuniqueIndexes(TestData):
         for index in [df.index, pd.Index(list('edcba'))]:
             this_df = df.copy()
             expected_ser = pd.Series(index.values, index=this_df.index)
-            expected_df = DataFrame({'A': expected_ser,
-                                     'B': this_df['B'],
-                                     'A': expected_ser},
-                                    columns=['A', 'B', 'A'])
+            expected_df = DataFrame.from_items([('A', expected_ser),
+                                                ('B', this_df['B']),
+                                                ('A', expected_ser)])
             this_df['A'] = index
             check(this_df, expected_df)
 
@@ -440,7 +439,7 @@ class TestDataFrameNonuniqueIndexes(TestData):
         xp.columns = ['A', 'A', 'B']
         assert_frame_equal(rs, xp)
 
-    def test_values_duplicates(self):
+    def test_as_matrix_duplicates(self):
         df = DataFrame([[1, 2, 'a', 'b'],
                         [1, 2, 'a', 'b']],
                        columns=['one', 'one', 'two', 'two'])

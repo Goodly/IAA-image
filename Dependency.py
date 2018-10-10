@@ -1,15 +1,9 @@
 import math
-import ast
 import pandas as pd
 import numpy as np
 import os
-from math import isnan
-from dataV2 import create_dependencies_dict
-from dataV2 import get_path
-from dataV2 import indicesFromString
 import json
-from dataV2 import readIndices
-
+from dataV2 import *
 def eval_depenency(directory):
     print("DEPENDENCY STARTING")
     schema = []
@@ -69,7 +63,7 @@ def handleDependencies(schemaPath, iaaPath):
                             if len(iaaparAns>0):
                                 print("GOTONEMATEY")
                                 validParent = True
-                                newInds = iaaparAns['highlighted_indices'].apply(json.loads).tolist()
+                                newInds = [get_indices_hard(ind) for ind in iaaparAns['highlighted_indices'].tolist()]
                                 print('newi', newInds)
                                 #newInds = parseList(newInds)
                                 newAlph = iaaparAns['alpha_unitizing_score'].tolist()

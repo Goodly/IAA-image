@@ -236,21 +236,12 @@ class AppEngineManager(RequestMethods):
             encodings.remove('chunked')
             urlfetch_resp.headers['transfer-encoding'] = ','.join(encodings)
 
-        original_response = HTTPResponse(
+        return HTTPResponse(
             # In order for decoding to work, we must present the content as
             # a file-like object.
             body=BytesIO(urlfetch_resp.content),
-            msg=urlfetch_resp.header_msg,
             headers=urlfetch_resp.headers,
             status=urlfetch_resp.status_code,
-            **response_kw
-        )
-
-        return HTTPResponse(
-            body=BytesIO(urlfetch_resp.content),
-            headers=urlfetch_resp.headers,
-            status=urlfetch_resp.status_code,
-            original_response=original_response,
             **response_kw
         )
 

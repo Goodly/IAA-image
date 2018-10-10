@@ -10,6 +10,8 @@ def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers,
     #print('topercentageArr')
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     #print('filtering for winners')
+    print("these be starts, users", len(starts), len(users))
+    assert len(starts) == len(users)
     filteredData = filterSingular(percentageArray, numUsers,users,starts,ends)
     #f for filtered
     #print('filtered')
@@ -138,6 +140,8 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
         if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 1.2) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
+    print("these be starts, users", len(starts), len(users))
+    assert len(starts) == len(users)
     majorityUsersUnique = getMajorityUsers(passingIndexes, users, starts, ends)
     goodIndices = getIndicesFromMajorityUsers(users, majorityUsersUnique)
     if  len(goodIndices)<1:
@@ -154,6 +158,7 @@ def getMajorityUsers(passingIndexes, users, starts, ends):
     """returns array of unique users who highlighted
     anything that passed the agreement threshold Matrix
     """
+    print(len(starts), len(users))
     assert len(starts) == len(users), 'starts, users mismatched'
     majorityUsers = []
     for i in range(len(starts)):

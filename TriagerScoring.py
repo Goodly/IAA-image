@@ -9,41 +9,41 @@ path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
 path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
 jpath1 = 'FormTriager1.2C2-2018-07-25T23.json'
 jpath2 = 'SemanticsTriager1.3C2-2018-07-25T23.json'
-def evalTriage(path):
-    """JSON INPUT"""
-    bigDict, articles = fetch_for_triage(path)
-    out = [['task_uuid', 'article_num', 'start', 'end', 'category', 'case_number']]
-    for a in articles:
-        starts = bigDict[a]['starts']
-        ends = bigDict[a]['ends']
-        users = bigDict[a]['users']
-        flags = bigDict[a]['flags']
-        cats = bigDict[a]['cats']
-        annotator_count = len(np.unique(users))
-        flagExclusions = exclusionList(users, flags, cats)
-        if annotator_count >= 2:
-            uqcats = np.unique(cats)
-            for c in uqcats:
-                cat_indices = getIndices(c,cats)
-                c_starts = np.array(starts)[cat_indices]
-                c_ends = np.array(ends)[cat_indices]
-                c_users = np.array(users)[cat_indices]
-                c_flags = np.array(flags)[cat_indices]
-                length = 0
-                if len(c_ends)>0:
-                    length = max(c_ends)
-                    numUsers = len(np.unique(c_users))
-                    print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
-                    pstarts, pends, pflags = scoreTriager(c_starts, c_ends, c_users, numUsers, c_flags, length, flagExclusions)
-                    out = appendData(a, pstarts, pends, pflags, c, out)
-    print('exporting to csv')
-    scores = open('T_IAA_'+path, 'w', encoding = 'utf-8')
-
-    with scores:
-        writer = csv.writer(scores)
-        writer.writerows(out)
-
-    print("Table complete")
+# def evalTriage(path):
+#     """JSON INPUT"""
+#     bigDict, articles = fetch_for_triage(path)
+#     out = [['task_uuid', 'article_num', 'start', 'end', 'category', 'case_number']]
+#     for a in articles:
+#         starts = bigDict[a]['starts']
+#         ends = bigDict[a]['ends']
+#         users = bigDict[a]['users']
+#         flags = bigDict[a]['flags']
+#         cats = bigDict[a]['cats']
+#         annotator_count = len(np.unique(users))
+#         flagExclusions = exclusionList(users, flags, cats)
+#         if annotator_count >= 2:
+#             uqcats = np.unique(cats)
+#             for c in uqcats:
+#                 cat_indices = getIndices(c,cats)
+#                 c_starts = np.array(starts)[cat_indices]
+#                 c_ends = np.array(ends)[cat_indices]
+#                 c_users = np.array(users)[cat_indices]
+#                 c_flags = np.array(flags)[cat_indices]
+#                 length = 0
+#                 if len(c_ends)>0:
+#                     length = max(c_ends)
+#                     numUsers = len(np.unique(c_users))
+#                     print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
+#                     pstarts, pends, pflags = scoreTriager(c_starts, c_ends, c_users, numUsers, c_flags, length, flagExclusions)
+#                     out = appendData(a, pstarts, pends, pflags, c, out)
+#     print('exporting to csv')
+#     scores = open('T_IAA_'+path, 'w', encoding = 'utf-8')
+#
+#     with scores:
+#         writer = csv.writer(scores)
+#         writer.writerows(out)
+#
+#     print("Table complete")
 
 
 def importData(path, excludedUsers = []):
@@ -382,7 +382,10 @@ print("#####Form TRIAGER AGREED UPON DATA!!!#####")
 print()
 print()
 print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
-importData('./demo1/Demo1_ForTri-2018-08-29T0335-Highlighter.csv')
+
+importData('./demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv')
+
+
 #evalTriage(jpath1)
 #importData(path2)
 # s = [5, 45, 3, 80, 6, 65]

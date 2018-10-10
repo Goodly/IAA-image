@@ -16,7 +16,7 @@ import pandas.io.formats.format as fmt
 div_style = ''
 try:
     import IPython
-    if LooseVersion(IPython.__version__) < LooseVersion('3.0.0'):
+    if IPython.__version__ < LooseVersion('3.0.0'):
         div_style = ' style="max-width:1500px;overflow:auto;"'
 except (ImportError, AttributeError):
     pass
@@ -1411,9 +1411,8 @@ class TestToHTML(object):
         result = df.to_html(border=0)
         assert 'border="0"' in result
 
-    @tm.capture_stdout
     def test_display_option_warning(self):
-        with tm.assert_produces_warning(FutureWarning,
+        with tm.assert_produces_warning(DeprecationWarning,
                                         check_stacklevel=False):
             pd.options.html.border
 
@@ -1436,7 +1435,7 @@ class TestToHTML(object):
 
         biggie.to_html(columns=['B', 'A'], col_space=17)
         biggie.to_html(columns=['B', 'A'],
-                       formatters={'A': lambda x: '{x:.1f}'.format(x=x)})
+                       formatters={'A': lambda x: '%.1f' % x})
 
         biggie.to_html(columns=['B', 'A'], float_format=str)
         biggie.to_html(columns=['B', 'A'], col_space=12, float_format=str)
@@ -1864,10 +1863,3 @@ class TestToHTML(object):
                                                         name='myindexname'))
         result = df.to_html(index_names=False)
         assert 'myindexname' not in result
-
-    def test_to_html_with_id(self):
-        # gh-8496
-        df = pd.DataFrame({"A": [1, 2]}, index=pd.Index(['a', 'b'],
-                                                        name='myindexname'))
-        result = df.to_html(index_names=False, table_id="TEST_ID")
-        assert ' id="TEST_ID"' in result
