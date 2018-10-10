@@ -1,4 +1,4 @@
-from data_utils import *
+from dataV2 import *
 from math import exp
 import numpy as np
 import pandas as pd
@@ -13,10 +13,12 @@ def create_user_dataframe(data, csvPath=None):
         data1 = pd.DataFrame(columns=['Users', 'Score', 'Questions', 'Influence'])
     for article_num in data.keys():
         print('scanning article', article_num)
-        for question_num in data[article_num].keys():
+        for question_num in data[article_num]['quesData'].keys():
             print('checking q', question_num)
             #TODO make this not hardCoded, it's identical to data_utils get quesiton userid but we had importerror
             #users_q = data[article_num][question_num][1][1][0]
+            print(article_num, question_num)
+            print()
             users_q = get_question_userid(data, article_num, question_num)
             print('users_q', users_q)
             for ids in users_q:
@@ -32,7 +34,7 @@ def create_last30_dataframe(data, csvPath=None):
     else:
         data1 = pd.DataFrame(columns=['Users', 'Index'] + list(range(30)))
     for article_num in data.keys():
-        for question_num in data[article_num].keys():
+        for question_num in data[article_num]['quesData'].keys():
             users_q = get_question_userid(data, article_num, question_num)
             for ids in users_q:
                 if ids not in data1.loc[:, 'Users'].tolist():
@@ -86,7 +88,7 @@ def gaussian_mean(answers):
     return sum(result) / total
 
 
-def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choices, highlight_answer, starts, ends,
+def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choices, highlight_answer, hlUsers, starts, ends,
                                article_length, data, last30):
     """Using the same dataframe of userIDs, rep scores, and number of questions, changes the vals of the dataframe
     such that the they receive the distance from the average answer chosen as a ratio of 0 to 1,
@@ -98,13 +100,13 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     answers_passed = list()
     highlight_answer_array = np.zeros(article_length)
     score_dict = {}
-    print(checked)
+    #print(checked)
     for i in checked:
         answers_passed.append(i[1])
     answer_choice = gaussian_mean(answers)
 
     for h in highlight_answer:
-        print(h)
+        #print(h)
         highlight_answer_array[h] = 1
 
     for t in checked:
@@ -113,13 +115,30 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
         points = (1 - abs(answer_choice - answer) / num_of_choices) ** 3
         do_math(data, last30, user, points)
         score_dict[user] = points
-    for x in int_users:
+    for x in userID:
+        print(x)
         points = score_dict[x]
-        highlight = np.array(int_users[x])
+        highlight = getUserHighlights(x, hlUsers, starts, ends, article_length)
 
         score = points * (1 - np.sum(np.absolute(highlight_answer_array - highlight)) / article_length)
         do_math(data, last30, x, score)
 
+def getUserHighlights(userId, hlUsers, starts, ends, length):
+    hlUsers = np.array(hlUsers)
+    starts = np.array(starts)
+    ends = np.array(ends)
+    userMask = hlUsers == userId
+    print(userMask)
+    uStarts = starts[userMask]
+    uEnds = ends[userMask]
+    hlArr = startsToBool(uStarts, uEnds, length)
+    return hlArr
+def startsToBool(starts, ends,length):
+    out = np.zeros(length)
+    for i in range(len(starts)):
+        for x in range(starts[i], ends[i]):
+            out[x] = 1
+    return out
 
 def checkDuplicates(answers, userID, starts, ends, article_length):
     checked = []
@@ -203,3 +222,11 @@ def last30_to_CSV(dataframe):
 def CSV_to_last30(path):
     """This function opens the csv of the last 30 questions rep points dataframe as last30.csv"""
     return pd.read_csv(path, index_col=False).loc[:, ['Users', 'Index'] + list(range(30))]
+
+def get_user_rep(id, repDF):
+    if repDF.loc[repDF['Users']==id]['Questions'].iloc[0]<30:
+        influence = .8
+    else:
+        influence = float(repDF.loc[repDF['Users']==id]['Influence'].iloc[0])
+    return influence*50
+

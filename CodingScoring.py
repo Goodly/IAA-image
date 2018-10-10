@@ -3,6 +3,7 @@ from ThresholdMatrix import *
 from dataV2 import *
 from ExtraInfo import getTextFromIndices
 from math import ceil
+from repScores import *
 
 def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, hlUsers, hlAns, repDF = None, dfunc = None, num_choices = 15):
     """ calculate all scores for any coding question
@@ -23,7 +24,7 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
     print('evalcod numUsers',len(np.unique(repScaledUsers))
     )
-
+    assert(len(repScaledUsers) == len(repScaledAnswers))
     highScore, winner, weights, firstSecondScoreDiff = scoreCoding(repScaledAnswers, repScaledUsers, dfunc, num_choices = num_choices)
     if dfunc == 'ordinal':
         # This functions as an outlier test, if 4 users categorizes as 'very likely' and one categorizes as
@@ -37,16 +38,18 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
                 (num_choices > 3 and winner == 1 or winner == num_choices):
             highScore, winner, weights, firstSecondScoreDiff = scoreCoding(answers, users, 'ordinal', scale = 2)
     # These all return tuples (array of answers, amount of scaling done), element at index 1 is same for all
-    weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
+    assert(len(answers) == len(users))
+    weightScaledAnswers, weightScaledUsers, weightScaledHlUsers, \
+                                            weightScaledStarts, \
                                             weightScaledEnds, \
                                             weightScaledNumUsers,\
-                                            userWeightDict= weightScaleEverything(hlAns, weights, users,
+                                            userWeightDict= weightScaleEverything(hlAns, weights, hlUsers, users,
                                                                                          starts,ends, repDF)
     #TOPTWO metric add the score diference
     #weight scale the hlUsers for future usage
     print('starts', len(starts), len(weightScaledStarts))
-    print(len(hlUsers))
-    winner, units, uScore, iScore, selectedText= passToUnitizing(weightScaledAnswers,hlUsers,users,weightScaledStarts,
+    print(len(hlUsers), len(weightScaledHlUsers))
+    winner, units, uScore, iScore, selectedText= passToUnitizing(weightScaledAnswers,weightScaledHlUsers,weightScaledUsers,weightScaledStarts,
                                                     weightScaledEnds,numUsers,length, highScore, winner,
                                                     weightScaledNumUsers, userWeightDict, sourceText)
     return winner, units, uScore, iScore, highScore, numUsers, selectedText, firstSecondScoreDiff
@@ -57,14 +60,15 @@ def repScaleAnsUsers(answers, users, repDF):
     repScaledAnswers, repScaledUsers = scaleFromRep(answers, users, repDF), scaleFromRep(users, users, repDF)
     return repScaledAnswers, repScaledUsers
 
-def weightScaleEverything(answers,weights, users, starts, ends, repDF):
-
-    arrs = [answers, users, starts, ends]
+def weightScaleEverything(answers,weights, users, hlUsers, starts, ends, repDF):
+    print(len(answers), len(users))
+    arrs = [answers, users, hlUsers, starts, ends]
+    assert (len(answers) == len(users))
     scaledArrs, sumTotalScaling, userWeightDict = scaleManyFromWeights(arrs,answers, weights, users, repDF)
 
     if len(scaledArrs)>0:
         # answers, users, starts, ends
-        return scaledArrs[0], scaledArrs[1], scaledArrs[2], scaledArrs[3], sumTotalScaling, userWeightDict
+        return scaledArrs[0], scaledArrs[1], scaledArrs[2], scaledArrs[3], scaledArrs[4], sumTotalScaling, userWeightDict
     return [0],[0],[0],[0],sumTotalScaling, userWeightDict
 
 #TOPTWO metric add the top two score difference as  an input
@@ -85,6 +89,8 @@ def passToUnitizing(answers, hlusers, ansusers, starts, ends, numUsers, length, 
         #If somebody highlights something
         if len(starts)>3:
             print('p2u', len(starts), len(hlusers))
+            print("these be starts, users", len(fStarts), len(fhlusers))
+            assert len(fStarts) == len(fhlusers)
             uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fhlusers,
                                                      userWeightDict, answers, winner)
             selectedText = 'N/A'
@@ -233,6 +239,10 @@ def scaleManyFromWeights(arr,answers,weights, users, repDF):
     checked = []
     userWeightDict = {}
     for i in range(len(arr[1])):
+        print("bouttabuggo")
+        print(len(users))
+        print(len(answers))
+        print(len(arr[1]))
         if (arr[1][i], users[i], answers[i]) not in checked:
             checked.append((arr[1][i], users[i], answers[i]))
 
