@@ -37,6 +37,7 @@ Jinja2==2.10
 jmespath==0.9.3
 josepy==1.0.1
 kiwisolver==1.0.1
+krippendorff==0.2.2
 lxml==4.1.1
 MarkupSafe==1.0
 matplotlib==2.2.3
