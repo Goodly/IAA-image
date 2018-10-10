@@ -6,6 +6,7 @@ def scoreChecklist(answers,numUsers, num_choices):
     print('answers', answers, num_choices)
     length = num_choices+1
     #index 1 refers to answer 1, 0 and the last item are not answerable
+    answers = [int(a) for a in answers]
     scores = np.zeros(length)
     for a in answers:
         scores[a] = scores[a]+1
@@ -30,19 +31,21 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         weights = np.zeros(len(percArray))
         weights[i] = 1
 #        assert len(starts) == len(users), 'starts, users mismatched'
-        weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
+        assert(len(answers) == len(users))
+        weightScaledAnswers, weightScaledUsers, weightScaledHlUsers, \
+        weightScaledStarts, \
         weightScaledEnds, \
         weightScaledNumUsers, \
-        userWeightDict = weightScaleEverything(hlAns, weights, users,
+        userWeightDict = weightScaleEverything(hlAns, weights, users, hlUsers,
                                                starts, ends, repDF)
-        weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
-        weightScaledEnds, \
-        weightScaledNumUsers,  = hlAns, hlUsers, starts, ends, numUsers
-        print('clnumusers', weightScaledUsers)
+        # weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
+        # weightScaledEnds, \
+        # weightScaledNumUsers,  = hlAns, hlUsers, starts, ends, numUsers
+        # print('clnumusers', weightScaledUsers)
         #assert len(weightScaledStarts) == len(weightScaledUsers), 'starts, users mismatched'
         #TODO: weight scale the hlUsers
         print('passing to utizing')
-        winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers,hlUsers, users, weightScaledStarts,
+        winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers,weightScaledHlUsers, users, weightScaledStarts,
                                                         weightScaledEnds,numUsers,length, codingScore, i,
                                                         weightScaledNumUsers, userWeightDict, sourceText)
         firstSecondDiff = 1 - codingScore

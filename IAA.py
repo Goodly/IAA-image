@@ -2,6 +2,7 @@ import csv
 from ChecklistCoding import *
 from ExtraInfo import *
 from dataV2 import *
+from repScores import *
 import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
@@ -34,7 +35,7 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
                     #will be an error for every file that isn't the right file, there's a more graceful solution, but
                     #we'll save that dream for another day
 
-def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None):
+def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None):
     print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
     print("done")
@@ -43,8 +44,8 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
     #initialize rep
     print('starting rep')
-    #repDF = initRep(repCSV, uberDict)
-    repDF = None
+    repDF = create_user_dataframe(uberDict, repCSV)
+    thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
     print('initialized repScores')
     for task in uberDict.keys():  # Iterates throuh each article
         #task_id = get_article_num(uberDict, task)
@@ -61,7 +62,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
 
             print('scoring task', task[:8], 'question', ques)
             print('schema is', schema_namespace, '-------------------------------------')
-            agreements = score(task, ques, uberDict, repDF, hardCodedTypes = hardCodedTypes)
+            agreements = score(task, ques, uberDict, repDF, thirtyDf = thirtyDf,hardCodedTypes = hardCodedTypes)
             print("GOT AGREEMENT")
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, task, ques)
@@ -146,7 +147,7 @@ def adjustForJson(units):
 
 
 
-def score(article, ques, data, repDF = None, hardCodedTypes = False):
+def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = False):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -218,9 +219,10 @@ def score(article, ques, data, repDF = None, hardCodedTypes = False):
 
     if question_type == 'ordinal':
         print('scoring ordinal q')
+        assert(len(answers) == len(users))
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText, hlUsers, hlAns, repDF = repDF, dfunc='ordinal')
         #print("ORDINAL", out[1], starts, ends)
-        #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], starts, ends, length, repDF)
+        do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], hlUsers, starts, ends, length, repDF, thirtyDf)
         out = out+(question_type, num_choices)
     elif question_type == 'nominal':
         print('scoring nominal q')
