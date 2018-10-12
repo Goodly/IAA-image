@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="Case flag bug resolved">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_T_IAA_FormTriager1.2C2-2018-07-28T21.csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/C_T_IAA_SemanticsTriager1.3C2-2018-07-28T21.csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CausalityWeighting.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Create Run.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DKProTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Demo1Reas-2018-08-29T0058-Schema.csv.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FormTriager1.2C2-2018-07-25T23.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FormTriager1.2C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA.py" beforeDir="false" afterPath="$PROJECT_DIR$/IAA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OG.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/C_T_IAA_FormTriager1.2C2-2018-07-28T21.csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/C_T_IAA_SemanticsTriager1.3C2-2018-07-28T21.csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/CausalityWeighting.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/ChecklistCoding.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/CodingScoring.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Create Run.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/DKProTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Demo1Reas-2018-08-29T0058-Schema.csv.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/ExtraInfo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/FormTriager1.2C2-2018-07-25T23.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/FormTriager1.2C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/IAA reports.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/IAA.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/IAA_OG.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/IAA_unitizing_PA.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Inter_q_dependencies.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Inter_q_dependencies.ods" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Josh's Stuff.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Josh's stuf.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/KrippendorffUnitizing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Krippendorff_applied.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/MindPath.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/MultipleCoding" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/QuestionDependencies.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/SemanticsTriager1.3C2-2018-07-25T23.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/SemanticsTriager1.3C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/T_IAAFormTriager1.2C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/T_IAA_FormTriager1.2C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/T_IAA_SemanticsTriager1.3C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/ThresholdMatrix.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/TriagerScoring.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/UnitizingScoring.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/UnitizingScoringTests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/Untitled.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/UserRepScores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/User_Rep_EDA.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/agreement_scores-preuwdic.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/agreement_scores-preuwdic2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/agreement_scores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/calc_scores.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/dataV2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/data_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/dkprotriage.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/form_triager_agreement_scores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/pe_summary_stats.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/pointAssignment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/repScores.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/semantics_triager_agreement_scores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/t_iaaFormTriager1.2C2-2018-07-28T21.csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/t_iaaSemanticsTriager1.3C2-2018-07-28T21.csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/testKrippendorff.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/test_user_rep.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/testans.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/testhl.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/testsch.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/threshold_matrix_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_OLD/triager_agreement_scores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_raw/ChecklistCoding.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_raw/CodingScoring.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_raw/IAA.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_raw/Readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_raw/ThresholdMatrix.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_raw/UnitizingScoring.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_raw/data_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAA_unitizing_PA.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Inter_q_dependencies.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Inter_q_dependencies.ods" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Josh's Stuff.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Josh's stuf.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/KrippendorffUnitizing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Krippendorff_applied.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MindPath.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MultipleCoding" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Point_recsEvidence.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Point_recsLanguage.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Point_recsProbability.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Point_recsReason.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuestionDependencies.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/S_IAA_testhl.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SemanticsTriager1.3C2-2018-07-25T23.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SemanticsTriager1.3C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sorted_Points" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sorted_Points.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/T_IAAFormTriager1.2C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/T_IAA_FormTriager1.2C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/T_IAA_SemanticsTriager1.3C2-2018-07-28T21.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TriagerScoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/TriagerScoring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Untitled.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserRepScores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User_Rep_EDA.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/agreement_scores-preuwdic.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/agreement_scores-preuwdic2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/agreement_scores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ans condensed" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ans condensed.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/calc_scores.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dkprotriage.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/form_triager_agreement_scores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/highlightCondensed" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/highlightCondensed.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/SSSPECaus2-2018-05-03T23.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/S_IAA_PreAlphaSources-2018-08-10T0420-DataHuntHighlights.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/pe_2018-01-04T18+0000--quiztaskruns.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/pe_data_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/pe_question_to_indicator_map.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/pe_schema_CredWeb3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/pe_users_13_14_15-2018-03-19T18.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/pe_webconf_answer_counts_by_user_article.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_data/small_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pe_summary_stats.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pred1Sorted_Points_1712.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pred1Sorted_Points_1721.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pred1Sorted_Points_1737.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema condensed" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema condensed.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/semantics_triager_agreement_scores.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/.~lock.SSSPECaus2-2018-08-22T2019-Schema.csv#" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntAnswers.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/SSSPECaus2-2018-08-22T2019-Schema.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sss_pull_8_22/S_IAA_SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/t_iaaFormTriager1.2C2-2018-07-28T21.csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/t_iaaSemanticsTriager1.3C2-2018-07-28T21.csv.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testKrippendorff.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testans.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testhl.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testsch.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/threshold_matrix_test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/triager_agreement_scores.csv" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1244811360">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="20" />
+          <entry key="project.open.time.10" value="4" />
+          <entry key="project.open.time.11" value="7" />
+          <entry key="project.open.time.12" value="3" />
+          <entry key="project.open.time.14" value="1" />
+          <entry key="project.open.time.15" value="3" />
+          <entry key="project.open.time.18" value="1" />
+          <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.23" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.9" value="6" />
+          <entry key="project.opened" value="29" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Python Console" value="78" />
+          <entry key="dummy" value="32" />
+          <entry key="py" value="47358" />
+          <entry key="txt" value="66" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="98" />
+          <entry key="Python" value="47436" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="Python" value="49" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="csv" value="3" />
+          <entry key="py" value="49" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages" />
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="975">
+              <caret line="137" column="78" selection-start-line="137" selection-start-column="78" selection-end-line="137" selection-end-column="78" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataV2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="10650">
+              <caret line="710" column="1" selection-start-line="710" selection-start-column="1" selection-end-line="710" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <marker date="1536033101277" expanded="true" signature="3354:3480" ph="..." />
+                <marker date="1536033101277" expanded="true" signature="5228:5296" ph="..." />
+                <marker date="1536033101277" expanded="true" signature="5332:5388" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/IAA.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+                <marker date="1538097380880" expanded="true" signature="7697:8004" ph="..." />
+                <marker date="1538097380880" expanded="true" signature="8073:8078" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pointAssignment.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+              <folding>
+                <marker date="1536972769025" expanded="true" signature="577:578" ph="..." />
+                <marker date="1536972769025" expanded="true" signature="4335:4541" ph="..." />
+                <marker date="1536972769025" expanded="true" signature="7337:7366" ph="..." />
+                <marker date="1536972769025" expanded="true" signature="7400:7436" ph="..." />
+                <marker date="1536972769025" expanded="true" signature="16497:16614" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Weighting.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+                <marker date="1536032793166" expanded="true" signature="4678:4764" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Master.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
+                <marker date="1536033077254" expanded="true" signature="205:210" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TriagerScoring.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CodingScoring.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dependency.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-777">
+              <caret line="32" column="44" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <marker date="1536043261838" expanded="true" signature="1081:1086" ph="..." />
+                <marker date="1536043261838" expanded="true" signature="4993:5136" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Separator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="645">
+              <caret line="45" column="1" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>NA</find>
+      <find>arrim</find>
+      <find>taski</find>
+      <find>findNum</find>
+      <find>rooo</find>
+      <find>thresho</find>
+      <find>addendum</find>
+      <find>get_num</find>
+      <find>ast</find>
+      <find>sourceDic</find>
+      <find>mergeBy</find>
+      <find>indicesfromString</find>
+      <find>checked</find>
+      <find>indicesTOStart</find>
+      <find>codeZer</find>
+      <find>indicesT</find>
+      <find>indicesFrom</find>
+      <find>WEIGH</find>
+      <find>starrt</find>
+      <find>starr</find>
+      <find>getTUA</find>
+      <find>Table</find>
+      <find>exporting to</find>
+      <find>adde</find>
+      <find>Tri</find>
+      <find>TRI</find>
+      <find>outD</find>
+      <find>Argon</find>
+      <find>argon</find>
+      <find>print</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="MERGE" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/test_user_rep.py" />
+        <option value="$PROJECT_DIR$/CausalityWeighting.py" />
+        <option value="$PROJECT_DIR$/repScores.py" />
+        <option value="$PROJECT_DIR$/data_utils.py" />
+        <option value="$PROJECT_DIR$/ExtraInfo.py" />
+        <option value="$PROJECT_DIR$/ChecklistCoding.py" />
+        <option value="$PROJECT_DIR$/QuestionDependencies.py" />
+        <option value="$PROJECT_DIR$/ThresholdMatrix.py" />
+        <option value="$PROJECT_DIR$/CodingScoring.py" />
+        <option value="$PROJECT_DIR$/Weighting Algorithm (updated).py" />
+        <option value="$PROJECT_DIR$/Weighting.py" />
+        <option value="$PROJECT_DIR$/Master.py" />
+        <option value="$PROJECT_DIR$/dataV2.py" />
+        <option value="$PROJECT_DIR$/UnitizingScoring.py" />
+        <option value="$PROJECT_DIR$/Dependency.py" />
+        <option value="$PROJECT_DIR$/Separator.py" />
+        <option value="$PROJECT_DIR$/pointAssignment.py" />
+        <option value="$PROJECT_DIR$/IAA.py" />
+        <option value="$PROJECT_DIR$/TriagerScoring.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="67" />
+    <option name="y" value="25" />
+    <option name="width" value="767" />
+    <option name="height" value="875" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="IAA-image" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IAA-image" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.pointAssignment">
+    <configuration name="Dependency" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Dependency.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Master" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Master.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Separator" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Separator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TriagerScoring" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TriagerScoring.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pointAssignment" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="IAA-image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pointAssignment.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.pointAssignment" />
+      <item itemvalue="Python.Dependency" />
+      <item itemvalue="Python.Master" />
+      <item itemvalue="Python.Separator" />
+      <item itemvalue="Python.TriagerScoring" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.pointAssignment" />
+        <item itemvalue="Python.TriagerScoring" />
+        <item itemvalue="Python.Master" />
+        <item itemvalue="Python.Separator" />
+        <item itemvalue="Python.Dependency" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5ab7dded-591f-47ea-9713-0c6b86400ec9" name="Default" comment="" />
+      <created>1532152400476</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1532152400476</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Updates For Josh">
+      <created>1534992899028</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1534992899028</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updates For Josh">
+      <created>1535967613625</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1535967613625</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Demo Updates">
+      <created>1536027459749</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1536027459749</updated>
+    </task>
+    <task id="LOCAL-00004" summary="ReadyFor Demo">
+      <created>1536033940105</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1536033940105</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Case flag bug resolved">
+      <created>1536973658495</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1536973658496</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="67" y="25" width="1533" height="875" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12847683" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32885906" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4986755" visible="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32751676" />
+      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32885906" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.2966443" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32885906" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5013245" side_tool="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12847683" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32885906" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4986755" visible="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32751676" />
+      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32885906" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.2966443" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32885906" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5013245" side_tool="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updates For Josh" />
+    <MESSAGE value="Demo Updates" />
+    <MESSAGE value="ReadyFor Demo" />
+    <MESSAGE value="Case flag bug resolved" />
+    <option name="LAST_COMMIT_MESSAGE" value="Case flag bug resolved" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="astarts[0] == 5084" language="Python" />
+          <url>file://$PROJECT_DIR$/UnitizingScoring.py</url>
+          <line>89</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dataV2.py</url>
+          <line>142</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="ch == 2" language="Python" />
+          <url>file://$PROJECT_DIR$/Dependency.py</url>
+          <line>43</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="t == '99968e91-36d0-4be9-a40f-858fdc0451d0'" language="Python" />
+          <url>file://$PROJECT_DIR$/pointAssignment.py</url>
+          <line>159</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="art == 1737" language="Python" />
+          <url>file://$PROJECT_DIR$/pointAssignment.py</url>
+          <line>121</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="task == '025a8515-ff9b-4ce9-b56a-ab8bdf2ca8c1'" language="Python" />
+          <url>file://$PROJECT_DIR$/dataV2.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="qnum == 11" language="Python" />
+          <url>file://$PROJECT_DIR$/dataV2.py</url>
+          <line>42</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pointAssignment.py</url>
+          <line>79</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="codedUsers[i] == 4" language="Python" />
+          <url>file://$PROJECT_DIR$/TriagerScoring.py</url>
+          <line>315</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>codedUsers[i] == 4</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>indices[i] == 1273</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>qnum == 11</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>task == '025a8515-ff9b-4ce9-b56a-ab8bdf2ca8c1'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>task == '025a8515-ff9b-4ce9-b56a-ab8bdf2ca8c1' and ques == 11</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>art == 1737</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>t == '99968e91-36d0-4be9-a40f-858fdc0451d0'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>t == '5257406f-8cb8-42b8-b4dd-799e0a22931f'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>t = '5257406f-8cb8-42b8-b4dd-799e0a22931f'</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>i ==0</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/IAA_raw/CodingScoring.py" />
+    <entry file="file://$USER_HOME$/Desktop/test_user_rep.py" />
+    <entry file="file://$USER_HOME$/Desktop/repScores.py" />
+    <entry file="file://$PROJECT_DIR$/test_user_rep.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="800">
+          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/indexing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="798">
+          <caret line="1784" selection-start-line="1784" selection-end-line="1784" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/datascience/tables.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/datascience/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CausalityWeighting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1005">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/numpy/lib/arraysetops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="230" selection-start-line="230" selection-end-line="230" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA_OLD/UnitizingScoring.py" />
+    <entry file="file:///usr/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/QuestionDependencies.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/series.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7320">
+          <caret line="565" selection-start-line="565" selection-end-line="565" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_utils.py" />
+    <entry file="file://$PROJECT_DIR$/ExtraInfo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="37" column="12" lean-forward="true" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repScores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/frame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="2664" selection-start-line="2664" selection-end-line="2664" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="406" selection-start-line="406" selection-end-line="406" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChecklistCoding.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThresholdMatrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="60" selection-start-line="1" selection-start-column="60" selection-end-line="1" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/io/parsers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="832">
+          <caret line="1707" selection-start-line="1707" selection-end-line="1707" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interpreter/lib/python3.6/site-packages/pandas/core/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="1166" selection-start-line="1166" selection-end-line="1166" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pred1/SortedPts_1721.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pred1/SortedPts_1737.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pred1/SortedPts_1712.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CodingScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Separator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="45" column="1" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dependency.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-777">
+          <caret line="32" column="44" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1536043261838" expanded="true" signature="1081:1086" ph="..." />
+            <marker date="1536043261838" expanded="true" signature="4993:5136" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TriagerScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Master.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+            <marker date="1536033077254" expanded="true" signature="205:210" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weighting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <marker date="1536032793166" expanded="true" signature="4678:4764" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pointAssignment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding>
+            <marker date="1536972769025" expanded="true" signature="577:578" ph="..." />
+            <marker date="1536972769025" expanded="true" signature="4335:4541" ph="..." />
+            <marker date="1536972769025" expanded="true" signature="7337:7366" ph="..." />
+            <marker date="1536972769025" expanded="true" signature="7400:7436" ph="..." />
+            <marker date="1536972769025" expanded="true" signature="16497:16614" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IAA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <marker date="1538097380880" expanded="true" signature="7697:8004" ph="..." />
+            <marker date="1538097380880" expanded="true" signature="8073:8078" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataV2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10650">
+          <caret line="710" column="1" selection-start-line="710" selection-start-column="1" selection-end-line="710" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1536033101277" expanded="true" signature="3354:3480" ph="..." />
+            <marker date="1536033101277" expanded="true" signature="5228:5296" ph="..." />
+            <marker date="1536033101277" expanded="true" signature="5332:5388" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnitizingScoring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="975">
+          <caret line="137" column="78" selection-start-line="137" selection-start-column="78" selection-end-line="137" selection-end-column="78" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
