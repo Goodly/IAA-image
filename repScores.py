@@ -95,26 +95,27 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     such that the they receive the distance from the average answer chosen as a ratio of 0 to 1,
     and that is added to their rep score."""
     print(answer_aggregated)
+    print("uid", userID)
     if type(answer_aggregated) == str or type(highlight_answer) == str:
         return 0
     checked = zip(answers, userID)
-    answers_passed = list()
+    print("cked", checked)
     highlight_answer_array = np.zeros(article_length)
     score_dict = {}
-    for i in checked:
-        answers_passed.append(i[1])
+
     answer_choice = gaussian_mean(answers)
 
     for h in highlight_answer:
         highlight_answer_array[h] = 1
 
-    for t in checked:
-        user = t[1]
-        answer = t[0]
+    for t in range(len(userID)):
+        user = userID[t]
+        answer = answers[t]
         points = (1 - abs(answer_choice - answer) / num_of_choices) ** 3
         do_math(data, last30, user, points)
         score_dict[user] = points
-    for x in hlUsers:
+    print('sd', score_dict)
+    for x in userID:
         #TODO: new way of doing highlight scores based on rep
         print(x)
         points = score_dict[x]
