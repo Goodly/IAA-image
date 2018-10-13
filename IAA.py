@@ -208,18 +208,20 @@ def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = F
     if question_type == 'interval':
         # TODO: verify if these still exist, if they do, bring up to speed with new output formats
         return run_2step_unitization(data, article, ques, repDF)
-    print('fetching answers', question_type)
+    print('fetching answers', question_type, 'art:', article, ques)
     answers = get_question_answers(data, article, ques)
     print('fetchig userdata')
     users =get_question_userid(data, article, ques)
-    print(users)
+    print('users',users)
     print(np.unique(users))
+    print(len(np.unique(users)))
+    print('ans',answers)
     numUsers = get_num_users(data, article, ques)
     print ('got', numUsers,'users')
-
+    assert (len(answers) == len(users))
     if question_type == 'ordinal':
         print('scoring ordinal q')
-        assert(len(answers) == len(users))
+        #assert(len(answers) == len(users))
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText, hlUsers, hlAns, repDF = repDF, dfunc='ordinal')
         #print("ORDINAL", out[1], starts, ends)
         do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], hlUsers, starts, ends, length, repDF, thirtyDf)

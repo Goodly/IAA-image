@@ -123,6 +123,7 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
         score = points * (1 - np.sum(np.absolute(highlight_answer_array - highlight)) / article_length)
         do_math(data, last30, x, score)
 
+
 def getUserHighlights(userId, hlUsers, starts, ends, length):
     hlUsers = np.array(hlUsers)
     starts = np.array(starts)
@@ -133,6 +134,8 @@ def getUserHighlights(userId, hlUsers, starts, ends, length):
     uEnds = ends[userMask]
     hlArr = startsToBool(uStarts, uEnds, length)
     return hlArr
+
+
 def startsToBool(starts, ends,length):
     out = np.zeros(length)
     for i in range(len(starts)):
@@ -143,10 +146,10 @@ def startsToBool(starts, ends,length):
 def checkDuplicates(answers, userID, starts, ends, article_length):
     checked = []
     int_users = {}
-
-    for i in range(len(answers)):
-        if [answers[i], userID[i], int(starts[i]), int(ends[i])] not in checked:
-            checked.append([answers[i], userID[i], int(starts[i]), int(ends[i])])
+    #Changed this to just starts, ends; guaranteed no duplicates of answers or userID
+    for i in range(len(starts)):
+        if [starts[i], ends[i]] not in checked:
+            checked.append([starts[i], ends[i]])
     for x in checked:
         article_array = np.zeros(article_length).tolist()
         if x[0] not in int_users.keys():

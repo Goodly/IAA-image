@@ -6,6 +6,7 @@ def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers,
     #assert len(starts) == len(users), 'starts, users mismatched'
     #print('scoringNu')
     #print('nu', userWeightDict)
+    print('nu users len', len(users))
     answerMatrix = toArray(starts,ends,length, users, userWeightDict, answers, winner)
     #print('topercentageArr')
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
@@ -88,22 +89,32 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
             totalWeight = len(uniqueUsers)
             weight = 1
         #print(uniqueUsers[u])
-        indices = getIndicesFromUserAnswer(users, uniqueUsers[u], answers, winner)
+        #indices = getIndicesFromUserAnswer(users, uniqueUsers[u], answers, winner)
         #can't use np.unique, possible to highlight to same endpoint from 2 diff starts
         #print(indices)
-        if len(indices>=1):
+        # if len(indices>=1):
+        #
+        #     userStarts = (astarts[indices])
+        #     userEnds = (aends[indices])
+        #     #there's a weird corner case where this might go wrong, but I doubt it'll ever actually happen
+        #     uqStart, uqEnd = np.unique(userStarts), np.unique(userEnds)
+        #     if len(uqStart) == len(uqEnd):
+        #         userStarts = uqStart
+        #         userEnds = uqEnd
+        #     for start in range(len(userStarts)):
+        #         for i in range(int(userStarts[start]), int(userEnds[start])):
+        #             #print(u,i,len(userBlocks))
+        #             userBlocks[u][i] = weight
 
-            userStarts = (astarts[indices])
-            userEnds = (aends[indices])
-            #there's a weird corner case where this might go wrong, but I doubt it'll ever actually happen
-            uqStart, uqEnd = np.unique(userStarts), np.unique(userEnds)
-            if len(uqStart) == len(uqEnd):
-                userStarts = uqStart
-                userEnds = uqEnd
-            for start in range(len(userStarts)):
-                for i in range(int(userStarts[start]), int(userEnds[start])):
-                    #print(u,i,len(userBlocks))
-                    userBlocks[u][i] = weight
+
+        uqStart, uqEnd = np.unique(astarts), np.unique(aends)
+        if len(uqStart) == len(uqEnd):
+            userStarts = uqStart
+            userEnds = uqEnd
+        for start in range(len(astarts)):
+            for i in range(int(astarts[start]), int(aends[start])):
+                #print(u,i,len(userBlocks))
+                userBlocks[u][i] = weight
     #Now there are arrays of 1s and 0s, gotta collapse them
     #and make the possibilities column
     col1 = np.zeros(length)

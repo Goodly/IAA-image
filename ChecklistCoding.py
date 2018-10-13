@@ -32,12 +32,10 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         weights[i] = 1
 #        assert len(starts) == len(users), 'starts, users mismatched'
         assert(len(answers) == len(users))
-        weightScaledAnswers, weightScaledUsers, weightScaledHlUsers, \
-        weightScaledStarts, \
-        weightScaledEnds, \
-        weightScaledNumUsers, \
-        userWeightDict = weightScaleEverything(hlAns, weights, users, hlUsers,
-                                               starts, ends, repDF)
+        weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users,
+                                                                                     repDF)
+        weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, starts,
+                                                                                    ends)
         # weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
         # weightScaledEnds, \
         # weightScaledNumUsers,  = hlAns, hlUsers, starts, ends, numUsers
@@ -45,7 +43,7 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         #assert len(weightScaledStarts) == len(weightScaledUsers), 'starts, users mismatched'
         #TODO: weight scale the hlUsers
         print('passing to utizing')
-        winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers,weightScaledHlUsers, users, weightScaledStarts,
+        winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers,weightScaledHlUsers, weightScaledStarts,
                                                         weightScaledEnds,numUsers,length, codingScore, i,
                                                         weightScaledNumUsers, userWeightDict, sourceText)
         firstSecondDiff = 1 - codingScore

@@ -35,29 +35,24 @@ def data_storer(path, answerspath, schemapath):
             'schema_name':schema_style,
             'dependencies': dependencies
         }
-        print('dependencies dict', dependencies)
         numUsersD = makeNumUsersDict(task_ans)
         qDict = {}
         for i in range(len(qNums)):
             qnum = qNums[i]
             qlabel = findLabel(qlabels, qnum)
-            #print(qlabels, qNums)
-            #print('qnum',qnum)
-            #print('qlab', qlabel)
             numUsers = findNumUsers(numUsersD, qlabel)
             q_type = get_q_type(task_schema, qlabel)
             answer_contents = find_answer_contents(task_schema, qlabel)
             question_text = find_question_text(task_schema, qlabel)
-            #print('qtype', q_type)
             #ANSWER block
             if q_type == 'CHECKBOX':
                 answers, users= find_answers_checklist(task_ans, qnum)
             elif q_type == 'TEXT':
-                answers, users = [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                answers, users = [0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0]
             elif q_type == 'RADIO':
                 answers, users = find_answers_radio(task_ans, qlabel, task_schema)
+                assert(len(answers) == len(users))
             starts, ends, hlUsers, length, targetText, hlAns = findStartsEnds(task_schema, qlabel, task_hl)
-            print('THESESHOULDBESAME', len(starts), len(ends), len(hlUsers))
             qDict[qnum] = {
                'answers': answers,
                'users': users,
@@ -73,35 +68,24 @@ def data_storer(path, answerspath, schemapath):
                 'parents': dependencyStatus(dependencies, qnum)
              }
         uberDict[task]['quesData'] = qDict
-    #print(uberDict)
     return uberDict
 def dependencyStatus(dependencies, qnum):
     try:
-        print('theseareparents',dependencies[qnum])
         return dependencies[qnum]
     except:
         return {}
 def evalDependency(data, task_id, parentdata, question, answer, indices, alpha, alphainc):
-    print(len(indices))
     depDict = get_article_dependencies(data, task_id)
-    print('dep Here')
-    print(depDict)
-    print(isinstance(answer, int))
-    print(isinstance(indices, list))
     try:
         l = answer+5
         isInt = True
     except:
         isInt = False
-    print(answer, indices,(isinstance(indices, list)) )
-    print("ISNTITFUN", isInt)
     if isInt and isinstance(indices, list):
-        print('savingPrents')
         parentdata = saveParentData(depDict, parentdata,question, answer, indices, alpha, alphainc)
     elif isinstance(answer, int):
         if checkIfChild(depDict, question):
             parents = get_question_parents(data, task_id, question)
-            print("PARENTSLOVEYOU", parents)
             indices, alpha, alphainc = get_parent_data(parents, parentdata)
     return parentdata, indices, alpha, alphainc
 
@@ -109,20 +93,15 @@ def get_parent_data(parents, parentData):
     indices = []
     alpha = []
     alphainc = []
-    print('parreents', parents)
-    print("PDAT", parentData)
     for p in parents.keys():
         for a in parents[p]:
             try:
-                print('h1')
                 newInd = parentData[p][a][0]
                 newAlph = parentData[p][a][1]
                 newAlphinc = parentData[p][a][2]
-                print('h2')
                 indices.append(newInd)
                 alpha.append(newAlph)
                 newAlphinc.append(newAlphinc)
-                print('got parent data')
             except:
                 print('parentdata not found')
     indices = np.unique(indices)
@@ -143,9 +122,6 @@ def saveParentData(dependenciesDict, parentData, question, answer, indices, alph
         parentData[question] = parentAddendum(parentData, answer, [indices, alpha, alphainc])
     return parentData
 def parentAddendum(parentData, answer, newStuff):
-    print(parentData)
-    print(answer)
-    print('thoiswereinpts')
     if answer not in parentData.keys():
         parentData[answer] = [newStuff]
     else:
@@ -153,47 +129,32 @@ def parentAddendum(parentData, answer, newStuff):
     return parentData
 def checkIfParent(dependenciesDict, question, answer):
     for k in dependenciesDict.keys():
-        print('a key exists')
         if question in dependenciesDict[k].keys():
-            print('inthefirst')
-            print(dependenciesDict[k])
             if answer in dependenciesDict[k][question]:
-                print('gotparent')
                 return True
-            print('notparent')
             return False
 
 
 def create_dependencies_dict(schemadata):
     dependers = schemadata[schemadata['answer_next_questions'].notnull()]
-    print(dependers)
     allChildren = dependers['answer_next_questions'].tolist()
-    print('children', allChildren)
     parents = dependers['answer_label'].tolist()
     tempDict = dict()
     for i in range(len(allChildren)):
         dictAddendumList(tempDict, allChildren[i], parents[i])
-    print('THIS DICT', tempDict)
     d = {}
     for k in tempDict.keys():
         questions = parseMany(k,'Q',',')
-        print('questions', questions)
         thisParents = tempDict[k]
-        print('padres', thisParents)
         thisParentQs = [parse(thisParent, 'Q', '.') for thisParent in thisParents]
         thisParentAs = [parse(thisParent, 'A', ',') for thisParent in thisParents]
-        print('qs', thisParentQs)
-        print(thisParentAs)
         extendedFamDict = {}
         for i in range(len(thisParentQs)):
             extendedFamDict = dictAddendumList(extendedFamDict, thisParentQs[i], thisParentAs[i])
-        print('efd', extendedFamDict)
         for q in questions:
             #d[q] = extendedFamDict
             d = dictAddendumDict(d, q, extendedFamDict)
-        print('d',d)
-    print(len(allChildren), len(parents))
-    print('theOne', d)
+
     # parQuestions = [parse(parLab, 'Q', '.') for parLab in parents]
     # parAnswers = [parse(parLab, 'A', '.') for parLab in parents]
     # childQuestions = [parse(childLabel, 'Q', ',') for childLabel in allChildren]
@@ -203,8 +164,6 @@ def dictAddendumDict(dict, key, newDict):
         dict[key] = newDict
     else:
         for k in newDict:
-            print(dict)
-            print(dict[key])
             if k in dict[key].keys():
                 dict[key][k].append(newDict[k][0])
             else:
@@ -233,7 +192,6 @@ def find_answer_contents(schemadata, qlabel):
     questiondf = schemadata[schemadata['question_label'] == qlabel]
     pot_answers = questiondf['answer_content'].tolist()
     pot_answers.insert(0,'zero')
-    print(pot_answers)
     return pot_answers
 
 
@@ -242,9 +200,7 @@ def find_article_data(task_ans):
 
 
 def indicesFromString(indices):
-    print(indices)
     indices = clearBogusChars(indices)
-    print(indices)
     try:
         return json.loads(indices)
     except TypeError:
@@ -267,9 +223,7 @@ def clearBogusChars(string):
     string = string.replace("'", '')
     string = string.replace('"', '')
     string = string.replace(' , ', '')
-    print('prestrip', string)
     string = string.strip()
-    print('poststrip', string)
     string = string.replace(',,',',')
     i = 1
     while not string[i].isdigit():
@@ -326,12 +280,12 @@ def findNumUsers(numUsersDict, qlabel):
 
 
 def find_answers_radio(ansData, qlabel, schemaData):
+    ansData = ansData.dropna(subset=[qlabel])
     col = ansData[qlabel]
-    stringAnswers = col.dropna().tolist()
+    assert (len(col) == len(col.dropna()))
+    stringAnswers = col.tolist()
     users = ansData['contributor_uuid'].tolist()
-    for u in users:
-        print(type(u))
-    #print(ansData['contributor_uuid'].tolist())
+    assert(len(stringAnswers) == len(users))
     numAnswers = []
     for ans in stringAnswers:
         numAnswers.append(stringAnsToInt(schemaData, ans, qlabel))
@@ -345,17 +299,12 @@ def stringAnsToInt(schemadata, answer, qlabel):
     numAnswer = parse(ansLabel,'A')
     return numAnswer
 def findLabel(qlabels, qnum):
-    #print('finding', qnum)
     for label in qlabels:
-        #print(label)
         if str(qnum) in label:
-            #print('step1')
-            #print(label)
             if parse(label, 'Q') == qnum:
                 return label
 
 def find_answers_checklist(ans_data, qnum):
-    #print("FINDING ANSWERS FOR CHCKLIST")
     columns = ans_data.head(0)
     good_cols =find_matching_columns(columns, qnum)
     answers = []
@@ -367,10 +316,8 @@ def find_answers_checklist(ans_data, qnum):
         answeredRows = ans_data[ans_data[colName]!=0]
         newUsers = answeredRows['contributor_uuid'].tolist()
         for newU in range(len(newUsers)):
-            print(newUsers[newU])
             users.append(newUsers[newU])
 
-        #print(ansCount)
         for i in range(ansCount):
             answers.append(aNum)
     return answers, users
@@ -422,7 +369,6 @@ def get_questions(ansData):
     return relTags, relNums
 
 def readIndices(strIndices):
-    print(strIndices)
     #end = strIndices.index(']')
     separated = parseMany(strIndices[1:-1], separator = ' ')
     fin = [int(floor(float(i))) for i in separated]
@@ -531,12 +477,9 @@ def get_question_text(data, task_id, question_num):
     return data[task_id]['quesData'][question_num]['question_text']
 
 def get_question_parents(data, task_id, question_num):
-    print(data[task_id])
     return data[task_id]['quesData'][question_num]['parents']
 
 def get_article_dependencies(data,task_id):
-    print('dependenciesgoingout')
-    print(data[task_id]['taskData']['dependencies'])
     return data[task_id]['taskData']['dependencies']
 
 def get_namespace(data, article, question_num):
