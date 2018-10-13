@@ -49,9 +49,10 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer,
     wrong."""
     if type(answer_choice) == str or type(highlight_answer) == str:
         return 0
-    checked, int_users = checkDuplicates(answers, userID, starts, ends, article_length)
-    print(checked)
-    print(int_users)
+    #checked, int_users = checkDuplicates(answers, userID, starts, ends, article_length)
+    # print(checked)
+    # print(int_users)
+    checked = zip(answers, userID)
     highlight_answer_array = np.zeros(article_length)
     winners = []
     for t in checked:
@@ -65,9 +66,9 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer,
             do_math(data, user, 0)
     for h in highlight_answer:
         highlight_answer_array[h] = 1
-    for x in int_users:
+    for x in userID:
         if x in winners:
-            highlight = np.array(int_users[x])
+            highlight = np.array(userID[x])
             score = 1 - np.sum(np.absolute(highlight_answer_array - highlight)) / article_length
             do_math(data, last30, x, score)
 
@@ -96,17 +97,15 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     print(answer_aggregated)
     if type(answer_aggregated) == str or type(highlight_answer) == str:
         return 0
-    checked, int_users = checkDuplicates(answers, userID, starts, ends, article_length)
+    checked = zip(answers, userID)
     answers_passed = list()
     highlight_answer_array = np.zeros(article_length)
     score_dict = {}
-    #print(checked)
     for i in checked:
         answers_passed.append(i[1])
     answer_choice = gaussian_mean(answers)
 
     for h in highlight_answer:
-        #print(h)
         highlight_answer_array[h] = 1
 
     for t in checked:
@@ -115,7 +114,8 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
         points = (1 - abs(answer_choice - answer) / num_of_choices) ** 3
         do_math(data, last30, user, points)
         score_dict[user] = points
-    for x in userID:
+    for x in hlUsers:
+        #TODO: new way of doing highlight scores based on rep
         print(x)
         points = score_dict[x]
         highlight = getUserHighlights(x, hlUsers, starts, ends, article_length)
