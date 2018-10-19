@@ -7,7 +7,7 @@ from pointAssignment import *
 from Separator import *
 def calculate_scores_master(directory):
     print("IAA PROPER")
-    calc_agreement_directory(directory, hardCodedTypes=True)
+    calc_agreement_directory(directory, hardCodedTypes=True, repCSV="UserRepScores.csv")
     print("DEPENDENCY")
     eval_depenency(directory)
     print("WEIGHTING")

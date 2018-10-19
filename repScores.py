@@ -182,15 +182,22 @@ def do_math(data, last30, userID, reward):
 
     # print('inDoMath uID', userID)
     # print()
+    print('scurrr', user['Score'].iloc[0])
     r = float(user['Score'].iloc[0])*2 - oldlast30score
     n = float(user['Questions'].iloc[0])
     q_score = 10 * (1 - exp(-n / .7))
+    print('rrrrr', r)
     points = r * n / q_score
     points = points + reward
     n = n + 1
     q_score = 10 * (1 - exp(-n / .7))
     data.loc[data['Users'] == userID, 'Questions'] = n
     data.loc[data['Users'] == userID, 'Score'] = ((points / n) * q_score + last30score)/2
+    print('thi fal', data.loc[data['Users'] == userID, 'Influence'])
+    print(n, points, q_score, last30score)
+    print(2 / (1 + 1 * exp(-.7 * ((points / n) * q_score + last30score)/2+ 5)))
+    assert (len(data.loc[data['Users'] == userID, 'Influence']) == 1, )
+
     data.loc[data['Users'] == userID, 'Influence'] = 2 / (1 + 1 * exp(-.7 * ((points / n) * q_score + last30score)/2+ 5))
 
     # print(reward)

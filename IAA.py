@@ -44,7 +44,10 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
     #initialize rep
     print('starting rep')
-    repDF = create_user_dataframe(uberDict, repCSV)
+    try:
+        repDF = pd.read_csv(repCSV)
+    except:
+        repDF = create_user_dataframe(uberDict, csvPath = None)
     thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
     print('initialized repScores')
     for task in uberDict.keys():  # Iterates throuh each article
