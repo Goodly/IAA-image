@@ -6,7 +6,7 @@ from repScores import *
 import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
-
+#needed a change
 def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, answersFile = None):
     print("IAA STARTING")
     highlights = []
