@@ -286,9 +286,13 @@ def find_answers_radio(ansData, qlabel, schemaData):
     stringAnswers = col.tolist()
     users = ansData['contributor_uuid'].tolist()
     assert(len(stringAnswers) == len(users))
+    print('qlabeeeeel', qlabel)
     numAnswers = []
     for ans in stringAnswers:
-        numAnswers.append(stringAnsToInt(schemaData, ans, qlabel))
+        if isinstance(ans, int):
+            numAnswers.append(ans)
+        else:
+            numAnswers.append(stringAnsToInt(schemaData, ans, qlabel))
     return numAnswers, users
 
 
@@ -495,8 +499,7 @@ def finder(ser, a):
 
 def get_type_hard(type, ques):
     #ques = parse(ques, 'Q')
-    #print('type', type, ques)
-    #TODO:verify all of this against the schema
+    print('type', type, ques)
     typing_dict = {
         'Source relevance':
             {
@@ -586,6 +589,25 @@ def get_type_hard(type, ques):
                 14:['ordinal', 4],
                 15:['ordinal', 10],
                 16:['ordinal', 10]
+            },
+        'Evidence Specialist 3':
+            {
+                1: ['checklist', 3],
+                2: ['checklist', 9],
+                # TODO: this is an interval quesiton, prob gonna get ignored l8r though
+                3: ['nominal', 1],
+                4: ['ordinal', 5],
+                5: ['ordinal', 6],
+                6: ['ordinal', 6],
+                7: ['nominal', 3],
+                8: ['nominal', 1],
+                9: ['ordinal', 7],
+                10: ['ordinal', 3],
+                11: ['ordinal', 5],
+                12: ['ordinal', 5],
+                13: ['ordinal', 4],
+                14: ['ordinal', 10],
+                15: ['nominal', 1]
             },
         'Beginner Reasoning Specialist Structured':
             {

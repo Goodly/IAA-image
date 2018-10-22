@@ -32,6 +32,7 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         weights[i] = 1
 #        assert len(starts) == len(users), 'starts, users mismatched'
         assert(len(answers) == len(users))
+        assert(len(np.unique(users)) == len(np.unique(hlUsers)))
         weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users,
                                                                                      repDF)
         weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, starts,

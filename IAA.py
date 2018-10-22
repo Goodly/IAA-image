@@ -43,12 +43,13 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
     #initialize rep
-    print('starting rep')
-    try:
-        repDF = pd.read_csv(repCSV)
-    except:
-        repDF = create_user_dataframe(uberDict, csvPath = None)
-    thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
+    # print('starting rep')
+    # try:
+    #     repDF = pd.read_csv(repCSV)
+    # except:
+    #     repDF = create_user_dataframe(uberDict, csvPath = None)
+    # thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
+    repDF, thirtyDf = None, None
     print('initialized repScores')
     for task in uberDict.keys():  # Iterates throuh each article
         #task_id = get_article_num(uberDict, task)
@@ -57,16 +58,12 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
         article_num = get_article_num(uberDict,task_id)
         article_sha = get_article_sha(uberDict, task_id)
         schema_namespace = get_schema(uberDict, task_id)
-        print('got_task_id')
         questions = uberDict[task]['quesData'].keys()
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
-            # print(repDF)
 
-            print('scoring task', task[:8], 'question', ques)
-            print('schema is', schema_namespace, '-------------------------------------')
+
             agreements = score(task, ques, uberDict, repDF, thirtyDf = thirtyDf,hardCodedTypes = hardCodedTypes)
-            print("GOT AGREEMENT")
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, task, ques)
             if type(agreements) is list:
@@ -122,7 +119,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
 
 
     # push out of womb, into world
-    print('exporting rep_scores')
+    #print('exporting rep_scores')
     # print(repDF)
 #    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
  #   userid_to_CSV(repDF)
@@ -165,15 +162,12 @@ def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = F
     # unit_questions = [9,10,11, 24] #asks users to highlight, nothing else OR they highlight w/ txt answer
     # multiple_questions = [3,5,8,23]
 
-    print('Scoring article: ', article, ' question: ', ques)
     starts = get_question_start(data,article, ques)
     ends = get_question_end(data, article, ques)
     length = get_text_length(data, article, ques)
-    print(length)
     if len(ends)>0 and max(ends)>0:
         texts = get_answer_texts(data, article, ques)
         sourceText = makeList(length)
-        print(starts, ends, texts)
         sourceText = addToSourceText(starts, ends, texts, sourceText)
         hlUsers = get_question_hlUsers(data, article,ques)
         hlAns = get_question_hlAns(data, article, ques)
@@ -211,32 +205,26 @@ def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = F
     if question_type == 'interval':
         # TODO: verify if these still exist, if they do, bring up to speed with new output formats
         return run_2step_unitization(data, article, ques, repDF)
-    print('fetching answers', question_type, 'art:', article, ques)
     answers = get_question_answers(data, article, ques)
-    print('fetchig userdata')
     users =get_question_userid(data, article, ques)
-    print('users',users)
-    print(np.unique(users))
-    print(len(np.unique(users)))
-    print('ans',answers)
+    print('art', article,ques)
     numUsers = get_num_users(data, article, ques)
-    print ('got', numUsers,'users')
+    print('nu', numUsers, users)
     assert (len(answers) == len(users))
+
     if question_type == 'ordinal':
-        print('scoring ordinal q')
         #assert(len(answers) == len(users))
-        out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText, hlUsers, hlAns, repDF = repDF, dfunc='ordinal')
+        out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText, hlUsers, hlAns, repDF = repDF, dfunc='ordinal', num_choices=num_choices)
         #print("ORDINAL", out[1], starts, ends)
-        do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], hlUsers, starts, ends, length, repDF, thirtyDf)
+        #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], hlUsers, starts, ends, length, repDF, thirtyDf)
         out = out+(question_type, num_choices)
     elif question_type == 'nominal':
-        print('scoring nominal q')
+        print('nominal', users)
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText,hlUsers, hlAns, repDF = repDF, num_choices=num_choices)
         #do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF)
         #print("NOMINAL", out[1], starts, ends)
         out = out+(question_type, num_choices)
     elif question_type == 'checklist':
-        print('evaling checklist Q')
         out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, hlUsers, hlAns, num_choices = num_choices)
     return out
 

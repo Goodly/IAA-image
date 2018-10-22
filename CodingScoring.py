@@ -22,6 +22,9 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
         agreement score.  The variable 'iScore' refers to the unitizing agreement score calculated using Krippendorff's
         alpha including users who never highlighted any characters that passed the threshold matrix
     """
+    #This only occurs when the users are prompted for a textual input.
+    if num_choices == 1:
+        print('users', users, hlUsers)
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
     print('evalcod numUsers',len(np.unique(repScaledUsers))
     )
@@ -45,6 +48,7 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
     #                                         weightScaledNumUsers,\
     #                                         userWeightDict= weightScaleEverything(hlAns, weights, hlUsers, users,
     #                                                                                      starts,ends, repDF)
+    assert (len(np.unique(users)) >= len(np.unique(hlUsers)))
     weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users, repDF)
     weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, starts, ends)
     #TOPTWO metric add the score diference

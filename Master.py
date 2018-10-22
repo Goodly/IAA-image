@@ -30,7 +30,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'pred1'
+    input_dir = 'demo3'
     if args.input_dir:
         input_dir = args.input_dir
     calculate_scores_master(input_dir)

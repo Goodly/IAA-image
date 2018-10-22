@@ -235,6 +235,8 @@ def CSV_to_last30(path):
     return pd.read_csv(path, index_col=False).loc[:, ['Users', 'Index'] + list(range(30))]
 
 def get_user_rep(id, repDF):
+    if repDF is None:
+        return 50
     if repDF.loc[repDF['Users']==id]['Questions'].iloc[0]<30:
         influence = .8
     else:
