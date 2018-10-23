@@ -4,41 +4,46 @@ import numpy as np
 import os
 import json
 from dataV2 import *
-def eval_depenency(directory):
+def eval_dependency(directory, iaa_dir, out_dir = None):
     print("DEPENDENCY STARTING")
+    if out_dir is None:
+        out_dir = 'scoring_'+directory
+    print('dir', directory, iaa_dir, out_dir)
     schema = []
     iaa = []
     for root, dir, files in os.walk(directory):
         for file in files:
             if file.endswith('.csv') and 'Dep' not in file:
                 print("Checking Agreement for "+directory+'/'+file)
-                if 'S_IAA' in file:
-                    iaa.append(directory+'/'+file)
-                elif 'Schema' in file:
+                if 'Schema' in file:
                     schema.append(directory+'/'+file)
+    for root, dir, files in os.walk(iaa_dir):
+        for file in files:
+            if file.endswith('.csv') and 'Dep' not in file:
+                print("Checking Agreement for "+directory+'/'+file)
+                if 'S_IAA' in file:
+                    iaa.append(iaa_dir+'/'+file)
+
     schema.sort()
     iaa.sort()
     assert(len(schema)==len(iaa))
+    out_dir = make_directory(out_dir)
     for i in range(len(schema)):
-        print('launching with', schema[i], iaa[i])
-        handleDependencies(schema[i], iaa[i])
+        handleDependencies(schema[i], iaa[i], out_dir)
+    return out_dir
 
-
-def handleDependencies(schemaPath, iaaPath):
+def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
     dependencies = create_dependencies_dict(schemData)
-    print('haves a depend')
     tasks = np.unique(iaaData['task_uuid'].tolist())
     for t in tasks:
         iaaTask = iaaData[iaaData['task_uuid'] == t]
         #childQuestions
         for ch in dependencies.keys():
-            print('newChild', ch)
             child = dependencies[ch]
             needsLove = checkNeedsLove(iaaTask, ch)
             if needsLove:
-                print("INEEDAHERO")
                 indices = np.zeros(0)
                 alpha = np.zeros(0)
                 alphainc = np.zeros(0)
@@ -56,7 +61,7 @@ def handleDependencies(schemaPath, iaaPath):
                         neededAnswers = child[par]
 
                         for ans in neededAnswers:
-                            iaaparAns = iaaPar[iaaPar['agreed_Answer'] == str(ans)]
+                            iaaparAns = iaaPar[iaaPar['agreed_Answer'] == ans]
                             print(ans, iaaPar['agreed_Answer'].tolist())
                             print("ONELINEGUY")
                             print(iaaparAns)
@@ -90,23 +95,18 @@ def handleDependencies(schemaPath, iaaPath):
                     alphainc = alphainc[0]
                 except IndexError:
                     alpha, alphainc = -1,-1
-                print("FOR YOUR BOAT")
-                print(rows)
-                if len(rows)>0:
-                    print("UCROSSRIVER")
+
                 for row in rows:
-                    print('doing Transfer')
                     iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
                     iaaData.at[row, 'alpha_unitizing_score'] = alpha
                     iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
-                    print("PUPDATED")
-                    print(iaaData.loc[row])
     print('exporting to csv')
     path, name = get_path(iaaPath)
 
-    iaaData.to_csv(path+'Dep_'+name,  encoding = 'utf-8')
+    iaaData.to_csv(out_dir+'Dep_'+name,  encoding = 'utf-8')
 
     print("Table complete")
+    return out_dir
 
 def parseList(iterable):
     out = []
@@ -130,7 +130,7 @@ def checkNeedsLove(df, qNum):
 def find_real_answers(answers):
     out = []
     for a in answers:
-        if a.isdigit():
+        if isinstance(a, int) or a.isdigit():
             out.append(int(a))
     return out
 
@@ -138,7 +138,9 @@ def find_real_answers(answers):
 def find_index(df, targetVals,col):
     indices = []
     for v in targetVals:
-        shrunk = df[df[col] == str(v)]
+        print('fining index,', df[col], v)
+        print(type(df[col]), v)
+        shrunk = df[df[col] == v]
         print("SRK")
         print(shrunk)
         if len(shrunk)>0:

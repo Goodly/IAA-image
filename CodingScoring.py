@@ -23,11 +23,9 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
         alpha including users who never highlighted any characters that passed the threshold matrix
     """
     #This only occurs when the users are prompted for a textual input.
-    if num_choices == 1:
-        print('users', users, hlUsers)
+
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
-    print('evalcod numUsers',len(np.unique(repScaledUsers))
-    )
+
     assert(len(repScaledUsers) == len(repScaledAnswers))
     highScore, winner, weights, firstSecondScoreDiff = scoreCoding(repScaledAnswers, repScaledUsers, dfunc, num_choices = num_choices)
     if dfunc == 'ordinal':
@@ -53,8 +51,6 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
     weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, starts, ends)
     #TOPTWO metric add the score diference
     #weight scale the hlUsers for future usage
-    print('starts', len(starts), len(weightScaledStarts))
-    print(len(hlUsers), len(weightScaledHlUsers))
     winner, units, uScore, iScore, selectedText= passToUnitizing(weightScaledAnswers,weightScaledHlUsers,weightScaledStarts,
                                                     weightScaledEnds,numUsers,length, highScore, winner,
                                                     weightScaledNumUsers, userWeightDict, sourceText)
@@ -67,7 +63,6 @@ def repScaleAnsUsers(answers, users, repDF):
     return repScaledAnswers, repScaledUsers
 
 def weightScaleEverything(answers,weights, users, hlUsers, starts, ends, repDF):
-    print(len(answers), len(users))
     arrs = [answers, users, hlUsers, starts, ends]
     assert (len(answers) == len(users))
     scaledArrs, sumTotalScaling, userWeightDict = scaleManyFromWeights(arrs,answers, weights, users, repDF)
@@ -93,8 +88,6 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
         fNumUsers = scaledNumUsers
         #If somebody highlights something
         if len(starts)>3:
-            print('p2u', len(starts), len(hlusers))
-            print("these be starts, users", len(fStarts), len(fhlusers))
             assert len(fStarts) == len(fhlusers)
             uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fhlusers,
                                                      userWeightDict, answers, winner)
@@ -130,10 +123,8 @@ def scoreCoding(answers, users, dfunc, scale = 1, num_choices = 25):
     """
     answers = [int(a) for a in answers]
     if dfunc == 'ordinal':
-        print(num_choices)
         highscore, winner, weights, secondWinner, secondScore = getWinnersOrdinal(answers, num_choices = num_choices, scale = scale)
     else:
-        print('num_choices',num_choices)
         highscore, winner, weights, secondWinner, secondScore = getWinnersNominal(answers, num_choices = num_choices)
     firstSecDiff = highscore - secondScore
     return highscore, winner, weights, firstSecDiff
@@ -305,10 +296,6 @@ def scaleManyFromWeights(arr,answers,weights, users, repDF):
     checked = []
     userWeightDict = {}
     for i in range(len(arr[1])):
-        print("bouttabuggo")
-        print(len(users))
-        print(len(answers))
-        print(len(arr[1]))
         if (arr[1][i], users[i], answers[i]) not in checked:
             checked.append((arr[1][i], users[i], answers[i]))
 

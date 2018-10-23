@@ -3,7 +3,7 @@ import numpy as np
 import ast
 from math import floor
 import json
-
+import os
 def data_storer(path, answerspath, schemapath):
     """Function that turns csv data. Input the path name for the csv file.
     This will return a super dictionary that is used with other abstraction functions."""
@@ -69,6 +69,8 @@ def data_storer(path, answerspath, schemapath):
              }
         uberDict[task]['quesData'] = qDict
     return uberDict
+
+
 def dependencyStatus(dependencies, qnum):
     try:
         return dependencies[qnum]
@@ -286,7 +288,6 @@ def find_answers_radio(ansData, qlabel, schemaData):
     stringAnswers = col.tolist()
     users = ansData['contributor_uuid'].tolist()
     assert(len(stringAnswers) == len(users))
-    print('qlabeeeeel', qlabel)
     numAnswers = []
     for ans in stringAnswers:
         if isinstance(ans, int):
@@ -413,7 +414,6 @@ def parse(base, field, end = None):
         #if this is a bug then has to be end+1 or end -1
         ansString = base[aSpot +1: eSpot]
         return int(ansString)
-    #print('BAASSEE', base)
     aSpot = base.index(field)
     ansString = base[aSpot+1:]
     return int(ansString)
@@ -496,16 +496,24 @@ def finder(ser, a):
             if ser[i]==a:
                     return i
     return -1
-
+def make_directory(directory):
+    if directory[-1] != '/':
+        directory = directory +'/'
+    try:
+        os.mkdir(directory)
+    except FileExistsError:
+        pass
+    return directory
 def get_type_hard(type, ques):
     #ques = parse(ques, 'Q')
     print('type', type, ques)
     typing_dict = {
         'Source relevance':
             {
-                1: ['checklist', 7],
-                2: ['checklist', 8],
-                3: ['ordinal', 5]
+                1: ['checklist', 9],
+                2: ['nominal', 2],
+                3: ['ordinal', 6],
+                4: ['ordinal', 8]
             },
         #OLD
         'Science and Causality Questions for SSS Students V2':
@@ -527,18 +535,16 @@ def get_type_hard(type, ques):
                 1:['checklist', 13],
                 2:['ordinal', 5],
                 3:['ordinal', 5],
-                5:['ordinal', 5],
-                6:['nominal', 8],
-                7:['nominal',1],
-                #TODO: is this ordinal?
-                8:['ordinal', 4],
+                4:['ordinal', 6],
+                5:['checklist', 8],
+                6:['nominal', 1],
+                7:['ordinal',5],
+                8:['ordinal', 5],
                 9:['ordinal', 5],
-                10: ['ordinal', 4],
-                11: ['ordinal', 5],
-                12: ['ordinal', 3],
-                13: ['ordinal', 5],
-                15: ['ordinal', 10],
-                14: ['ordinal', 10]
+                10: ['ordinal', 5],
+                11: ['ordinal', 4],
+                12: ['ordinal', 10],
+                13: ['ordinal', 1]
             },
         'Confidence':
             {
@@ -639,8 +645,20 @@ def get_type_hard(type, ques):
             {
                 1:['checklist', 9],
                 2:['checklist', 2],
-                3:['checklist', 5],
-                4:['ordinal', 7]
+                3:['checklist', 6],
+                4:['ordinal', 8]
+            },
+        'Probability':
+            {
+                1:['ordinal', 3],
+                2:['ordinal', 5],
+                3:['ordinal', 3],
+                4:['ordinal', 6],
+                5:['ordinal', 3],
+                6:['ordinal', 4],
+                7:['ordinal', 5],
+                8:['ordinal',10],
+                9:['nominal', 1]
             }
 
     }

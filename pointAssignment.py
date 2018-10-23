@@ -26,12 +26,12 @@ def pointSort(directory):
     outData = [['Article ID', 'Credibility Indicator ID ', 'Credibilty Indicator Category',
                 'Credibility Indicator Name',
                 'Points', 'Indices of Label in Article', 'Start', 'End']]
-    tst = [['Article ID', 'Credibility Indicator ID ', 'Credibilty Indicator Category',
-                'Credibility Indicator Name',
-                'Points', 'Indices of Label in Article', 'Start', 'End']]
+
     artNum = 0000
     for weightSet in weightFile:
-        dataDict = storeData(sourceFile, argRelevanceFile, weightSet, './demo1/allTUAS.csv')
+        print(sourceFile, argRelevanceFile, weightSet)
+        dataDict = storeData(sourceFile, argRelevanceFile, weightSet, './demo3/allTUAS.csv')
+        print(dataDict)
         articles = dataDict.keys()
         mergeWeightFiles(weightFile)
         for art in articles:
@@ -108,7 +108,6 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
     weightData = pd.read_csv(weightFile)
     tuas = pd.read_csv(allTuas)
     #by articles not by tasks
-    #TODO: change this to article_sha256 after it works
     #Use article not tasks, finding which task best fits the weighting recommenation
     uqArticles = np.unique(argData['article_sha256'])
     bigDict = {}
@@ -333,8 +332,8 @@ def getFiles(directory):
         for file in files:
             #print(file)
             if 'Dep_S_IAA' in file:
-                print('siaa file-------------', file)
-                if file.endswith('.csv')  and 'Quo' in file:
+                print('depsiaa file-------------', file)
+                if file.endswith('.csv')  and 'ource' in file:
                     print("found Sources File" + directory + '/' + file)
                     sourceFile = directory+'/'+file
                 if file.endswith('.csv')   and 'Arg' in file:

@@ -5,6 +5,7 @@ import os
 def launch_Weighting(directory):
     print("WEIGHTING STARTING")
     iaaFiles = []
+    print('weightdir',directory)
     for root, dir, files in os.walk(directory):
         for file in files:
             print(file)
@@ -33,7 +34,10 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
         return
     print("WEIGHINGWITHSCHEMA", IAA_csv_schema_type, IAA_csv_file)
     IAA_csv = IAA_csv.with_column("Schema", IAA_csv_schema_type)
-    IAA_csv = IAA_csv.relabeled("question_Number", "Question_Number").relabeled("agreed_Answer", "Answer_Number")
+    IAA_csv = IAA_csv.relabeled("question_Number", "Question_Number")
+    #because data sciecne module doesn't support a where to distinguish between strings and ints, we're casting
+    #the ints to strings.
+    IAA_csv.append_column("Answer_Number", [str(a) for a in IAA_csv.column('agreed_Answer')])
     IAA_csv = IAA_csv.where("Answer_Number", are.not_contained_in('ULM'))
 
 

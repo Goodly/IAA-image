@@ -16,15 +16,12 @@ def scoreChecklist(answers,numUsers, num_choices):
     return out
 
 def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sourceText, hlUsers, hlAns, num_choices  = 5,  dfunc = None):
-    print("CHECKLIST NUM USERS", numUsers)
 
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
     #assert len(starts) == len(users), 'starts, users mismatched'
-    print('prepercNumUsers', numUsers)
     #TODO: scale numUsers when repScaled gets scaled up
     percArray = scoreChecklist(repScaledAnswers, numUsers, num_choices)
     out = []
-    print('got percAray')
     for i in range(1,len(percArray)):
         codingScore = percArray[i]
         #scaledNumUsers and weighted stuff needs to change for each answer choice
@@ -32,7 +29,7 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         weights[i] = 1
 #        assert len(starts) == len(users), 'starts, users mismatched'
         assert(len(answers) == len(users))
-        assert(len(np.unique(users)) == len(np.unique(hlUsers)))
+        #assert(len(np.unique(users)) == len(np.unique(hlUsers)))
         weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users,
                                                                                      repDF)
         weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, starts,

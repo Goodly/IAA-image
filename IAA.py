@@ -7,8 +7,10 @@ import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
-def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, answersFile = None):
+def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, answersFile = None, outDirectory = None):
     print("IAA STARTING")
+    if outDirectory is None:
+        outDirectory = 's_iaa_'+directory
     highlights = []
     answers = []
     schema = []
@@ -30,12 +32,13 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
     schema.sort()
     assert(len(highlights) == len(schema), 'files not found')
     for i in range(len(highlights)):
-        calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
-                            answersFile = answers[i], schemaFile=schema[i])
+         calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
+                            answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory)
                     #will be an error for every file that isn't the right file, there's a more graceful solution, but
                     #we'll save that dream for another day
+    return outDirectory
 
-def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None):
+def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = 's_iaa'):
     print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
     print("done")
@@ -124,12 +127,22 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
 #    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
  #   userid_to_CSV(repDF)
     print('exporting to csv')
+    # if outDirectory[-1] != '/':
+    #     outDirectory = outDirectory +'/'
+    #
+    # try:
+    #     scores = open(outDirectory+'S_IAA_'+name, 'w', encoding = 'utf-8')
+    # except FileNotFoundError:
+    #     os.mkdir(outDirectory)
+    outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
-    scores = open(path+'S_IAA_'+name, 'w', encoding = 'utf-8')
+    scores = open(outDirectory + 'S_IAA_' + name, 'w', encoding='utf-8')
     with scores:
         writer = csv.writer(scores)
         writer.writerows(data)
     print("Table complete")
+    print('iaa outdir', outDirectory)
+    return outDirectory
 def adjustForJson(units):
     units = str(units)
     out = '['
@@ -211,7 +224,8 @@ def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = F
     numUsers = get_num_users(data, article, ques)
     print('nu', numUsers, users)
     assert (len(answers) == len(users))
-
+    if num_choices == 1:
+        return 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     if question_type == 'ordinal':
         #assert(len(answers) == len(users))
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText, hlUsers, hlAns, repDF = repDF, dfunc='ordinal', num_choices=num_choices)
