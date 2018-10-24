@@ -1,6 +1,8 @@
+import os
+import argparse
+
 from UnitizingScoring import *
 from ThresholdMatrix import *
-from IAA import get_path
 import pandas as pd
 from math import floor
 import csv
@@ -46,9 +48,9 @@ jpath2 = 'SemanticsTriager1.3C2-2018-07-25T23.json'
 #     print("Table complete")
 
 
-def importData(path, excludedUsers = []):
+def importData(input_file, output_file, excludedUsers = []):
     """CSV INPUT"""
-    data = pd.read_csv(path, encoding = 'utf-8')
+    data = pd.read_csv(input_file, encoding = 'utf-8')
     #only excluding users for purpose of cleaner test data
     #Quang Gold--Duplicate Data from the real Quang
     #excludedUsers.append('40bbbf7e-a77b-498d-bb44-2ef6601061ef')
@@ -89,8 +91,7 @@ def importData(path, excludedUsers = []):
                 out = appendData(filename[0], a, namespaces, pstarts, pends, c, pflags, out, source_text)
     print('exporting to csv')
 
-    outPath, name = get_path(path)
-    scores = open(outPath+'T_IAA'+name, 'w', encoding = 'utf-8')
+    scores = open(output_file, 'w', encoding = 'utf-8')
 
     with scores:
         writer = csv.writer(scores)
@@ -383,7 +384,6 @@ print()
 print()
 print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
 
-importData('./demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv')
 
 
 #evalTriage(jpath1)
@@ -399,3 +399,28 @@ importData('./demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv')
 
 # scoreTriager(s,e1,l,u,3,f,c)
 # scoreTriager(s,e1,l,u,3,f2,c)
+
+def load_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-i', '--input-file',
+        help='CSV file with highlights to filter for agreement.'
+             'and Schema .csv files.')
+    parser.add_argument(
+        '-o', '--output-file',
+        help='Output file')
+    return parser.parse_args()
+
+if __name__ == '__main__':
+    args = load_args()
+    input_file = './demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv'
+    if args.input_file:
+        input_file = args.input_file
+    dirname = os.path.dirname(input_file)
+    basename = os.path.basename(input_file)
+    output_file = os.path.join(dirname, 'T_IAA_' + basename)
+    if args.output_file:
+        output_file = args.output_file
+    print("Input: {}".format(input_file))
+    print("Output: {}".format(output_file))
+    importData(input_file, output_file)
