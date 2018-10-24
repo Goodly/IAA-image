@@ -1,11 +1,12 @@
 import os
 import argparse
-
-from UnitizingScoring import *
-from ThresholdMatrix import *
-import pandas as pd
 from math import floor
 import csv
+
+import numpy as np
+import pandas as pd
+from UnitizingScoring import toArray, scorePercentageUnitizing
+from ThresholdMatrix import evalThresholdMatrix
 
 path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
 path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
