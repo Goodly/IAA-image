@@ -1,6 +1,6 @@
 import krippendorff
 import numpy as np
-from ThresholdMatrix import *
+from ThresholdMatrix import evalThresholdMatrix
 
 def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner):
     #assert len(starts) == len(users), 'starts, users mismatched'
