@@ -268,6 +268,7 @@ def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = eval
         if passingFunc(percentageArray[i], numUsers, scale) == 'H':
             passersArray[i] = 1
     return passersArray
+
 def minPercent(percent, totalNumUsers, scale):
     if percent>=scale:
         return 'H'

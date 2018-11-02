@@ -37,8 +37,8 @@ def load_args():
 if __name__ == '__main__':
     args = load_args()
     input_dir = 'demo3'
-    output_dir = None
-    scoring_dir  = None
+    output_dir = 'd4iaa'
+    scoring_dir  = 'd5scoring'
     if args.input_dir:
         input_dir = args.input_dir
         output_dir = args.output_dir

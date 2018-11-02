@@ -33,7 +33,7 @@ def pointSort(directory):
         dataDict = storeData(sourceFile, argRelevanceFile, weightSet, './demo3/allTUAS.csv')
         print(dataDict)
         articles = dataDict.keys()
-        mergeWeightFiles(weightFile)
+        #mergeWeightFiles(weightFile)
         for art in articles:
 
 
