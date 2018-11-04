@@ -3,19 +3,10 @@ import numpy as np
 from ThresholdMatrix import *
 
 def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner):
-    #assert len(starts) == len(users), 'starts, users mismatched'
-    #print('scoringNu')
-    #print('nu', userWeightDict)
-    print('nu users len', len(users))
     answerMatrix = toArray(starts,ends,length, users, userWeightDict, answers, winner)
-    #print('topercentageArr')
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
-    #print('filtering for winners')
-    print("these be starts, users", len(starts), len(users))
     assert len(starts) == len(users)
     filteredData = filterSingular(percentageArray, numUsers,users,starts,ends)
-    #f for filtered
-    #print('filtered')
     fStarts,fEnds,fNumUsers,goodIndices, fUsers = filteredData[0], filteredData[1], \
                                                   filteredData[2], filteredData[3], filteredData[4]
     if len(fStarts)==0:
@@ -23,12 +14,8 @@ def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers,
     if fUsers[0] == 'U':
         return 'U','U','U'
     filteredMatrix = toArray(fStarts, fEnds,length, fUsers, userWeightDict, answers, winner)
-   # print('scoring alpha')
     score = scoreAlpha(filteredMatrix, 'nominal')
-    #print('done1')
     inclusiveScore = scoreAlpha(answerMatrix, 'nominal')
-    #print('done2')
-    #print(score, inclusiveScore, goodIndices)
     return score, inclusiveScore, goodIndices
 
 
@@ -82,29 +69,10 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
     for u in range(len(uniqueUsers)):
         try:
             weight = userWeightDict[uniqueUsers[u]]
-            print(userWeightDict)
-            print(weight)
             totalWeight = totalWeight + weight
         except:
             totalWeight = len(uniqueUsers)
             weight = 1
-        #print(uniqueUsers[u])
-        #indices = getIndicesFromUserAnswer(users, uniqueUsers[u], answers, winner)
-        #can't use np.unique, possible to highlight to same endpoint from 2 diff starts
-        #print(indices)
-        # if len(indices>=1):
-        #
-        #     userStarts = (astarts[indices])
-        #     userEnds = (aends[indices])
-        #     #there's a weird corner case where this might go wrong, but I doubt it'll ever actually happen
-        #     uqStart, uqEnd = np.unique(userStarts), np.unique(userEnds)
-        #     if len(uqStart) == len(uqEnd):
-        #         userStarts = uqStart
-        #         userEnds = uqEnd
-        #     for start in range(len(userStarts)):
-        #         for i in range(int(userStarts[start]), int(userEnds[start])):
-        #             #print(u,i,len(userBlocks))
-        #             userBlocks[u][i] = weight
 
 
         uqStart, uqEnd = np.unique(astarts), np.unique(aends)
@@ -113,7 +81,6 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
             userEnds = uqEnd
         for start in range(len(astarts)):
             for i in range(int(astarts[start]), int(aends[start])):
-                #print(u,i,len(userBlocks))
                 userBlocks[u][i] = weight
     #Now there are arrays of 1s and 0s, gotta collapse them
     #and make the possibilities column
@@ -138,11 +105,8 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
     passingIndexes = np.zeros(len(percentageScoresArray))
     #adjust so user count isn't inflated by reps
     num_reals = len(np.unique(users))
-    #codeZero, minPassPercent = evalThresholdMatrix(max(percentageScoresArray), num_reals, scale=1.5), 'N/A'
-    #print('minPass', minPassPercent)
     #if minPassPercent == 'U':
     #    return 'U','U','U','U','U'
-    #print('comparisonians', minPassPercent, percentageScoresArray)
     for i in range(len(percentageScoresArray)):
         if type(percentageScoresArray[i]) == 'numpy.ndarray':
             print("OOOOO")
@@ -151,7 +115,6 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
         if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 1.2) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
-    print("these be starts, users", len(starts), len(users))
     assert len(starts) == len(users)
     majorityUsersUnique = getMajorityUsers(passingIndexes, users, starts, ends)
     goodIndices = getIndicesFromMajorityUsers(users, majorityUsersUnique)
@@ -169,7 +132,6 @@ def getMajorityUsers(passingIndexes, users, starts, ends):
     """returns array of unique users who highlighted
     anything that passed the agreement threshold Matrix
     """
-    print(len(starts), len(users))
     assert len(starts) == len(users), 'starts, users mismatched'
     majorityUsers = []
     for i in range(len(starts)):

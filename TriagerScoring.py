@@ -80,7 +80,7 @@ def importData(path, excludedUsers = []):
                 users = cat_data['contributor_uuid'].tolist()
                 flags = cat_data['case_number'].tolist()
                 namespaces = cat_data['namespace'].tolist()
-                length = floor(cat_data['source_text_length'].tolist()[0])
+                length = floor(cat_data['source_text_length'].str.decode('unicode-escape').tolist()[0])
                 texts = cat_data['target_text'].tolist()
 
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
@@ -103,6 +103,7 @@ def appendData(article_filename, article_sha256, namespaces,start_pos_list, end_
         case_numbers = np.zeros(len(start_pos_list))
     for i in range(len(start_pos_list)):
         text = getText(start_pos_list[i], end_pos_list[i],source_text)
+        text = text.encode('unicode-escape').decode('utf-8')
         print(len(namespaces), len(start_pos_list), len(end_pos_list), len(case_numbers))
         data.append([article_filename, article_sha256, namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
     return data

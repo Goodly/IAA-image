@@ -41,7 +41,7 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
 def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = 's_iaa'):
     print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
-    print("done")
+    print("donegettingdata")
     data = [["article_num", "article_sha256", "task_uuid","schema_namespace","question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]

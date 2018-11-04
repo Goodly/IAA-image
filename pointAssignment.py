@@ -129,7 +129,8 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
             artNum = artArgData['article_num'].iloc[0]
             taskAnsArg = getAnswersTask(artArgData)
         except IndexError:
-            artNum = [art]
+            print("INDEX ERROR", artArgData)
+            artNum = art
             taskAnsArg = {-1:-1}
         artSourceData = sourceData[sourceData['article_sha256'].notnull()]
         artSourceData = artSourceData[artSourceData['article_sha256'] == art]

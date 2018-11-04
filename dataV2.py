@@ -4,6 +4,8 @@ import ast
 from math import floor
 import json
 import os
+
+
 def data_storer(path, answerspath, schemapath):
     """Function that turns csv data. Input the path name for the csv file.
     This will return a super dictionary that is used with other abstraction functions."""
@@ -233,17 +235,17 @@ def clearBogusChars(string):
     string = string[0]+string[i:]
     return string
 def findStartsEnds(schemadata, qlabel, highlightdata):
-    questiondf = schemadata[schemadata['question_label'] == qlabel]
     # hasHighlight = max(questiondf['nohighlight'])<1
     # if hasHighlight:
     #TODO: implement a check to see if people thought there should've been a highlight
-    question_hl = highlightdata[highlightdata['question_label'] == qlabel]
-    starts = question_hl['start_pos'].tolist()
-    ends = question_hl['end_pos'].tolist()
-    users = question_hl['contributor_uuid'].tolist()
-    length = question_hl['source_text_length']
-    answerText = question_hl['target_text']
-    answer_labels = question_hl['answer_label']
+    #Don't filter by answer for checklist questions here
+    relevant_hl = highlightdata[highlightdata['question_label'] == qlabel]
+    starts = relevant_hl['start_pos'].tolist()
+    ends = relevant_hl['end_pos'].tolist()
+    users = relevant_hl['contributor_uuid'].tolist()
+    length = relevant_hl['source_text_length']
+    answerText = relevant_hl['target_text'].str.decode('unicode-escape')
+    answer_labels = relevant_hl['answer_label']
     answer_nums = [parse(ans, 'A') for ans in answer_labels]
     return starts, ends, users, length, answerText, answer_nums
     #else:
