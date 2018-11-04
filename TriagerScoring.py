@@ -80,6 +80,9 @@ def importData(path, excludedUsers = []):
                 users = cat_data['contributor_uuid'].tolist()
                 flags = cat_data['case_number'].tolist()
                 namespaces = cat_data['namespace'].tolist()
+                for n in namespaces:
+                    print(n)
+                    print(str(n))
                 length = floor(cat_data['source_text_length'].str.decode('unicode-escape').tolist()[0])
                 texts = cat_data['target_text'].tolist()
 
