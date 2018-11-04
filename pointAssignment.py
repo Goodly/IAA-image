@@ -28,12 +28,14 @@ def pointSort(directory):
                 'Points', 'Indices of Label in Article', 'Start', 'End']]
 
     artNum = 0000
+    print('files', weightFile)
     for weightSet in weightFile:
         print(sourceFile, argRelevanceFile, weightSet)
         dataDict = storeData(sourceFile, argRelevanceFile, weightSet, './demo3/allTUAS.csv')
         print(dataDict)
         articles = dataDict.keys()
         #mergeWeightFiles(weightFile)
+        print('arty farty', articles)
         for art in articles:
 
 
@@ -77,13 +79,13 @@ def pointSort(directory):
                     starts, ends = indicesToStartEnd(wu)
                     addendum = [artNum, credId, schema, labels[i], pts, wu, starts[0], ends[0]]
                     outData.append(addendum)
+                    print('anum', artNum)
                     #TODO: figure out how visualization handles stuff with multiple starts and ends
                     for k in range(1, len(starts)-1):
                         addendum = [artNum, credId, schema, labels[i], 0, wu, starts[k], ends[k]]
                         outData.append(addendum)
                 print('exporting to csv')
                 scores = open(directory + '/SortedPts_'+str(artNum)+'.csv', 'w', encoding='utf-8')
-                print(directory + '/SortedPts_Master.csv')
                 with scores:
                    writer = csv.writer(scores)
                    writer.writerows(outData)
@@ -103,32 +105,58 @@ def mergeWeightFiles(weightSet):
     df.to_csv('combined_weights.csv')
 
 def storeData(sourceFile, argRelFile, weightFile, allTuas):
+    print('weightFile', weightFile)
     sourceData = pd.read_csv(sourceFile)
     argData = pd.read_csv(argRelFile)
     weightData = pd.read_csv(weightFile)
     tuas = pd.read_csv(allTuas)
     #by articles not by tasks
     #Use article not tasks, finding which task best fits the weighting recommenation
-    uqArticles = np.unique(argData['article_sha256'])
+    argArticles = np.unique(argData['article_sha256'])
+    print('weightdat \n',weightData['article_sha256'])
+    nuqWeightArts = weightData[weightData['article_sha256'].notnull()]['article_sha256']
+    print('nuqweight', nuqWeightArts)
+    weightArticles = np.unique(nuqWeightArts)
+    print('weightArt', weightArticles)
+    uqArticles = np.append(argArticles, weightArticles)
+    print('uqart', uqArticles)
     bigDict = {}
     for art in uqArticles:
+        print('thisArt', art)
         artArgData = argData[argData['article_sha256'].notnull()]
         artArgData = artArgData[artArgData['article_sha256'] == art]
-        artNum = artArgData['article_num'].iloc[0]
-        taskAnsArg = getAnswersTask(artArgData)
+        try:
+            artNum = artArgData['article_num'].iloc[0]
+            taskAnsArg = getAnswersTask(artArgData)
+        except IndexError:
+            artNum = [art]
+            taskAnsArg = {-1:-1}
         artSourceData = sourceData[sourceData['article_sha256'].notnull()]
         artSourceData = artSourceData[artSourceData['article_sha256'] == art]
         #there's many questions, only q 4 is relevant
         artQSourceData = artSourceData[artSourceData['question_Number'] == 4]
         taskAnsSource = getAnswersTask(artQSourceData)
         artWeights = weightData[weightData['article_sha256'].notnull()]
-        artWeights = artWeights[artWeights['article_sha256'] == art]
-        weightTasks = artWeights['task_uuid'].tolist()
-        labels = artWeights['Label'].tolist()
-        weightInds = artWeights['highlighted_indices'].apply(get_indices_hard).tolist()
-        weightRec = artWeights['Points'].tolist()
-        weightQs = artWeights['Question_Number'].tolist()
-        weightAnswers = artWeights['Answer_Number'].tolist()
+        print('checksametypeerror', art,artWeights['article_sha256'])
+        print(weightFile)
+        #TODO: same bug with nan line. hate pt. assignment
+        try:
+            artWeights = artWeights[artWeights['article_sha256'] == art]
+            weightTasks = artWeights['task_uuid'].tolist()
+            labels = artWeights['Label'].tolist()
+            weightInds = artWeights['highlighted_indices'].apply(get_indices_hard).tolist()
+            weightRec = artWeights['Points'].tolist()
+            weightQs = artWeights['Question_Number'].tolist()
+            weightAnswers = artWeights['Answer_Number'].tolist()
+        except TypeError:
+            print('')
+            artWeights = []
+            weightTasks = []
+            labels = []
+            weightInds = []
+            weightRec = []
+            weightQs = []
+            weightAnswers = []
         weightDict = {}
         for t in range(len(weightTasks)):
             weightDict[weightTasks[t]] = {
@@ -137,8 +165,8 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
                 'label':labels[t],
 
             }
-        s = artWeights['schema']
         try:
+            s = artWeights['schema']
             schema = s.iloc[0]
         except:
             schema = 'SCHEMANOTFOUND'
@@ -335,13 +363,18 @@ def getFiles(directory):
                 print('depsiaa file-------------', file)
                 if file.endswith('.csv')  and 'ource' in file:
                     print("found Sources File" + directory + '/' + file)
-                    sourceFile = directory+'/'+file
+                    sourceFile = directory+file
+                    print('Found Sources File ' + sourceFile)
                 if file.endswith('.csv')   and 'Arg' in file:
-                    print('Found Arguments File '+ directory+'/' + file)
-                    argRelevanceFile = directory+'/'+file
+
+                    argRelevanceFile = directory+file
+                    print('Found Arguments File ' + argRelevanceFile)
             if file.endswith('.csv')  and 'Point' in file:
-                print('Found Weights File '+ directory+'/' + file)
-                weightOutputs.append(directory+'/'+file)
+                print('Found Weights File '+ directory + file)
+                weightOutputs.append(directory+file)
+                print('foud Weights File...', weightOutputs)
+
+    print('all', sourceFile, argRelevanceFile, weightOutputs)
     return sourceFile, argRelevanceFile, weightOutputs
 
 
