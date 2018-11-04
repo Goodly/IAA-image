@@ -1,6 +1,6 @@
 import krippendorff
 import numpy as np
-from ThresholdMatrix import *
+from ThresholdMatrix import evalThresholdMatrix
 
 def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner):
     answerMatrix = toArray(starts,ends,length, users, userWeightDict, answers, winner)

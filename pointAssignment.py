@@ -19,7 +19,7 @@ sourceValToWeightDict= {1:2, 2:1, 3:.5, 4:.25, 5:.5, 6:.5, 7:.5, -1:1}
 
 
 
-def pointSort(directory):
+def pointSort(directory, allTUAS_filename):
     print("SORTING STARTING")
     sourceFile, argRelevanceFile, weightFile = getFiles(directory)
 
@@ -31,7 +31,7 @@ def pointSort(directory):
     print('files', weightFile)
     for weightSet in weightFile:
         print(sourceFile, argRelevanceFile, weightSet)
-        dataDict = storeData(sourceFile, argRelevanceFile, weightSet, './demo3/allTUAS.csv')
+        dataDict = storeData(sourceFile, argRelevanceFile, weightSet, allTUAS_filename)
         print(dataDict)
         articles = dataDict.keys()
         #mergeWeightFiles(weightFile)
