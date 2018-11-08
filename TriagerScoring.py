@@ -83,8 +83,8 @@ def importData(path, excludedUsers = []):
                 for n in namespaces:
                     print(n)
                     print(str(n))
-                length = floor(cat_data['source_text_length'].str.decode('unicode-escape').tolist()[0])
-                texts = cat_data['target_text'].tolist()
+                length = floor(cat_data['source_text_length'].tolist()[0])
+                texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
 
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
                 source_text = addToSourceText(starts, ends, texts, source_text)
@@ -380,6 +380,7 @@ def getText(start,end, sourceText):
         out = out+sourceText[i]
     return out
 print("#####Form TRIAGER AGREED UPON DATA!!!#####")
+importData("mt/Demo2FormTri-2018-11-06T0733-Highlighter.csv")
 #importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
 #importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
 
@@ -388,7 +389,7 @@ print()
 print()
 print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
 
-importData('./demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv')
+#importData('./demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv')
 
 
 #evalTriage(jpath1)

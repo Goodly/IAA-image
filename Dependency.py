@@ -26,7 +26,7 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
 
     schema.sort()
     iaa.sort()
-    assert(len(schema)==len(iaa))
+    assert(len(schema)==len(iaa), 'mismatched files ', len(schema), 'schema', len(iaa), 'iaa oututs')
     out_dir = make_directory(out_dir)
     for i in range(len(schema)):
         handleDependencies(schema[i], iaa[i], out_dir)

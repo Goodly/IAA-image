@@ -45,6 +45,7 @@ def pointSort(directory, allTUAS_filename):
                 sorcDic = retrieveSourceDict(dataDict, art)
                 weightQ, weightA = getweightQA(dataDict, art)
                 pointRecs = getpointRec(dataDict, art)
+                print('poir', pointRecs)
                 weightInds = getweightIndices(dataDict, art)
                 labels = getLabels(dataDict,art)
                 schema =getSchema(dataDict, art)
@@ -71,7 +72,8 @@ def pointSort(directory, allTUAS_filename):
                         argAns = -1
                     journalist = 'Joe The Journalist'
                     pts = assignPoints(ptsRec,wu, sourceUnits, argUnits, argAns, sourceAns, art, journalist)
-
+                    if pd.isna(pts):
+                        pts = 0
 
                     #credId = counter
                     credId = schema[0]+str(counter)
@@ -138,6 +140,7 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
         artQSourceData = artSourceData[artSourceData['question_Number'] == 4]
         taskAnsSource = getAnswersTask(artQSourceData)
         artWeights = weightData[weightData['article_sha256'].notnull()]
+        artWeights = artWeights
         print('checksametypeerror', art,artWeights['article_sha256'])
         print(weightFile)
         #TODO: same bug with nan line. hate pt. assignment
@@ -382,9 +385,13 @@ def getFiles(directory):
 def findNumVals(lst):
     indices = []
     for i in range(len(lst)):
-        if lst[i].isdigit():
-            indices.append(i)
 
+        try:
+            if lst[i].isdigit():
+                indices.append(i)
+        except AttributeError:
+            print("attributeerror", i)
+            indices.append(i)
     return indices
 
 

@@ -42,10 +42,10 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'demo3'
-    tua_file = './demo3/allTUAS.csv'
-    output_dir = 's_iaa_demo3'
-    scoring_dir  = 'scoring_demo3'
+    input_dir = 'demo32'
+    tua_file = './mt/allTUAS.csv'
+    output_dir = None
+    scoring_dir  = None
     rep_file = './UserRepScores.csv'
     if args.input_dir:
         input_dir = args.input_dir

@@ -12,7 +12,6 @@ def data_storer(path, answerspath, schemapath):
     highlightData = pd.read_csv(path, encoding = 'utf-8')
     answersData = pd.read_csv(answerspath, encoding = 'utf-8')
     schemaData = pd.read_csv(schemapath, encoding = 'utf-8')
-
     task_uuid = np.unique(answersData['quiz_task_uuid'])
     uberDict = {}
     for task in task_uuid:
@@ -624,8 +623,8 @@ def get_type_hard(type, ques):
                 3:['checklist', 7],
                 4:['ordinal', 3],
                 5:['ordinal', 3],
-                6:['checklist', 8],
-                7:['ordinal', 5],
+                6:['checklist', 9],
+                7:['ordinal', 6],
                 8:['nominal', 1],
                 #hardness
                 9:['ordinal', 10],

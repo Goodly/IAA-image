@@ -4,6 +4,9 @@ from ThresholdMatrix import evalThresholdMatrix
 
 def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner):
     answerMatrix = toArray(starts,ends,length, users, userWeightDict, answers, winner)
+    #TODO: SCALE answerMatrix by rep
+    numUsers = len(np.unique(users))
+    print('percFax', answerMatrix, numUsers)
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     assert len(starts) == len(users)
     filteredData = filterSingular(percentageArray, numUsers,users,starts,ends)
@@ -107,12 +110,14 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
     num_reals = len(np.unique(users))
     #if minPassPercent == 'U':
     #    return 'U','U','U','U','U'
+    print('unitizing states', max(percentageScoresArray), num_reals)
     for i in range(len(percentageScoresArray)):
         if type(percentageScoresArray[i]) == 'numpy.ndarray':
             print("OOOOO")
 #TODO: get math done for minpasspercent
 #        if percentageScoresArray[i]>minPassPercent:
-        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 1.2) == 'H':
+
+        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 1.8) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
     assert len(starts) == len(users)
