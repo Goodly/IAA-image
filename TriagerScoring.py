@@ -1,9 +1,14 @@
-from UnitizingScoring import *
-from ThresholdMatrix import *
-from IAA import get_path
+import numpy as np
 import pandas as pd
 from math import floor
 import csv
+import os
+import argparse
+
+from UnitizingScoring import toArray, scorePercentageUnitizing, getIndicesFromUser
+from ThresholdMatrix import evalThresholdMatrix
+from IAA import get_path
+
 
 path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
 path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
@@ -118,7 +123,7 @@ def getIndices(c, cats):
     return indices
 def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, globalExclusion):
     #TODO: do this for each category
-    #print(users)
+    print('scoreT seu', len(starts), len(ends), len(users))
     passers = determinePassingIndices(starts, ends, numUsers, users, length, category)
     #print('glob', globalExclusion)
     #Bug: sometimes users aren't being excluded when they should, not a huge deal, happens one time in all the data
@@ -264,6 +269,7 @@ def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = eval
     """passingFunc must take in 3 arguments, first is a percentage, second is numberof users, 3rd is the scale
         what the scale is can very for different methods of evaluating passes/fails"""
     #print(starts)
+    print('findPI seu', len(starts), len(ends), len(users))
     answerMatrix = toArray(starts, ends, length, users)
     percentageArray = scorePercentageUnitizing(answerMatrix, length, numUsers)
     passersArray = np.zeros(len(percentageArray))
@@ -380,7 +386,7 @@ def getText(start,end, sourceText):
         out = out+sourceText[i]
     return out
 print("#####Form TRIAGER AGREED UPON DATA!!!#####")
-importData("mt/Demo2FormTri-2018-11-06T0733-Highlighter.csv")
+importData("SemanticsTriager1.4C2-2018-11-16T1913-Highlighter.csv")
 #importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
 #importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
 
@@ -405,3 +411,29 @@ print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
 
 # scoreTriager(s,e1,l,u,3,f,c)
 # scoreTriager(s,e1,l,u,3,f2,c)
+
+def load_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-i', '--input-file',
+        help='CSV file with highlights to filter for agreement.'
+             'and Schema .csv files.')
+    parser.add_argument(
+        '-o', '--output-file',
+        help='Output file')
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    args = load_args()
+    input_file = './demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv'
+    if args.input_file:
+        input_file = args.input_file
+    dirname = os.path.dirname(input_file)
+    basename = os.path.basename(input_file)
+    output_file = os.path.join(dirname, 'T_IAA_' + basename)
+    if args.output_file:
+        output_file = args.output_file
+    print("Input: {}".format(input_file))
+    print("Output: {}".format(output_file))
+    importData(input_file, output_file)

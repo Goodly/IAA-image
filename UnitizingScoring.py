@@ -69,6 +69,7 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
     userBlocks = np.zeros((len(uniqueUsers), length))
     astarts, aends = np.array(starts), np.array(ends)
     totalWeight = 0
+    print('toArr seu', len(starts), len(ends), len(users))
     for u in range(len(uniqueUsers)):
         try:
             weight = userWeightDict[uniqueUsers[u]]
@@ -77,13 +78,12 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
             totalWeight = len(uniqueUsers)
             weight = 1
 
-
-        uqStart, uqEnd = np.unique(astarts), np.unique(aends)
-        if len(uqStart) == len(uqEnd):
-            userStarts = uqStart
-            userEnds = uqEnd
-        for start in range(len(astarts)):
-            for i in range(int(astarts[start]), int(aends[start])):
+        thisU = uniqueUsers[u]
+        print('inloop', len(astarts), len(aends), len(users))
+        uIndices = getIndicesFromUser(users, uniqueUsers[u])
+        ustarts, uends = astarts[uIndices], aends[uIndices]
+        for start in range(len(ustarts)):
+            for i in range(int(ustarts[start]), int(uends[start])):
                 userBlocks[u][i] = weight
     #Now there are arrays of 1s and 0s, gotta collapse them
     #and make the possibilities column
@@ -117,7 +117,7 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
 #TODO: get math done for minpasspercent
 #        if percentageScoresArray[i]>minPassPercent:
 
-        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 1.8) == 'H':
+        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 1.2) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
     assert len(starts) == len(users)

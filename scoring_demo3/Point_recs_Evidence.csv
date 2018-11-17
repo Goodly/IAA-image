@@ -1,6 +1,6 @@
 ,article_num,article_sha256,task_uuid,Question_Number,Answer_Number,highlighted_indices,Point_Recommendation,Points,Label,schema
-2,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,5.0,3.0,L,-1.0,-0.4167350949215892,Sample representativeness,Evidence
-3,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,6.0,3.0,L,-1.0,-0.3818137942930394,Control condition,Evidence
-4,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,9.0,1.0,[],-4.0,-3.8020093121304144,Alternative explanation,Evidence
-5,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,12.0,1.0,[],-3.0,-2.912335624075932,Systematic uncertainty,Evidence
+1,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,5.0,3.0,L,-1.0,-0.4167350949215892,Sample representativeness,Evidence
+2,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,6.0,3.0,L,-1.0,-0.3818137942930394,Control condition,Evidence
+3,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,9.0,1.0,[],-4.0,-3.8020093121304144,Alternative explanation,Evidence
+4,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,12.0,1.0,[],-3.0,-2.912335624075932,Systematic uncertainty,Evidence
 Quality of evidence,,,,,,,,4.0,,

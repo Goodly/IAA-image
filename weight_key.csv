@@ -38,39 +38,39 @@ Language,11,,ordinal,0,0,Well-balanced
 Language,11,,ordinal,1,0.5,Well-balanced
 Language,11,,ordinal,2,1,Well-balanced
 Language,11,,ordinal,3,2,Well-balanced
-Reason,2,,categorical,1,-5,Availability Heuristic
-Reason,2,,categorical,2,-4,Stereotyping
-Reason,2,,categorical,3,-4,Hindsight Bias
-Reason,2,,categorical,4,-4,Gambler's Fallacy
-Reason,2,,categorical,5,-3,Other misleading reasoning
-Reason,2,,categorical,6,0,
-Reason,3,,categorical,1,-5,Just World Fallacy
-Reason,3,,categorical,2,-4,Good Old Days Fallacy
-Reason,3,,categorical,3,-5,Naturalistic Fallacy
-Reason,3,,categorical,4,-5,Sunk Cost Fallacy
-Reason,3,,categorical,5,-4,Identifiable Victim Effect
-Reason,3,,categorical,6,-3,Other appeals to biases
-Reason,4,,ordinal,1,2,Sunk Cost Fallacy
-Reason,4,,ordinal,2,0,Sunk Cost Fallacy
-Reason,4,,ordinal,3,1,Sunk Cost Fallacy
-Reason,5,,ordinal,1,2,Sunk Cost Fallacy
-Reason,5,,ordinal,2,0,Sunk Cost Fallacy
-Reason,5,,ordinal,3,1,Sunk Cost Fallacy
-Reason,6,,categorical,1,-4,Begging the Question
-Reason,6,,categorical,2,-5,False Dilemma
-Reason,6,,categorical,3,-4,Straw Man Argument
-Reason,6,,categorical,4,-5,Red Herring
-Reason,6,,categorical,5,-5,Equivocation
-Reason,6,,categorical,6,-4,Slippery Slope Argument
-Reason,6,,categorical,7,-5,Appeal to Ignorance
-Reason,6,,categorical,8,-3,Other logical fallacies
-Reason,6,,categorical,9,0,
-Reason,7,,ordinal,1,-5,Misleading argument
-Reason,7,,ordinal,2,-4,Misleading argument
-Reason,7,,ordinal,3,-3,Misleading argument
-Reason,7,,ordinal,4,-2,Misleading argument
-Reason,7,,ordinal,5,-1,Misleading argument
-Reason,7,,ordinal,6,0,Misleading argument
+Reasoning,2,,categorical,1,-5,Availability Heuristic
+Reasoning,2,,categorical,2,-4,Stereotyping
+Reasoning,2,,categorical,3,-4,Hindsight Bias
+Reasoning,2,,categorical,4,-4,Gambler's Fallacy
+Reasoning,2,,categorical,5,-3,Other misleading reasoning
+Reasoning,2,,categorical,6,0,
+Reasoning,3,,categorical,1,-5,Just World Fallacy
+Reasoning,3,,categorical,2,-4,Good Old Days Fallacy
+Reasoning,3,,categorical,3,-5,Naturalistic Fallacy
+Reasoning,3,,categorical,4,-5,Sunk Cost Fallacy
+Reasoning,3,,categorical,5,-4,Identifiable Victim Effect
+Reasoning,3,,categorical,6,-3,Other appeals to biases
+Reasoning,4,,ordinal,1,2,Sunk Cost Fallacy
+Reasoning,4,,ordinal,2,0,Sunk Cost Fallacy
+Reasoning,4,,ordinal,3,1,Sunk Cost Fallacy
+Reasoning,5,,ordinal,1,2,Sunk Cost Fallacy
+Reasoning,5,,ordinal,2,0,Sunk Cost Fallacy
+Reasoning,5,,ordinal,3,1,Sunk Cost Fallacy
+Reasoning,6,,categorical,1,-4,Begging the Question
+Reasoning,6,,categorical,2,-5,False Dilemma
+Reasoning,6,,categorical,3,-4,Straw Man Argument
+Reasoning,6,,categorical,4,-5,Red Herring
+Reasoning,6,,categorical,5,-5,Equivocation
+Reasoning,6,,categorical,6,-4,Slippery Slope Argument
+Reasoning,6,,categorical,7,-5,Appeal to Ignorance
+Reasoning,6,,categorical,8,-3,Other logical fallacies
+Reasoning,6,,categorical,9,0,
+Reasoning,7,,ordinal,1,-5,Misleading argument
+Reasoning,7,,ordinal,2,-4,Misleading argument
+Reasoning,7,,ordinal,3,-3,Misleading argument
+Reasoning,7,,ordinal,4,-2,Misleading argument
+Reasoning,7,,ordinal,5,-1,Misleading argument
+Reasoning,7,,ordinal,6,0,Misleading argument
 Evidence,2,,categorical,1,0,Quality of evidence
 Evidence,2,,categorical,2,0,Quality of evidence
 Evidence,2,,categorical,3,0,Quality of evidence
