@@ -48,7 +48,7 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
     #                                                                                      starts,ends, repDF)
     assert (len(np.unique(users)) >= len(np.unique(hlUsers)))
     weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users, repDF)
-    weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, starts, ends)
+    weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, hlAns, starts, ends)
     #TOPTWO metric add the score diference
     #weight scale the hlUsers for future usage
     winner, units, uScore, iScore, selectedText= passToUnitizing(weightScaledAnswers,weightScaledHlUsers,weightScaledStarts,
@@ -79,7 +79,7 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
     Only calculates unitizing agreement amongst users who selected the most agreed-upon answer"""
     #assert len(starts) == len(users), 'starts, users mismatched'
     #TOPTWO metric change next line to have the score difference as an arg
-    if evalThresholdMatrix(highScore, numUsers, ) == 'H':
+    if evalThresholdMatrix(highScore, numUsers) == 'H':
         #f for filtered
         starts, ends, hlusers = np.array(starts), np.array(ends), np.array(hlusers)
         #fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
@@ -216,7 +216,7 @@ def scaleFromWeights(arr,answers,weights, users, repDF):
             if weight < 0:
                 weight = 0
             scaleBy = ceil(weight*rep)
-            setUserWeightDict(users[i], scaleBy, userWeightDict)
+            setUserWeightDict(users[i], answers[i], scaleBy, userWeightDict)
             sumTotalScaling += scaleBy
             addition = np.repeat(addition, scaleBy)
             scaled = np.append(scaled, addition)
@@ -253,12 +253,12 @@ def makeUWeightDict(answers, weights, users, repDF):
                 weight = 0
             #round up to avoid empty arrays, and prevent users from having 0 weight
             scaleBy = ceil(weight*rep)
-            setUserWeightDict(users[i], scaleBy, userWeightDict)
+            setUserWeightDict(users[i], answers[i], scaleBy, userWeightDict)
             sumTotalScaling += scaleBy
 
     return sumTotalScaling, userWeightDict
 
-def scaleHighlights(userWeightDict, hlUsers, starts, ends):
+def scaleHighlights(userWeightDict, hlUsers, hlAns, starts, ends):
     """
 
     :param userWeightDict:
@@ -272,7 +272,7 @@ def scaleHighlights(userWeightDict, hlUsers, starts, ends):
     scaledStarts = np.zeros(0)
     scaledEnds = np.zeros(0)
     for u in range(len(hlUsers)):
-        weight = userWeightDict[hlUsers[u]]
+        weight = userWeightDict[(hlUsers[u], hlAns[u])]
         usersAddendum = np.repeat(np.array(hlUsers[u]), weight)
         endsAddendum = np.repeat(np.array(ends[u]), weight)
         startsAddendum = np.repeat(np.array(starts[u]), weight)
@@ -320,6 +320,6 @@ def list_of_arrs(length):
     for i in range(length):
         out.append(np.zeros(0))
     return out
-def setUserWeightDict(index, value, dict):
-    if index not in dict.keys() or value > dict[index]:
-        dict[index] = value
+def setUserWeightDict(user, answer, value, dict):
+    if (user, answer) not in dict.keys() or value > dict[(user, answer)]:
+        dict[(user, answer)] = value

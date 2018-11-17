@@ -26,7 +26,7 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
 
     schema.sort()
     iaa.sort()
-    assert(len(schema)==len(iaa))
+    assert(len(schema)==len(iaa), 'mismatched files ', len(schema), 'schema', len(iaa), 'iaa oututs')
     out_dir = make_directory(out_dir)
     for i in range(len(schema)):
         handleDependencies(schema[i], iaa[i], out_dir)
@@ -37,10 +37,25 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
     dependencies = create_dependencies_dict(schemData)
     tasks = np.unique(iaaData['task_uuid'].tolist())
+    iaaData['prereq_passed'] = iaaData['agreed_Answer']
+
+    iaaData = iaaData.sort_values(['question_Number'])
     for t in tasks:
+        #filter out questions that should never of been asksed because no agreement on prerequisites
+        for q in range(len(iaaData)):
+            qnum = iaaData['question_Number'].iloc[q]
+            ans = iaaData['agreed_Answer'].iloc[q]
+            iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, t, ans)
+    #     #get just the task
         iaaTask = iaaData[iaaData['task_uuid'] == t]
+        iaaTask.to_csv(str(t)+'.csv')
+
+        iaaData = iaaData[iaaData['prereq_passed'] == True]
+        iaaTask = iaaData[iaaData['task_uuid'] == t]
+
         #childQuestions
         for ch in dependencies.keys():
+
             child = dependencies[ch]
             needsLove = checkNeedsLove(iaaTask, ch)
             if needsLove:
@@ -63,29 +78,21 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                         for ans in neededAnswers:
                             iaaparAns = iaaPar[iaaPar['agreed_Answer'] == ans]
                             print(ans, iaaPar['agreed_Answer'].tolist())
-                            print("ONELINEGUY")
                             print(iaaparAns)
                             if len(iaaparAns>0):
-                                print("GOTONEMATEY")
                                 validParent = True
                                 newInds = [get_indices_hard(ind) for ind in iaaparAns['highlighted_indices'].tolist()]
-                                print('newi', newInds)
                                 #newInds = parseList(newInds)
                                 newAlph = iaaparAns['alpha_unitizing_score'].tolist()
                                 newIncl = iaaparAns['alpha_unitizing_score_inclusive'].tolist()
-                                print(len(newInds))
                                 for i in range(len(newInds)):
                                     print(newInds, newInds[i])
                                     indices = np.append(indices, newInds[i])
                                 alpha = np.append(alpha, (newAlph[0]))
                                 alphainc = np.append(alphainc, (newIncl[0]))
-                                print('mjrpupdate')
-                                print(indices)
-                                print(alpha)
                 #If parent didn't pass, this question should not of been asked
                 if not validParent:
                     for row in rows:
-                        print("DEADROW", row)
                         iaaData.at[row,'agreed_Answer'] = -1
                         iaaData.at[row, 'coding_perc_agreement'] = -1
                 indices = np.unique(indices).tolist()
@@ -117,16 +124,43 @@ def parseList(iterable):
 def checkNeedsLove(df, qNum):
     qdf = df[df['question_Number'] == qNum]
     alphas = (qdf['alpha_unitizing_score'])
+    if qdf.empty:
+        return False
     for a in alphas:
-        try:
-
-            j = float(a)+1
-            ans = math.isnan(j)
-            return ans
-        except:
-            pass
+        if not checkIsNum(a):
+            return False
     return True
 
+def checkPassed(qnum, dependencies, iaadata, task, answer):
+    iaatask = iaadata[iaadata['task_uuid'] == task]
+    qdata = iaatask[iaatask['question_Number'] == qnum]
+    if not checkIsNum(answer):
+        return False
+    if qnum in dependencies.keys():
+        #this loop only triggered if child question depends on a prereq
+        for parent in dependencies[qnum].keys():
+            pardata = iaatask[iaatask['question_Number'] == parent]
+            parAns = pardata['agreed_Answer'].tolist()
+            valid_answers = dependencies[qnum][parent]
+            for v in valid_answers:
+                if v in parAns:
+                    par_ans_data = pardata[pardata['agreed_Answer'] == v]
+                    if par_ans_data['prereq_passed'] == True:
+                       return True
+            return False
+    return True
+
+
+def checkIsNum(value):
+    try:
+        j = float(value) + 1
+        ans = math.isnan(j)
+        if ans:
+            return False
+        return True
+    except:
+        pass
+    return False
 def find_real_answers(answers):
     out = []
     for a in answers:
@@ -138,17 +172,11 @@ def find_real_answers(answers):
 def find_index(df, targetVals,col):
     indices = []
     for v in targetVals:
-        print('fining index,', df[col], v)
-        print(type(df[col]), v)
         shrunk = df[df[col] == v]
-        print("SRK")
-        print(shrunk)
         if len(shrunk)>0:
             inds = []
             for i in shrunk.index:
                 inds.append(i)
-            print("INDS")
-            print(inds)
             for i in inds:
                 indices.append(i)
     return indices

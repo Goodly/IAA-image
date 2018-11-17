@@ -1,0 +1,4 @@
+,article_num,article_sha256,task_uuid,Question_Number,Answer_Number,highlighted_indices,Point_Recommendation,Points,Label,schema
+0,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,6.0,3.0,"[1704, 1705, 1706, 1707, 1708, 1709, 1710, 1711, 1712, 1713, 1714, 1715, 1716, 1717, 1718, 1719, 1720, 1721, 1722, 1723, 1724, 1725, 1726, 1727, 1728, 1729, 1730, 1731, 1732, 1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740, 1741, 1742]",-1.0,-0.6152773022558143,Control condition,Evidence
+1,1712.0,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,5a5f70f3-28c1-4fda-b657-adbd78ada7b5,9.0,1.0,[],-4.0,-3.8020093121304144,Alternative explanation,Evidence
+Quality of evidence,,,,,,,,4.0,,

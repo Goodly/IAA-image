@@ -19,7 +19,17 @@ def launch_Weighting(directory):
 def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
 
     IAA_csv = Table.read_table(IAA_csv_file)
-    IAA_csv_schema_name = IAA_csv.column("schema_namespace").item(0)
+    #IndexError when the csv is empty
+    try:
+        IAA_csv_schema_name = IAA_csv.column("schema_namespace").item(0)
+    except IndexError:
+        if IAA_csv.shape[0]<1:
+            return
+        else:
+            print(len(IAA_csv))
+            print(IAA_csv)
+            raise Exception('EricIsAnIdiotError')
+
     print(IAA_csv_schema_name)
     if "uage" in IAA_csv_schema_name:
         IAA_csv_schema_type = "Language"
@@ -114,10 +124,10 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
     schema_name = []
     for i in range(length):
         schema_name.append(IAA_csv_schema_type)
-    for_visualization['schema'] = pd.Series(IAA_csv_schema_type for i in range(len(for_visualization['article_sha256'])))
+    for_visualization['schema'] = pd.Series(IAA_csv_schema_type for i in range(len(for_visualization['article_sha256'])+1))
 
 
-    for_visualization.to_csv(directory+"/Point_recs_"+IAA_csv_schema_type+".csv")
+    for_visualization.to_csv(directory+"/Point_recs_"+IAA_csv_schema_type+".csv", encoding = 'utf-8')
     # You can choose to specify the path of the exported csv file in the .to_csv() method.
 
 def convertToInt(string):

@@ -196,7 +196,7 @@ def do_math(data, last30, userID, reward):
     print('thi fal', data.loc[data['Users'] == userID, 'Influence'])
     print(n, points, q_score, last30score)
     print(2 / (1 + 1 * exp(-.7 * ((points / n) * q_score + last30score)/2+ 5)))
-    assert (len(data.loc[data['Users'] == userID, 'Influence']) == 1, )
+    assert (len(data.loc[data['Users'] == userID, 'Influence']) == 1)
 
     data.loc[data['Users'] == userID, 'Influence'] = 2 / (1 + 1 * exp(-.7 * ((points / n) * q_score + last30score)/2+ 5))
 

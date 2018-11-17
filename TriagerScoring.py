@@ -1,12 +1,14 @@
-import os
-import argparse
-from math import floor
-import csv
-
 import numpy as np
 import pandas as pd
-from UnitizingScoring import toArray, scorePercentageUnitizing
+from math import floor
+import csv
+import os
+import argparse
+
+from UnitizingScoring import toArray, scorePercentageUnitizing, getIndicesFromUser
 from ThresholdMatrix import evalThresholdMatrix
+from IAA import get_path
+
 
 path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
 path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
@@ -49,9 +51,9 @@ jpath2 = 'SemanticsTriager1.3C2-2018-07-25T23.json'
 #     print("Table complete")
 
 
-def importData(input_file, output_file, excludedUsers = []):
+def importData(path, excludedUsers = []):
     """CSV INPUT"""
-    data = pd.read_csv(input_file, encoding = 'utf-8')
+    data = pd.read_csv(path, encoding = 'utf-8')
     #only excluding users for purpose of cleaner test data
     #Quang Gold--Duplicate Data from the real Quang
     #excludedUsers.append('40bbbf7e-a77b-498d-bb44-2ef6601061ef')
@@ -83,6 +85,9 @@ def importData(input_file, output_file, excludedUsers = []):
                 users = cat_data['contributor_uuid'].tolist()
                 flags = cat_data['case_number'].tolist()
                 namespaces = cat_data['namespace'].tolist()
+                for n in namespaces:
+                    print(n)
+                    print(str(n))
                 length = floor(cat_data['source_text_length'].tolist()[0])
                 texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
 
@@ -92,7 +97,8 @@ def importData(input_file, output_file, excludedUsers = []):
                 out = appendData(filename[0], a, namespaces, pstarts, pends, c, pflags, out, source_text)
     print('exporting to csv')
 
-    scores = open(output_file, 'w', encoding = 'utf-8')
+    outPath, name = get_path(path)
+    scores = open(outPath+'T_IAA'+name, 'w', encoding = 'utf-8')
 
     with scores:
         writer = csv.writer(scores)
@@ -117,7 +123,7 @@ def getIndices(c, cats):
     return indices
 def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, globalExclusion):
     #TODO: do this for each category
-    #print(users)
+    print('scoreT seu', len(starts), len(ends), len(users))
     passers = determinePassingIndices(starts, ends, numUsers, users, length, category)
     #print('glob', globalExclusion)
     #Bug: sometimes users aren't being excluded when they should, not a huge deal, happens one time in all the data
@@ -263,6 +269,7 @@ def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = eval
     """passingFunc must take in 3 arguments, first is a percentage, second is numberof users, 3rd is the scale
         what the scale is can very for different methods of evaluating passes/fails"""
     #print(starts)
+    print('findPI seu', len(starts), len(ends), len(users))
     answerMatrix = toArray(starts, ends, length, users)
     percentageArray = scorePercentageUnitizing(answerMatrix, length, numUsers)
     passersArray = np.zeros(len(percentageArray))
@@ -271,6 +278,7 @@ def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = eval
         if passingFunc(percentageArray[i], numUsers, scale) == 'H':
             passersArray[i] = 1
     return passersArray
+
 def minPercent(percent, totalNumUsers, scale):
     if percent>=scale:
         return 'H'
@@ -378,6 +386,7 @@ def getText(start,end, sourceText):
         out = out+sourceText[i]
     return out
 print("#####Form TRIAGER AGREED UPON DATA!!!#####")
+importData("SemanticsTriager1.4C2-2018-11-16T1913-Highlighter.csv")
 #importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
 #importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
 
@@ -386,6 +395,7 @@ print()
 print()
 print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
 
+#importData('./demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv')
 
 
 #evalTriage(jpath1)
@@ -412,6 +422,7 @@ def load_args():
         '-o', '--output-file',
         help='Output file')
     return parser.parse_args()
+
 
 if __name__ == '__main__':
     args = load_args()
