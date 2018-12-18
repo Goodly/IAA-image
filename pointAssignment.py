@@ -25,7 +25,7 @@ def pointSort(directory, allTUAS_filename):
 
     outData = [['Article ID', 'Credibility Indicator ID ', 'Credibilty Indicator Category',
                 'Credibility Indicator Name',
-                'Points', 'Indices of Label in Article', 'Start', 'End']]
+                'Points', 'Indices of Label in Article', 'Start', 'End', 'target_text']]
 
     artNum = 0000
     print('files', weightFile)
@@ -47,10 +47,13 @@ def pointSort(directory, allTUAS_filename):
                 pointRecs = getpointRec(dataDict, art)
                 print('poir', pointRecs)
                 weightInds = getweightIndices(dataDict, art)
+                weightTexts = getweightText(dataDict, art)
+                print('wtwtwtwtxt', weightTexts)
                 labels = getLabels(dataDict,art)
                 schema =getSchema(dataDict, art)
                 for i in range(len(pointRecs)):
                     wu = weightInds[i]
+                    wt = weightTexts[i]
                     if isinstance(wu, str):
                         wu = get_indices_hard(wu)
                     bestSourceTask = findBestMatch(wu, sorcDic)
@@ -79,12 +82,12 @@ def pointSort(directory, allTUAS_filename):
                     credId = schema[0]+str(counter)
                     counter+=1
                     starts, ends = indicesToStartEnd(wu)
-                    addendum = [artNum, credId, schema, labels[i], pts, wu, starts[0], ends[0]]
+                    addendum = [artNum, credId, schema, labels[i], pts, wu, starts[0], ends[0], wt]
                     outData.append(addendum)
                     print('anum', artNum)
                     #TODO: figure out how visualization handles stuff with multiple starts and ends
                     for k in range(1, len(starts)-1):
-                        addendum = [artNum, credId, schema, labels[i], 0, wu, starts[k], ends[k]]
+                        addendum = [artNum, credId, schema, labels[i], 0, wu, starts[k], ends[k], wt]
                         outData.append(addendum)
                 print('exporting to csv')
                 scores = open(directory + '/SortedPts_'+str(artNum)+'.csv', 'w', encoding='utf-8')
@@ -149,6 +152,7 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
             weightTasks = artWeights['task_uuid'].tolist()
             labels = artWeights['Label'].tolist()
             weightInds = artWeights['highlighted_indices'].apply(get_indices_hard).tolist()
+            weightTexts = artWeights['target_text']
             weightRec = artWeights['Points'].tolist()
             weightQs = artWeights['Question_Number'].tolist()
             weightAnswers = artWeights['Answer_Number'].tolist()
@@ -160,6 +164,7 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
             weightInds = []
             weightRec = []
             weightQs = []
+            weightTexts = []
             weightAnswers = []
         weightDict = {}
         for t in range(len(weightTasks)):
@@ -176,6 +181,8 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
             schema = 'SCHEMANOTFOUND'
         argtasks = artArgData['task_uuid']
         taskTuaArg = {}
+        print('wtwtwtwtwtwtwt', weightTexts)
+        print('wiii', weightInds)
         for t in argtasks:
             tua = getTUA(t, tuas)
             taskTuaArg[t] = tua
@@ -196,6 +203,7 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
             'pointRec': weightRec,
             'weightQuestions':weightQs,
             'weightAnswers': weightAnswers,
+            'weightText': weightTexts,
             'schema': schema,
             'artNum': artNum
         }
@@ -294,7 +302,9 @@ def getpointRec(data, article):
 def getweightIndices(data,article):
     indices = data[article]['weightIndices']
     return indices
-
+def getweightText(data,article):
+    indices = data[article]['weightText']
+    return indices
 
 
 def getLabels(data, article):
@@ -345,7 +355,7 @@ def getAnswersTask(artData):
     for t in range(len(tasks)):
         d[tasks[t]] = answers[t]
     return d
-
+#def getTextTask()
 def mergeByTask(answerDict, tuaDict):
     for k in answerDict.keys():
         if k in tuaDict.keys():
@@ -390,7 +400,7 @@ def findNumVals(lst):
             if lst[i].isdigit():
                 indices.append(i)
         except AttributeError:
-            print("attributeerror", i)
+            print("attributeerror", i, lst[i])
             indices.append(i)
     return indices
 

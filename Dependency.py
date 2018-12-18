@@ -48,7 +48,6 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
             iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, t, ans)
     #     #get just the task
         iaaTask = iaaData[iaaData['task_uuid'] == t]
-        iaaTask.to_csv(str(t)+'.csv')
 
         iaaData = iaaData[iaaData['prereq_passed'] == True]
         iaaTask = iaaData[iaaData['task_uuid'] == t]
