@@ -23,24 +23,4 @@ def findMaster(directory):
             if file.endswith('.csv') and 'SortedPts_' in file:
                 return file
 
-def removeRedundancies(df):
-    print('pre', len(df))
-    print(df)
-    failures = []
-    labels = np.unique(df['Credibilty Indicator Category'])
-    for l in labels:
-        labdf = df[df['Credibilty Indicator Category'] == l]
-        clones = np.zeros(0)
-        for i in range(len(labdf)):
-            hstart = labdf['Start'].iloc[i]
-            hEnd = labdf['End'].iloc[i]
-
-            for k in range(i+1, len(labdf)):
-                cstart = labdf['Start'].iloc[k]
-                if cstart == hstart:
-                    cend = labdf['End'].iloc[k]
-                    if cend == hEnd:
-                        df.diloc[k]
-
-
 #splitcsv('pred1')

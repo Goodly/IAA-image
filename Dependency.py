@@ -14,13 +14,13 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
     for root, dir, files in os.walk(directory):
         for file in files:
             if file.endswith('.csv') and 'Dep' not in file:
-                print("Checking Agreement for "+directory+'/'+file)
+                print("evaluating dependencies  for "+directory+'/'+file)
                 if 'Schema' in file:
                     schema.append(directory+'/'+file)
     for root, dir, files in os.walk(iaa_dir):
         for file in files:
             if file.endswith('.csv') and 'Dep' not in file:
-                print("Checking Agreement for "+directory+'/'+file)
+                print("evaluating dependencies for "+directory+'/'+file)
                 if 'S_IAA' in file:
                     iaa.append(iaa_dir+'/'+file)
 
@@ -70,14 +70,11 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                 if len(answers)>0:
                     #questions the child depends on
                     for par in child.keys():
-                        print('newPar')
                         iaaPar = iaaTask[iaaTask['question_Number'] == (par)]
                         neededAnswers = child[par]
 
                         for ans in neededAnswers:
                             iaaparAns = iaaPar[iaaPar['agreed_Answer'] == ans]
-                            print(ans, iaaPar['agreed_Answer'].tolist())
-                            print(iaaparAns)
                             if len(iaaparAns>0):
                                 validParent = True
                                 newInds = [get_indices_hard(ind) for ind in iaaparAns['highlighted_indices'].tolist()]
@@ -85,7 +82,6 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                                 newAlph = iaaparAns['alpha_unitizing_score'].tolist()
                                 newIncl = iaaparAns['alpha_unitizing_score_inclusive'].tolist()
                                 for i in range(len(newInds)):
-                                    print(newInds, newInds[i])
                                     indices = np.append(indices, newInds[i])
                                 alpha = np.append(alpha, (newAlph[0]))
                                 alphainc = np.append(alphainc, (newIncl[0]))
@@ -95,7 +91,6 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                         iaaData.at[row,'agreed_Answer'] = -1
                         iaaData.at[row, 'coding_perc_agreement'] = -1
                 indices = np.unique(indices).tolist()
-                print(alpha)
                 try:
                     alpha = alpha[0]
                     alphainc = alphainc[0]
@@ -135,16 +130,20 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
     qdata = iaatask[iaatask['question_Number'] == qnum]
     if not checkIsNum(answer):
         return False
+    #print('keys', dependencies.keys())
     if qnum in dependencies.keys():
+        #fprint("QNUM", qnum)
         #this loop only triggered if child question depends on a prereq
         for parent in dependencies[qnum].keys():
             pardata = iaatask[iaatask['question_Number'] == parent]
             parAns = pardata['agreed_Answer'].tolist()
             valid_answers = dependencies[qnum][parent]
             for v in valid_answers:
-                if v in parAns:
-                    par_ans_data = pardata[pardata['agreed_Answer'] == v]
-                    if par_ans_data['prereq_passed'] == True:
+                strv = str(v)
+                if strv in parAns:
+                    par_ans_data = pardata[pardata['agreed_Answer'] == strv]
+                    #print(len(par_ans_data['prereq_passed']), 'ppassed', par_ans_data['prereq_passed'])
+                    if par_ans_data['prereq_passed'].iloc[0] == True:
                        return True
             return False
     return True

@@ -369,6 +369,8 @@ def get_questions(ansData):
     relNums = np.zeros(0)
     for queue in ansData['final_queue']:
         relTags = np.append(relTags, parseMany(queue, separator = ','))
+        #qnum = parseMany(queue, field = 'Q', separator = ',')
+        #tnum =
         relNums = np.append(relNums, parseMany(queue, field = 'Q', separator=','))
     relTags = np.unique(relTags)
     relNums = np.unique(relNums).astype(int)

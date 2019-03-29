@@ -145,7 +145,6 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, global
     coded = codeUsers(userToCode, users)
     #print(coded, numUsers)
     newStarts, newEnds = toStartsEnds(passers)
-    #Exclude flags from users who didn't use case flags
     flags = determineFlags(starts, ends, newStarts, newEnds, coded, inFlags)
     print('Starts:',newStarts)
     print('Ends:',newEnds)

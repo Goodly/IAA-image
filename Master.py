@@ -58,3 +58,5 @@ if __name__ == '__main__':
     if args.rep_file:
         rep_file = args.rep_file
     calculate_scores_master(input_dir, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file)
+
+#calculate_scores_master("./langdeptest")
