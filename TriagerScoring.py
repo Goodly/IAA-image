@@ -385,7 +385,7 @@ def getText(start,end, sourceText):
         out = out+sourceText[i]
     return out
 print("#####Form TRIAGER AGREED UPON DATA!!!#####")
-importData("SemanticsTriager1.4C2-2018-11-16T1913-Highlighter.csv")
+#importData("SemanticsTriager1.4C2-2018-11-16T1913-Highlighter.csv")
 #importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
 #importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
 
@@ -425,7 +425,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_file = './demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv'
+    input_file = './march_triage/march2019SemTri-2019-04-02T2214-Highlighter.csv'
     if args.input_file:
         input_file = args.input_file
     dirname = os.path.dirname(input_file)
