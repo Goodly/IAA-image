@@ -58,13 +58,12 @@ def importData(path, excludedUsers = []):
     #Quang Gold--Duplicate Data from the real Quang
     #excludedUsers.append('40bbbf7e-a77b-498d-bb44-2ef6601061ef')
     article_shas = np.unique(data['article_sha256'])
-    out = [['task_uuid','article_filename','article_sha256', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
+    out = [['article_filename','article_sha256', 'task_uuid', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
     for a in article_shas:
         print('---------------------------')
         art_data = data.loc[data['article_sha256'] == a]
 
         filename = art_data['article_filename'].tolist()
-        task_uuid = art_data['highlight_task_uuid'].tolist()
         users = art_data['contributor_uuid'].tolist()
         annotator_count = len(np.unique(users))
         flags = art_data['case_number'].tolist()
@@ -77,13 +76,14 @@ def importData(path, excludedUsers = []):
         #flagExclusions = exclusionList(users, flags, cats)
         flagExclusions = []
         #print(flagExclusions)
-        if annotator_count >= 3:
+        if annotator_count >= 2:
             cats = np.unique(art_data['topic_name'])
             for c in cats:
                 cat_data = art_data.loc[art_data['topic_name'] == c]
                 starts = [int(s) for s in cat_data['start_pos'].tolist()]
                 ends = [int(e) for e in cat_data['end_pos'].tolist()]
                 users = cat_data['contributor_uuid'].tolist()
+                task_uuids = cat_data['task_uuid'].tolist()
                 flags = cat_data['case_number'].tolist()
                 namespaces = cat_data['namespace'].tolist()
                 for n in namespaces:
@@ -95,7 +95,7 @@ def importData(path, excludedUsers = []):
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
                 source_text = addToSourceText(starts, ends, texts, source_text)
                 pstarts, pends, pflags = scoreTriager(starts, ends, users, numUsers, flags, length, c, flagExclusions)
-                out = appendData(task_uuid[0],filename[0], a, namespaces, pstarts, pends, c, pflags, out, source_text)
+                out = appendData(filename[0], a, task_uuids, namespaces, pstarts, pends, c, pflags, out, source_text)
     print('exporting to csv')
 
     outPath, name = get_path(path)
@@ -107,14 +107,14 @@ def importData(path, excludedUsers = []):
 
     print("Table complete")
 
-def appendData(highlight_task_uuid, article_filename, article_sha256, namespaces,start_pos_list, end_pos_list, topic_name, case_numbers, data, source_text):
+def appendData(article_filename, article_sha256, task_uuids, namespaces,start_pos_list, end_pos_list, topic_name, case_numbers, data, source_text):
     if len(case_numbers) == 0:
         case_numbers = np.zeros(len(start_pos_list))
     for i in range(len(start_pos_list)):
         text = getText(start_pos_list[i], end_pos_list[i],source_text)
         text = text.encode('unicode-escape').decode('utf-8')
         print(len(namespaces), len(start_pos_list), len(end_pos_list), len(case_numbers))
-        data.append([highlight_task_uuid, article_filename, article_sha256, namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
+        data.append([article_filename, article_sha256, task_uuids[i], namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
     return data
 def getIndices(c, cats):
     indices = []
@@ -426,7 +426,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_file = './march_triage/Demo2FormTri-2019-04-16T1834-Highlighter.csv'
+    input_file = './march_triage/march2019SemTri-2019-04-02T2214-Highlighter.csv'
     if args.input_file:
         input_file = args.input_file
     dirname = os.path.dirname(input_file)
