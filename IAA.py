@@ -52,7 +52,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     # except:
     #     repDF = create_user_dataframe(uberDict, csvPath = None)
     # thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
-    repDF, thirtyDf = None, None
+    repDF = create_user_reps(uberDict,repCSV)
     print('initialized repScores')
     for task in uberDict.keys():  # Iterates throuh each article
         #task_id = get_article_num(uberDict, task)
@@ -66,7 +66,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
         for ques in sorted(questions):  # Iterates through each question in an article
 
 
-            agreements = score(task, ques, uberDict, repDF, thirtyDf = thirtyDf,hardCodedTypes = hardCodedTypes)
+            agreements = score(task, ques, uberDict, repDF,hardCodedTypes = hardCodedTypes)
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, task, ques)
             if type(agreements) is list:
@@ -134,8 +134,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     #     scores = open(outDirectory+'S_IAA_'+name, 'w', encoding = 'utf-8')
     # except FileNotFoundError:
     #     os.mkdir(outDirectory)
-    user_rep_df = create_user_reps(uberDict,repCSV)
-    print("user_rep_df updated and saved as UserRepScores.csv")
+
     outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
     scores = open(outDirectory + 'S_IAA_' + name, 'w', encoding='utf-8')
@@ -144,7 +143,9 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
         writer.writerows(data)
     print("Table complete")
     print('iaa outdir', outDirectory)
-    user_rep_task(uberDict, outDirectory + 'S_IAA_' + name, user_rep_df)
+    user_rep_task(uberDict, outDirectory + 'S_IAA_' + name, repDF)
+    print("user_rep_df updated and saved as UserRepScores.csv")
+
     return outDirectory
 def adjustForJson(units):
     units = str(units)
@@ -163,7 +164,7 @@ def adjustForJson(units):
 
 
 
-def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = False):
+def score(article, ques, data, repDF = None,  hardCodedTypes = False):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
