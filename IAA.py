@@ -134,6 +134,8 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     #     scores = open(outDirectory+'S_IAA_'+name, 'w', encoding = 'utf-8')
     # except FileNotFoundError:
     #     os.mkdir(outDirectory)
+    user_rep_df = create_user_reps(uberDict,repCSV)
+    print("user_rep_df updated and saved as UserRepScores.csv")
     outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
     scores = open(outDirectory + 'S_IAA_' + name, 'w', encoding='utf-8')
@@ -142,6 +144,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
         writer.writerows(data)
     print("Table complete")
     print('iaa outdir', outDirectory)
+    user_rep_task(uberDict, outDirectory + 'S_IAA_' + name, user_rep_df)
     return outDirectory
 def adjustForJson(units):
     units = str(units)

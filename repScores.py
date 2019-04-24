@@ -288,7 +288,7 @@ def user_rep_task(uberDict, task_csv, user_rep_df):
                         highlight_ends.append(h_e)
                 do_rep_calculation_nominal(user_array, answer_array, 1, highlights, highlight_users_array,
                                            highlight_starts, highlight_ends, article_len, user_rep_df)
-
+        userid_to_CSV(user_rep_df)
 
 def userid_to_CSV(dataframe):
     """This function will save the User Rep Score dataframe as UserRepScores.csv"""
