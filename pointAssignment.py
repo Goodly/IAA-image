@@ -30,7 +30,7 @@ def pointSort(directory, allTUAS_filename):
     artNum = 0000
     print('files', weightFile)
     for weightSet in weightFile:
-        print(sourceFile, argRelevanceFile, weightSet)
+        print('files in weightset:', sourceFile, argRelevanceFile, weightSet)
         dataDict = storeData(sourceFile, argRelevanceFile, weightSet, allTUAS_filename)
         print(dataDict)
         articles = dataDict.keys()
@@ -41,26 +41,35 @@ def pointSort(directory, allTUAS_filename):
 
                 counter= 0
                 artNum = retrieveArtNum(dataDict, art)
+                print("SORTING FOR", art, artNum)
                 argDic = retrieveArgDict(dataDict, art)
                 sorcDic = retrieveSourceDict(dataDict, art)
                 weightQ, weightA = getweightQA(dataDict, art)
                 pointRecs = getpointRec(dataDict, art)
-                print('poir', pointRecs)
+                #print('poir', pointRecs)
                 weightInds = getweightIndices(dataDict, art)
                 weightTexts = getweightText(dataDict, art)
-                print('wtwtwtwtxt', weightTexts)
+                #print('wtwtwtwtxt', weightTexts)
                 labels = getLabels(dataDict,art)
                 schema =getSchema(dataDict, art)
                 for i in range(len(pointRecs)):
-                    wu = weightInds[i]
-                    wt = weightTexts[i]
-                    if isinstance(wu, str):
-                        wu = get_indices_hard(wu)
-                    bestSourceTask = findBestMatch(wu, sorcDic)
-                    bestArgTask = findBestMatch(wu, argDic)
-                    ptsRec = pointRecs[i]
-                    # it's zero when there's no answers that passed the specialist IAA
-                    # -1 is default answer value, it'll pass the ptsrec to the final score
+                    #initialize vars to 0 in case there's no text associated with it
+                    bestSourceTask = 0
+                    bestArgTask = 0
+                    wt = ''
+                    try:
+                        wu = weightInds[i]
+                        wt = weightTexts[i]
+                        if isinstance(wu, str):
+                            wu = get_indices_hard(wu)
+                        bestSourceTask = findBestMatch(wu, sorcDic)
+                        bestArgTask = findBestMatch(wu, argDic)
+                    except KeyError:
+                        print("KEY ERROR, no", i)
+                    except ValueError:
+                        print(ValueError)
+                        # it's zero when there's no answers that passed the specialist IAA
+                        # -1 is default answer value, it'll pass the ptsrec to the final score
                     if bestSourceTask!=0:
                         sourceData = sorcDic[bestSourceTask]
                         sourceUnits, sourceAns = sourceData[1], sourceData[0]
@@ -73,27 +82,32 @@ def pointSort(directory, allTUAS_filename):
                     else:
                         argUnits = []
                         argAns = -1
+                    ptsRec = pointRecs[i]
                     journalist = 'Joe The Journalist'
                     pts = assignPoints(ptsRec,wu, sourceUnits, argUnits, argAns, sourceAns, art, journalist)
                     if pd.isna(pts):
                         pts = 0
-
-                    #credId = counter
+                        #credId = counter
+                    #BUGFIX-previously only got appended to outData if pts was NAN--updated 5/19
+                    print("THE SCHEMATA",schema)
+                    if pd.isna(schema):
+                        schema = 'NANSCHEMA'
                     credId = schema[0]+str(counter)
                     counter+=1
                     starts, ends = indicesToStartEnd(wu)
                     addendum = [artNum, credId, schema, labels[i], pts, wu, starts[0], ends[0], wt]
                     outData.append(addendum)
                     print('anum', artNum)
-                    #TODO: figure out how visualization handles stuff with multiple starts and ends
                     for k in range(1, len(starts)-1):
+                        print("IN KKKKK")
                         addendum = [artNum, credId, schema, labels[i], 0, wu, starts[k], ends[k], wt]
                         outData.append(addendum)
-                print('exporting to csv')
-                scores = open(directory + '/SortedPts_'+str(artNum)+'.csv', 'w', encoding='utf-8')
-                with scores:
-                   writer = csv.writer(scores)
-                   writer.writerows(outData)
+
+    print('exporting to csv', outData)
+    scores = open(directory + '/SortedPts_'+str(artNum)+'.csv', 'w', encoding='utf-8')
+    with scores:
+       writer = csv.writer(scores)
+       writer.writerows(outData)
 
     print("Table complete")
     print('Sources')
@@ -111,6 +125,7 @@ def mergeWeightFiles(weightSet):
 
 def storeData(sourceFile, argRelFile, weightFile, allTuas):
     print('weightFile', weightFile)
+    print("Storedata:args", sourceFile, argRelFile, weightFile, allTuas)
     sourceData = pd.read_csv(sourceFile)
     argData = pd.read_csv(argRelFile)
     weightData = pd.read_csv(weightFile)
@@ -118,13 +133,13 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
     #by articles not by tasks
     #Use article not tasks, finding which task best fits the weighting recommenation
     argArticles = np.unique(argData['article_sha256'])
-    print('weightdat \n',weightData['article_sha256'])
+    #print('weightdat \n',weightData['article_sha256'])
     nuqWeightArts = weightData[weightData['article_sha256'].notnull()]['article_sha256']
-    print('nuqweight', nuqWeightArts)
+    #print('nuqweight', nuqWeightArts)
     weightArticles = np.unique(nuqWeightArts)
-    print('weightArt', weightArticles)
+    #print('weightArt', weightArticles)
     uqArticles = np.append(argArticles, weightArticles)
-    print('uqart', uqArticles)
+    #print('uqart', uqArticles)
     bigDict = {}
     for art in uqArticles:
         print('thisArt', art)
@@ -144,8 +159,8 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
         taskAnsSource = getAnswersTask(artQSourceData)
         artWeights = weightData[weightData['article_sha256'].notnull()]
         artWeights = artWeights
-        print('checksametypeerror', art,artWeights['article_sha256'])
-        print(weightFile)
+        #print('checksametypeerror', art,artWeights['article_sha256'])
+        #print(weightFile)
         #TODO: same bug with nan line. hate pt. assignment
         try:
             artWeights = artWeights[artWeights['article_sha256'] == art]
@@ -181,8 +196,7 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
             schema = 'SCHEMANOTFOUND'
         argtasks = artArgData['task_uuid']
         taskTuaArg = {}
-        print('wtwtwtwtwtwtwt', weightTexts)
-        print('wiii', weightInds)
+
         for t in argtasks:
             tua = getTUA(t, tuas)
             taskTuaArg[t] = tua
@@ -207,6 +221,7 @@ def storeData(sourceFile, argRelFile, weightFile, allTuas):
             'schema': schema,
             'artNum': artNum
         }
+    print("BIGDICT", bigDict)
     return bigDict
 def runjson(targ):
     return json.loads(targ)
@@ -379,7 +394,7 @@ def getFiles(directory):
                     print("found Sources File" + directory + '/' + file)
                     sourceFile = directory+file
                     print('Found Sources File ' + sourceFile)
-                if file.endswith('.csv')   and 'Arg' in file:
+                if file.endswith('.csv')   and ('Arg' in file or 'arg' in file):
 
                     argRelevanceFile = directory+file
                     print('Found Arguments File ' + argRelevanceFile)
@@ -389,6 +404,7 @@ def getFiles(directory):
                 print('foud Weights File...', weightOutputs)
 
     print('all', sourceFile, argRelevanceFile, weightOutputs)
+    print("WEIGHTOUTPUTS:", len(weightOutputs))
     return sourceFile, argRelevanceFile, weightOutputs
 
 
@@ -400,7 +416,7 @@ def findNumVals(lst):
             if lst[i].isdigit():
                 indices.append(i)
         except AttributeError:
-            print("attributeerror", i, lst[i])
+            print("attributeerror, already int", i, lst[i])
             indices.append(i)
     return indices
 
@@ -542,6 +558,7 @@ def sendPoints(target, points, targetDatabase):
 def getSource(sourceUnitizaiton):
     return 0
 
+pointSort('./scoring_urap/', './mt/allTUAS.csv')
 # print(checkAgreement([1,2,3,4], [1,2,3,4]))
 #
 # u1 = [3,4,5,6,7,8,9,10]

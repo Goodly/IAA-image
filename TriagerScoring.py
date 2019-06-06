@@ -14,42 +14,6 @@ path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
 path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
 jpath1 = 'FormTriager1.2C2-2018-07-25T23.json'
 jpath2 = 'SemanticsTriager1.3C2-2018-07-25T23.json'
-# def evalTriage(path):
-#     """JSON INPUT"""
-#     bigDict, articles = fetch_for_triage(path)
-#     out = [['task_uuid', 'article_num', 'start', 'end', 'category', 'case_number']]
-#     for a in articles:
-#         starts = bigDict[a]['starts']
-#         ends = bigDict[a]['ends']
-#         users = bigDict[a]['users']
-#         flags = bigDict[a]['flags']
-#         cats = bigDict[a]['cats']
-#         annotator_count = len(np.unique(users))
-#         flagExclusions = exclusionList(users, flags, cats)
-#         if annotator_count >= 2:
-#             uqcats = np.unique(cats)
-#             for c in uqcats:
-#                 cat_indices = getIndices(c,cats)
-#                 c_starts = np.array(starts)[cat_indices]
-#                 c_ends = np.array(ends)[cat_indices]
-#                 c_users = np.array(users)[cat_indices]
-#                 c_flags = np.array(flags)[cat_indices]
-#                 length = 0
-#                 if len(c_ends)>0:
-#                     length = max(c_ends)
-#                     numUsers = len(np.unique(c_users))
-#                     print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
-#                     pstarts, pends, pflags = scoreTriager(c_starts, c_ends, c_users, numUsers, c_flags, length, flagExclusions)
-#                     out = appendData(a, pstarts, pends, pflags, c, out)
-#     print('exporting to csv')
-#     scores = open('T_IAA_'+path, 'w', encoding = 'utf-8')
-#
-#     with scores:
-#         writer = csv.writer(scores)
-#         writer.writerows(out)
-#
-#     print("Table complete")
-
 
 def importData(path, excludedUsers = []):
     """CSV INPUT"""
@@ -426,7 +390,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_file = './march_triage/march2019SemTri-2019-04-02T2214-Highlighter.csv'
+    input_file = './march_triage/Sp-19-Urap-March-FormTriage-2019-05-01T0551-Highlighter.csv'
     if args.input_file:
         input_file = args.input_file
     dirname = os.path.dirname(input_file)

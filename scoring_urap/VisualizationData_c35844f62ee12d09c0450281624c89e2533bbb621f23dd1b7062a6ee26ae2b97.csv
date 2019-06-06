@@ -1,0 +1,5 @@
+Article ID,Credibility Indicator ID ,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+c35844f62ee12d09c0450281624c89e2533bbb621f23dd1b7062a6ee26ae2b97,N0,NANSCHEMA,Statistical uncertainty,-0.8526671436161601,[],-1,-1,
+c35844f62ee12d09c0450281624c89e2533bbb621f23dd1b7062a6ee26ae2b97,P0,Probability,Inappropriate confidence,-0.41346135809942336,[],-1,-1,
+c35844f62ee12d09c0450281624c89e2533bbb621f23dd1b7062a6ee26ae2b97,P1,Probability,False precision,-0.5356603597245225,"[1314, 1315, 1316, 1317, 1318, 1540, 1541, 1542, 1888, 1889, 1890, 1891, 1892, 1893, 1894, 1895]",1314,1318,
+c35844f62ee12d09c0450281624c89e2533bbb621f23dd1b7062a6ee26ae2b97,P1,Probability,False precision,0.0,"[1314, 1315, 1316, 1317, 1318, 1540, 1541, 1542, 1888, 1889, 1890, 1891, 1892, 1893, 1894, 1895]",1540,1542,

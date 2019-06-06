@@ -19,7 +19,7 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
             if file.endswith('.csv') and 'IAA' not in file:
                 print("Checking Agreement for "+directory+'/'+file)
                 if 'Highlights' in file:
-                    print('highlight')
+                    #print('highlight')
                     highlights.append(directory+'/'+file)
                 elif 'Answers' in file:
                     answers.append(directory+'/'+file)
@@ -39,9 +39,9 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
     return outDirectory
 
 def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = 's_iaa'):
-    print('collecting Data')
+    #print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
-    print("donegettingdata")
+    #print("donegettingdata")
     data = [["article_num", "article_sha256", "task_uuid","schema_namespace","question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
@@ -53,7 +53,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     #     repDF = create_user_dataframe(uberDict, csvPath = None)
     # thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
     repDF, thirtyDf = None, None
-    print('initialized repScores')
+    #print('initialized repScores')
     for task in uberDict.keys():  # Iterates throuh each article
         #task_id = get_article_num(uberDict, task)
 
@@ -220,9 +220,9 @@ def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = F
         return run_2step_unitization(data, article, ques, repDF)
     answers = get_question_answers(data, article, ques)
     users =get_question_userid(data, article, ques)
-    print('art', article,ques)
+    #print('art', article,ques)
     numUsers = get_num_users(data, article, ques)
-    print('nu', numUsers, users)
+    #print('nu', numUsers, users)
     assert (len(answers) == len(users))
     if num_choices == 1:
         return 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -233,7 +233,7 @@ def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = F
         #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], hlUsers, starts, ends, length, repDF, thirtyDf)
         out = out+(question_type, num_choices)
     elif question_type == 'nominal':
-        print('nominal', users)
+        #print('nominal', users)
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText,hlUsers, hlAns, repDF = repDF, num_choices=num_choices)
         #do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF)
         #print("NOMINAL", out[1], starts, ends)

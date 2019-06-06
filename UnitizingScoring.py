@@ -68,7 +68,7 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
     userBlocks = np.zeros((len(uniqueUsers), length))
     astarts, aends = np.array(starts), np.array(ends)
     totalWeight = 0
-    print('toArr seu', len(starts), len(ends), len(users))
+    #print('toArr seu', len(starts), len(ends), len(users))
     for u in range(len(uniqueUsers)):
         try:
             weight = userWeightDict[uniqueUsers[u]]
@@ -78,7 +78,7 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
             weight = 1
 
         thisU = uniqueUsers[u]
-        print('inloop', len(astarts), len(aends), len(users))
+        #print('inloop', len(astarts), len(aends), len(users))
         uIndices = getIndicesFromUser(users, uniqueUsers[u])
         ustarts, uends = astarts[uIndices], aends[uIndices]
         for start in range(len(ustarts)):

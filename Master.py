@@ -42,7 +42,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'demo32'
+    input_dir = 'urap'
     tua_file = './mt/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
@@ -59,4 +59,4 @@ if __name__ == '__main__':
         rep_file = args.rep_file
     calculate_scores_master(input_dir, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file)
 
-#calculate_scores_master("./langdeptest")
+#calculate_scores_master("urap")

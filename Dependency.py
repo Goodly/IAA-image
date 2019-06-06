@@ -46,9 +46,6 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
             qnum = iaaData['question_Number'].iloc[q]
             ans = iaaData['agreed_Answer'].iloc[q]
             iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, t, ans)
-    #     #get just the task
-        iaaTask = iaaData[iaaData['task_uuid'] == t]
-
         iaaData = iaaData[iaaData['prereq_passed'] == True]
         iaaTask = iaaData[iaaData['task_uuid'] == t]
 
@@ -126,6 +123,9 @@ def checkNeedsLove(df, qNum):
     return True
 
 def checkPassed(qnum, dependencies, iaadata, task, answer):
+    """
+    checks if the question passed and if a prerequisite question passed
+    """
     iaatask = iaadata[iaadata['task_uuid'] == task]
     qdata = iaatask[iaatask['question_Number'] == qnum]
     if not checkIsNum(answer):
@@ -135,14 +135,18 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
         #fprint("QNUM", qnum)
         #this loop only triggered if child question depends on a prereq
         for parent in dependencies[qnum].keys():
+            #Can't ILOC because checklist questions have many answers
             pardata = iaatask[iaatask['question_Number'] == parent]
             parAns = pardata['agreed_Answer'].tolist()
             valid_answers = dependencies[qnum][parent]
             for v in valid_answers:
+                #cast to string because all answers(even numeric) are read as strings and no conversion done
                 strv = str(v)
+                #Won't be found if it doesn't pass
                 if strv in parAns:
                     par_ans_data = pardata[pardata['agreed_Answer'] == strv]
                     #print(len(par_ans_data['prereq_passed']), 'ppassed', par_ans_data['prereq_passed'])
+                    #In case the parent's prereq didn't pass
                     if par_ans_data['prereq_passed'].iloc[0] == True:
                        return True
             return False
