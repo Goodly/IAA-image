@@ -36,6 +36,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
     dependencies = create_dependencies_dict(schemData)
+    print(schemaPath, "DEPENDENCIES DICS \n", dependencies)
     tasks = np.unique(iaaData['task_uuid'].tolist())
     iaaData['prereq_passed'] = iaaData['agreed_Answer']
 
@@ -113,6 +114,7 @@ def parseList(iterable):
         out.append(addendum)
     return out
 def checkNeedsLove(df, qNum):
+    #Checks if the question's parent prompts users for a highlight
     qdf = df[df['question_Number'] == qNum]
     alphas = (qdf['alpha_unitizing_score'])
     if qdf.empty:
