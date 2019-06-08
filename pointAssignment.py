@@ -558,7 +558,6 @@ def sendPoints(target, points, targetDatabase):
 def getSource(sourceUnitizaiton):
     return 0
 
-pointSort('./scoring_urap/', './mt/allTUAS.csv')
 # print(checkAgreement([1,2,3,4], [1,2,3,4]))
 #
 # u1 = [3,4,5,6,7,8,9,10]

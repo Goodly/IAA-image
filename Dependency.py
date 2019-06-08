@@ -41,15 +41,21 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     iaaData['prereq_passed'] = iaaData['agreed_Answer']
 
     iaaData = iaaData.sort_values(['question_Number'])
-    for t in tasks:
-        #filter out questions that should never of been asksed because no agreement on prerequisites
-        for q in range(len(iaaData)):
-            qnum = iaaData['question_Number'].iloc[q]
-            ans = iaaData['agreed_Answer'].iloc[q]
-            iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, t, ans)
-        iaaData = iaaData[iaaData['prereq_passed'] == True]
-        iaaTask = iaaData[iaaData['task_uuid'] == t]
 
+    #filter out questions that should never of been asksed because no agreement on prerequisites
+    for q in range(len(iaaData)):
+        qnum = iaaData['question_Number'].iloc[q]
+        ans = iaaData['agreed_Answer'].iloc[q]
+        tsk = iaaData['task_uuid'].iloc[q]
+        iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, tsk, ans)
+    iaaData = iaaData[iaaData['prereq_passed'] == True]
+
+    iaaData = iaaData.sort_values("article_num")
+
+
+
+    for t in tasks:
+        iaaTask = iaaData[iaaData['task_uuid'] == t]
         #childQuestions
         for ch in dependencies.keys():
 
@@ -117,12 +123,13 @@ def checkNeedsLove(df, qNum):
     #Checks if the question's parent prompts users for a highlight
     qdf = df[df['question_Number'] == qNum]
     alphas = (qdf['alpha_unitizing_score'])
+    #If no rows correspond to the child question
     if qdf.empty:
         return False
     for a in alphas:
-        if not checkIsNum(a):
-            return False
-    return True
+        if not checkIsVal(a):
+            return True
+    return False
 
 def checkPassed(qnum, dependencies, iaadata, task, answer):
     """
@@ -130,7 +137,7 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
     """
     iaatask = iaadata[iaadata['task_uuid'] == task]
     qdata = iaatask[iaatask['question_Number'] == qnum]
-    if not checkIsNum(answer):
+    if not checkIsVal(answer):
         return False
     #print('keys', dependencies.keys())
     if qnum in dependencies.keys():
@@ -155,7 +162,27 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
     return True
 
 
+def checkIsVal(value):
+    #returns true if value is a possible output from IAA that indicates the child q had user highlights
+    if value == "M" or value == "L":
+        return True
+    #if its NAN
+    if pd.isna(value):
+        return False
+    try:
+        j = float(value) + 1
+        ans = math.isnan(j)
+        if ans:
+            return False
+        return True
+    except:
+        pass
+    return False
+
 def checkIsNum(value):
+    #if its NAN
+    if pd.isna(value):
+        return False
     try:
         j = float(value) + 1
         ans = math.isnan(j)
