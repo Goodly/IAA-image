@@ -8,6 +8,19 @@ from Separator import *
 
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None):
+    """
+
+    :param directory: the directory that holds all files from the tagworks datahunt export
+    :param tua_file: directory to the file holding all the TUAs that created the datahunt tasks
+    :param iaa_dir: the directory to output the raw IAA data to; if no input default is s_iaa_<directory>
+    :param scoring_dir: directory to output data from every other stage of the scoring algorithm to; if no
+        input default is scoring_<directory>
+    :param repCSV: the csv that holds the rep score data
+    :return: No explicit return.  Running will create two directories named by the inputs. the iaa_dir will house
+        a csv output from the IAA algorithm.  The scoring_dir will house the csvs output from the dependency evaluation
+        algorithm; the weighting algorithm; the point sorting algorithm; and the final cleaning algorithm that prepares
+        data to be visualized
+    """
     print("IAA PROPER")
     iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir)
     print('iaaaa', iaa_dir)
