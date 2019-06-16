@@ -42,7 +42,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     #print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
     #print("donegettingdata")
-    data = [["article_num", "article_sha256", "task_uuid","schema_namespace","question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
+    data = [["article_num", "article_sha256", "quiz_task_uuid","schema_namespace","question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
     #initialize rep
@@ -189,6 +189,7 @@ def score(article, ques, data, repDF = None, thirtyDf = None, hardCodedTypes = F
         hlUsers = []
         hlAns = []
     # TODO: find actual number of choices always
+    # TODO: verify that I did this and that the following line is unnecessary
     num_choices = 5
     question_type = get_question_type(data, article, ques)
 

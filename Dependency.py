@@ -37,7 +37,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
     dependencies = create_dependencies_dict(schemData)
     print(schemaPath, "DEPENDENCIES DICS \n", dependencies)
-    tasks = np.unique(iaaData['task_uuid'].tolist())
+    tasks = np.unique(iaaData['quiz_task_uuid'].tolist())
     iaaData['prereq_passed'] = iaaData['agreed_Answer']
 
     iaaData = iaaData.sort_values(['question_Number'])
@@ -46,7 +46,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     for q in range(len(iaaData)):
         qnum = iaaData['question_Number'].iloc[q]
         ans = iaaData['agreed_Answer'].iloc[q]
-        tsk = iaaData['task_uuid'].iloc[q]
+        tsk = iaaData['quiz_task_uuid'].iloc[q]
         iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, tsk, ans)
     iaaData = iaaData[iaaData['prereq_passed'] == True]
 
@@ -55,7 +55,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
 
 
     for t in tasks:
-        iaaTask = iaaData[iaaData['task_uuid'] == t]
+        iaaTask = iaaData[iaaData['quiz_task_uuid'] == t]
         #childQuestions
         for ch in dependencies.keys():
 
@@ -76,7 +76,8 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                     for par in child.keys():
                         iaaPar = iaaTask[iaaTask['question_Number'] == (par)]
                         neededAnswers = child[par]
-
+                        #Potential for multiple answers from parent to lead to same child question
+                        #We don't want to favor one prerequisite's highlight over another
                         for ans in neededAnswers:
                             iaaparAns = iaaPar[iaaPar['agreed_Answer'] == ans]
                             if len(iaaparAns>0):
@@ -90,6 +91,8 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                                 alpha = np.append(alpha, (newAlph[0]))
                                 alphainc = np.append(alphainc, (newIncl[0]))
                 #If parent didn't pass, this question should not of been asked
+                #This should be handled by the previous step; the below if statemnt is an artifact of older version
+                #could be useful for debugging if we make changes
                 if not validParent:
                     for row in rows:
                         iaaData.at[row,'agreed_Answer'] = -1
@@ -135,7 +138,7 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
     """
     checks if the question passed and if a prerequisite question passed
     """
-    iaatask = iaadata[iaadata['task_uuid'] == task]
+    iaatask = iaadata[iaadata['quiz_task_uuid'] == task]
     qdata = iaatask[iaatask['question_Number'] == qnum]
     if not checkIsVal(answer):
         return False
