@@ -55,7 +55,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'langdeptest'
+    input_dir = 'urap'
     tua_file = './mt/allTUAS.csv'
     output_dir = None
     scoring_dir  = None

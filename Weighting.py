@@ -89,31 +89,29 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
 
 
     IAA_csv["Question_Number"]= IAA_csv["Question_Number"].apply(int)
-    print(IAA_csv['Answer_Number'])
-    for num in IAA_csv['Answer_Number']:
-        print(type(num))
+
     IAA_csv["Answer_Number"]= IAA_csv["Answer_Number"].apply(convertToInt)
     new_csv = pd.merge(credibility_weights_csv, IAA_csv, on =["Schema", "Question_Number", "Answer_Number"], how = "inner")
 
 
     points = new_csv["Point_Recommendation"] * new_csv["agreement_score"]
-    new_csv = new_csv.assign(Points = points)
+    new_csv = new_csv.assign(agreement_adjusted_points = points)
 
 
 
-    column_names = ["article_num", "article_sha256", "task_uuid", "Question_Number", "Answer_Number",
-                    "highlighted_indices", "Point_Recommendation", "Points", "Label", "target_text"]
+    column_names = ["article_num", "article_sha256", "quiz_task_uuid", "Question_Number", "Answer_Number",
+                    "highlighted_indices", "Point_Recommendation", "agreement_adjusted_points", "Label", "target_text"]
     for_visualization = new_csv[column_names]
     for_visualization = new_csv
     if IAA_csv_schema_type == "Evidence":
-        for_visualization.loc['Quality of evidence', 'Points'] = q6_points
-    for_visualization = for_visualization[for_visualization["Points"] != 0]
+        for_visualization.loc['Quality of evidence', 'agreement_adjusted_points'] = q6_points
+    #for_visualization = for_visualization[for_visualization["agreement_adjusted_points"] != 0]
     length = len(for_visualization)
     # schema_name = []
     # for i in range(length):
     #     schema_name.append(IAA_csv_schema_type)
     for_visualization['schema'] = pd.Series(IAA_csv_schema_type for i in range(len(for_visualization['article_sha256'])+1))
-
+    for_visualization = for_visualization.loc[:, ~for_visualization.columns.duplicated()]
 
     for_visualization.to_csv(directory+"/Point_recs_"+IAA_csv_schema_type+".csv", encoding = 'utf-8')
     # You can choose to specify the path of the exported csv file in the .to_csv() method.
@@ -140,4 +138,3 @@ def convertToInt(string):
     except:
         return -1
 
-#launch_Weighting('./demo1')
