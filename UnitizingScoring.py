@@ -2,7 +2,7 @@ import krippendorff
 import numpy as np
 from ThresholdMatrix import evalThresholdMatrix
 
-def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner):
+def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner, useRep = False):
     answerMatrix = toArray(starts,ends,length, users, userWeightDict, answers, winner)
     #TODO: SCALE answerMatrix by rep
     numUsers = len(np.unique(users))

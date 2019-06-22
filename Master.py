@@ -23,9 +23,8 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
         data to be visualized
     """
     print("IAA PROPER")
-    if just_s_iaa:
-        print("S_IDAA")
-    iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir)
+
+    iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir, useRep=use_rep)
     if just_s_iaa:
         return
     print('iaaaa', iaa_dir)
@@ -75,7 +74,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'urap'
+    input_dir = 'urap-old format'
     tua_file = './mt/allTUAS.csv'
     output_dir = None
     scoring_dir  = None

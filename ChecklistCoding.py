@@ -15,9 +15,9 @@ def scoreChecklist(answers,numUsers, num_choices):
         out.append(scores[i]/numUsers)
     return out
 
-def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sourceText, hlUsers, hlAns, num_choices  = 5,  dfunc = None):
+def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sourceText, hlUsers, hlAns, num_choices  = 5,  dfunc = None, useRep = False):
 
-    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
+    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF, useRep=useRep)
     #assert len(starts) == len(users), 'starts, users mismatched'
     #TODO: scale numUsers when repScaled gets scaled up
     percArray = scoreChecklist(repScaledAnswers, numUsers, num_choices)
@@ -31,7 +31,7 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         assert(len(answers) == len(users))
         #assert(len(np.unique(users)) == len(np.unique(hlUsers)))
         weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users,
-                                                                                     repDF)
+                                                                                     repDF, useRep=useRep)
         #print('UW DICT', userWeightDict)
         weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, hlAns, starts,
                                                                                     ends)
@@ -46,7 +46,7 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         #print(weightScaledNumUsers)
         winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers,weightScaledHlUsers, weightScaledStarts,
                                                         weightScaledEnds,numUsers,length, codingScore, i,
-                                                        weightScaledNumUsers, userWeightDict, sourceText)
+                                                        weightScaledNumUsers, userWeightDict, sourceText, useRep=useRep)
         firstSecondDiff = 1 - codingScore
         out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText, firstSecondDiff, 'checklist', num_choices])
         #do_rep_calculation_nominal(users, answers, out[0], units, starts, ends, length, repDF,last30, checkListScale=(1/num_choices))

@@ -170,7 +170,6 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
         src_best_ind = -1
         src_best_score = 0
         w = weights.iloc[i]
-        print('www', w['quiz_task_uuid'])
         w_art = w['article_sha256']
         #make sure the comparisons we find are to the right article
         art_tuas = all_tuas[all_tuas['sha256'] == w_art]
@@ -311,4 +310,3 @@ def convert_to_tq_format(topic, question):
     return "T"+str(topic)+".Q"+str(question)
 
 
-pointSort("./scoring_urap")

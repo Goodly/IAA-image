@@ -26,6 +26,7 @@ def data_storer(path, answerspath, schemapath):
         task_schema = schemaData[schemaData['schema_namespace'] == schema_name]
         article_num, article_sha = find_article_data(task_ans)
         schema_style = find_schema_topic(task_schema)
+        schema_id = find_schema_sha256(task_schema)
         #down the road cache this to make it go faster
         dependencies = create_dependencies_dict(task_schema)
         uberDict[task]['taskData'] = {
@@ -34,6 +35,7 @@ def data_storer(path, answerspath, schemapath):
             'article_num':article_num,
             'article_sha':article_sha,
             'schema_name':schema_style,
+            'schema_id': schema_id,
             'dependencies': dependencies
         }
         numUsersD = makeNumUsersDict(task_ans)
@@ -361,7 +363,9 @@ def get_indices_hard(string):
 def find_schema_topic(schemaData):
 
     return schemaData.iloc[0]['topic_name']
+def find_schema_sha256(schemaData):
 
+    return schemaData.iloc[0]['schema_sha256']
 def find_schema(ansData):
 
     return ansData['schema_namespace'].iloc[0]
@@ -458,6 +462,9 @@ def get_answer_texts(data, task_id, question_num):
     return data[task_id]['quesData'][question_num]['target_text'].tolist()
 
 def get_schema(data, task_id):
+    return data[task_id]['taskData']['schema_name']
+
+def get_schema_sha256(data, task_id):
     return data[task_id]['taskData']['schema_name']
 
 def get_question_hlUsers(data, task_id, question_num):
