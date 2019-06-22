@@ -4,12 +4,15 @@ import ast
 from math import floor
 import json
 import os
+from math import floor
 
 
 def data_storer(path, answerspath, schemapath):
     """Function that turns csv data. Input the path name for the csv file.
     This will return a super dictionary that is used with other abstraction functions."""
     highlightData = pd.read_csv(path, encoding = 'utf-8')
+    #below line added because now highlights csv also includes data from questions with no highlight attached to it
+    highlightData = highlightData[~pd.isna(highlightData['start_pos'])]
     answersData = pd.read_csv(answerspath, encoding = 'utf-8')
     schemaData = pd.read_csv(schemapath, encoding = 'utf-8')
     task_uuid = np.unique(answersData['quiz_task_uuid'])
@@ -243,10 +246,10 @@ def findStartsEnds(schemadata, qlabel, highlightdata):
     #TODO: implement a check to see if people thought there should've been a highlight
     #Don't filter by answer for checklist questions here
     relevant_hl = highlightdata[highlightdata['question_label'] == qlabel]
-    starts = relevant_hl['start_pos'].tolist()
-    ends = relevant_hl['end_pos'].tolist()
+    starts = relevant_hl['start_pos'].apply(floor).tolist()
+    ends = relevant_hl['end_pos'].apply(floor).tolist()
     users = relevant_hl['contributor_uuid'].tolist()
-    length = relevant_hl['source_text_length']
+    length = relevant_hl['article_text_length']
     answerText = relevant_hl['target_text'].str.decode('unicode-escape')
     answer_labels = relevant_hl['answer_label']
     answer_nums = [parse(ans, 'A') for ans in answer_labels]
@@ -548,15 +551,15 @@ def get_type_hard(type, ques):
                 2:['ordinal', 5],
                 3:['ordinal', 5],
                 4:['ordinal', 6],
-                5:['ordinal', 5],
-                6:['checklist', 8],
-                7:['nominal',1],
-                #8:['ordinal', 5],
+                5:['checklist', 8],
+                6:['nominal', 1],
+                7:['ordinal',5],
+                8:['ordinal', 5],
                 9:['ordinal', 5],
                 10: ['ordinal', 5],
-                11: ['ordinal', 5],
-                12: ['ordinal', 4],
-                13: ['ordinal', 5],
+                11: ['ordinal', 4],
+                12: ['ordinal', 10],
+                13: ['ordinal', 10],
                 15: ['ordinal', 10]
             },
         'Confidence':

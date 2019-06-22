@@ -43,8 +43,8 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     #print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
     #print("donegettingdata")
-    data = [["article_num", "article_sha256", "quiz_task_uuid","schema_namespace","schema_sha256","question_Number", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
-             "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score","odds_by_chance", "binary_odds_by_chance",
+    data = [["article_num", "article_sha256", "quiz_task_uuid","schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
+             "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
     #initialize rep
     # print('starting rep')
@@ -67,6 +67,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
         schema_namespace = get_schema(uberDict, task_id)
         schema_sha = get_schema_sha256(uberDict, task_id)
         questions = uberDict[task]['quesData'].keys()
+        print("cecking agreement for "+schema_namespace+" task "+task_id)
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
@@ -88,17 +89,18 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
                     # parent_data, units, unitizingScore, inclusiveUnitizing = evalDependency(uberDict, task, parentData,
                     #                                                                         ques, winner, units,
                     #                                                                         unitizingScore, inclusiveUnitizing)
-                    bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
+                    # bin chance odds and chance odds are deprecated and aren't being output; code to calculate them being elf there in cas eit's useful in the future
+                    #bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
                     #Treat each q as a binary yes/no
-                    chance_odds = bin_chance_odds
+                    #chance_odds = bin_chance_odds
                     ques_num = ques
                     units = str(units).replace('\n', '')
                     units = units.replace(' ', ', ')
-                    #TODO: when separate topics implemented; this func needs it as an arg
-                    get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
-                    data.append([article_num, article_sha, task_id, schema_namespace, schema_sha, ques_num, agreements[i][8], winner,
+                    #TODO: when separate topics implemented; replace the 1 with th the topicnum
+                    ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
+                    data.append([article_num, article_sha, task_id, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
                                  codingPercentAgreement, agreements[i][7], units,
-                                 unitizingScore, inclusiveUnitizing, totalScore, chance_odds, bin_chance_odds, num_users, agreements[i][9],agreements[i][6],
+                                 unitizingScore, inclusiveUnitizing, totalScore, num_users, agreements[i][9],agreements[i][6],
                                 question_text, answer_text])
 
             else:
@@ -114,17 +116,20 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
                 #                                                                         ques, winner, units,
                 #                                                                         unitizingScore,
                 #                                                                         inclusiveUnitizing)
-                bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
-                chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
+                # bin chance odds and chance odds are deprecated and aren't being output; code to calculate them being elf there in cas eit's useful in the future
+                #bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
+                #chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
                 answer_text = get_answer_content(uberDict, task, ques, agreements[0])
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                 #ques_num = parse(ques, 'Q')
                 ques_num = ques
                 units = str(units).replace('\n', '')
                 units = units.replace(' ', ', ')
-                data.append([article_num, article_sha,task_id,schema_namespace, schema_sha, ques_num, agreements[8], winner, codingPercentAgreement, agreements[7],
+                ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
+
+                data.append([article_num, article_sha,task_id,schema_namespace, schema_sha, ques_num, ans_uuid, agreements[8], winner, codingPercentAgreement, agreements[7],
                              units, unitizingScore, inclusiveUnitizing,
-                             totalScore, chance_odds, bin_chance_odds, num_users, agreements[9], selectedText,
+                             totalScore, num_users, agreements[9], selectedText,
                              question_text, answer_text])
 
 
@@ -288,11 +293,17 @@ def run_2step_unitization(data, article, question, repDF):
 
     return 'NA', indices, score, score, 'NA'
 
+
 def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
     if isinstance(answer, str):
         return 0
     schema_data = pd.read_csv(schema_file, encoding='utf-8')
     assert (schema_data['schema_sha256'].iloc[0] == schema_sha, 'schema misalignment')
+    tqa = "T"+str(topic)+".Q"+str(question)+".A"+str(answer)
+    row = schema_data[schema_data['answer_label'] == tqa]
+    if row.shape[0]<1:
+        return 'XXX'
+    return row['answer_uuid'].iloc[0]
 
 
 # # # TEST STUFF

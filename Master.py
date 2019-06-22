@@ -8,7 +8,7 @@ from Separator import *
 
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
-                            just_s_iaa = False, just_dep_iaa = False, use_rep = False):
+                            just_s_iaa = True, just_dep_iaa = False, use_rep = False):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -74,7 +74,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'urap-old format'
+    input_dir = 'urap'
     tua_file = './mt/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
