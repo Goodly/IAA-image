@@ -468,7 +468,7 @@ def get_schema(data, task_id):
     return data[task_id]['taskData']['schema_name']
 
 def get_schema_sha256(data, task_id):
-    return data[task_id]['taskData']['schema_name']
+    return data[task_id]['taskData']['schema_id']
 
 def get_question_hlUsers(data, task_id, question_num):
     return data[task_id]['quesData'][question_num]['hlUsers']
