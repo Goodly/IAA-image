@@ -1,6 +1,7 @@
 import argparse
 
 from IAA import calc_agreement_directory
+from IAA import calc_scores
 from Dependency import *
 from Weighting import *
 from pointAssignment import *
@@ -9,7 +10,8 @@ from IAA_report import make_iaa_human_readable
 from dataV2 import make_directory
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
-                            just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True):
+                            just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True,
+                            single_task = False, highlights_file = None, schema_file = None, answers_file = None):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -18,6 +20,21 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     :param scoring_dir: directory to output data from every other stage of the scoring algorithm to; if no
         input default is scoring_<directory>
     :param repCSV: the csv that holds the rep score data
+    :param just_s_iaa: True if the calculations should stop after the initial specialist IAA computation, false otherwise
+    :param just_dep_iaa: True if the calculations should stop after the initial specialist IAA computation and the
+        dependency computation, false otherwise
+    :param use_rep: True if the scores should be computed using user rep scores; false otherwise
+    :param reporting: True if user would like extra csv outputs.  These csvs aren't necessary to score but may be useful
+        to humans trying to understand and analyze the algorithms
+    :param single_task: True if there's only one task to be analyzed, false otherwise
+    :param: highlights_file: only used if single_task is true; necessary if single_task is true; the path to the
+        highlights file that is output from tagworks
+    :param: schema_file: only used if single_task is true; necessary if single_task is true; the path to the schema file
+        that is output from tagworks
+    :param anwers_file: only used if single_task is true; necessary if single_task is true; the path to the answers file
+        that is output from tagworks
+    **if in the future the data import is adjusted to depend on other file outputs from tagworks, new parameters would
+        have to be added to accomodate the change in importing procedures
     :return: No explicit return.  Running will create two directories named by the inputs. the iaa_dir will house
         a csv output from the IAA algorithm.  The scoring_dir will house the csvs output from the dependency evaluation
         algorithm; the weighting algorithm; the point sorting algorithm; and the final cleaning algorithm that prepares
@@ -26,7 +43,11 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     print("IAA PROPER")
     rep_direc = directory + "_report"
     make_directory(rep_direc)
-    iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir, useRep=use_rep)
+    if not single_task:
+        iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir, useRep=use_rep)
+    else:
+        iaa_dir = calc_scores(highlights_file, repCSV=repCSV, answersFile = answers_file, schemaFile = schema_file,
+                              outDirectory = iaa_dir, useRep = use_rep)
     if reporting:
         make_iaa_human_readable(iaa_dir, rep_direc)
     if just_s_iaa:
@@ -74,7 +95,20 @@ def load_args():
     parser.add_argument(
         '-r', '--use_rep',
         help='True if we want to use reputation scores, false otherwise')
+    parser.add_argument(
+        '-st', '--single_task',
+        help="True if there's only one task to be analyzed, false otherwise")
+    parser.add_argument(
+        '-hf', '--highlights_file',
+        help="only used if single_task is true; necessary if single_task is true; the path to the highlights file that is output from tagworks")
+    parser.add_argument(
+        '-sf', '--schema_file',
+        help="only used if single_task is true; necessary if single_task is true; the path to the schema file that is output from tagworks")
+    parser.add_argument(
+        '-af', '--answers_file',
+        help="only used if single_task is true; necessary if single_task is true; the path to the answers file that is output from tagworks")
     return parser.parse_args()
+
 
 if __name__ == '__main__':
     args = load_args()
