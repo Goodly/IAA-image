@@ -36,22 +36,26 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
     dependencies = create_dependencies_dict(schemData)
-    tasks = np.unique(iaaData['task_uuid'].tolist())
+    print(schemaPath, "DEPENDENCIES DICS \n", dependencies)
+    tasks = np.unique(iaaData['quiz_task_uuid'].tolist())
     iaaData['prereq_passed'] = iaaData['agreed_Answer']
 
     iaaData = iaaData.sort_values(['question_Number'])
+
+    #filter out questions that should never of been asksed because no agreement on prerequisites
+    for q in range(len(iaaData)):
+        qnum = iaaData['question_Number'].iloc[q]
+        ans = iaaData['agreed_Answer'].iloc[q]
+        tsk = iaaData['quiz_task_uuid'].iloc[q]
+        iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, tsk, ans)
+    iaaData = iaaData[iaaData['prereq_passed'] == True]
+
+    iaaData = iaaData.sort_values("article_num")
+
+
+
     for t in tasks:
-        #filter out questions that should never of been asksed because no agreement on prerequisites
-        for q in range(len(iaaData)):
-            qnum = iaaData['question_Number'].iloc[q]
-            ans = iaaData['agreed_Answer'].iloc[q]
-            iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, t, ans)
-    #     #get just the task
-        iaaTask = iaaData[iaaData['task_uuid'] == t]
-
-        iaaData = iaaData[iaaData['prereq_passed'] == True]
-        iaaTask = iaaData[iaaData['task_uuid'] == t]
-
+        iaaTask = iaaData[iaaData['quiz_task_uuid'] == t]
         #childQuestions
         for ch in dependencies.keys():
 
@@ -72,7 +76,8 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                     for par in child.keys():
                         iaaPar = iaaTask[iaaTask['question_Number'] == (par)]
                         neededAnswers = child[par]
-
+                        #Potential for multiple answers from parent to lead to same child question
+                        #We don't want to favor one prerequisite's highlight over another
                         for ans in neededAnswers:
                             iaaparAns = iaaPar[iaaPar['agreed_Answer'] == ans]
                             if len(iaaparAns>0):
@@ -86,6 +91,8 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                                 alpha = np.append(alpha, (newAlph[0]))
                                 alphainc = np.append(alphainc, (newIncl[0]))
                 #If parent didn't pass, this question should not of been asked
+                #This should be handled by the previous step; the below if statemnt is an artifact of older version
+                #could be useful for debugging if we make changes
                 if not validParent:
                     for row in rows:
                         iaaData.at[row,'agreed_Answer'] = -1
@@ -116,40 +123,69 @@ def parseList(iterable):
         out.append(addendum)
     return out
 def checkNeedsLove(df, qNum):
+    #Checks if the question's parent prompts users for a highlight
     qdf = df[df['question_Number'] == qNum]
     alphas = (qdf['alpha_unitizing_score'])
+    #If no rows correspond to the child question
     if qdf.empty:
         return False
     for a in alphas:
-        if not checkIsNum(a):
-            return False
-    return True
+        if not checkIsVal(a):
+            return True
+    return False
 
 def checkPassed(qnum, dependencies, iaadata, task, answer):
-    iaatask = iaadata[iaadata['task_uuid'] == task]
+    """
+    checks if the question passed and if a prerequisite question passed
+    """
+    iaatask = iaadata[iaadata['quiz_task_uuid'] == task]
     qdata = iaatask[iaatask['question_Number'] == qnum]
-    if not checkIsNum(answer):
+    if not checkIsVal(answer):
         return False
     #print('keys', dependencies.keys())
     if qnum in dependencies.keys():
         #fprint("QNUM", qnum)
         #this loop only triggered if child question depends on a prereq
         for parent in dependencies[qnum].keys():
+            #Can't ILOC because checklist questions have many answers
             pardata = iaatask[iaatask['question_Number'] == parent]
             parAns = pardata['agreed_Answer'].tolist()
             valid_answers = dependencies[qnum][parent]
             for v in valid_answers:
+                #cast to string because all answers(even numeric) are read as strings and no conversion done
                 strv = str(v)
+                #Won't be found if it doesn't pass
                 if strv in parAns:
                     par_ans_data = pardata[pardata['agreed_Answer'] == strv]
                     #print(len(par_ans_data['prereq_passed']), 'ppassed', par_ans_data['prereq_passed'])
+                    #In case the parent's prereq didn't pass
                     if par_ans_data['prereq_passed'].iloc[0] == True:
                        return True
             return False
     return True
 
 
+def checkIsVal(value):
+    #returns true if value is a possible output from IAA that indicates the child q had user highlights
+    if value == "M" or value == "L":
+        return True
+    #if its NAN
+    if pd.isna(value):
+        return False
+    try:
+        j = float(value) + 1
+        ans = math.isnan(j)
+        if ans:
+            return False
+        return True
+    except:
+        pass
+    return False
+
 def checkIsNum(value):
+    #if its NAN
+    if pd.isna(value):
+        return False
     try:
         j = float(value) + 1
         ans = math.isnan(j)

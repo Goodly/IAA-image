@@ -4,12 +4,15 @@ import ast
 from math import floor
 import json
 import os
+from math import floor
 
 
 def data_storer(path, answerspath, schemapath):
     """Function that turns csv data. Input the path name for the csv file.
     This will return a super dictionary that is used with other abstraction functions."""
     highlightData = pd.read_csv(path, encoding = 'utf-8')
+    #below line added because now highlights csv also includes data from questions with no highlight attached to it
+    highlightData = highlightData[~pd.isna(highlightData['start_pos'])]
     answersData = pd.read_csv(answerspath, encoding = 'utf-8')
     schemaData = pd.read_csv(schemapath, encoding = 'utf-8')
     task_uuid = np.unique(answersData['quiz_task_uuid'])
@@ -26,6 +29,7 @@ def data_storer(path, answerspath, schemapath):
         task_schema = schemaData[schemaData['schema_namespace'] == schema_name]
         article_num, article_sha = find_article_data(task_ans)
         schema_style = find_schema_topic(task_schema)
+        schema_id = find_schema_sha256(task_schema)
         #down the road cache this to make it go faster
         dependencies = create_dependencies_dict(task_schema)
         uberDict[task]['taskData'] = {
@@ -34,6 +38,7 @@ def data_storer(path, answerspath, schemapath):
             'article_num':article_num,
             'article_sha':article_sha,
             'schema_name':schema_style,
+            'schema_id': schema_id,
             'dependencies': dependencies
         }
         numUsersD = makeNumUsersDict(task_ans)
@@ -139,6 +144,10 @@ def checkIfParent(dependenciesDict, question, answer):
 
 
 def create_dependencies_dict(schemadata):
+    """
+
+    creates a dictionary mapping from the parent question to all of its children
+    """
     dependers = schemadata[schemadata['answer_next_questions'].notnull()]
     allChildren = dependers['answer_next_questions'].tolist()
     parents = dependers['answer_label'].tolist()
@@ -173,8 +182,6 @@ def dictAddendumDict(dict, key, newDict):
                 dict[key][k] = newDict[k][0]
     return dict
 
-def deepAddendumDicts(dict, key,newDict):
-    return
 def dictAddendumList(dict, key, newFriend):
     if key not in dict.keys():
         if isinstance(newFriend, list):
@@ -239,10 +246,10 @@ def findStartsEnds(schemadata, qlabel, highlightdata):
     #TODO: implement a check to see if people thought there should've been a highlight
     #Don't filter by answer for checklist questions here
     relevant_hl = highlightdata[highlightdata['question_label'] == qlabel]
-    starts = relevant_hl['start_pos'].tolist()
-    ends = relevant_hl['end_pos'].tolist()
+    starts = relevant_hl['start_pos'].apply(floor).tolist()
+    ends = relevant_hl['end_pos'].apply(floor).tolist()
     users = relevant_hl['contributor_uuid'].tolist()
-    length = relevant_hl['source_text_length']
+    length = relevant_hl['article_text_length']
     answerText = relevant_hl['target_text'].str.decode('unicode-escape')
     answer_labels = relevant_hl['answer_label']
     answer_nums = [parse(ans, 'A') for ans in answer_labels]
@@ -359,7 +366,9 @@ def get_indices_hard(string):
 def find_schema_topic(schemaData):
 
     return schemaData.iloc[0]['topic_name']
+def find_schema_sha256(schemaData):
 
+    return schemaData.iloc[0]['schema_sha256']
 def find_schema(ansData):
 
     return ansData['schema_namespace'].iloc[0]
@@ -458,6 +467,9 @@ def get_answer_texts(data, task_id, question_num):
 def get_schema(data, task_id):
     return data[task_id]['taskData']['schema_name']
 
+def get_schema_sha256(data, task_id):
+    return data[task_id]['taskData']['schema_id']
+
 def get_question_hlUsers(data, task_id, question_num):
     return data[task_id]['quesData'][question_num]['hlUsers']
 def get_question_hlAns(data, task_id, question_num):
@@ -509,7 +521,7 @@ def make_directory(directory):
     return directory
 def get_type_hard(type, ques):
     #ques = parse(ques, 'Q')
-    print('type', type, ques)
+    #print('type', type, ques)
     typing_dict = {
         'Source relevance':
             {
@@ -547,7 +559,8 @@ def get_type_hard(type, ques):
                 10: ['ordinal', 5],
                 11: ['ordinal', 4],
                 12: ['ordinal', 10],
-                13: ['ordinal', 1]
+                13: ['ordinal', 10],
+                15: ['ordinal', 10]
             },
         'Confidence':
             {
@@ -579,6 +592,31 @@ def get_type_hard(type, ques):
                 11: ['ordinal', 4],
                 12: ['nominal', 4],
                 13: ['ordinal', 10],
+                14: ['ordinal', 10]
+            },
+        'Reasoning Specialist V4':
+            {
+                1: ['checklist', 5],
+                2:['checklist', 6],
+                3: ['checklist', 7],
+                4: ['ordinal', 3],
+                5: ['ordinal', 3],
+                6: ['checklist', 9],
+                7: ['ordinal', 5],
+                8: ['nominal', 1],
+                9: ['ordinal', 10],
+                10: ['ordinal', 10]
+            },
+        'Probability Specialist V4':
+            {
+                1: ['ordinal', 3],
+                2: ['ordinal', 5],
+                5: ['ordinal', 3],
+                6: ['ordinal', 3],
+                7: ['ordinal', 5],
+                10: ['ordinal', 3],
+                11: ['ordinal', 4],
+                12: ['ordinal', 4],
                 14: ['ordinal', 10]
             },
         'Evidence Specialist':
@@ -642,21 +680,25 @@ def get_type_hard(type, ques):
             },
         'Argument relevance':
             {
-                1:['ordinal', 6]
+                1:['ordinal', 6],
+                2: ['ordinal', 10],
+                3: ['ordinal', 10]
             },
         'Source relevance':
             {
                 1:['checklist', 9],
                 2:['checklist', 2],
                 3:['checklist', 6],
-                4:['ordinal', 8]
+                4:['ordinal', 8],
+                5:['ordinal', 10],
+                6:['ordinal', 10]
             },
         'Probability':
             {
                 1:['ordinal', 3],
                 2:['ordinal', 5],
                 3:['ordinal', 3],
-                4:['ordinal', 6],
+                4:['ordinal', 7],
                 5:['ordinal', 3],
                 6:['ordinal', 4],
                 7:['ordinal', 5],

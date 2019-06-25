@@ -8,7 +8,7 @@ import numpy as np
 
 
 def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, hlUsers, hlAns, repDF=None, dfunc=None,
-                   num_choices=15):
+                   num_choices=15, useRep = False):
     """ calculate all scores for any coding question
         inputs:
         answers, users, starts, and ends are all lists that are in the same order,
@@ -26,8 +26,12 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
     """
     # This only occurs when the users are prompted for a textual input.
 
+
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
     print(len(repScaledAnswers),len(repScaledUsers))
+
+    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF,  useRep = useRep)
+
     assert (len(repScaledUsers) == len(repScaledAnswers))
     highScore, winner, weights, firstSecondScoreDiff = scoreCoding(repScaledAnswers, repScaledUsers, dfunc,
                                                                    num_choices=num_choices)
@@ -51,7 +55,7 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
     #                                                                                      starts,ends, repDF)
     assert (len(np.unique(users)) >= len(np.unique(hlUsers)))
     weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users,
-                                                                                 repDF)
+                                                                                 repDF, useRep=useRep)
     weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, hlAns, starts,
                                                                                 ends)
     # TOPTWO metric add the score diference
@@ -59,13 +63,15 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
     winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers, weightScaledHlUsers,
                                                                   weightScaledStarts,
                                                                   weightScaledEnds, numUsers, length, highScore, winner,
-                                                                  weightScaledNumUsers, userWeightDict, sourceText)
+                                                                  weightScaledNumUsers, userWeightDict, sourceText,
+                                                                  useRep=useRep)
     return winner, units, uScore, iScore, highScore, numUsers, selectedText, firstSecondScoreDiff
 
 
-def repScaleAnsUsers(answers, users, repDF):
-    if repDF is None:
+def repScaleAnsUsers(answers, users, repDF, useRep = False):
+    if repDF is None or not useRep:
         return answers, users
+
     repScaledAnswers = []
     repScaledUsers = []
 
@@ -84,6 +90,9 @@ def repScaleAnsUsers(answers, users, repDF):
             repScaledAnswers = np.append(repScaledAnswers, additionAns)
             repScaledUsers = np.append(repScaledUsers, additionUser)
 
+
+    repScaledAnswers, repScaledUsers = scaleFromRep(answers, users, repDF, useRep=useRep), scaleFromRep(users, users, repDF, useRep=useRep)
+
     return repScaledAnswers, repScaledUsers
 
 
@@ -101,7 +110,7 @@ def weightScaleEverything(answers, weights, users, hlUsers, starts, ends, repDF)
 
 # TOPTWO metric add the top two score difference as  an input
 def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
-                    highScore, winner, scaledNumUsers, userWeightDict, sourceText):
+                    highScore, winner, scaledNumUsers, userWeightDict, sourceText, useRep = False):
     """ calculates unitizing agreement for any coding question after verifying that it passes the threshold matrix
     Only calculates unitizing agreement amongst users who selected the most agreed-upon answer"""
     # assert len(starts) == len(users), 'starts, users mismatched'
@@ -117,7 +126,7 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
         if len(starts) > 3:
             assert len(fStarts) == len(fhlusers)
             uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fhlusers,
-                                                     userWeightDict, answers, winner)
+                                                     userWeightDict, answers, winner, useRep = useRep)
             selectedText = 'N/A'
             if uScore == 'U':
                 return 'U', 'U', 'U', 'U', 'U'
@@ -218,7 +227,7 @@ def getWinnersNominal(answers, num_choices=5):
 
 
 #TODO: make sure that these functions now work since repDF is being inputted into the functions.
-def scaleFromRep(arr, users, repDF):
+def scaleFromRep(arr, users, repDF, useRep = False):
     """Scales the array based on user reps"""
     print(arr, users, repDF)
     scaled = np.zeros(0)
@@ -227,13 +236,13 @@ def scaleFromRep(arr, users, repDF):
         if (arr[i], users[i]) not in checked:
             checked.append((arr[i], users[i]))
             addition = np.array(arr[i])
-            rep = ceil(get_user_rep(users[i], repDF))
+            rep = ceil(get_user_rep(users[i], repDF, useRep=useRep))
             addition = np.repeat(addition, rep)
             scaled = np.append(scaled, addition)
     return scaled
 
 
-def scaleFromWeights(arr, answers, weights, users, repDF):
+def scaleFromWeights(arr, answers, weights, users, repDF, useRep=False):
     """Scales the array based on the weights and the user reps"""
     # weights is array of fractions now
     weights = weights
@@ -245,7 +254,7 @@ def scaleFromWeights(arr, answers, weights, users, repDF):
         if (arr[i], users[i], answers[i]) not in checked:
             checked.append((arr[i], users[i], answers[i]))
             addition = np.array(arr[i])
-            rep = get_user_rep(users[i], repDF)
+            rep = get_user_rep(users[i], repDF, useRep=useRep)
             ans = answers[i]
             weight = weights[int(ans)]
             if weight < 0:

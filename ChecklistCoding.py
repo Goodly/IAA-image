@@ -3,7 +3,7 @@ from CodingScoring import *
 
 def scoreChecklist(answers,numUsers, num_choices):
     out = []
-    print('answers', answers, num_choices)
+    #print('answers', answers, num_choices)
     length = num_choices+1
     #index 1 refers to answer 1, 0 and the last item are not answerable
     answers = [int(a) for a in answers]
@@ -11,13 +11,13 @@ def scoreChecklist(answers,numUsers, num_choices):
     for a in answers:
         scores[a] = scores[a]+1
     for i in range(len(scores)):
-        print('scores', scores, numUsers)
+        #print('scores', scores, numUsers)
         out.append(scores[i]/numUsers)
     return out
 
-def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sourceText, hlUsers, hlAns, num_choices  = 5,  dfunc = None):
+def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sourceText, hlUsers, hlAns, num_choices  = 5,  dfunc = None, useRep = False):
 
-    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
+    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF, useRep=useRep)
     #assert len(starts) == len(users), 'starts, users mismatched'
     #TODO: scale numUsers when repScaled gets scaled up
     percArray = scoreChecklist(repScaledAnswers, numUsers, num_choices)
@@ -31,8 +31,8 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         assert(len(answers) == len(users))
         #assert(len(np.unique(users)) == len(np.unique(hlUsers)))
         weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users,
-                                                                                     repDF)
-        print('UW DICT', userWeightDict)
+                                                                                     repDF, useRep=useRep)
+        #print('UW DICT', userWeightDict)
         weightScaledHlUsers, weightScaledStarts, weightScaledEnds = scaleHighlights(userWeightDict, hlUsers, hlAns, starts,
                                                                                     ends)
         # weightScaledAnswers, weightScaledUsers, weightScaledStarts, \
@@ -41,12 +41,12 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         # print('clnumusers', weightScaledUsers)
         #assert len(weightScaledStarts) == len(weightScaledUsers), 'starts, users mismatched'
         #TODO: weight scale the hlUsers
-        print('passing to utizing')
-        print(userWeightDict)
-        print(weightScaledNumUsers)
+        #print('passing to utizing')
+        #print(userWeightDict)
+        #print(weightScaledNumUsers)
         winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers,weightScaledHlUsers, weightScaledStarts,
                                                         weightScaledEnds,numUsers,length, codingScore, i,
-                                                        weightScaledNumUsers, userWeightDict, sourceText)
+                                                        weightScaledNumUsers, userWeightDict, sourceText, useRep=useRep)
         firstSecondDiff = 1 - codingScore
         out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText, firstSecondDiff, 'checklist', num_choices])
         #do_rep_calculation_nominal(users, answers, out[0], units, starts, ends, length, repDF,last30, checkListScale=(1/num_choices))
