@@ -5,10 +5,11 @@ from Dependency import *
 from Weighting import *
 from pointAssignment import *
 from Separator import *
-
+from IAA_report import make_iaa_human_readable
+from dataV2 import make_directory
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
-                            just_s_iaa = True, just_dep_iaa = False, use_rep = False):
+                            just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -23,8 +24,11 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
         data to be visualized
     """
     print("IAA PROPER")
-
+    rep_direc = directory + "_report"
+    make_directory(rep_direc)
     iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir, useRep=use_rep)
+    if reporting:
+        make_iaa_human_readable(iaa_dir, rep_direc)
     if just_s_iaa:
         return
     print('iaaaa', iaa_dir)
