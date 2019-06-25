@@ -8,7 +8,8 @@ import ast
 
 def create_user_reps(uberDict, csvPath=None):
     if csvPath:
-        user_rep = pd.read_csv(csvPath)
+        user_rep = CSV_to_userid(csvPath)
+        print(user_rep, "----------------------------------------------")
     else:
         user_rep = pd.DataFrame(columns=['Users', 'Score', 'Questions', 'Influence', 'Index'] + list(range(30)))
     for article_sha256 in uberDict.keys():
@@ -174,6 +175,7 @@ def do_math(data, userID, reward):
     # oldlast30q_score = len(np.array(data.loc[data['Users'] == userID, range(30)]))
     oldlast30score = np.sum(np.array(data.loc[data['Users'] == userID, range(30)]))
     user = data.loc[data['Users'] == userID]
+    print(user)
     index = data.loc[data['Users'] == userID, 'Index'].tolist()[0]
     data.loc[data['Users'] == userID, index] = reward
 
@@ -207,6 +209,7 @@ def do_math(data, userID, reward):
 
     score = data.loc[data['Users'] == userID, 'Score']
     data.loc[data['Users'] == userID, 'Influence'] = 2 / (1 + exp(-.07 * score + 2))
+    userid_to_CSV(data)
 
 
 def calc_influence(data, userID):
@@ -223,8 +226,8 @@ def calc_influence(data, userID):
 def user_rep_task(uberDict, task_csv, user_rep_df):
     """This is the function every time agreement is calculated. To use, input the master data structure, the agreed upon
     answers csv, and the pre-existing user_rep dataframe created by function create_user_reps."""
-    answers = pd.read_csv(task_csv)
-    for i in answers.itertuples():
+    agreement_output = pd.read_csv(task_csv)
+    for i in agreement_output.itertuples():
         article_sha = i[2]
         agreement = i[7]
         task_num = i[3]
@@ -288,16 +291,18 @@ def user_rep_task(uberDict, task_csv, user_rep_df):
                         highlight_ends.append(h_e)
                 do_rep_calculation_nominal(user_array, answer_array, 1, highlights, highlight_users_array,
                                            highlight_starts, highlight_ends, article_len, user_rep_df)
-        userid_to_CSV(user_rep_df)
+
 
 def userid_to_CSV(dataframe):
     """This function will save the User Rep Score dataframe as UserRepScores.csv"""
+    print(dataframe, 'LOOK OVER HERE')
     dataframe.to_csv("UserRepScores.csv")
 
 
 def CSV_to_userid(path):
     """This function will take in the path name of the UserRepScore.csv and output the dataframe corresponding."""
-    return pd.read_csv(path, index_col=False).loc[:, ['Users', 'Score', 'Questions', 'Influence']]
+    print(path)
+    return pd.read_csv(path, index_col=False).loc[:, ['Users', 'Score', 'Questions', 'Influence'] + list(range(30))].fillna(0)
 
 
 def last30_to_CSV(dataframe):
@@ -316,5 +321,5 @@ def get_user_rep(id, repDF, useRep = False):
         influence = .8
     else:
         influence = float(repDF.loc[repDF['Users']==id]['Influence'].iloc[0])
-    return influence*50
+    return influence
 

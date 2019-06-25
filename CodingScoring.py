@@ -26,6 +26,10 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
     """
     # This only occurs when the users are prompted for a textual input.
 
+
+    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
+    print(len(repScaledAnswers),len(repScaledUsers))
+
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF,  useRep = useRep)
 
     assert (len(repScaledUsers) == len(repScaledAnswers))
@@ -67,7 +71,28 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
 def repScaleAnsUsers(answers, users, repDF, useRep = False):
     if repDF is None or not useRep:
         return answers, users
+
+    repScaledAnswers = []
+    repScaledUsers = []
+
+
+    scaled = np.zeros(0)
+    checked = []
+    for i in range(len(answers)):
+        if (answers[i], users[i]) not in checked:
+            checked.append((answers[i], users[i]))
+            additionAns = np.array(answers[i])
+            additionUser = np.array(users[i])
+            rep = ceil(get_user_rep(users[i], repDF))
+
+            additionUser = np.repeat(additionUser, rep)
+            additionAns = np.repeat(additionAns, rep)
+            repScaledAnswers = np.append(repScaledAnswers, additionAns)
+            repScaledUsers = np.append(repScaledUsers, additionUser)
+
+
     repScaledAnswers, repScaledUsers = scaleFromRep(answers, users, repDF, useRep=useRep), scaleFromRep(users, users, repDF, useRep=useRep)
+
     return repScaledAnswers, repScaledUsers
 
 
@@ -204,6 +229,7 @@ def getWinnersNominal(answers, num_choices=5):
 #TODO: make sure that these functions now work since repDF is being inputted into the functions.
 def scaleFromRep(arr, users, repDF, useRep = False):
     """Scales the array based on user reps"""
+    print(arr, users, repDF)
     scaled = np.zeros(0)
     checked = []
     for i in range(len(arr)):
