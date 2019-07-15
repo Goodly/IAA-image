@@ -39,9 +39,12 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
                     #we'll save that dream for another day
     return outDirectory
 
-def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = 's_iaa', useRep = False):
+def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = None, useRep = False):
     #print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
+    if not outDirectory:
+        outDirectory = 's_iaa'+highlightfilename
+        outDirectory = outDirectory.rstrip('.csv')
     #print("donegettingdata")
     data = [["article_num", "article_sha256", "quiz_task_uuid","schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score",

@@ -36,7 +36,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
     if "uage" in IAA_csv_schema_name:
         IAA_csv_schema_type = "Language"
     elif "Reason" in IAA_csv_schema_name:
-        IAA_csv_schema_type = "Reason"
+        IAA_csv_schema_type = "Reasoning"
     elif "Evidence" in IAA_csv_schema_name:
         IAA_csv_schema_type = "Evidence"
     elif "Probability" in IAA_csv_schema_name:
@@ -138,3 +138,4 @@ def convertToInt(string):
     except:
         return -1
 
+launch_Weighting('scoring_urap')

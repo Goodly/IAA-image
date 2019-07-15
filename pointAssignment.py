@@ -7,12 +7,15 @@ import math
 import uuid
 
 def pointSort(directory, all_TUAs_dir = "./config/allTUAs.csv",
-              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True):
+              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False):
 
     #Load everything so that it's a pandas dataframe
     scale_guide = pd.read_csv(scale_guide_dir)
     all_tuas = pd.read_csv(all_TUAs_dir)
     files = getFiles(directory)
+
+    if not rep_direc:
+        rep_direc = directory+"_report"
     # marker booleans that will make corner cases nicer down the road
     hasSource = False
     hasArg = False
@@ -38,7 +41,6 @@ def pointSort(directory, all_TUAs_dir = "./config/allTUAs.csv",
         weights = weights.append(wf)
 
     if reporting:
-        rep_direc = directory+"_report"
         make_directory(rep_direc)
         weights.to_csv(rep_direc+'/weightsStacked'+str(i)+'.csv')
 
