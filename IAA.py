@@ -53,6 +53,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     # except:
     #     repDF = create_user_dataframe(uberDict, csvPath = None)
     # thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
+    useRep = True
     if useRep:
         repDF = create_user_reps(uberDict,repCSV)
         print('initialized repScores')
@@ -67,7 +68,7 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
         schema_namespace = get_schema(uberDict, task_id)
         schema_sha = get_schema_sha256(uberDict, task_id)
         questions = uberDict[task]['quesData'].keys()
-        print("cecking agreement for "+schema_namespace+" task "+task_id)
+        print("checking agreement for "+schema_namespace+" task "+task_id)
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
