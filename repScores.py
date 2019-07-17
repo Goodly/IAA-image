@@ -6,29 +6,42 @@ from dataV2 import *
 import os.path
 from os import path
 from scipy.stats import norm
+import math
+import datetime
+from dateutil.parser import parse
 
 def create_user_reps(uberDict, csvPath=None):
     if path.exists(csvPath):
         user_rep = CSV_to_userid(csvPath)
 
+
     else:
         user_rep = pd.DataFrame(
-            columns=['Users', 'Score', 'Questions', 'Influence', 'Index'] + [str(x) for x in range(30)])
+            columns=['Users', 'Score', 'Questions', 'Influence', 'Index','LastDate'] + [str(x) for x in range(30)])
+    date = datetime.datetime.today().date()
+    print(date)
     for article_sha256 in uberDict.keys():
+
         for question_num in uberDict[article_sha256]['quesData'].keys():
             # TODO make this not hardCoded, it's identical to data_utils get quesiton userid but we had importerror
             # users_q = data[article_num][question_num][1][1][0]
             users_q = get_question_userid(uberDict, article_sha256, question_num)
 
             for ids in users_q:
-
                 if ids == 0:
                     continue
                 if ids not in user_rep.loc[:, 'Users'].tolist():
-                    user_rep = user_rep.append(pd.Series([ids, 1, 1, 1, 0] + list(np.zeros(30)),
+
+                    user_rep = user_rep.append(pd.Series([ids, 1, 1, 1, 0, date] + list(np.zeros(30)),
                                                          index=['Users', 'Score', 'Questions', 'Influence',
-                                                                'Index'] + [str(x) for x in range(30)]),
+                                                                'Index','LastDate'] + [str(x) for x in range(30)]),
                                                ignore_index=True)
+                    print(user_rep)
+                    print((user_rep.loc[user_rep['Users'] == ids, 'LastDate']))
+    for id in user_rep.loc[:,'Users'].tolist():
+        if (date - (user_rep.loc[user_rep['Users'] == id,'LastDate'].iloc[0])).days > 60:
+                user_rep = user_rep[user_rep.Users != id]
+
     return user_rep
 
 
@@ -176,9 +189,8 @@ def do_math(data, userID, reward):
     oldlast30score = np.sum(np.array(data.loc[data['Users'] == userID, [str(x) for x in range(30)]]))
     user = data.loc[data['Users'] == userID]
 
-
-    stdscores = np.std(data.loc[:,'Score'])
-
+    stdscores = np.std(data.loc[:, 'Score'])
+    data.loc[data['Users']==userID, 'LastDate'] = datetime.datetime.today().date()
     index = data.loc[data['Users'] == userID, 'Index'].tolist()[0]
     data.loc[data['Users'] == userID, str(int(index))] = reward
 
@@ -193,10 +205,10 @@ def do_math(data, userID, reward):
         data.loc[data['Users'] == userID, 'Index'] = 0
     n = float(user['Questions'].iloc[0])
     if (n > 29):
-        r = (float(user['Score'].iloc[0]) - oldlast30mean*.5)*2
+        r = (float(user['Score'].iloc[0]) - oldlast30mean * .5) * 2
 
     else:
-        r= float(user['Score'].iloc[0])
+        r = float(user['Score'].iloc[0])
 
     # q_score = 1.5 * (1 - exp(-n / .7))
     print('hmm®')
@@ -208,10 +220,10 @@ def do_math(data, userID, reward):
     # q_s    core = 1.5 * (1 - exp(-n / .7))
 
     if n > 29:
-        data.loc[data['Users'] == userID, 'Score'] = (points / n)*.5 + last30mean*.5
+        data.loc[data['Users'] == userID, 'Score'] = (points / n) * .5 + last30mean * .5
     else:
 
-        data.loc[data['Users'] == userID, 'Score'] =  (points / n)
+        data.loc[data['Users'] == userID, 'Score'] = (points / n)
 
     score = float(data.loc[data['Users'] == userID, 'Score'])
     #
@@ -220,9 +232,8 @@ def do_math(data, userID, reward):
     # else:
     #
     #     data.loc[data['Users'] == userID, 'Influence'] = norm.cdf(score, avgscores, stdscores/3)*2
-    influence, data = get_user_rep(userID, data,True)
+    influence, data = get_user_rep(userID, data, True)
     userid_to_CSV(data)
-
 
 
 def calc_influence(data, userID):
@@ -317,8 +328,10 @@ def CSV_to_userid(path):
     """This function will take in the path name of the UserRepScore.csv and output the dataframe corresponding."""
 
     csv = pd.read_csv(path, index_col=False)
-
-    return csv.loc[:, ['Users', 'Score', 'Questions', 'Influence', 'Index'] + [str(x) for x in range(30)]]
+    dataframe = csv.loc[:, ['Users', 'Score', 'Questions', 'Influence', 'Index','LastDate'] + [str(x) for x in range(30)]]
+    dataframe['LastDate'] = [x.date() for x in pd.to_datetime(dataframe['LastDate'], infer_datetime_format= True)]
+    print((dataframe['LastDate'].iloc[0]))
+    return dataframe
 
 
 def last30_to_CSV(dataframe):
@@ -337,14 +350,19 @@ def get_user_rep(id, repDF, useRep=False):
 
     else:
 
-        users = repDF.loc[:,'Users']
-        avg_scores = np.mean(repDF.loc[:, 'Score'])
-        std_scores = np.std(repDF.loc[:, 'Score'])
+        users = repDF.loc[:, 'Users']
+        question = np.array(repDF.loc[:, "Questions"])
+        tot_questions = sum(question)
+        total = np.sum(np.multiply(question,repDF.loc[:, 'Score']))
+        print('what', tot_questions, total)
+        scores = np.array(repDF.loc[:,'Score'])
+        avg_scores = np.mean(scores)
+        std_scores = math.sqrt(np.mean((scores - avg_scores) ** 2))
         for u in users.tolist():
             user_score = float(repDF.loc[repDF['Users'] == u]['Score'].iloc[0])
             infl = norm.cdf(user_score, avg_scores, std_scores)
 
-            repDF.loc[repDF['Users']==u, 'Influence'] = infl*2
+            repDF.loc[repDF['Users'] == u, 'Influence'] = infl * 2
             if (u == id):
                 influence = repDF.loc[repDF['Users'] == id, 'Influence']
                 if repDF.loc[repDF['Users'] == id]['Questions'].iloc[0] < 30:
