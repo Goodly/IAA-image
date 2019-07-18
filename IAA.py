@@ -3,6 +3,7 @@ from ChecklistCoding import *
 from ExtraInfo import *
 from dataV2 import *
 from repScores import *
+from multiprocessing  import Pool
 import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
@@ -32,13 +33,24 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
     answers.sort()
     schema.sort()
     assert(len(highlights) == len(schema), 'files not found')
-    for i in range(len(highlights)):
-         calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
-                            answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep)
+    ins = []
+    for i in range(len(schema)):
+
+        ins.append([highlights[i], hardCodedTypes, repCSV ,
+                            answers[i], schema[i], outDirectory, useRep])
+
+    with Pool() as pool:
+        pool.map(unpack_iaa, ins)
+
+    #for i in range(len(highlights)):
+      #   calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
+      #                      answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep)
                     #will be an error for every file that isn't the right file, there's a more graceful solution, but
                     #we'll save that dream for another day
     return outDirectory
-
+def unpack_iaa(input):
+    calc_scores(input[0], hardCodedTypes=input[1], repCSV = input[2],
+                            answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6])
 def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = None, useRep = False):
     #print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
@@ -73,7 +85,6 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
         print("cecking agreement for "+schema_namespace+" task "+task_id)
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
-
 
             agreements = score(task, ques, uberDict, repDF,hardCodedTypes = hardCodedTypes, useRep=useRep)
             # if it's a list then it was a checklist question

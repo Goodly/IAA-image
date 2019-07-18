@@ -12,7 +12,7 @@ def data_storer(path, answerspath, schemapath):
     This will return a super dictionary that is used with other abstraction functions."""
     highlightData = pd.read_csv(path, encoding = 'utf-8')
     #below line added because now highlights csv also includes data from questions with no highlight attached to it
-    highlightData = highlightData[~pd.isna(highlightData['start_pos'])]
+    highlightData = highlightData[highlightData["highlight_count"]!=0]
     answersData = pd.read_csv(answerspath, encoding = 'utf-8')
     schemaData = pd.read_csv(schemapath, encoding = 'utf-8')
     task_uuid = np.unique(answersData['quiz_task_uuid'])

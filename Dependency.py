@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 import json
+from multiprocessing import Pool
 from dataV2 import *
 def eval_dependency(directory, iaa_dir, out_dir = None):
     print("DEPENDENCY STARTING")
@@ -28,10 +29,18 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
     iaa.sort()
     assert(len(schema)==len(iaa), 'mismatched files ', len(schema), 'schema', len(iaa), 'iaa oututs')
     out_dir = make_directory(out_dir)
+    ins = []
     for i in range(len(schema)):
-        handleDependencies(schema[i], iaa[i], out_dir)
+        ins.append((schema[i], iaa[i], out_dir))
+        #handleDependencies(schema[i], iaa[i], out_dir)
+
+    with Pool() as pool:
+        pool.map(unpack_dependency_ins, ins)
+
     return out_dir
 
+def unpack_dependency_ins(input):
+    return handleDependencies(input[0], input[1], input[2])
 def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')

@@ -8,7 +8,7 @@ from pointAssignment import *
 from Separator import *
 from IAA_report import make_iaa_human_readable
 from dataV2 import make_directory
-
+from time import time
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None):
@@ -43,15 +43,20 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     print("IAA PROPER")
     rep_direc = directory + "_report"
     make_directory(rep_direc)
+    start = time()
     if not single_task:
         iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir, useRep=use_rep)
     else:
+
         iaa_dir = calc_scores(highlights_file, repCSV=repCSV, answersFile = answers_file, schemaFile = schema_file,
                               outDirectory = iaa_dir, useRep = use_rep)
+
     if reporting:
         make_iaa_human_readable(iaa_dir, rep_direc)
     if just_s_iaa:
         return
+    end = time()
+    print("IAA TIME ELAPSED", end - start)
     print('iaaaa', iaa_dir)
     print("DEPENDENCY")
     scoring_dir = eval_dependency(directory, iaa_dir, out_dir=scoring_dir)
@@ -64,6 +69,7 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     pointSort(scoring_dir, tua_file)
     print("----------------SPLITTING-----------------------------------")
     splitcsv(scoring_dir)
+    print("DONE, time elapsed", time()-start)
 
 def load_args():
     parser = argparse.ArgumentParser()

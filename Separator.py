@@ -87,4 +87,4 @@ def indicesToStartEnd(indices):
         last = indices[i]
     #ends.append(indices[len(indices)-1])
     return sorted(starts), sorted(ends)
-splitcsv('scoring_urap')
+#splitcsv('scoring_urap')
