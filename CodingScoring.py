@@ -89,9 +89,8 @@ def repScaleAnsUsers(answers, users, repDF, useRep = False):
             additionAns = np.repeat(additionAns, rep)
             repScaledAnswers = np.append(repScaledAnswers, additionAns)
             repScaledUsers = np.append(repScaledUsers, additionUser)
+    userid_to_CSV(repDF)
 
-
-    repScaledAnswers, repScaledUsers = scaleFromRep(answers, users, repDF, useRep=useRep), scaleFromRep(users, users, repDF, useRep=useRep)
 
     return repScaledAnswers, repScaledUsers
 
@@ -236,9 +235,11 @@ def scaleFromRep(arr, users, repDF, useRep = False):
         if (arr[i], users[i]) not in checked:
             checked.append((arr[i], users[i]))
             addition = np.array(arr[i])
-            rep = ceil(get_user_rep(users[i], repDF, useRep=useRep))
+            rep, repDF = get_user_rep(users[i], repDF, useRep=useRep)
+            rep = ceil(rep)
             addition = np.repeat(addition, rep)
             scaled = np.append(scaled, addition)
+    userid_to_CSV(repDF)
     return scaled
 
 
@@ -254,7 +255,7 @@ def scaleFromWeights(arr, answers, weights, users, repDF, useRep=False):
         if (arr[i], users[i], answers[i]) not in checked:
             checked.append((arr[i], users[i], answers[i]))
             addition = np.array(arr[i])
-            rep = get_user_rep(users[i], repDF, useRep=useRep)
+            rep, repDF = get_user_rep(users[i], repDF, useRep=useRep)
             ans = answers[i]
             weight = weights[int(ans)]
             if weight < 0:
@@ -264,6 +265,7 @@ def scaleFromWeights(arr, answers, weights, users, repDF, useRep=False):
             sumTotalScaling += scaleBy
             addition = np.repeat(addition, scaleBy)
             scaled = np.append(scaled, addition)
+    userid_to_CSV(repDF)
     return scaled, sumTotalScaling, userWeightDict
 
 
@@ -290,7 +292,7 @@ def makeUWeightDict(answers, weights, users, repDF):
         if (users[i], answers[i]) not in checked:
             checked.append(users[i], answers[i])
 
-            rep = get_user_rep(users[i], repDF)
+            rep, repDF = get_user_rep(users[i], repDF)
             ans = answers[i]
             weight = weights[int(ans)]
             if weight < 0:
@@ -299,7 +301,7 @@ def makeUWeightDict(answers, weights, users, repDF):
             scaleBy = ceil(weight * rep)
             setUserWeightDict(users[i], answers[i], scaleBy, userWeightDict)
             sumTotalScaling += scaleBy
-
+    userid_to_CSV(repDF)
     return sumTotalScaling, userWeightDict
 
 
@@ -343,8 +345,7 @@ def scaleManyFromWeights(arr, answers, weights, users, repDF):
     for i in range(len(arr[1])):
         if (arr[1][i], users[i], answers[i]) not in checked:
             checked.append((arr[1][i], users[i], answers[i]))
-
-            rep = get_user_rep(users[i], repDF)
+            rep, repDF = get_user_rep(users[i], repDF)
             ans = answers[i]
             weight = weights[int(ans)]
             if weight < 0:
@@ -357,7 +358,7 @@ def scaleManyFromWeights(arr, answers, weights, users, repDF):
                 addition = np.array(arr[i])
                 addition = np.repeat(addition, scaleBy)
                 scaled[i] = np.append(scaled[i], addition)
-
+    userid_to_CSV(repDF)
     return scaled, sumTotalScaling, userWeightDict
 
 

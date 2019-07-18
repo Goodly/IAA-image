@@ -16,8 +16,5 @@ Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility In
 38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,E0,Evidence,Systematic uncertainty,0.0,[],-1,-1
 38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,E0,Evidence,Open to evidence,0.0,[],-1,-1
 38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,E0,Evidence,Open to evidence,-0.2872529169698261,[],-1,-1
-38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L0,Language,Exaggeration,-2.0391700409878237,[],-1,-1
-38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L0,Language,Inappropriate slang,-0.15950704903955898,[],-1,-1
-38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L0,Language,Denigration,0.0,[],-1,-1
-38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L0,Language,Well-balanced,0.21381946906041552,L,-1,-1
-38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L0,Language,Well-balanced,0.4425306833585684,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L0,Language,Writing errors,-0.8293788690975481,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L0,Language,Other problematic tone,-0.9526780185840552,[],-1,-1

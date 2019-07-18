@@ -3,29 +3,45 @@ from math import exp
 import numpy as np
 import pandas as pd
 from dataV2 import *
-import ast
-
+import os.path
+from os import path
+from scipy.stats import norm
+import math
+import datetime
+from dateutil.parser import parse
 
 def create_user_reps(uberDict, csvPath=None):
-    if csvPath:
+    if path.exists(csvPath):
         user_rep = CSV_to_userid(csvPath)
-        print(user_rep, "----------------------------------------------")
+
+
     else:
-        user_rep = pd.DataFrame(columns=['Users', 'Score', 'Questions', 'Influence', 'Index'] + list(range(30)))
+        user_rep = pd.DataFrame(
+            columns=['Users', 'Score', 'Questions', 'Influence', 'Index','LastDate'] + [str(x) for x in range(30)])
+    date = datetime.datetime.today().date()
+    print(date)
     for article_sha256 in uberDict.keys():
+
         for question_num in uberDict[article_sha256]['quesData'].keys():
             # TODO make this not hardCoded, it's identical to data_utils get quesiton userid but we had importerror
             # users_q = data[article_num][question_num][1][1][0]
             users_q = get_question_userid(uberDict, article_sha256, question_num)
 
             for ids in users_q:
-                print(len((users_q)))
-                print(set(users_q))
+                if ids == 0:
+                    continue
                 if ids not in user_rep.loc[:, 'Users'].tolist():
-                    print((ids))
-                    user_rep = user_rep.append(pd.Series([ids, 5, 1, 1, 0] + list(np.zeros(30)),
+
+                    user_rep = user_rep.append(pd.Series([ids, 1, 1, 1, 0, date] + list(np.zeros(30)),
                                                          index=['Users', 'Score', 'Questions', 'Influence',
-                                                                'Index'] + list(range(30))), ignore_index=True)
+                                                                'Index','LastDate'] + [str(x) for x in range(30)]),
+                                               ignore_index=True)
+                    print(user_rep)
+                    print((user_rep.loc[user_rep['Users'] == ids, 'LastDate']))
+    for id in user_rep.loc[:,'Users'].tolist():
+        if (date - (user_rep.loc[user_rep['Users'] == id,'LastDate'].iloc[0])).days > 60:
+                user_rep = user_rep[user_rep.Users != id]
+
     return user_rep
 
 
@@ -36,19 +52,18 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer,
     such that if the user in the list of USERID gets their answer right, they add 1 to their score, and 0 if they are
     wrong."""
     if type(answer_choice) == str or type(highlight_answer) == str or len(highlight_answer) == 0:
-        print('oh')
         return 0
 
     checked = zip(answers, userID)
     highlight_answer_array = np.zeros(article_length)
     winners = []
-    print(answers, userID)
+
     for t in checked:
         user = t[1]
         answer = t[0]
 
         if (answer == answer_choice):
-            print('yay', answer, answer_choice, user)
+
             do_math(user_rep_df, user, checkListScale)
             winners.append(user)
         else:
@@ -66,7 +81,6 @@ def do_rep_calculation_nominal(userID, answers, answer_choice, highlight_answer,
                     incrementer += 1
         score = 1 - np.sum(np.absolute(highlight_answer_array - user_highlight)) / article_length
         do_math(user_rep_df, x, score)
-
 
 
 def gaussian_mean(answers):
@@ -96,34 +110,31 @@ def do_rep_calculation_ordinal(userID, answers, answer_aggregated, num_of_choice
     score_dict = {}
 
     answer_choice = gaussian_mean(answers)
-    print(answer_aggregated, answer_choice, answers)
+
     for h in highlight_answer:
         highlight_answer_array[h] = 1
 
     for t in range(len(userID)):
         user = userID[t]
         answer = answers[t]
-        print(user, answer)
+
         points = (1 - abs(answer_choice - answer) / num_of_choices)
         do_math(user_rep_df, user, points)
         score_dict[user] = points
 
-    if len(userID) != 4:
-        print(userID)
-        print("wtf")
     for x in userID:
         points = score_dict[x]
         user_highlight = np.zeros(article_length)
-        print(article_length, "hwat is going on")
+
         for user_h, user_s, user_e in zip(hlUsers, starts, ends):
             incrementer = user_s
             if user_h == x:
                 while incrementer <= user_e:
                     user_highlight[incrementer] = 1
                     incrementer += 1
-        print(points, highlight_answer_array, user_highlight, article_length, "nani")
+
         score = points * (1 - np.sum(np.absolute(highlight_answer_array - user_highlight)) / article_length)
-        print(score, "hold up")
+
         do_math(user_rep_df, x, score)
 
 
@@ -132,31 +143,32 @@ def getUserHighlights(userId, hlUsers, starts, ends, length):
     starts = np.array(starts)
     ends = np.array(ends)
     userMask = hlUsers == userId
-    print(userMask)
+
     uStarts = starts[userMask]
     uEnds = ends[userMask]
     hlArr = startsToBool(uStarts, uEnds, length)
     return hlArr
 
 
-def startsToBool(starts, ends,length):
+def startsToBool(starts, ends, length):
     out = np.zeros(length)
     for i in range(len(starts)):
         for x in range(starts[i], ends[i]):
             out[x] = 1
     return out
 
+
 def checkDuplicates(answers, userID, starts, ends, article_length):
     checked = []
     int_users = {}
-    #Changed this to just starts, ends; guaranteed no duplicates of answers or userID
+    # Changed this to just starts, ends; guaranteed no duplicates of answers or userID
     for i in range(len(starts)):
         if [starts[i], ends[i]] not in checked:
             checked.append([starts[i], ends[i]])
     for x in checked:
         article_array = np.zeros(article_length).tolist()
         if x[0] not in int_users.keys():
-            print("HELLO THERE", x[2], x[3])
+
             article_array[x[2]:x[3] + 1] = np.ones(x[3] - x[2] + 1).tolist()
             int_users[x[0]] = article_array
         else:
@@ -170,16 +182,19 @@ def checkDuplicates(answers, userID, starts, ends, article_length):
 def do_math(data, userID, reward):
     """This function takes in the points added to one user and changes the dataframe to update that one user's score
     using the equations set for calculating reputation."""
-
-    oldlast30mean = np.mean(np.array(data.loc[data['Users'] == userID, range(30)]))
-    # oldlast30q_score = len(np.array(data.loc[data['Users'] == userID, range(30)]))
-    oldlast30score = np.sum(np.array(data.loc[data['Users'] == userID, range(30)]))
+    if userID == 0:
+        return
+    oldlast30mean = np.mean(np.array(data.loc[data['Users'] == userID, [str(x) for x in range(30)]]))
+    # oldlast30q_score = len(np.array(data.loc[data['Users'] == userID, [str(x) for x in range(30)]]))
+    oldlast30score = np.sum(np.array(data.loc[data['Users'] == userID, [str(x) for x in range(30)]]))
     user = data.loc[data['Users'] == userID]
-    print(user)
-    index = data.loc[data['Users'] == userID, 'Index'].tolist()[0]
-    data.loc[data['Users'] == userID, index] = reward
 
-    last30 = data.loc[data['Users'] == userID, range(30)]
+    stdscores = np.std(data.loc[:, 'Score'])
+    data.loc[data['Users']==userID, 'LastDate'] = datetime.datetime.today().date()
+    index = data.loc[data['Users'] == userID, 'Index'].tolist()[0]
+    data.loc[data['Users'] == userID, str(int(index))] = reward
+
+    last30 = data.loc[data['Users'] == userID, [str(x) for x in range(30)]]
     last30mean = np.mean(np.array(last30.dropna(axis=1)))
     # last30q_score = len(np.array(last30.dropna(axis=1)))
     last30score = sum(np.array(last30.dropna(axis=1)))
@@ -188,27 +203,36 @@ def do_math(data, userID, reward):
         data.loc[data['Users'] == userID, 'Index'] = index + 1
     else:
         data.loc[data['Users'] == userID, 'Index'] = 0
-
-    r = float(user['Score'].iloc[0]) * 2 - oldlast30mean * 30
     n = float(user['Questions'].iloc[0])
+    if (n > 29):
+        r = (float(user['Score'].iloc[0]) - oldlast30mean * .5) * 2
+
+    else:
+        r = float(user['Score'].iloc[0])
 
     # q_score = 1.5 * (1 - exp(-n / .7))
-
+    print('hmm®')
     points = r * n
     points = points + reward
 
     n = n + 1
     data.loc[data['Users'] == userID, 'Questions'] = n
-    # q_score = 1.5 * (1 - exp(-n / .7))
+    # q_s    core = 1.5 * (1 - exp(-n / .7))
 
     if n > 29:
-        data.loc[data['Users'] == userID, 'Score'] = ((points) + last30mean * 30) / 2
+        data.loc[data['Users'] == userID, 'Score'] = (points / n) * .5 + last30mean * .5
     else:
 
-        data.loc[data['Users'] == userID, 'Score'] = ((points / n))
+        data.loc[data['Users'] == userID, 'Score'] = (points / n)
 
-    score = data.loc[data['Users'] == userID, 'Score']
-    data.loc[data['Users'] == userID, 'Influence'] = 2 / (1 + exp(-.07 * score + 2))
+    score = float(data.loc[data['Users'] == userID, 'Score'])
+    #
+    # if stdscores == 0:
+    #     data.loc[data['Users'] == userID, 'Influence'] = 2 / (1 + exp((-50)*score + 50*avgscores))
+    # else:
+    #
+    #     data.loc[data['Users'] == userID, 'Influence'] = norm.cdf(score, avgscores, stdscores/3)*2
+    influence, data = get_user_rep(userID, data, True)
     userid_to_CSV(data)
 
 
@@ -226,19 +250,20 @@ def calc_influence(data, userID):
 def user_rep_task(uberDict, task_csv, user_rep_df):
     """This is the function every time agreement is calculated. To use, input the master data structure, the agreed upon
     answers csv, and the pre-existing user_rep dataframe created by function create_user_reps."""
+
     agreement_output = pd.read_csv(task_csv)
     for i in agreement_output.itertuples():
         article_sha = i[2]
-        agreement = i[7]
+        agreement = i[9]
         task_num = i[3]
-        question_num = i[5]
-        question_type = i[6]
-        highlights = i[10]
+        question_num = i[6]
+        question_type = i[8]
+        highlights = i[12]
         if highlights == 'L' or highlights == 'M' or highlights == 'U':
             None
         else:
 
-            highlights = ast.literal_eval(i[10])
+            highlights = get_indices_hard(i[12])
         num_of_users = i[16]
         users = get_question_userid(uberDict, task_num, question_num)
         answers = get_question_answers(uberDict, task_num, question_num)
@@ -252,8 +277,8 @@ def user_rep_task(uberDict, task_csv, user_rep_df):
         if agreement == 'L' or agreement == 'M' or agreement == 'U' or agreement == 0 or type(article_len) == pd.Series:
             pass
         else:
-            print("yaya")
-            agreement = int(agreement)
+
+            agreement = (agreement)
             if question_type == 'nominal':
                 do_rep_calculation_nominal(users, answers, agreement, highlights, user_highlights_id,
                                            user_highlights_start, user_highlights_end, article_len,
@@ -261,7 +286,7 @@ def user_rep_task(uberDict, task_csv, user_rep_df):
 
             if question_type == 'ordinal':
                 hl_users = get_question_hlUsers(uberDict, task_num, question_num)
-                print(users, hl_users)
+
                 do_rep_calculation_ordinal(users, answers, agreement, number_of_answers, highlights, hl_users,
                                            user_highlights_start, user_highlights_end, article_len,
                                            user_rep_df=user_rep_df)
@@ -295,14 +320,18 @@ def user_rep_task(uberDict, task_csv, user_rep_df):
 
 def userid_to_CSV(dataframe):
     """This function will save the User Rep Score dataframe as UserRepScores.csv"""
-    print(dataframe, 'LOOK OVER HERE')
+
     dataframe.to_csv("UserRepScores.csv")
 
 
 def CSV_to_userid(path):
     """This function will take in the path name of the UserRepScore.csv and output the dataframe corresponding."""
-    print(path)
-    return pd.read_csv(path, index_col=False).loc[:, ['Users', 'Score', 'Questions', 'Influence'] + list(range(30))].fillna(0)
+
+    csv = pd.read_csv(path, index_col=False)
+    dataframe = csv.loc[:, ['Users', 'Score', 'Questions', 'Influence', 'Index','LastDate'] + [str(x) for x in range(30)]]
+    dataframe['LastDate'] = [x.date() for x in pd.to_datetime(dataframe['LastDate'], infer_datetime_format= True)]
+    print((dataframe['LastDate'].iloc[0]))
+    return dataframe
 
 
 def last30_to_CSV(dataframe):
@@ -314,12 +343,29 @@ def CSV_to_last30(path):
     """This function opens the csv of the last 30 questions rep points dataframe as last30.csv"""
     return pd.read_csv(path, index_col=False).loc[:, ['Users', 'Index'] + list(range(30))]
 
-def get_user_rep(id, repDF, useRep = False):
-    if repDF is None or not useRep:
-        return 50
-    if repDF.loc[repDF['Users']==id]['Questions'].iloc[0]<30:
-        influence = .8
-    else:
-        influence = float(repDF.loc[repDF['Users']==id]['Influence'].iloc[0])
-    return influence
 
+def get_user_rep(id, repDF, useRep=False):
+    if repDF is None or not useRep:
+        return 1
+
+    else:
+
+        users = repDF.loc[:, 'Users']
+        question = np.array(repDF.loc[:, "Questions"])
+        tot_questions = sum(question)
+        total = np.sum(np.multiply(question,repDF.loc[:, 'Score']))
+        print('what', tot_questions, total)
+        scores = np.array(repDF.loc[:,'Score'])
+        avg_scores = np.mean(scores)
+        std_scores = math.sqrt(np.mean((scores - avg_scores) ** 2))
+        for u in users.tolist():
+            user_score = float(repDF.loc[repDF['Users'] == u]['Score'].iloc[0])
+            infl = norm.cdf(user_score, avg_scores, std_scores)
+
+            repDF.loc[repDF['Users'] == u, 'Influence'] = infl * 2
+            if (u == id):
+                influence = repDF.loc[repDF['Users'] == id, 'Influence']
+                if repDF.loc[repDF['Users'] == id]['Questions'].iloc[0] < 30:
+                    influence = .8
+
+    return influence, repDF
