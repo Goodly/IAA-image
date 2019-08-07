@@ -272,7 +272,7 @@ def toStartsEnds(passers):
                 ends.append(i)
             prev = 1-prev
     if len(ends)<len(starts):
-        ends.append[passers[-1]]
+        ends.append(passers[-1])
     return starts, ends
 
 def toFlagMatrix(starts, ends, nStarts, nEnds, codedUsers, flags):
@@ -346,7 +346,7 @@ def makeList(size):
 
 def getText(start,end, sourceText):
     out = ''
-    for i in range(start,end):
+    for i in range(int(start),int(end)):
         out = out+sourceText[i]
     return out
 print("#####Form TRIAGER AGREED UPON DATA!!!#####")
