@@ -34,7 +34,7 @@ def importData(path, excludedUsers = []):
         cats = art_data['topic_name'].tolist()
         art_users = art_data['contributor_uuid'].tolist()
         numUsers = len(np.unique(art_users))
-        length = art_data['source_text_length'].iloc[0]
+        length = art_data['article_text_length'].iloc[0]
         #print(length)
         source_text = makeList(length)
         #flagExclusions = exclusionList(users, flags, cats)
@@ -53,7 +53,7 @@ def importData(path, excludedUsers = []):
                 for n in namespaces:
                     print(n)
                     print(str(n))
-                length = floor(cat_data['source_text_length'].tolist()[0])
+                length = floor(cat_data['article_text_length'].tolist()[0])
                 texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
 
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)

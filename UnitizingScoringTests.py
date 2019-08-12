@@ -67,7 +67,7 @@ def data_storer(data):
             answers.append([article.loc[article['question_number']== x, 'contributor_id']])
             answers.append([article.loc[article['question_number']== x, 'start_pos']])
             answers.append([article.loc[article['question_number']== x, 'end_pos']])
-            answers.append([article.loc[article['question_number']== x, 'source_text_length']])
+            answers.append([article.loc[article['question_number']== x, 'article_text_length']])
             array.append(answers)
 
             new_dict[x] = array

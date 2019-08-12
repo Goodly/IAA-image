@@ -15,12 +15,12 @@ def create_run(agreement, num_run, num_users = 5, num_questions = 10, source_len
          'contributor_id': np.tile(np.arange(1, num_users + 1), num_questions),
          'question_number': np.repeat(np.arange(1, num_questions + 1), num_users),
          'answer_number': inputs[0], 'start_pos': inputs[1],
-         'end_pos': inputs[2], 'source_text_length': rows + source_len,
+         'end_pos': inputs[2], 'article_text_length': rows + source_len,
          'answer_type': np.repeat(ans_type, len(rows)), 'question_text': rows}
     run = pd.DataFrame(d)
     run = run[['taskrun_article_number', 'contributor_id',
          'question_number', 'answer_number', 'start_pos',
-         'end_pos', 'source_text_length', 'answer_type', 'question_text']]
+         'end_pos', 'article_text_length', 'answer_type', 'question_text']]
     return run
 
 def generate_agreement(agreement, num_users, num_questions, source_len):
