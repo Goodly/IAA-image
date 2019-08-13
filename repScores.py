@@ -10,6 +10,7 @@ import math
 import datetime
 from dateutil.parser import parse
 
+
 def create_user_reps(uberDict, csvPath=None):
     """When this function is called, if there is no existing UserRepScore.csv, will create and save a DataFrame with the columns
     Users, Score, Questions, Influence, Index, and LastDate. Each row corresponds to a unique UserID and their influence, score, and
@@ -18,10 +19,9 @@ def create_user_reps(uberDict, csvPath=None):
     if path.exists(csvPath):
         user_rep = CSV_to_userid(csvPath)
 
-
     else:
         user_rep = pd.DataFrame(
-            columns=['Users', 'Score', 'Questions', 'Influence', 'Index','LastDate'] + [str(x) for x in range(30)])
+            columns=['Users', 'Score', 'Questions', 'Influence', 'Index', 'LastDate'] + [str(x) for x in range(30)])
     date = datetime.datetime.today().date()
 
     for article_sha256 in uberDict.keys():
@@ -35,15 +35,14 @@ def create_user_reps(uberDict, csvPath=None):
                 if ids == 0:
                     continue
                 if ids not in user_rep.loc[:, 'Users'].tolist():
-
                     user_rep = user_rep.append(pd.Series([ids, 1, 1, 1, 0, date] + list(np.zeros(30)),
                                                          index=['Users', 'Score', 'Questions', 'Influence',
-                                                                'Index','LastDate'] + [str(x) for x in range(30)]),
+                                                                'Index', 'LastDate'] + [str(x) for x in range(30)]),
                                                ignore_index=True)
 
-    for id in user_rep.loc[:,'Users'].tolist():
-        if (date - (user_rep.loc[user_rep['Users'] == id,'LastDate'].iloc[0])).days > 60:
-                user_rep = user_rep[user_rep.Users != id]
+    for id in user_rep.loc[:, 'Users'].tolist():
+        if (date - (user_rep.loc[user_rep['Users'] == id, 'LastDate'].iloc[0])).days > 60:
+            user_rep = user_rep[user_rep.Users != id]
 
     return user_rep
 
@@ -193,17 +192,14 @@ def do_math(data, userID, reward):
         return
     oldlast30mean = np.mean(np.array(data.loc[data['Users'] == userID, [str(x) for x in range(30)]]))
 
-
     user = data.loc[data['Users'] == userID]
 
-
-    data.loc[data['Users']==userID, 'LastDate'] = datetime.datetime.today().date()
+    data.loc[data['Users'] == userID, 'LastDate'] = datetime.datetime.today().date()
     index = data.loc[data['Users'] == userID, 'Index'].tolist()[0]
     data.loc[data['Users'] == userID, str(int(index))] = reward
 
     last30 = data.loc[data['Users'] == userID, [str(x) for x in range(30)]]
     last30mean = np.mean(np.array(last30.dropna(axis=1)))
-
 
     if (index < 29):
         data.loc[data['Users'] == userID, 'Index'] = index + 1
@@ -227,7 +223,6 @@ def do_math(data, userID, reward):
     else:
 
         data.loc[data['Users'] == userID, 'Score'] = (points / n)
-
 
     influence, data = get_user_rep(userID, data, True)
     userid_to_CSV(data)
@@ -325,9 +320,10 @@ def CSV_to_userid(path):
     """This function will take in the path name of the UserRepScore.csv and output the dataframe corresponding."""
 
     csv = pd.read_csv(path, index_col=False)
-    dataframe = csv.loc[:, ['Users', 'Score', 'Questions', 'Influence', 'Index','LastDate'] + [str(x) for x in range(30)]]
-    dataframe['LastDate'] = [x.date() for x in pd.to_datetime(dataframe['LastDate'], infer_datetime_format= True)]
-    print((dataframe['LastDate'].iloc[0]))
+    dataframe = csv.loc[:,
+                ['Users', 'Score', 'Questions', 'Influence', 'Index', 'LastDate'] + [str(x) for x in range(30)]]
+    dataframe['LastDate'] = [x.date() for x in pd.to_datetime(dataframe['LastDate'], infer_datetime_format=True)]
+
     return dataframe
 
 
@@ -352,10 +348,8 @@ def get_user_rep(id, repDF, useRep=False):
         x = 2
         users = repDF.loc[:, 'Users']
         question = np.array(repDF.loc[:, "Questions"])
-        tot_questions = sum(question)
-        total = np.sum(np.multiply(question,repDF.loc[:, 'Score']))
-        print('what', tot_questions, total)
-        scores = np.array(repDF.loc[:,'Score'])
+
+        scores = np.array(repDF.loc[:, 'Score'])
         avg_scores = np.mean(scores)
         std_scores = math.sqrt(np.mean((scores - avg_scores) ** 2))
         for u in users.tolist():
