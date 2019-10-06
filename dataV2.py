@@ -61,6 +61,7 @@ def data_storer(path, answerspath, schemapath):
             starts, ends, hlUsers, length, targetText, hlAns = findStartsEnds(task_schema, qlabel, task_hl)
             qDict[qnum] = {
                'answers': answers,
+                'numChoices':10,
                'users': users,
                'numUsers': numUsers,
                'starts': starts,
@@ -447,6 +448,8 @@ def get_question_start(data, task_id, question_num):
 def get_question_end(data, task_id, question_num):
     return data[task_id]['quesData'][question_num]['ends']
 
+def get_question_numchoices(data, task_id, question_num):
+    return data[task_id]['quesData'][question_num]['numChoices']
 
 def get_text_length(data, task_id, question_num):
     try:
@@ -511,6 +514,7 @@ def finder(ser, a):
             if ser[i]==a:
                     return i
     return -1
+
 def make_directory(directory):
     if directory[-1] != '/':
         directory = directory +'/'
@@ -519,6 +523,7 @@ def make_directory(directory):
     except FileExistsError:
         pass
     return directory
+
 def get_type_hard(type, ques):
     #ques = parse(ques, 'Q')
     #print('type', type, ques)
@@ -561,6 +566,23 @@ def get_type_hard(type, ques):
                 12: ['ordinal', 10],
                 13: ['ordinal', 10],
                 15: ['ordinal', 10]
+            },
+        'Language Specialist V4':
+            {
+                1:['checklist', 13],
+                2:['ordinal', 5],
+                3:['ordinal',5],
+                5:['ordinal', 5],
+                6:['ordinal', 8],
+                7:['nominal', 1],
+                9:['ordinal', 5],
+                10:['ordinal',4],
+                11:['ordinal',5],
+                12:['ordinal', 4],
+                13:['ordinal', 5],
+                14:['ordinal', 10],
+                15:['ordinal', 10]
+
             },
         'Confidence':
             {
@@ -621,21 +643,21 @@ def get_type_hard(type, ques):
             },
         'Evidence Specialist':
             {
-                2:['checklist', 3],
-                3:['checklist', 9],
+                1:['checklist', 3],
+                2:['checklist', 9],
                 #TODO: this is an interval quesiton, prob gonna get ignored l8r though
-                4:['nominal', 1],
-                5:['ordinal', 6],
-                6:['ordinal', 5],
-                7:['nominal', 3],
-                8:['nominal', 1],
-                9:['ordinal', 5],
-                11:['ordinal', 3],
-                12:['ordinal', 5],
-                13:['ordinal', 5],
-                14:['ordinal', 4],
-                15:['ordinal', 10],
-                16:['ordinal', 10]
+                3:['nominal', 1],
+                4:['ordinal', 6],
+                5:['ordinal', 5],
+                6:['nominal', 3],
+                7:['nominal', 1],
+                8:['ordinal', 5],
+                9:['ordinal', 3],
+                10:['ordinal', 5],
+                11:['ordinal', 5],
+                12:['ordinal', 4],
+                13:['ordinal', 10],
+                14:['ordinal', 10]
             },
         'Evidence Specialist 3':
             {

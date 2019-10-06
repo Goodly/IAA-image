@@ -33,8 +33,10 @@ def importData(path, excludedUsers = []):
         flags = art_data['case_number'].tolist()
         cats = art_data['topic_name'].tolist()
         art_users = art_data['contributor_uuid'].tolist()
-        numUsers = len(np.unique(art_users))
-        length = art_data['article_text_length'].iloc[0]
+        #numUsers = len(np.unique(art_users))
+        numUsers = art_data['taskrun_count'].iloc[0]
+        #redundancy = art_data['']
+        length = art_data['source_text_length'].iloc[0]
         #print(length)
         source_text = makeList(length)
         #flagExclusions = exclusionList(users, flags, cats)
@@ -53,7 +55,7 @@ def importData(path, excludedUsers = []):
                 for n in namespaces:
                     print(n)
                     print(str(n))
-                length = floor(cat_data['article_text_length'].tolist()[0])
+                length = floor(cat_data['source_text_length'].tolist()[0])
                 texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
 
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
@@ -390,7 +392,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_file = './march_triage/Sp-19-Urap-March-FormTriage-2019-05-01T0551-Highlighter.csv'
+    input_file = './march_triage/march2019SemTri-2019-04-12T1713-Highlighter.csv'
     if args.input_file:
         input_file = args.input_file
     dirname = os.path.dirname(input_file)

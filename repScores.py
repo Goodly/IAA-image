@@ -342,7 +342,7 @@ def get_user_rep(id, repDF, useRep=False):
     every users' score into a CDF and calculate the number of standard deviations that user is from the average,
     and using that multiplied by a multiplier X."""
     if repDF is None or not useRep:
-        return 1
+        return 1, repDF
 
     else:
         x = 2

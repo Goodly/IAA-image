@@ -4,16 +4,20 @@ import os
 import json
 import csv
 
-def splitcsv(directory):
+from dataV2 import get_indices_hard
+
+
+def splitcsv(directory, textseparator = '//'):
     #print('splitting')
     pointsFile = findWeights(directory)
     #print(pointsFile)
+    print(directory, pointsFile)
     pointsdf = pd.read_csv(directory+'/'+pointsFile)
     #print(pointsdf)
     valid_points = pointsdf[~pd.isna(pointsdf['article_sha256'])]
     articles = np.unique(valid_points['article_sha256'])
     final_cols = ['Article ID', 'Credibility Indicator ID', 'Credibilty Indicator Category',
-                  'Credibility Indicator Name', 'Points', 'Indices of Label in Article', 'Start', 'End']
+                  'Credibility Indicator Name', 'Points', 'Indices of Label in Article', 'Start', 'End', 'target_text']
 
 
     for art in articles:
@@ -32,26 +36,32 @@ def splitcsv(directory):
                 end = -1
                 cred_ind_name = sch_df['Label'].iloc[j]
                 indices = sch_df['highlighted_indices'].iloc[j]
-                points = sch_df['points'].iloc[j]
+                points = sch_df['agreement_adjusted_points'].iloc[j]
+                text = sch_df['target_text'].iloc[j]
                 #if there is a unitization
-                if not (isinstance(indices, float)) and (not (isinstance(indices, str)) or len(indices) > 1):
-                    indices = json.loads(indices)
-                    starts, ends = indicesToStartEnd(indices)
-
+                if not (isinstance(indices, float)) and (not (isinstance(indices, str)) or len(indices) > 2):
+                    print(indices, len(indices))
+                    indices = get_indices_hard(indices)
+                    sei = indicesToStartEnd(indices)
+                    print("sei" ,sei)
+                    starts = sei[0]
+                    ends = sei[1]
+                    chunks = sei[2] #chunk of the index that we're investigating
                     for k in range(len(starts)):
                         start = starts[k]
                         end = ends[k]
+                        indices = chunks[k]
                         #addend = pd.DataFrame([art_id, cred_id, cred_cat, cred_ind_name, points, indices,start,
                         #                       end])
-                        addend = [art_id, cred_id, cred_cat, cred_ind_name, points, indices,start, end]
+                        addend = [art_id, cred_id, cred_cat, cred_ind_name, points, indices,start, end, text]
                         final_out.append(addend)
                         #set point value to 0 to avoid double counting
                         #the visualizatio sums up the column and automatically combines separate unitizations with
                         #the same label
                         points = 0
                 else:
-                    addend = pd.DataFrame([art_id, cred_id, cred_cat, cred_ind_name, points, indices, start, end])
-                    addend = [art_id, cred_id, cred_cat, cred_ind_name, points, indices, start, end]
+                    #addend = pd.DataFrame([art_id, cred_id, cred_cat, cred_ind_name, points, indices, start, end])
+                    addend = [art_id, cred_id, cred_cat, cred_ind_name, points, indices, start, end, text]
                     final_out.append(addend)
                 #final_out = pd.concat([final_out, addend], axis =0, names = final_cols)
 
@@ -76,15 +86,25 @@ def findWeights(directory):
 def indicesToStartEnd(indices):
     starts = []
     ends = []
+    breakpointer = []
     last = -1
+    print("INDPASS", indices)
     arr = np.array(indices)
     if len(indices)<1:
-        return [-1],[-1]
+        return [-1],[-1], [-1]
     for i in range(len(indices)):
         if indices[i]-last>1 and indices[i] not in starts:
             starts.append(indices[i])
             ends.append(indices[i-1])
+            breakpointer.append(i)
         last = indices[i]
+    chunks = []
+    breakpointer.append(len(indices)-1)
+    base = 0
+    for i in range(1, len(breakpointer)):
+        chunks.append(indices[base:breakpointer[i]])
+        base = breakpointer[i]
     #ends.append(indices[len(indices)-1])
-    return sorted(starts), sorted(ends)
+    print(starts, ends, sorted(chunks))
+    return sorted(starts), sorted(ends), sorted(chunks)
 #splitcsv('scoring_urap')

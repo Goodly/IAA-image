@@ -8,7 +8,7 @@ from dataV2 import *
 def eval_dependency(directory, iaa_dir, out_dir = None):
     print("DEPENDENCY STARTING")
     if out_dir is None:
-        out_dir = 'scoring_'+directory
+        out_dir = 'scoring_' + directory
     print('dir', directory, iaa_dir, out_dir)
     schema = []
     iaa = []
@@ -31,10 +31,12 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
     out_dir = make_directory(out_dir)
     ins = []
     for i in range(len(schema)):
+        print(schema, iaa)
         ins.append((schema[i], iaa[i], out_dir))
         #handleDependencies(schema[i], iaa[i], out_dir)
 
     with Pool() as pool:
+        print('pool ins:\n',ins)
         pool.map(unpack_dependency_ins, ins)
 
     return out_dir

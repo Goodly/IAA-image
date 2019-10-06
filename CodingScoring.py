@@ -255,6 +255,7 @@ def scaleFromWeights(arr, answers, weights, users, repDF, useRep=False):
         if (arr[i], users[i], answers[i]) not in checked:
             checked.append((arr[i], users[i], answers[i]))
             addition = np.array(arr[i])
+            #the case where userep = false is handled inside get_user_rep
             rep, repDF = get_user_rep(users[i], repDF, useRep=useRep)
             ans = answers[i]
             weight = weights[int(ans)]
@@ -265,7 +266,8 @@ def scaleFromWeights(arr, answers, weights, users, repDF, useRep=False):
             sumTotalScaling += scaleBy
             addition = np.repeat(addition, scaleBy)
             scaled = np.append(scaled, addition)
-    userid_to_CSV(repDF)
+    if useRep:
+        userid_to_CSV(repDF)
     return scaled, sumTotalScaling, userWeightDict
 
 

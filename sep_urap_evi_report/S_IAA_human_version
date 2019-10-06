@@ -1,0 +1,198 @@
+,article_num,schema_namespace,question_Number,question_type,agreed_Answer,coding_perc_agreement,alpha_unitizing_score,agreement_score,num_users,num_answer_choices,target_text,question_text,answer_content
+0,1712,Evidence Specialist,1,checklist,1,0.7647058823529411,L,0.38235294117647056,17,3,,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,"General Causation (In general, X causes Y.)"
+1,1712,Evidence Specialist,1,checklist,L,0.29411764705882354,L,0.14705882352941174,17,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+2,1712,Evidence Specialist,1,checklist,L,0.05882352941176471,L,0.029411764705882356,17,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+3,1712,Evidence Specialist,2,checklist,M,0.5294117647058824,M,0.2647058823529412,17,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+4,1712,Evidence Specialist,2,checklist,M,0.4705882352941176,M,0.2352941176470588,17,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+5,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,17,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+6,1712,Evidence Specialist,2,checklist,M,0.4117647058823529,M,0.2058823529411765,17,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+7,1712,Evidence Specialist,2,checklist,M,0.4705882352941176,M,0.2352941176470588,17,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+8,1712,Evidence Specialist,2,checklist,L,0.05882352941176471,L,0.029411764705882356,17,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+9,1712,Evidence Specialist,2,checklist,L,0.05882352941176471,L,0.029411764705882356,17,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+10,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,17,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+11,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,17,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+12,1712,Evidence Specialist,4,ordinal,4,0.7851516563452303,,0.7851516563452303,15,6,,How representative is the sample of the population that the claim is made about?,Slightly representative
+13,1712,Evidence Specialist,5,ordinal,M,0.5538098386371053,M,0.27690491931855266,8,5,M,"Was there an adequate control? If so, highlight section.",M
+14,1712,Evidence Specialist,6,nominal,3,0.8,,0.8,5,3,,Was randomized assignment used?,Can't tell; not enough info
+15,1712,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+16,1712,Evidence Specialist,8,ordinal,4,0.8430274021476247,,0.8430274021476247,17,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Somewhat less likely
+17,1712,Evidence Specialist,9,ordinal,1,0.6661488014958062,0.7353094485756854,0.7007291250357458,17,3,The patients who saw the heavy opioid prescribers were three times more likely to receive a prescription for opioids compared with the patients who saw the more judicious opioid prescribers at the same hospital,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,Yes
+18,1712,Evidence Specialist,10,ordinal,5,0.6892836867970786,,0.6892836867970786,15,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Very Unlikely
+19,1712,Evidence Specialist,11,ordinal,2,0.6938806728638239,,0.6938806728638239,15,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Somewhat Likely
+20,1712,Evidence Specialist,12,ordinal,3,0.698001590829121,0.5147392366352654,0.6063704137321932,17,4,The findings were specific to emergency room doctors and Medicare recipients,Does the author suggest in any way that further evidence might improve our understanding of the topic?,I can't tell
+21,1712,Evidence Specialist,13,ordinal,5,0.7938496120278173,,0.7938496120278173,17,10,,"How difficult was this task for you, on the whole?",5: Middling difficulty
+22,1712,Evidence Specialist,14,ordinal,7,0.805754049389831,,0.805754049389831,17,10,,"How confident are you about your answers, on the whole?",7
+23,1712,Evidence Specialist,1,checklist,1,0.8571428571428571,0.6811045789009615,0.7691237180219093,14,3,"So the higher the chances of getting opioids at a single doctor visit, the higher the risk of becoming a regular user",Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,"General Causation (In general, X causes Y.)"
+24,1712,Evidence Specialist,1,checklist,M,0.5,M,0.25,14,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+25,1712,Evidence Specialist,1,checklist,L,0.0,L,0.0,14,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+26,1712,Evidence Specialist,2,checklist,1,0.7857142857142857,0.6686769434548292,0.7271956145845575,14,9,"the patients who, by chance, saw a doctor who more frequently prescribed the drugs were 30 percent more likely to become long-term users of painkillers",What evidence is given for the primary causal claim? Select all that apply.,Correlation
+27,1712,Evidence Specialist,2,checklist,L,0.21428571428571427,L,0.10714285714285714,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+28,1712,Evidence Specialist,2,checklist,L,0.07142857142857142,L,0.03571428571428571,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+29,1712,Evidence Specialist,2,checklist,L,0.14285714285714285,L,0.07142857142857142,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+30,1712,Evidence Specialist,2,checklist,L,0.14285714285714285,L,0.07142857142857142,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+31,1712,Evidence Specialist,2,checklist,L,0.14285714285714285,L,0.07142857142857142,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+32,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+33,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+34,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+35,1712,Evidence Specialist,4,ordinal,4,0.6651340727608744,,0.6651340727608744,13,6,,How representative is the sample of the population that the claim is made about?,Slightly representative
+36,1712,Evidence Specialist,5,ordinal,U,1.0,U,0.5,2,5,U,"Was there an adequate control? If so, highlight section.",U
+37,1712,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+38,1712,Evidence Specialist,8,ordinal,4,0.7634006890524925,,0.7634006890524925,14,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Somewhat less likely
+39,1712,Evidence Specialist,9,ordinal,1,0.7838601327915393,0.6011075432116146,0.692483838001577,14,3,"by chance, saw a doctor who more frequently prescribed the drugs were 30 percent more likely to become long-term users of painkillers",Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,Yes
+40,1712,Evidence Specialist,10,ordinal,4,0.722763216983975,,0.722763216983975,13,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Somewhat Unlikely
+41,1712,Evidence Specialist,11,ordinal,3,0.7618930197763871,,0.7618930197763871,13,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Not Sure
+42,1712,Evidence Specialist,12,ordinal,3,0.6330138678015218,L,0.3165069339007609,14,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,I can't tell
+43,1712,Evidence Specialist,13,ordinal,5,0.7803611880010011,,0.7803611880010011,14,10,,"How difficult was this task for you, on the whole?",5: Middling difficulty
+44,1712,Evidence Specialist,14,ordinal,7,0.8453464772890988,,0.8453464772890988,14,10,,"How confident are you about your answers, on the whole?",7
+45,100001,Evidence Specialist,1,checklist,L,0.1,L,0.05,10,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+46,100001,Evidence Specialist,1,checklist,M,0.4,M,0.2,10,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+47,100001,Evidence Specialist,1,checklist,M,0.5,M,0.25,10,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+48,100001,Evidence Specialist,2,checklist,L,0.2,L,0.1,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+49,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+50,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+51,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+52,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+53,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+54,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+55,100001,Evidence Specialist,2,checklist,L,0.2,L,0.1,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+56,100001,Evidence Specialist,2,checklist,M,0.6,M,0.3,5,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+57,100001,Evidence Specialist,3,0,0,0.0,0,0.0,0,0,0,What other evidence is given?,zero
+58,100001,Evidence Specialist,4,ordinal,U,1.0,U,0.5,1,6,U,How representative is the sample of the population that the claim is made about?,U
+59,100001,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+60,100001,Evidence Specialist,8,ordinal,M,0.7089324849140702,M,0.3544662424570351,5,5,M,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",M
+61,100001,Evidence Specialist,9,ordinal,3,0.9045240422841724,,0.9045240422841724,10,3,,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,No
+62,100001,Evidence Specialist,10,ordinal,U,1.0,U,0.5,1,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",U
+63,100001,Evidence Specialist,11,ordinal,U,1.0,U,0.5,1,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",U
+64,100001,Evidence Specialist,12,ordinal,4,0.9303535331273488,,0.9303535331273488,10,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,"No, not at all"
+65,100001,Evidence Specialist,13,ordinal,1,0.9296090941665588,,0.9296090941665588,10,10,,"How difficult was this task for you, on the whole?",1: Easier than anything I've ever done in a classroom setting
+66,100001,Evidence Specialist,14,ordinal,10,0.7327460029266933,,0.7327460029266933,10,10,,"How confident are you about your answers, on the whole?",10: 100% certain about all my answers
+67,100001,Evidence Specialist,1,checklist,L,0.1,L,0.05,10,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+68,100001,Evidence Specialist,1,checklist,M,0.4,M,0.2,10,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+69,100001,Evidence Specialist,1,checklist,M,0.5,M,0.25,10,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+70,100001,Evidence Specialist,2,checklist,L,0.2,L,0.1,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+71,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+72,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+73,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+74,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+75,100001,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+76,100001,Evidence Specialist,2,checklist,L,0.2,L,0.1,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+77,100001,Evidence Specialist,2,checklist,L,0.2,L,0.1,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+78,100001,Evidence Specialist,2,checklist,M,0.4,M,0.2,5,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+79,100001,Evidence Specialist,3,0,0,0.0,0,0.0,0,0,0,What other evidence is given?,zero
+80,100001,Evidence Specialist,4,ordinal,U,1.0,U,0.5,1,6,U,How representative is the sample of the population that the claim is made about?,U
+81,100001,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+82,100001,Evidence Specialist,8,ordinal,M,0.6699977484482834,M,0.3349988742241417,5,5,M,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",M
+83,100001,Evidence Specialist,9,ordinal,3,0.7194195735420668,,0.7194195735420668,10,3,,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,No
+84,100001,Evidence Specialist,10,ordinal,U,0.9855004303048848,U,0.4927502151524424,2,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",U
+85,100001,Evidence Specialist,11,ordinal,U,0.9411063109464316,U,0.4705531554732158,2,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",U
+86,100001,Evidence Specialist,12,ordinal,4,0.9303535331273488,,0.9303535331273488,10,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,"No, not at all"
+87,100001,Evidence Specialist,13,ordinal,4,0.6990870867842975,,0.6990870867842975,10,10,,"How difficult was this task for you, on the whole?",4
+88,100001,Evidence Specialist,14,ordinal,7,0.7579062238893168,,0.7579062238893168,10,10,,"How confident are you about your answers, on the whole?",7
+89,100000,Evidence Specialist,1,checklist,1,1.0,0.5225495672236578,0.7612747836118289,14,3,Fewer hours of sleep on an average school night [is] associated with increased odds of all selected unsafe behaviors,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,"General Causation (In general, X causes Y.)"
+90,100000,Evidence Specialist,1,checklist,L,0.14285714285714285,L,0.07142857142857142,14,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+91,100000,Evidence Specialist,1,checklist,L,0.0,L,0.0,14,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+92,100000,Evidence Specialist,2,checklist,1,0.7857142857142857,0.46141393013593546,0.6235641079251106,14,9,"associated with//Teens who slept for less than six hours per night were three times more likely to report considering suicide, planning a suicide attempt or attempting suicide, compared with teens who slept eight hours or more",What evidence is given for the primary causal claim? Select all that apply.,Correlation
+93,100000,Evidence Specialist,2,checklist,L,0.21428571428571427,L,0.10714285714285714,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+94,100000,Evidence Specialist,2,checklist,L,0.07142857142857142,L,0.03571428571428571,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+95,100000,Evidence Specialist,2,checklist,L,0.07142857142857142,L,0.03571428571428571,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+96,100000,Evidence Specialist,2,checklist,M,0.35714285714285715,M,0.17857142857142858,14,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+97,100000,Evidence Specialist,2,checklist,L,0.07142857142857142,L,0.03571428571428571,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+98,100000,Evidence Specialist,2,checklist,L,0.2857142857142857,L,0.14285714285714285,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+99,100000,Evidence Specialist,2,checklist,L,0.07142857142857142,L,0.03571428571428571,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+100,100000,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+101,100000,Evidence Specialist,3,0,0,0.0,0,0.0,0,0,0,What other evidence is given?,zero
+102,100000,Evidence Specialist,4,ordinal,3,0.6135183410843547,,0.6135183410843547,14,6,,How representative is the sample of the population that the claim is made about?,Somewhat representative
+103,100000,Evidence Specialist,5,ordinal,5,0.9506245147359522,L,0.4753122573679761,5,5,,"Was there an adequate control? If so, highlight section.",Can't tell; not enough info
+104,100000,Evidence Specialist,6,nominal,U,1.0,U,0.5,2,3,U,Was randomized assignment used?,U
+105,100000,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+106,100000,Evidence Specialist,8,ordinal,4,0.6855881636796558,,0.6855881636796558,14,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Somewhat less likely
+107,100000,Evidence Specialist,9,ordinal,1,0.7016097318075005,0.6421022269881881,0.6718559793978442,14,3,more likely to report considering suicide,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,Yes
+108,100000,Evidence Specialist,10,ordinal,4,0.6812876948184581,,0.6812876948184581,12,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Somewhat Unlikely
+109,100000,Evidence Specialist,11,ordinal,2,0.6998361829221404,,0.6998361829221404,12,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Somewhat Likely
+110,100000,Evidence Specialist,12,ordinal,3,0.7492356058587806,,0.7492356058587806,14,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,I can't tell
+111,100000,Evidence Specialist,13,ordinal,4,0.7948563296649042,,0.7948563296649042,14,10,,"How difficult was this task for you, on the whole?",4
+112,100000,Evidence Specialist,14,ordinal,5,0.8214073026142381,,0.8214073026142381,14,10,,"How confident are you about your answers, on the whole?",5: 50-50
+113,1712,Evidence Specialist,1,checklist,M,0.5,M,0.25,14,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+114,1712,Evidence Specialist,1,checklist,2,0.5714285714285714,0.5637569257407034,0.5675927485846374,14,3,30 percent higher use when patients saw higher dose prescribers,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,"Singular Causation (In this case, A caused/is causing B)"
+115,1712,Evidence Specialist,1,checklist,L,0.0,L,0.0,14,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+116,1712,Evidence Specialist,2,checklist,1,0.7142857142857143,0.6026550065460619,0.6584703604158881,14,9,30 percent higher use when patients saw higher dose prescribers,What evidence is given for the primary causal claim? Select all that apply.,Correlation
+117,1712,Evidence Specialist,2,checklist,L,0.2857142857142857,L,0.14285714285714285,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+118,1712,Evidence Specialist,2,checklist,L,0.14285714285714285,L,0.07142857142857142,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+119,1712,Evidence Specialist,2,checklist,L,0.07142857142857142,L,0.03571428571428571,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+120,1712,Evidence Specialist,2,checklist,M,0.42857142857142855,M,0.21428571428571427,14,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+121,1712,Evidence Specialist,2,checklist,L,0.14285714285714285,L,0.07142857142857142,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+122,1712,Evidence Specialist,2,checklist,L,0.07142857142857142,L,0.03571428571428571,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+123,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+124,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+125,1712,Evidence Specialist,4,ordinal,4,0.6651269006857319,,0.6651269006857319,14,6,,How representative is the sample of the population that the claim is made about?,Slightly representative
+126,1712,Evidence Specialist,5,ordinal,4,0.8479969065549499,,0.8479969065549499,6,5,,"Was there an adequate control? If so, highlight section.",No control
+127,1712,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+128,1712,Evidence Specialist,8,ordinal,5,0.7005094900890343,,0.7005094900890343,14,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Much less likely
+129,1712,Evidence Specialist,9,ordinal,1,0.7431916950299364,0.5100344228659677,0.626613058947952,14,3,30 percent higher use when patients saw higher dose prescribers,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,Yes
+130,1712,Evidence Specialist,10,ordinal,4,0.5898137489555464,,0.5898137489555464,13,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Somewhat Unlikely
+131,1712,Evidence Specialist,11,ordinal,2,0.6885110809668222,,0.6885110809668222,13,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Somewhat Likely
+132,1712,Evidence Specialist,12,ordinal,4,0.6321160719436829,1.0,0.8160580359718415,14,4,though the researchers also acknowledged this long-term use required prescriptions from other doctors after the ER visit,Does the author suggest in any way that further evidence might improve our understanding of the topic?,"No, not at all"
+133,1712,Evidence Specialist,13,ordinal,5,0.7651827729732947,,0.7651827729732947,14,10,,"How difficult was this task for you, on the whole?",5: Middling difficulty
+134,1712,Evidence Specialist,14,ordinal,6,0.8691116792908095,,0.8691116792908095,14,10,,"How confident are you about your answers, on the whole?",6
+135,100003,Evidence Specialist,1,checklist,L,0.1,L,0.05,10,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+136,100003,Evidence Specialist,1,checklist,M,0.5,M,0.25,10,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+137,100003,Evidence Specialist,1,checklist,M,0.4,M,0.2,10,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+138,100003,Evidence Specialist,2,checklist,L,0.0,L,0.0,6,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+139,100003,Evidence Specialist,2,checklist,L,0.3333333333333333,L,0.16666666666666666,6,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+140,100003,Evidence Specialist,2,checklist,L,0.0,L,0.0,6,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+141,100003,Evidence Specialist,2,checklist,L,0.0,L,0.0,6,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+142,100003,Evidence Specialist,2,checklist,L,0.0,L,0.0,6,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+143,100003,Evidence Specialist,2,checklist,L,0.0,L,0.0,6,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+144,100003,Evidence Specialist,2,checklist,M,0.5,M,0.25,6,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+145,100003,Evidence Specialist,2,checklist,L,0.0,L,0.0,6,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+146,100003,Evidence Specialist,2,checklist,L,0.16666666666666666,L,0.08333333333333333,6,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+147,100003,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+148,100003,Evidence Specialist,8,ordinal,3,0.7325549838191101,,0.7325549838191101,6,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Equally likely
+149,100003,Evidence Specialist,9,ordinal,3,0.7782250843154408,,0.7782250843154408,10,3,,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,No
+150,100003,Evidence Specialist,10,ordinal,U,1.0,U,0.5,1,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",U
+151,100003,Evidence Specialist,11,ordinal,U,1.0,U,0.5,1,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",U
+152,100003,Evidence Specialist,12,ordinal,4,0.8764139158675059,,0.8764139158675059,10,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,"No, not at all"
+153,100003,Evidence Specialist,13,ordinal,3,0.7205219399534584,,0.7205219399534584,10,10,,"How difficult was this task for you, on the whole?",3
+154,100003,Evidence Specialist,14,ordinal,6,0.671568569884885,,0.671568569884885,10,10,,"How confident are you about your answers, on the whole?",6
+155,100000,Evidence Specialist,1,checklist,L,0.09090909090909093,L,0.045454545454545456,11,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+156,100000,Evidence Specialist,1,checklist,M,0.3636363636363637,M,0.18181818181818185,11,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+157,100000,Evidence Specialist,1,checklist,M,0.5454545454545454,M,0.2727272727272727,11,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
+158,100000,Evidence Specialist,2,checklist,L,0.2,L,0.1,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+159,100000,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+160,100000,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+161,100000,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+162,100000,Evidence Specialist,2,checklist,M,0.4,M,0.2,5,9,M,What evidence is given for the primary causal claim? Select all that apply.,M
+163,100000,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+164,100000,Evidence Specialist,2,checklist,7,0.8,L,0.4,5,9,,What evidence is given for the primary causal claim? Select all that apply.,Experts are cited
+165,100000,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+166,100000,Evidence Specialist,2,checklist,L,0.0,L,0.0,5,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
+167,100000,Evidence Specialist,4,ordinal,U,0.874469117916141,U,0.4372345589580705,2,6,U,How representative is the sample of the population that the claim is made about?,U
+168,100000,Evidence Specialist,5,ordinal,U,0.8479969065549499,U,0.42399845327747493,2,5,U,"Was there an adequate control? If so, highlight section.",U
+169,100000,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+170,100000,Evidence Specialist,8,ordinal,3,0.8712287620450551,,0.8712287620450551,5,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Equally likely
+171,100000,Evidence Specialist,9,ordinal,3,0.9710945002323512,L,0.4855472501161757,11,3,,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,No
+172,100000,Evidence Specialist,10,ordinal,M,0.7089324849140702,M,0.3544662424570351,5,5,M,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",M
+173,100000,Evidence Specialist,11,ordinal,3,0.7966412823139591,,0.7966412823139591,5,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Not Sure
+174,100000,Evidence Specialist,12,ordinal,4,0.6539342115045418,,0.6539342115045418,11,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,"No, not at all"
+175,100000,Evidence Specialist,13,ordinal,3,0.7430225401051285,,0.7430225401051285,11,10,,"How difficult was this task for you, on the whole?",3
+176,100000,Evidence Specialist,14,ordinal,6,0.8188877953629998,,0.8188877953629998,11,10,,"How confident are you about your answers, on the whole?",6
+177,100000,Evidence Specialist,1,checklist,L,0.1,L,0.05,10,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+178,100000,Evidence Specialist,1,checklist,L,0.0,L,0.0,10,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
+179,100000,Evidence Specialist,1,checklist,3,0.9,0.630977971158129,0.7654889855790645,10,3,the research does not show a causal relationship between sleep and higher risk behaviors,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,No causal claim made
+180,100000,Evidence Specialist,2,checklist,U,0.0,U,0.0,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+181,100000,Evidence Specialist,2,checklist,U,0.0,U,0.0,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+182,100000,Evidence Specialist,2,checklist,U,0.0,U,0.0,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+183,100000,Evidence Specialist,2,checklist,U,0.0,U,0.0,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+184,100000,Evidence Specialist,2,checklist,U,0.0,U,0.0,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+185,100000,Evidence Specialist,2,checklist,U,0.0,U,0.0,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+186,100000,Evidence Specialist,2,checklist,U,0.0,U,0.0,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+187,100000,Evidence Specialist,2,checklist,U,0.0,U,0.0,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+188,100000,Evidence Specialist,2,checklist,U,1.0,U,0.5,1,9,U,What evidence is given for the primary causal claim? Select all that apply.,U
+189,100000,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
+190,100000,Evidence Specialist,8,ordinal,U,1.0,U,0.5,1,5,U,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",U
+191,100000,Evidence Specialist,9,ordinal,3,0.7194195735420668,,0.7194195735420668,10,3,,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,No
+192,100000,Evidence Specialist,10,ordinal,U,0.8479969065549499,U,0.42399845327747493,2,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",U
+193,100000,Evidence Specialist,11,ordinal,U,0.8479969065549499,U,0.42399845327747493,2,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",U
+194,100000,Evidence Specialist,12,ordinal,2,0.6494278094302028,0.5991272050404048,0.6242775072353038,10,4,both note the limitations of the study include the fact that the data are self-reported by participants//causal,Does the author suggest in any way that further evidence might improve our understanding of the topic?,"Yes, implicitly"
+195,100000,Evidence Specialist,13,ordinal,7,0.6993844932016142,,0.6993844932016142,10,10,,"How difficult was this task for you, on the whole?",7
+196,100000,Evidence Specialist,14,ordinal,8,0.7414452497642225,,0.7414452497642225,10,10,,"How confident are you about your answers, on the whole?",8

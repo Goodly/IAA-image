@@ -41,6 +41,9 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
         data to be visualized
     """
     print("IAA PROPER")
+    #iaa_dir is now handled inside IAA.py
+    #if iaa_dir is None:
+    #    iaa_dir = 's_iaa_'+directory
     rep_direc = directory + "_report"
     make_directory(rep_direc)
     start = time()
@@ -69,7 +72,7 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     pointSort(scoring_dir, tua_file)
     print("----------------SPLITTING-----------------------------------")
     splitcsv(scoring_dir)
-    print("DONE, time elapsed", time()-start)
+    #print("DONE, time elapsed", time()-start)
 
 def load_args():
     parser = argparse.ArgumentParser()
@@ -118,8 +121,8 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'urap'
-    tua_file = './mt/allTUAS.csv'
+    input_dir = 'sep_urap_evi'
+    tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
     rep_file = './UserRepScores.csv'

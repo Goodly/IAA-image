@@ -8,10 +8,15 @@ import uuid
 
 def pointSort(directory, all_TUAs_dir = "./config/allTUAs.csv",
               scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False):
-
+    print("files in")
+    for root, dir, files in os.walk("./config/"):
+        for file in files:
+            print(file)
+            if 'TUA' in file:
+                allTuaName = './config/'+file
     #Load everything so that it's a pandas dataframe
     scale_guide = pd.read_csv(scale_guide_dir)
-    all_tuas = pd.read_csv(all_TUAs_dir)
+    all_tuas = pd.read_csv(allTuaName)
     files = getFiles(directory)
 
     if not rep_direc:
@@ -21,7 +26,8 @@ def pointSort(directory, all_TUAs_dir = "./config/allTUAs.csv",
     hasArg = False
     source_file = files[0]
     arg_file = files[1]
-
+    argRel = None
+    sourceRel = None
     if source_file:
         hasSource = True
         sourceRel = pd.read_csv(files[0])
@@ -42,25 +48,26 @@ def pointSort(directory, all_TUAs_dir = "./config/allTUAs.csv",
 
     if reporting:
         make_directory(rep_direc)
-        weights.to_csv(rep_direc+'/weightsStacked'+str(i)+'.csv')
+        weights.to_csv(rep_direc+'/weightsStacked'+str(len(weightFiles))+'.csv')
+    if hasArg or hasSource:
+        all_tuas = collapse_all_tuas(all_tuas, hasArg, argRel, hasSource, sourceRel, reporting)
+        if reporting:
+            all_tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+str(i)+'.csv')
 
-    all_tuas = collapse_all_tuas(all_tuas, hasArg, argRel, hasSource, sourceRel, reporting)
-    if reporting:
-        all_tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+str(i)+'.csv')
+        all_tuas = enhance_all_tuas(all_tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
+        if reporting:
+            all_tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+str(i)+'.csv')
 
-    all_tuas = enhance_all_tuas(all_tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
-    if reporting:
-        all_tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+str(i)+'.csv')
+        all_tuas, weights = find_tua_match(all_tuas, weights)
+        if reporting:
+            all_tuas.to_csv(rep_direc+'/matched_All_TUAS'+str(i)+'.csv')
+            weights.to_csv(rep_direc + '/weightsMatched' + str(i) + '.csv')
 
-    all_tuas, weights = find_tua_match(all_tuas, weights)
-    if reporting:
-        all_tuas.to_csv(rep_direc+'/matched_All_TUAS'+str(i)+'.csv')
-        weights.to_csv(rep_direc + '/weightsMatched' + str(i) + '.csv')
-
-    weights = apply_point_adjustments(weights, scale_guide)
-    if reporting:
-        weights.to_csv(rep_direc + '/weightsAdjusted' + str(i) + '.csv')
-
+        weights = apply_point_adjustments(weights, scale_guide)
+        if reporting:
+            weights.to_csv(rep_direc + '/weightsAdjusted' + str(i) + '.csv')
+    else:
+        weights['points'] = weights['agreement_adjusted_points']
     #Now break up weights by article
     weights.to_csv(directory+'/SortedPts.csv')
 
@@ -241,6 +248,7 @@ def collapse_all_tuas(all_tuas, has_arg, arg_spec, has_source, source_spec, repo
     quiz_task_uuid is unique and is shared by the allTUAs csv and all the IAA csvs.
     """
     #get list of all the task_uuids we care about
+    collapsed = None
     real_tasks = pd.Series()
     if has_arg:
         real_tasks = real_tasks.append(arg_spec['quiz_task_uuid'])

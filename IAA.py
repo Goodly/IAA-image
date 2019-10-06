@@ -12,7 +12,8 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
                              useRep = False):
     print("IAA STARTING")
     if outDirectory is None:
-        outDirectory = 's_iaa_'+directory
+        outDirectory = 's_iaa_' + directory
+    print("outDIR:", outDirectory)
     highlights = []
     answers = []
     schema = []
@@ -38,24 +39,25 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
 
         ins.append([highlights[i], hardCodedTypes, repCSV ,
                             answers[i], schema[i], outDirectory, useRep])
+    print("starting pol")
+    # with Pool() as pool:
+    #     pool.map(unpack_iaa, ins)
 
-    with Pool() as pool:
-        pool.map(unpack_iaa, ins)
-
-    #for i in range(len(highlights)):
-      #   calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
-      #                      answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep)
+    for i in range(len(highlights)):
+        calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
+                           answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep)
                     #will be an error for every file that isn't the right file, there's a more graceful solution, but
                     #we'll save that dream for another day
     return outDirectory
 def unpack_iaa(input):
+    print("unpacking", input)
     calc_scores(input[0], hardCodedTypes=input[1], repCSV = input[2],
                             answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6])
-def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = None, useRep = False):
-    #print('collecting Data')
+def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = None, useRep = False):
+    print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
     if not outDirectory:
-        outDirectory = 's_iaa'+highlightfilename
+        outDirectory = 's_iaa' + highlightfilename
         outDirectory = outDirectory.rstrip('.csv')
     #print("donegettingdata")
     data = [["article_num", "article_sha256", "quiz_task_uuid","schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
@@ -68,7 +70,6 @@ def calc_scores(highlightfilename, hardCodedTypes = False, repCSV=None, answersF
     # except:
     #     repDF = create_user_dataframe(uberDict, csvPath = None)
     # thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
-    useRep = True
     if useRep:
         repDF = create_user_reps(uberDict,repCSV)
         print('initialized repScores')
@@ -192,7 +193,7 @@ def adjustForJson(units):
 
 
 
-def score(article, ques, data, repDF = None,  hardCodedTypes = False, useRep = False):
+def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = False):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -224,7 +225,8 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = False, useRep = F
     # TODO: verify that I did this and that the following line is unnecessary
     num_choices = 5
     question_type = get_question_type(data, article, ques)
-
+    get_question_numchoices(data, article, ques)
+    schema = get_schema(data, article)
     if hardCodedTypes:
         schema = get_schema(data, article)
         question_type, num_choices = get_type_hard(schema, ques)
@@ -257,6 +259,7 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = False, useRep = F
     numUsers = get_num_users(data, article, ques)
     #print('nu', numUsers, users)
     assert (len(answers) == len(users))
+    #print('qtype', question_type)
     if num_choices == 1:
         return 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     if question_type == 'ordinal':

@@ -138,4 +138,4 @@ def convertToInt(string):
     except:
         return -1
 
-launch_Weighting('scoring_urap')
+#launch_Weighting('scoring_urap')
