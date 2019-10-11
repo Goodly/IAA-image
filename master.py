@@ -10,7 +10,7 @@ from IAA_report import make_iaa_human_readable
 from dataV2 import make_directory
 from time import time
 from send_to_s3 import send_s3
-
+from GenerateVisualization import visualize
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True,
@@ -79,10 +79,13 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     print("----------------SPLITTING-----------------------------------")
     splitcsv(scoring_dir)
     #print("DONE, time elapsed", time()-start)
+    ids = []
     if push_aws:
         print("Pushing to aws")
-        send_s3(scoring_dir)
+        ids = send_s3(scoring_dir)
 
+    for id in ids:
+        visualize(id)
 
 def load_args():
     parser = argparse.ArgumentParser()
@@ -134,7 +137,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    #input_dir = 'sep_urap_evi'
+    input_dir = 'sep_urap_evi'
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
