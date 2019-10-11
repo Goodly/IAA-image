@@ -17,9 +17,9 @@
 15,1712,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
 16,1712,Evidence Specialist,8,ordinal,4,0.8430274021476247,,0.8430274021476247,17,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Somewhat less likely
 17,1712,Evidence Specialist,9,ordinal,1,0.6661488014958062,0.7353094485756854,0.7007291250357458,17,3,The patients who saw the heavy opioid prescribers were three times more likely to receive a prescription for opioids compared with the patients who saw the more judicious opioid prescribers at the same hospital,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,Yes
-18,1712,Evidence Specialist,10,ordinal,5,0.6892836867970786,,0.6892836867970786,15,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Very Unlikely
+18,1712,Evidence Specialist,10,ordinal,5,0.6892836867970787,,0.6892836867970787,15,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Very Unlikely
 19,1712,Evidence Specialist,11,ordinal,2,0.6938806728638239,,0.6938806728638239,15,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Somewhat Likely
-20,1712,Evidence Specialist,12,ordinal,3,0.698001590829121,0.5147392366352654,0.6063704137321932,17,4,The findings were specific to emergency room doctors and Medicare recipients,Does the author suggest in any way that further evidence might improve our understanding of the topic?,I can't tell
+20,1712,Evidence Specialist,12,ordinal,3,0.6980015908291212,0.5147392366352654,0.6063704137321932,17,4,The findings were specific to emergency room doctors and Medicare recipients,Does the author suggest in any way that further evidence might improve our understanding of the topic?,I can't tell
 21,1712,Evidence Specialist,13,ordinal,5,0.7938496120278173,,0.7938496120278173,17,10,,"How difficult was this task for you, on the whole?",5: Middling difficulty
 22,1712,Evidence Specialist,14,ordinal,7,0.805754049389831,,0.805754049389831,17,10,,"How confident are you about your answers, on the whole?",7
 23,1712,Evidence Specialist,1,checklist,1,0.8571428571428571,0.6811045789009615,0.7691237180219093,14,3,"So the higher the chances of getting opioids at a single doctor visit, the higher the risk of becoming a regular user",Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,"General Causation (In general, X causes Y.)"
@@ -34,13 +34,13 @@
 32,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
 33,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
 34,1712,Evidence Specialist,2,checklist,L,0.0,L,0.0,14,9,L,What evidence is given for the primary causal claim? Select all that apply.,L
-35,1712,Evidence Specialist,4,ordinal,4,0.6651340727608744,,0.6651340727608744,13,6,,How representative is the sample of the population that the claim is made about?,Slightly representative
+35,1712,Evidence Specialist,4,ordinal,4,0.6651340727608743,,0.6651340727608743,13,6,,How representative is the sample of the population that the claim is made about?,Slightly representative
 36,1712,Evidence Specialist,5,ordinal,U,1.0,U,0.5,2,5,U,"Was there an adequate control? If so, highlight section.",U
 37,1712,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
 38,1712,Evidence Specialist,8,ordinal,4,0.7634006890524925,,0.7634006890524925,14,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Somewhat less likely
 39,1712,Evidence Specialist,9,ordinal,1,0.7838601327915393,0.6011075432116146,0.692483838001577,14,3,"by chance, saw a doctor who more frequently prescribed the drugs were 30 percent more likely to become long-term users of painkillers",Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,Yes
-40,1712,Evidence Specialist,10,ordinal,4,0.722763216983975,,0.722763216983975,13,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Somewhat Unlikely
-41,1712,Evidence Specialist,11,ordinal,3,0.7618930197763871,,0.7618930197763871,13,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Not Sure
+40,1712,Evidence Specialist,10,ordinal,4,0.7227632169839752,,0.7227632169839752,13,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Somewhat Unlikely
+41,1712,Evidence Specialist,11,ordinal,3,0.7618930197763872,,0.7618930197763872,13,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Not Sure
 42,1712,Evidence Specialist,12,ordinal,3,0.6330138678015218,L,0.3165069339007609,14,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,I can't tell
 43,1712,Evidence Specialist,13,ordinal,5,0.7803611880010011,,0.7803611880010011,14,10,,"How difficult was this task for you, on the whole?",5: Middling difficulty
 44,1712,Evidence Specialist,14,ordinal,7,0.8453464772890988,,0.8453464772890988,14,10,,"How confident are you about your answers, on the whole?",7
@@ -65,7 +65,7 @@
 63,100001,Evidence Specialist,11,ordinal,U,1.0,U,0.5,1,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",U
 64,100001,Evidence Specialist,12,ordinal,4,0.9303535331273488,,0.9303535331273488,10,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,"No, not at all"
 65,100001,Evidence Specialist,13,ordinal,1,0.9296090941665588,,0.9296090941665588,10,10,,"How difficult was this task for you, on the whole?",1: Easier than anything I've ever done in a classroom setting
-66,100001,Evidence Specialist,14,ordinal,10,0.7327460029266933,,0.7327460029266933,10,10,,"How confident are you about your answers, on the whole?",10: 100% certain about all my answers
+66,100001,Evidence Specialist,14,ordinal,10,0.7327460029266932,,0.7327460029266932,10,10,,"How confident are you about your answers, on the whole?",10: 100% certain about all my answers
 67,100001,Evidence Specialist,1,checklist,L,0.1,L,0.05,10,3,L,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,L
 68,100001,Evidence Specialist,1,checklist,M,0.4,M,0.2,10,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
 69,100001,Evidence Specialist,1,checklist,M,0.5,M,0.25,10,3,M,Is a general or singular causal claim made? Highlight the section(s) that supports your answer.,M
@@ -107,7 +107,7 @@
 105,100000,Evidence Specialist,7,0,0,0.0,0,0.0,0,0,0,What is the best alternative explanation you can think of that could lead to the same set of evidence?,zero
 106,100000,Evidence Specialist,8,ordinal,4,0.6855881636796558,,0.6855881636796558,14,5,,"How likely is your alternative explanation for the same evidence, as compared to the author’s explanation?",Somewhat less likely
 107,100000,Evidence Specialist,9,ordinal,1,0.7016097318075005,0.6421022269881881,0.6718559793978442,14,3,more likely to report considering suicide,Is data presented as evidence for a pattern (e.g. A relationship between two variables)?,Yes
-108,100000,Evidence Specialist,10,ordinal,4,0.6812876948184581,,0.6812876948184581,12,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Somewhat Unlikely
+108,100000,Evidence Specialist,10,ordinal,4,0.681287694818458,,0.681287694818458,12,5,,"Given the information you have, how likely is it that the apparent pattern is a result of random statistical variation or error (noise)?",Somewhat Unlikely
 109,100000,Evidence Specialist,11,ordinal,2,0.6998361829221404,,0.6998361829221404,12,5,,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",Somewhat Likely
 110,100000,Evidence Specialist,12,ordinal,3,0.7492356058587806,,0.7492356058587806,14,4,,Does the author suggest in any way that further evidence might improve our understanding of the topic?,I can't tell
 111,100000,Evidence Specialist,13,ordinal,4,0.7948563296649042,,0.7948563296649042,14,10,,"How difficult was this task for you, on the whole?",4
@@ -195,4 +195,4 @@
 193,100000,Evidence Specialist,11,ordinal,U,0.8479969065549499,U,0.42399845327747493,2,5,U,"Given the information you have, how likely is it that the apparent pattern is a result of some systematic error (a systematic bias in the study that could not be cancelled out by collecting more data)?",U
 194,100000,Evidence Specialist,12,ordinal,2,0.6494278094302028,0.5991272050404048,0.6242775072353038,10,4,both note the limitations of the study include the fact that the data are self-reported by participants//causal,Does the author suggest in any way that further evidence might improve our understanding of the topic?,"Yes, implicitly"
 195,100000,Evidence Specialist,13,ordinal,7,0.6993844932016142,,0.6993844932016142,10,10,,"How difficult was this task for you, on the whole?",7
-196,100000,Evidence Specialist,14,ordinal,8,0.7414452497642225,,0.7414452497642225,10,10,,"How confident are you about your answers, on the whole?",8
+196,100000,Evidence Specialist,14,ordinal,8,0.7414452497642224,,0.7414452497642224,10,10,,"How confident are you about your answers, on the whole?",8
