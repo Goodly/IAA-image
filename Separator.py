@@ -64,7 +64,7 @@ def splitcsv(directory, textseparator = '//'):
                     addend = [art_id, cred_id, cred_cat, cred_ind_name, points, indices, start, end, text]
                     final_out.append(addend)
                 #final_out = pd.concat([final_out, addend], axis =0, names = final_cols)
-
+        final_out.append([None, None, None, None,None,None,None, None, None])
         path = directory + '/VisualizationData_' + str(art) + '.csv'
         print("EXPORTENg  "+path)
         scores = open(directory + '/VisualizationData_' + str(art) + '.csv', 'w', encoding='utf-8')

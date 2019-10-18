@@ -75,14 +75,14 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     print("WEIGHTING")
     launch_Weighting(scoring_dir)
     print("SORTING POINTS")
-    pointSort(scoring_dir, tua_file)
+    pointSort(scoring_dir, directory)
     print("----------------SPLITTING-----------------------------------")
     splitcsv(scoring_dir)
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
         print("Pushing to aws")
-        ids = send_s3(scoring_dir)
+        ids = send_s3(scoring_dir, directory)
 
     for id in ids:
         visualize(id)
@@ -137,7 +137,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'sep_urap_evi'
+    input_dir = 'sep_urap'
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None

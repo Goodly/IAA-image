@@ -43,6 +43,7 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
 
 def unpack_dependency_ins(input):
     return handleDependencies(input[0], input[1], input[2])
+
 def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')

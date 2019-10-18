@@ -30,6 +30,7 @@ def data_storer(path, answerspath, schemapath):
         article_num, article_sha = find_article_data(task_ans)
         schema_style = find_schema_topic(task_schema)
         schema_id = find_schema_sha256(task_schema)
+        tua_id = find_tua_uuid(task_hl)
         #down the road cache this to make it go faster
         dependencies = create_dependencies_dict(task_schema)
         uberDict[task]['taskData'] = {
@@ -39,7 +40,8 @@ def data_storer(path, answerspath, schemapath):
             'article_sha':article_sha,
             'schema_name':schema_style,
             'schema_id': schema_id,
-            'dependencies': dependencies
+            'dependencies': dependencies,
+            'tua_uuid': tua_id
         }
         numUsersD = makeNumUsersDict(task_ans)
         qDict = {}
@@ -374,6 +376,9 @@ def find_schema(ansData):
 
     return ansData['schema_namespace'].iloc[0]
 
+def find_tua_uuid(hlData):
+    return hlData['tua_uuid'].iloc[0]
+
 def get_questions(ansData):
     relTags = np.zeros(0)
     relNums = np.zeros(0)
@@ -480,6 +485,10 @@ def get_question_hlAns(data, task_id, question_num):
 
 def get_article_num(data,task_id):
     return data[task_id]['taskData']['article_num']
+
+def get_tua_uuid(data,task_id):
+    return data[task_id]['taskData']['tua_uuid']
+
 def get_article_sha(data,task_id):
     return data[task_id]['taskData']['article_sha']
 
@@ -638,7 +647,8 @@ def get_type_hard(type, ques):
                 7: ['ordinal', 5],
                 10: ['ordinal', 3],
                 11: ['ordinal', 4],
-                12: ['ordinal', 4],
+                12: ['ordinal', 5],
+                13: ['ordinal', 10],
                 14: ['ordinal', 10]
             },
         'Evidence Specialist':

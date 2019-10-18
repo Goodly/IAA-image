@@ -2,21 +2,31 @@ import numpy as np
 import pandas as pd
 import os
 from dataV2 import make_directory
+from dataV2 import get_indices_hard
 import json
 import math
 import uuid
 
-def pointSort(directory, all_TUAs_dir = "./config/allTUAs.csv",
+def pointSort(directory, input_dir,
               scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False):
     print("files in")
-    for root, dir, files in os.walk("./config/"):
+    print(input_dir)
+    dir_path = os.path.dirname(os.path.realpath(input_dir))
+
+    print('dir', dir_path)
+    input_path = os.path.join(dir_path, input_dir)
+    tua_path = os.path.join(input_path, 'tua/')
+    tualocation = ''
+    print(tua_path)
+    for root, dir, files in os.walk(input_dir+'/tua'):
         for file in files:
             print(file)
-            if 'TUA' in file:
-                allTuaName = './config/'+file
+            tua_location = os.path.join(tua_path, file)
     #Load everything so that it's a pandas dataframe
     scale_guide = pd.read_csv(scale_guide_dir)
-    all_tuas = pd.read_csv(allTuaName)
+    if len(tua_location)<3:
+        raise FileNotFoundError("TUA file not found")
+    tuas = pd.read_csv(tua_location)
     files = getFiles(directory)
 
     if not rep_direc:
@@ -50,17 +60,17 @@ def pointSort(directory, all_TUAs_dir = "./config/allTUAs.csv",
         make_directory(rep_direc)
         weights.to_csv(rep_direc+'/weightsStacked'+str(len(weightFiles))+'.csv')
     if hasArg or hasSource:
-        all_tuas = collapse_all_tuas(all_tuas, hasArg, argRel, hasSource, sourceRel, reporting)
+        tuas = collapse_all_tuas(tuas, hasArg, argRel, hasSource, sourceRel, reporting)
         if reporting:
-            all_tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+str(i)+'.csv')
+            tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+str(i)+'.csv')
 
-        all_tuas = enhance_all_tuas(all_tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
+        tuas = enhance_all_tuas(tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
         if reporting:
-            all_tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+str(i)+'.csv')
+            tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+str(i)+'.csv')
 
-        all_tuas, weights = find_tua_match(all_tuas, weights)
+        tuas, weights = find_tua_match(tuas, weights)
         if reporting:
-            all_tuas.to_csv(rep_direc+'/matched_All_TUAS'+str(i)+'.csv')
+            tuas.to_csv(rep_direc+'/matched_All_TUAS'+str(i)+'.csv')
             weights.to_csv(rep_direc + '/weightsMatched' + str(i) + '.csv')
 
         weights = apply_point_adjustments(weights, scale_guide)
@@ -108,13 +118,12 @@ def check_scale_match(weight, scale):
     topics = str(topicn)
     ## <3 unit conversions
     arg_col = "arg_T"+str(math.floor(scale['arg_topic']))+'.Q'+str(math.floor(scale['arg_question_num']))
-    arg_ans = scale['arg_answer_num']
-    weight_arg = weight[arg_col]
+    arg_ans = int(scale['arg_answer_num'])
     found = False
     abs_point = 0
     point_scale = 1
-    if arg_ans == -1 or arg_ans == weight_arg:
-        src_col = "arg_T"+str(math.floor(scale['source_topic']))+'.Q'+str(math.floor(scale['source_question_num']))
+    if arg_ans == -1 or arg_ans == weight[arg_col]:
+        src_col = "source_T"+str(math.floor(scale['source_topic']))+'.Q'+str(math.floor(scale['source_question_num']))
         src_ans = scale['source_answer_num']
 
         if src_ans == -1 or src_ans == weight[src_col]:
@@ -181,7 +190,7 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
         w = weights.iloc[i]
         w_art = w['article_sha256']
         #make sure the comparisons we find are to the right article
-        art_tuas = all_tuas[all_tuas['sha256'] == w_art]
+        art_tuas = all_tuas[all_tuas['article_sha256'] == w_art]
         w_h = w['highlighted_indices']
 
         #len will be 1 if failed IAA; or 0 if it's an empty list
@@ -190,7 +199,7 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
         #print(not (isinstance(w_h, float)))
         #print(len(w['highlighted_indices']))
         if not (isinstance(w_h, float)) and (not (isinstance(w_h, str)) or len(w_h)>1):
-            weight_unit = json.loads(w['highlighted_indices'])
+            weight_unit = get_indices_hard(w['highlighted_indices'])
             if len(weight_unit) > 0:
                 for t in range(art_tuas.shape[0]):
                     tua_unit = json.loads(art_tuas.iloc[t]['indices'])
@@ -210,13 +219,13 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
         weights.iloc[i, weights.columns.get_loc('source_match_score')] = src_best_score
         if arg_best_ind>=0 and arg_best_score>arg_threshold:
             arg_row = all_tuas.iloc[arg_best_ind]
-            weights.iloc[i, weights.columns.get_loc('arg_offsets')] = arg_row['offsets']
+            weights.iloc[i, weights.columns.get_loc('arg_offsets')] = arg_row['indices']
             weights.iloc[i, weights.columns.get_loc('arg_case_number')] = arg_row['case_number']
             for col in new_arg_cols:
                 weights.iloc[i, weights.columns.get_loc(col)] = arg_row[col]
         if src_best_ind >=0 and src_best_score>source_threshold:
             src_row = all_tuas.iloc[src_best_ind]
-            weights.iloc[i, weights.columns.get_loc('src_offsets')] = src_row['offsets']
+            weights.iloc[i, weights.columns.get_loc('src_offsets')] = src_row['indices']
             weights.iloc[i, weights.columns.get_loc('src_case_number')] = src_row['case_number']
     return all_tuas, weights
 
@@ -227,14 +236,18 @@ def add_indices_column(all_tuas):
         ind = []
         text = ""
         r = all_tuas.iloc[i]
-        offs = json.loads(r['offsets'])
-        for j in offs:
-            start = j[0]
-            end = j[1]
-            #TODO: decode this right so \u goes away
-            text +=j[2]+"//"
-            for k in range(start, end+1):
-                ind.append(k)
+        start = all_tuas['start_pos'].iloc[i]
+        end = all_tuas['end_pos'].iloc[i]
+        text += all_tuas['target_text'].iloc[i]+'//'
+        #Below from old version where there was an offsets column with a phat dictionary
+        # offs = json.loads(r['offsets'])
+        # for j in offs:
+        #     start = j[0]
+        #     end = j[1]
+        #     #TODO: decode this right so \u goes away
+        #     text +=j[2]+"//"
+        for k in range(start, end+1):
+            ind.append(k)
         print(ind)
         #JSOn so the legnth of the array being added is 1;
         #There's a better way but this works
@@ -251,16 +264,16 @@ def collapse_all_tuas(all_tuas, has_arg, arg_spec, has_source, source_spec, repo
     collapsed = None
     real_tasks = pd.Series()
     if has_arg:
-        real_tasks = real_tasks.append(arg_spec['quiz_task_uuid'])
+        real_tasks = real_tasks.append(arg_spec['tua_uuid'])
 
     if has_source:
-        real_tasks = real_tasks.append(source_spec['quiz_task_uuid'])
+        real_tasks = real_tasks.append(source_spec['tua_uuid'])
 
     real_tasks = real_tasks.unique()
     if len(real_tasks)>0:
-        collapsed = all_tuas[all_tuas['quiz_task_uuid'] == real_tasks[0]]
+        collapsed = all_tuas[all_tuas['tua_uuid'] == real_tasks[0]]
         for i in range(1,len(real_tasks)):
-            collapsed = collapsed.append(all_tuas[all_tuas['quiz_task_uuid'] == real_tasks[i]])
+            collapsed = collapsed.append(all_tuas[all_tuas['tua_uuid'] == real_tasks[i]])
     if reporting:
         print(np.sort(real_tasks))
     return collapsed
@@ -282,11 +295,11 @@ def enhance_all_tuas(all_tuas, scaling_guide, has_arg, arg_spec, has_source, sou
 def input_specialist_answers(all_tuas, spec, prefix):
     """fill in the added T?.Q? columns with the data from the dep_s_iaa"""
     for i in range(all_tuas.shape[0]):
-        id = all_tuas.iloc[i]['quiz_task_uuid']
-        spec_crop = spec[spec['quiz_task_uuid'] == id]
+        id = all_tuas.iloc[i]['tua_uuid']
+        spec_crop = spec[spec['tua_uuid'] == id]
         if len(spec_crop >0):
             schema = spec_crop['schema_namespace'].iloc[0]
-            if ('gumen' in schema and 'arg' in prefix) or ('ource' in schema and 'source' in prefix):
+            if ('gumen' in schema.lower() and 'arg' in prefix) or ('ource' in schema.lower() and 'source' in prefix):
                 for s in range(spec_crop.shape[0]):
                     qNum = spec_crop['question_Number'].iloc[s]
                     aNum = spec_crop['agreed_Answer'].iloc[s]
@@ -320,3 +333,4 @@ def convert_to_tq_format(topic, question):
     return "T"+str(topic)+".Q"+str(question)
 
 
+#pointSort('scoring_sep_urap', 'sep_urap/')

@@ -1,0 +1,10 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+1f487e5476e54e1c555e124ff5f6067bfb24ddfac1ee96a4bafaf0a6b43921fd,L0,Language,Exaggeration,-2.272590621836452,[],-1,-1,nan
+1f487e5476e54e1c555e124ff5f6067bfb24ddfac1ee96a4bafaf0a6b43921fd,L0,Language,Exaggeration,-1.8821163463569264,[],-1,-1,nan
+1f487e5476e54e1c555e124ff5f6067bfb24ddfac1ee96a4bafaf0a6b43921fd,L0,Language,Inappropriate slang,-0.18962766641920048,[],-1,-1,nan
+1f487e5476e54e1c555e124ff5f6067bfb24ddfac1ee96a4bafaf0a6b43921fd,L0,Language,Denigration,-0.19564220200207755,[],-1,-1,nan
+1f487e5476e54e1c555e124ff5f6067bfb24ddfac1ee96a4bafaf0a6b43921fd,L0,Language,Well-balanced,0.36737209331643855,[],-1,-1,nan
+1f487e5476e54e1c555e124ff5f6067bfb24ddfac1ee96a4bafaf0a6b43921fd,L0,Language,Well-balanced,0.3498283589698761,[],-1,-1,nan
+1f487e5476e54e1c555e124ff5f6067bfb24ddfac1ee96a4bafaf0a6b43921fd,P0,Probability,Inappropriate confidence,-1.4287294370211543,[],-1,-1,nan
+1f487e5476e54e1c555e124ff5f6067bfb24ddfac1ee96a4bafaf0a6b43921fd,P0,Probability,Acknowledges uncertainty,0.15859960926231936,L,-1,-1,nan
+,,,,,,,,
