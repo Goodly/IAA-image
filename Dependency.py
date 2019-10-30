@@ -48,7 +48,6 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
     dependencies = create_dependencies_dict(schemData)
-    print(schemaPath, "DEPENDENCIES DICS \n", dependencies)
     tasks = np.unique(iaaData['quiz_task_uuid'].tolist())
     iaaData['prereq_passed'] = iaaData['agreed_Answer']
 
@@ -69,6 +68,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     for t in tasks:
         iaaTask = iaaData[iaaData['quiz_task_uuid'] == t]
         #childQuestions
+        #TODO: speed this up by only checking the
         for ch in dependencies.keys():
 
             child = dependencies[ch]
@@ -82,22 +82,47 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                 answers = iaaQ['agreed_Answer'].tolist()
                 answers = find_real_answers(answers)
                 rows = find_index(iaaQ, answers, 'agreed_Answer')
+                #refersh out her eso children can pull highlights from multiple parentes, if they exist
                 validParent = False
+                newInds = []
+                newAlph = []
+                newIncl = []
                 if len(answers)>0:
                     #questions the child depends on
                     for par in child.keys():
                         iaaPar = iaaTask[iaaTask['question_Number'] == (par)]
+                        #DEBUGGING TIPPP:
+
                         neededAnswers = child[par]
                         #Potential for multiple answers from parent to lead to same child question
                         #We don't want to favor one prerequisite's highlight over another
                         for ans in neededAnswers:
-                            iaaparAns = iaaPar[iaaPar['agreed_Answer'] == ans]
-                            if len(iaaparAns>0):
-                                validParent = True
-                                newInds = [get_indices_hard(ind) for ind in iaaparAns['highlighted_indices'].tolist()]
-                                #newInds = parseList(newInds)
-                                newAlph = iaaparAns['alpha_unitizing_score'].tolist()
-                                newIncl = iaaparAns['alpha_unitizing_score_inclusive'].tolist()
+                            #BUG: THE TYPES DON"T ALIGH__HAVE TO MAKE SUBROUTINE TO CHECK IF IAAPARANSWER IS A DIGIT
+                            # BEFORE COMPARING
+
+                            for i in range(len(iaaPar)):
+                                print(iaaPar['agreed_Answer'].iloc[i], iaaPar['agreed_Answer'].iloc[i].isdigit())
+                                if iaaPar['agreed_Answer'].iloc[i].isdigit():
+                                    if int(iaaPar['agreed_Answer'].iloc[i]) == ans:
+                                        validParent = True
+                                        inds_str = iaaPar['highlighted_indices'].iloc[i]
+                                        inds = get_indices_hard(inds_str)
+                                        newInds.append(inds)
+                                        print('ans', ans)
+                                        newAlph.append(iaaPar['alpha_unitizing_score'].iloc[i])
+                                        newIncl.append(iaaPar['alpha_unitizing_score_inclusive'].iloc[i])
+                            # iaaPar['agreed_Answer'] = iaaPar['agreed_Answer'].astype(int, errors='ignore')
+                            # iaaparAns = iaaPar[iaaPar['agreed_Answer'] == ans]
+                            # if len(iaaparAns)>0:
+                            #     validParent = True
+                            #     newInds = []
+                            #     print('get the head', iaaparAns.columns)
+                            #     for i in range(len(iaaparAns)):
+                            #         newInds.append(get_indices_hard(iaaparAns['highlighted_indices']))
+                            #     #newInds = parseList(newInds)
+                            #     newAlph = iaaparAns['alpha_unitizing_score'].tolist()
+                            #     newIncl = iaaparAns['alpha_unitizing_score_inclusive'].tolist()
+                            if validParent:
                                 for i in range(len(newInds)):
                                     indices = np.append(indices, newInds[i])
                                 alpha = np.append(alpha, (newAlph[0]))
@@ -218,6 +243,12 @@ def find_real_answers(answers):
 def find_index(df, targetVals,col):
     indices = []
     for v in targetVals:
+        for i in range(len(df[col])):
+            if type(df[col].iloc[i])==str:
+                df[col].iloc[i] = int(df[col].iloc[i])
+        print(df[col])
+        print(v)
+        print(df[col].iloc[0]==v)
         shrunk = df[df[col] == v]
         if len(shrunk)>0:
             inds = []
@@ -227,4 +258,4 @@ def find_index(df, targetVals,col):
                 indices.append(i)
     return indices
 
-#eval_depenency('./demo1')
+#eval_dependency('sep_urap', 's_iaa_sep_urap')

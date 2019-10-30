@@ -115,7 +115,7 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
 #TODO: get math done for minpasspercent
 #        if percentageScoresArray[i]>minPassPercent:
 
-        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 1.6) == 'H':
+        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 2.4) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
     assert len(starts) == len(users)

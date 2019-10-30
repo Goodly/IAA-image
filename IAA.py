@@ -326,7 +326,7 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
 
 
 # # # TEST STUFF
-#calc_agreement_directory('./demo1', hardCodedTypes= True)
+calc_agreement_directory('./nyu_0', hardCodedTypes= True)
 # calc_scores('./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntAnswers.csv',
 #             schemaFile = './demo1/Demo1ArgRel3-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
 # calc_scores('./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntAnswers.csv',

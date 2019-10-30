@@ -15,13 +15,19 @@ def pointSort(directory, input_dir,
 
     print('dir', dir_path)
     input_path = os.path.join(dir_path, input_dir)
-    tua_path = os.path.join(input_path, 'tua/')
-    tualocation = ''
-    print(tua_path)
-    for root, dir, files in os.walk(input_dir+'/tua'):
-        for file in files:
-            print(file)
-            tua_location = os.path.join(tua_path, file)
+    tua_path = os.path.join(input_path, 'tua')
+    tua_location = ''
+    print('tua path',tua_path)
+    print(input_dir+'/tua')
+    for file in os.walk(input_dir):
+        if 'tua' in file and os.path.join(input_dir, file).isdir():
+            tua_path = os.path.join(input_dir, file)
+            print("FOUND TUA", tua_path)
+            break
+    for file in os.listdir(input_dir+'/tua'):
+        print('file in tua',file)
+        tua_location = os.path.join(tua_path, file)
+
     #Load everything so that it's a pandas dataframe
     scale_guide = pd.read_csv(scale_guide_dir)
     if len(tua_location)<3:

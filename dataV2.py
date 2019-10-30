@@ -353,9 +353,10 @@ def get_q_type(schemaData, qLabel):
 
     return schemaData[schemaData['question_label'] == qLabel].iloc[0]['question_type']
 def get_indices_hard(string):
+
     if isinstance(string, list):
         if len(string == 1) and isinstance(string[0], str):
-            string = string[0]
+              string = string[0]
     out = []
     num = 0
     for i in range(len(string)):
@@ -364,6 +365,7 @@ def get_indices_hard(string):
         elif num!=0:
             out.append(num)
             num = 0
+
     return out
 
 def find_schema_topic(schemaData):
@@ -377,7 +379,12 @@ def find_schema(ansData):
     return ansData['schema_namespace'].iloc[0]
 
 def find_tua_uuid(hlData):
-    return hlData['tua_uuid'].iloc[0]
+    try:
+        return hlData['tua_uuid'].iloc[0]
+    except IndexError:
+        print("BUG: NO TUA FOIUND")
+        return 0
+
 
 def get_questions(ansData):
     relTags = np.zeros(0)
@@ -525,6 +532,7 @@ def finder(ser, a):
     return -1
 
 def make_directory(directory):
+    print(directory)
     if directory[-1] != '/':
         directory = directory +'/'
     try:
