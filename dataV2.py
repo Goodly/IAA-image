@@ -635,12 +635,12 @@ def get_type_hard(type, ques):
             },
         'Reasoning Specialist V4':
             {
-                1: ['checklist', 5],
+                1: ['checklist', 6],
                 2:['checklist', 6],
                 3: ['checklist', 7],
                 4: ['ordinal', 3],
                 5: ['ordinal', 3],
-                6: ['checklist', 9],
+                6: ['checklist', 10],
                 7: ['ordinal', 5],
                 8: ['nominal', 1],
                 9: ['ordinal', 10],

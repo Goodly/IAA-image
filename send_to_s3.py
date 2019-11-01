@@ -71,4 +71,4 @@ def send_s3(scoring_dir, input_dir):
                           "article's sha256 and SSSArticle.txt is that, regardless of article title")
     return art_ids
 
-#send_s3('scoring_sep_urap', 'sep_urap')
+#send_s3('scoring_nyu_0', 'nyu_0')

@@ -35,7 +35,7 @@ Copyright (C) <2018> <Goodly Labs>
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="sequencesRead.js"></script>
+    <script type="text/javascript" src="sequencesV1.js"></script>
 </head>
 
 <!-- Begin body -->
@@ -74,7 +74,7 @@ Copyright (C) <2018> <Goodly Labs>
 
             <!-- Content: Features 1, 2, 3-->
             <div class="text article">
-                <h2>Example Article with Public Editor labels</h2>
+                <p id="headerArticle"></p>
                 <p class="p-article" id="textArticle">
 			ARTICLETEXTHERE
 		</p>
@@ -84,7 +84,8 @@ Copyright (C) <2018> <Goodly Labs>
 
             <!-- Cred score begin -->
             <div class="cred-score-container">
-                <script type="text/javascript">scoreArticle("ARTICLEIDHERE");</script>
+                <script type="text/javascript">scoreArticle("ARTICLEIDHERE");
+                </script>
                 <div class="sunburst">
                     <svg id="chart" viewBox="0 0 500 500"  preserveAspectRatio="xMidYMid meet">
                     </svg>

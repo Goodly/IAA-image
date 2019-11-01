@@ -12,7 +12,10 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
                              useRep = False):
     print("IAA STARTING")
     if outDirectory is None:
-        outDirectory = 's_iaa_' + directory
+        if directory.startswith('./'):
+            outDirectory = 's_iaa_'+ directory[2:]
+        else:
+            outDirectory = 's_iaa_' + directory
     print("outDIR:", outDirectory)
     highlights = []
     answers = []
@@ -45,7 +48,7 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
 
     for i in range(len(highlights)):
         calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
-                           answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep)
+                           answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep, directory=directory)
                     #will be an error for every file that isn't the right file, there's a more graceful solution, but
                     #we'll save that dream for another day
     return outDirectory
@@ -53,12 +56,21 @@ def unpack_iaa(input):
     print("unpacking", input)
     calc_scores(input[0], hardCodedTypes=input[1], repCSV = input[2],
                             answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6])
-def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = None, useRep = False):
+def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None):
     print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
+    print("HL Name", highlightfilename)
+    print("outdir in", outDirectory)
+    print(directory)
+    if directory.startswith('./'):
+        directory = directory[2:]
+    print(directory)
     if not outDirectory:
-        outDirectory = 's_iaa' + highlightfilename
-        outDirectory = outDirectory.rstrip('.csv')
+        outDirectory = 's_iaa' + directory
+        print(outDirectory)
+        if outDirectory[0] == '.':
+            outDirectory == outDirectory[1:]
+    print("outDir, top", outDirectory)
     #print("donegettingdata")
     data = [["article_num", "article_sha256", "quiz_task_uuid", "tua_uuid", "schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score",
@@ -326,7 +338,7 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
 
 
 # # # TEST STUFF
-calc_agreement_directory('./nyu_0', hardCodedTypes= True)
+#calc_agreement_directory('./nyu_0', hardCodedTypes= True)
 # calc_scores('./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntAnswers.csv',
 #             schemaFile = './demo1/Demo1ArgRel3-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
 # calc_scores('./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntAnswers.csv',

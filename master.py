@@ -154,4 +154,4 @@ if __name__ == '__main__':
         rep_file = args.rep_file
     calculate_scores_master(input_dir, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file)
 
-#calculate_scores_master("urap")
+calculate_scores_master("nyu_0")

@@ -106,7 +106,8 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
     #assert len(starts) == len(users), 'starts, users mismatched'
     passingIndexes = np.zeros(len(percentageScoresArray))
     #adjust so user count isn't inflated by reps
-    num_reals = len(np.unique(users))
+    #add one to num_reals because the system was too picky when working with small numbers of users
+    num_reals = len(np.unique(users))+1
     #if minPassPercent == 'U':
     #    return 'U','U','U','U','U'
     for i in range(len(percentageScoresArray)):

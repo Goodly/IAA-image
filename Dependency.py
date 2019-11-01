@@ -245,7 +245,12 @@ def find_index(df, targetVals,col):
     for v in targetVals:
         for i in range(len(df[col])):
             if type(df[col].iloc[i])==str:
-                df[col].iloc[i] = int(df[col].iloc[i])
+                try:
+                    df[col].iloc[i] = int(df[col].iloc[i])
+                except ValueError:
+                    print("VALUE ERROR CAUGHT: invalid row")
+                    continue
+
         print(df[col])
         print(v)
         print(df[col].iloc[0]==v)
