@@ -27,12 +27,16 @@ def pointSort(directory, input_dir,
     for file in os.listdir(input_dir+'/tua'):
         print('file in tua',file)
         tua_location = os.path.join(tua_path, file)
+        try:
+            tuas = tuas.append(pd.read_csv(tua_location))
+        except UnboundLocalError:
+            tuas = pd.read_csv(tua_location)
 
     #Load everything so that it's a pandas dataframe
     scale_guide = pd.read_csv(scale_guide_dir)
     if len(tua_location)<3:
         raise FileNotFoundError("TUA file not found")
-    tuas = pd.read_csv(tua_location)
+    #tuas = pd.read_csv(tua_location)
     files = getFiles(directory)
 
     if not rep_direc:
@@ -84,8 +88,11 @@ def pointSort(directory, input_dir,
             weights.to_csv(rep_direc + '/weightsAdjusted' + str(i) + '.csv')
     else:
         weights['points'] = weights['agreement_adjusted_points']
-    #Now break up weights by article
+    #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
+    #investigate the root
+    weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'answer_uuid', 'Question_Number'])
     weights.to_csv(directory+'/SortedPts.csv')
+    return tuas, weights
 
 def apply_point_adjustments(weights, scale_guide):
     """
@@ -252,7 +259,7 @@ def add_indices_column(all_tuas):
         #     end = j[1]
         #     #TODO: decode this right so \u goes away
         #     text +=j[2]+"//"
-        for k in range(start, end+1):
+        for k in range(int(start), int(end+1)):
             ind.append(k)
         print(ind)
         #JSOn so the legnth of the array being added is 1;

@@ -1,0 +1,10 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Metaphor unhelpful,-1.6959938131098995,[],-1,-1,nan
+832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Inappropriate slang,-0.21199922663873744,"[1769, 1770, 1771, 1772]",1769,1772,nan
+832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Inappropriate slang,0,"[1774, 1775, 1776, 1777]",1774,1778,nan
+832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Denigration,-0.40367746102880203,"[1769, 1770, 1771, 1772]",1769,1772,nan
+832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Denigration,0,"[1774, 1775, 1776, 1777]",1774,1778,nan
+832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Writing errors,-1.25,[],-1,-1,nan
+832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Well-balanced,0.40367746102880203,[],-1,-1,nan
+832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Well-balanced,0.5,[],-1,-1,nan
+,,,,,,,,

@@ -28,7 +28,6 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
 
 
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
-    print(len(repScaledAnswers),len(repScaledUsers))
 
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF,  useRep = useRep)
 
@@ -228,7 +227,6 @@ def getWinnersNominal(answers, num_choices=5):
 #TODO: make sure that these functions now work since repDF is being inputted into the functions.
 def scaleFromRep(arr, users, repDF, useRep = False):
     """Scales the array based on user reps"""
-    print(arr, users, repDF)
     scaled = np.zeros(0)
     checked = []
     for i in range(len(arr)):

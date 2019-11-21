@@ -9,7 +9,6 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
     print("DEPENDENCY STARTING")
     if out_dir is None:
         out_dir = 'scoring_' + directory
-    print('dir', directory, iaa_dir, out_dir)
     schema = []
     iaa = []
     for root, dir, files in os.walk(directory):
@@ -31,7 +30,6 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
     out_dir = make_directory(out_dir)
     ins = []
     for i in range(len(schema)):
-        print(schema, iaa)
         ins.append((schema[i], iaa[i], out_dir))
         #handleDependencies(schema[i], iaa[i], out_dir)
 
@@ -101,14 +99,12 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                             # BEFORE COMPARING
 
                             for i in range(len(iaaPar)):
-                                print(iaaPar['agreed_Answer'].iloc[i], iaaPar['agreed_Answer'].iloc[i].isdigit())
                                 if iaaPar['agreed_Answer'].iloc[i].isdigit():
                                     if int(iaaPar['agreed_Answer'].iloc[i]) == ans:
                                         validParent = True
                                         inds_str = iaaPar['highlighted_indices'].iloc[i]
                                         inds = get_indices_hard(inds_str)
                                         newInds.append(inds)
-                                        print('ans', ans)
                                         newAlph.append(iaaPar['alpha_unitizing_score'].iloc[i])
                                         newIncl.append(iaaPar['alpha_unitizing_score_inclusive'].iloc[i])
                             # iaaPar['agreed_Answer'] = iaaPar['agreed_Answer'].astype(int, errors='ignore')
@@ -251,9 +247,7 @@ def find_index(df, targetVals,col):
                     print("VALUE ERROR CAUGHT: invalid row")
                     continue
 
-        print(df[col])
-        print(v)
-        print(df[col].iloc[0]==v)
+
         shrunk = df[df[col] == v]
         if len(shrunk)>0:
             inds = []
