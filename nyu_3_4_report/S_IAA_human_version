@@ -2490,6 +2490,66 @@ There were 38 payments for $83,333 totaling more than $3.1 million","Using the h
 1219,100042,Language Specialist V4,12,ordinal,1,0.828634609999496,,0.828634609999496,3,4,,"Does the passage contain a particularly neutral, circumspect, or measured account of a frequently heated issue? If so, please offer them kudos.",Nope
 1220,100042,Language Specialist V4,14,ordinal,2,0.8986646043699666,,0.8986646043699666,3,10,,"How difficult was this task for you, on the whole?",2
 1221,100042,Language Specialist V4,15,ordinal,7,0.8986646043699666,,0.8986646043699666,3,10,,"How confident are you about your answers, on the whole?",7
+0,100041,Holistic Evaluation of Article,1,ordinal,2,0.8926906350375459,,0.8926906350375459,6,5,,"Knowing everything you know about the world, how *credible* does the article seem to you, overall?",Fairly credible
+1,100041,Holistic Evaluation of Article,2,ordinal,5,0.7890195072541117,,0.7890195072541117,6,5,,"Given everything you know about the world, how *biased* does the article seem to you, overall?",Not at all biased
+2,100041,Holistic Evaluation of Article,3,checklist,1,0.8333333333333334,,0.8333333333333334,6,11,,What type of article is this?,News report
+3,100041,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,6,11,L,What type of article is this?,L
+4,100041,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,6,11,L,What type of article is this?,L
+5,100041,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,6,11,L,What type of article is this?,L
+6,100041,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,6,11,L,What type of article is this?,L
+7,100041,Holistic Evaluation of Article,3,checklist,L,0.16666666666666666,L,0.08333333333333333,6,11,L,What type of article is this?,L
+8,100041,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,6,11,L,What type of article is this?,L
+9,100041,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,6,11,L,What type of article is this?,L
+10,100041,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,6,11,L,What type of article is this?,L
+11,100041,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,6,11,L,What type of article is this?,L
+12,100041,Holistic Evaluation of Article,3,checklist,L,0.16666666666666666,L,0.08333333333333333,6,11,L,What type of article is this?,L
+13,100041,Holistic Evaluation of Article,4,checklist,1,0.8,,0.8,5,5,,What type of news article is it?,Neutral description of a recent or ongoing event
+14,100041,Holistic Evaluation of Article,4,checklist,M,0.6,M,0.3,5,5,M,What type of news article is it?,M
+15,100041,Holistic Evaluation of Article,4,checklist,L,0.0,L,0.0,5,5,L,What type of news article is it?,L
+16,100041,Holistic Evaluation of Article,4,checklist,L,0.0,L,0.0,5,5,L,What type of news article is it?,L
+17,100041,Holistic Evaluation of Article,4,checklist,L,0.0,L,0.0,5,5,L,What type of news article is it?,L
+18,100041,Holistic Evaluation of Article,6,ordinal,1,1.0,,1.0,6,5,,Does the title match the text?,"Yes, without exaggeration"
+19,100041,Holistic Evaluation of Article,7,ordinal,3,0.9154029319602456,,0.9154029319602456,6,5,,To what extent do you agree with the central claim of the article (regardless of the quality of this particular article)?,Neither Agree nor Disagree
+20,100040,Holistic Evaluation of Article,1,ordinal,3,0.8712287620450551,,0.8712287620450551,5,5,,"Knowing everything you know about the world, how *credible* does the article seem to you, overall?",Somewhat credible
+21,100040,Holistic Evaluation of Article,2,ordinal,M,0.625379026507187,M,0.3126895132535935,5,5,M,"Given everything you know about the world, how *biased* does the article seem to you, overall?",M
+22,100040,Holistic Evaluation of Article,3,checklist,M,0.6,M,0.3,5,11,M,What type of article is this?,M
+23,100040,Holistic Evaluation of Article,3,checklist,L,0.2,L,0.1,5,11,L,What type of article is this?,L
+24,100040,Holistic Evaluation of Article,3,checklist,L,0.2,L,0.1,5,11,L,What type of article is this?,L
+25,100040,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+26,100040,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+27,100040,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+28,100040,Holistic Evaluation of Article,3,checklist,L,0.2,L,0.1,5,11,L,What type of article is this?,L
+29,100040,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+30,100040,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+31,100040,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+32,100040,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+33,100040,Holistic Evaluation of Article,4,checklist,M,0.6666666666666666,M,0.3333333333333333,3,5,M,What type of news article is it?,M
+34,100040,Holistic Evaluation of Article,4,checklist,L,0.3333333333333333,L,0.16666666666666666,3,5,L,What type of news article is it?,L
+35,100040,Holistic Evaluation of Article,4,checklist,L,0.3333333333333333,L,0.16666666666666666,3,5,L,What type of news article is it?,L
+36,100040,Holistic Evaluation of Article,4,checklist,L,0.0,L,0.0,3,5,L,What type of news article is it?,L
+37,100040,Holistic Evaluation of Article,4,checklist,L,0.0,L,0.0,3,5,L,What type of news article is it?,L
+38,100040,Holistic Evaluation of Article,6,ordinal,1,0.8540536313144019,,0.8540536313144019,5,5,,Does the title match the text?,"Yes, without exaggeration"
+39,100040,Holistic Evaluation of Article,7,ordinal,2,0.7705001729075187,,0.7705001729075187,5,5,,To what extent do you agree with the central claim of the article (regardless of the quality of this particular article)?,Somewhat Agree
+40,100039,Holistic Evaluation of Article,1,ordinal,5,0.969591805090524,,0.969591805090524,5,5,,"Knowing everything you know about the world, how *credible* does the article seem to you, overall?",Not at all credible
+41,100039,Holistic Evaluation of Article,2,ordinal,M,0.6907052692699656,M,0.3453526346349828,5,5,M,"Given everything you know about the world, how *biased* does the article seem to you, overall?",M
+42,100039,Holistic Evaluation of Article,3,checklist,M,0.4,M,0.2,5,11,M,What type of article is this?,M
+43,100039,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+44,100039,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+45,100039,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+46,100039,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+47,100039,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+48,100039,Holistic Evaluation of Article,3,checklist,M,0.4,M,0.2,5,11,M,What type of article is this?,M
+49,100039,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+50,100039,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+51,100039,Holistic Evaluation of Article,3,checklist,10,0.8,-0.014028934677772886,0.3929855326611136,5,11,Doctor Tells CNN Trump’s Walter Reed Medical Visit Was Fishy//regarding Mr. Trump’s physical health,What type of article is this?,Celebrity Gossip
+52,100039,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,5,11,L,What type of article is this?,L
+53,100039,Holistic Evaluation of Article,4,checklist,L,0.0,L,0.0,2,5,L,What type of news article is it?,L
+54,100039,Holistic Evaluation of Article,4,checklist,2,0.5,,0.5,2,5,,What type of news article is it?,"Report of what some person, body, or group said"
+55,100039,Holistic Evaluation of Article,4,checklist,3,0.5,,0.5,2,5,,What type of news article is it?,Evaluation of a recent or ongoing event
+56,100039,Holistic Evaluation of Article,4,checklist,L,0.0,L,0.0,2,5,L,What type of news article is it?,L
+57,100039,Holistic Evaluation of Article,4,checklist,L,0.0,L,0.0,2,5,L,What type of news article is it?,L
+58,100039,Holistic Evaluation of Article,6,ordinal,1,0.9624020749541876,0.14596923076923074,0.5541856528617093,5,5,Fishy,Does the title match the text?,"Yes, without exaggeration"
+59,100039,Holistic Evaluation of Article,7,ordinal,4,0.8540536313144019,,0.8540536313144019,5,5,,To what extent do you agree with the central claim of the article (regardless of the quality of this particular article)?,Somewhat Disagree
 0,100042,Reasoning Specialist V4,1,checklist,L,0.3333333333333333,L,0.16666666666666666,3,6,L,Does the passage contain... (check all that apply):,L
 1,100042,Reasoning Specialist V4,1,checklist,M,0.6666666666666666,M,0.3333333333333333,3,6,M,Does the passage contain... (check all that apply):,M
 2,100042,Reasoning Specialist V4,1,checklist,L,0.0,L,0.0,3,6,L,Does the passage contain... (check all that apply):,L

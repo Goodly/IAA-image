@@ -13,12 +13,13 @@ def launch_Weighting(directory):
             print(file)
             if file.endswith('.csv'):
                 if 'Dep_S_IAA' in file:
-                    print('gotaFile')
+                    print('gotaFile', file)
                     iaaFiles.append(directory+'/'+file)
+    print('files', iaaFiles)
     for f in iaaFiles:
-        weighting_alg(f, './weight_key.csv', directory)
+        weighting_alg(f, './weight_key.csv', 'weight_key_scaling_guide.csv', directory)
 
-def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
+def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './'):
 
     IAA_csv = Table.read_table(IAA_csv_file)
     #IndexError when the csv is empty
@@ -32,7 +33,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
             print(IAA_csv)
             raise Exception('EricIsAnIdiotError')
 
-    print(IAA_csv_schema_name)
+    print('schemnam',IAA_csv_schema_name)
     if "uage" in IAA_csv_schema_name:
         IAA_csv_schema_type = "Language"
     elif "Reason" in IAA_csv_schema_name:
@@ -41,6 +42,8 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
         IAA_csv_schema_type = "Evidence"
     elif "Probability" in IAA_csv_schema_name:
         IAA_csv_schema_type = "Probability"
+    elif "Overall" in IAA_csv_schema_name or 'olistic' in IAA_csv_schema_name:
+        IAA_csv_schema_type = "Overall"
     else:
         print("unweighted IAA", IAA_csv_file, "aborting")
         return
@@ -56,6 +59,8 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
 
     credibility_weights_csv = Table.read_table(credibility_weights_csv_file)
     credibility_weights_csv = credibility_weights_csv.to_df()
+    weight_scale_table = pd.read_csv(weight_scale_csv)
+
 
 
     q6_points = 0
@@ -85,35 +90,34 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, directory = './'):
             q6_points = weighted_q6(q6_holder_points)
 
     IAA_csv = IAA_csv.to_df()
+    IAA_csv["Question_Number"] = IAA_csv["Question_Number"].apply(int)
+
+    IAA_csv["Answer_Number"] = IAA_csv["Answer_Number"].apply(convertToInt)
+    for_visualization = pd.DataFrame()
+    for task in np.unique(IAA_csv['quiz_task_uuid']):
+        task_IAA = IAA_csv[IAA_csv['quiz_task_uuid'] == task]
+        scaled_cred_weights = scale_weights_csv(credibility_weights_csv, weight_scale_table, task_IAA,
+                                                    IAA_csv_schema_type)
+
+        new_csv = pd.merge(scaled_cred_weights, IAA_csv, on =["Schema", "Question_Number", "Answer_Number"], how = "inner")
 
 
-
-    IAA_csv["Question_Number"]= IAA_csv["Question_Number"].apply(int)
-
-    IAA_csv["Answer_Number"]= IAA_csv["Answer_Number"].apply(convertToInt)
-    new_csv = pd.merge(credibility_weights_csv, IAA_csv, on =["Schema", "Question_Number", "Answer_Number"], how = "inner")
-
-
-    points = new_csv["Point_Recommendation"] * new_csv["agreement_score"]
-    new_csv = new_csv.assign(agreement_adjusted_points = points)
-
+        points = new_csv["Point_Recommendation"] * new_csv["agreement_score"]
+        new_csv = new_csv.assign(agreement_adjusted_points = points)
+        for_visualization = for_visualization.append(new_csv)
 
 
     column_names = ["article_num", "article_sha256", "quiz_task_uuid", "Question_Number", "Answer_Number",
                     "highlighted_indices", "Point_Recommendation", "agreement_adjusted_points", "Label", "target_text"]
-    for_visualization = new_csv[column_names]
-    for_visualization = new_csv
-    if IAA_csv_schema_type == "Evidence":
-        for_visualization.loc['Quality of evidence', 'agreement_adjusted_points'] = q6_points
-    #for_visualization = for_visualization[for_visualization["agreement_adjusted_points"] != 0]
-    length = len(for_visualization)
-    # schema_name = []
-    # for i in range(length):
-    #     schema_name.append(IAA_csv_schema_type)
+
+    # if IAA_csv_schema_type == "Evidence":
+    #     for_visualization.loc['Quality of evidence', 'agreement_adjusted_points'] = q6_points
+
     for_visualization['schema'] = pd.Series(IAA_csv_schema_type for i in range(len(for_visualization['article_sha256'])+1))
     for_visualization = for_visualization.loc[:, ~for_visualization.columns.duplicated()]
-
-    for_visualization.to_csv(directory+"/Point_recs_"+IAA_csv_schema_type+".csv", encoding = 'utf-8')
+    out_file = directory+"/Point_recs_"+IAA_csv_schema_type+".csv"
+    print(out_file)
+    for_visualization.to_csv(out_file, encoding = 'utf-8')
     # You can choose to specify the path of the exported csv file in the .to_csv() method.
 def weighted_q6(num):
     if num >= 160:
@@ -130,6 +134,35 @@ def weighted_q6(num):
         score = 5
     return score
 
+def scale_weights_csv(weight_df, scale_df, iaa_df, schema):
+    '''
+
+    :param weight_df: weight_key
+    :param scale_df: weight_scale_key
+    :return: scaled weights dataframe
+    '''
+    if schema not in scale_df['if_schema']:
+        return weight_df
+    weight_df = weight_df[weight_df['Schema'] == schema]
+    scale_df = scale_df[scale_df['if_schema'==schema]]
+    scaled = weight_df
+    for a in scale_df['if_ans_uuid']:
+        if a in iaa_df['answer_uuid']:
+            row = iaa_df[iaa_df['answer_uuid' == a]]
+            #guaranteed to only happen once
+            q = int(row['question_Number'].iloc[0])
+            a = convertToInt(row['agreed_Answer'])
+            mulrow = scale_df[scale_df['if_ans_uuid'] == a]
+            mul = mulrow['mult'].iloc[0]
+            scaled.loc[['Question_Number' == q, 'Answer_Number' == a, ['Point_Recommendation']]] = \
+                scaled.loc[['Question_Number' == q, 'Answer_Number' == a, ['Point_Recommendation']]]*mul
+    return scaled
+
+
+
+
+
+
 
 def convertToInt(string):
     try:
@@ -138,4 +171,4 @@ def convertToInt(string):
     except:
         return -1
 
-#launch_Weighting('scoring_urap')
+#launch_Weighting('scoring_nyu_6')

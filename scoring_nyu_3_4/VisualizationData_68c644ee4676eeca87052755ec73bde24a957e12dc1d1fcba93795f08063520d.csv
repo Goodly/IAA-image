@@ -1,5 +1,8 @@
 Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
 68c644ee4676eeca87052755ec73bde24a957e12dc1d1fcba93795f08063520d,L0,Language,Well-balanced,0.4854268271702418,[],-1,-1,nan
 68c644ee4676eeca87052755ec73bde24a957e12dc1d1fcba93795f08063520d,L0,Language,Well-balanced,0.4804689366045664,[],-1,-1,nan
+68c644ee4676eeca87052755ec73bde24a957e12dc1d1fcba93795f08063520d,L0,Language,Well-balanced,0.4854268271702418,[],-1,-1,nan
+68c644ee4676eeca87052755ec73bde24a957e12dc1d1fcba93795f08063520d,L0,Language,Well-balanced,0.4804689366045664,[],-1,-1,nan
+68c644ee4676eeca87052755ec73bde24a957e12dc1d1fcba93795f08063520d,P0,Probability,Doesn’t acknowledge uncertainty,-1.9481834791001829,[],-1,-1,nan
 68c644ee4676eeca87052755ec73bde24a957e12dc1d1fcba93795f08063520d,P0,Probability,Doesn’t acknowledge uncertainty,-1.9481834791001829,[],-1,-1,nan
 ,,,,,,,,

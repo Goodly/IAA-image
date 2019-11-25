@@ -9,16 +9,12 @@ import uuid
 
 def pointSort(directory, input_dir,
               scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False):
-    print("files in")
-    print(input_dir)
+
     dir_path = os.path.dirname(os.path.realpath(input_dir))
 
-    print('dir', dir_path)
     input_path = os.path.join(dir_path, input_dir)
     tua_path = os.path.join(input_path, 'tua')
     tua_location = ''
-    print('tua path',tua_path)
-    print(input_dir+'/tua')
     for file in os.walk(input_dir):
         if 'tua' in file and os.path.join(input_dir, file).isdir():
             tua_path = os.path.join(input_dir, file)
@@ -90,7 +86,7 @@ def pointSort(directory, input_dir,
         weights['points'] = weights['agreement_adjusted_points']
     #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
     #investigate the root
-    weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'answer_uuid', 'Question_Number'])
+    weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'agreed_Answer', 'Question_Number'])
     weights.to_csv(directory+'/SortedPts.csv')
     return tuas, weights
 
@@ -206,11 +202,6 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
         art_tuas = all_tuas[all_tuas['article_sha256'] == w_art]
         w_h = w['highlighted_indices']
 
-        #len will be 1 if failed IAA; or 0 if it's an empty list
-        #print('whigh', w['highlighted_indices'])
-        #print(not (isinstance(w_h, str)) or len(w_h)>1)
-        #print(not (isinstance(w_h, float)))
-        #print(len(w['highlighted_indices']))
         if not (isinstance(w_h, float)) and (not (isinstance(w_h, str)) or len(w_h)>1):
             weight_unit = get_indices_hard(w['highlighted_indices'])
             if len(weight_unit) > 0:
@@ -261,7 +252,6 @@ def add_indices_column(all_tuas):
         #     text +=j[2]+"//"
         for k in range(int(start), int(end+1)):
             ind.append(k)
-        print(ind)
         #JSOn so the legnth of the array being added is 1;
         #There's a better way but this works
         all_tuas.iloc[i,all_tuas.columns.get_loc('indices')] = json.dumps(ind)
@@ -346,4 +336,4 @@ def convert_to_tq_format(topic, question):
     return "T"+str(topic)+".Q"+str(question)
 
 
-#pointSort('scoring_sep_urap', 'sep_urap/')
+#pointSort('scoring_nyu_6', 'nyu_6/')
