@@ -10,15 +10,15 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1.2, q = 1):
     :return: a code denoting the success of the inputs in this function, 'U' means too few leaders, while
     H, M, and L denote the degree  of agreement
     """
-    # threshold = .6
+    # threshold = .2
     # if num_of_users<2:
     #     return 'U'
     # if percentage>=threshold:
     #     return 'H'
     # if percentage >= threshold/2:
     #     return 'M'
-    # return 'L'
-    percentage = percentage * scale
+    #return 'L'
+    percentage = percentage * scale + 40
     kappa = num_of_users + 3
     q = 3**(-0.2 * num_of_users + 1.9) + 1
     deriv = kappa * q * exp(-kappa * (percentage - 0.5)) / (1 + q * exp(-kappa * (percentage - 0.5)))**2
@@ -28,6 +28,7 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1.2, q = 1):
         return 'H'
     else:
         return 'L'
+
 def checkThreshold():
     for i in range(1,101):
         for u in range(3,11):

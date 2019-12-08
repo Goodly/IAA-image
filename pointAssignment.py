@@ -66,19 +66,20 @@ def pointSort(directory, input_dir,
         make_directory(rep_direc)
         weights.to_csv(rep_direc+'/weightsStacked'+str(len(weightFiles))+'.csv')
     if hasArg or hasSource:
+        print('collapsing')
         tuas = collapse_all_tuas(tuas, hasArg, argRel, hasSource, sourceRel, reporting)
         if reporting:
             tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+str(i)+'.csv')
-
+        print('enhancing')
         tuas = enhance_all_tuas(tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
         if reporting:
             tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+str(i)+'.csv')
-
+        print('matching')
         tuas, weights = find_tua_match(tuas, weights)
         if reporting:
             tuas.to_csv(rep_direc+'/matched_All_TUAS'+str(i)+'.csv')
             weights.to_csv(rep_direc + '/weightsMatched' + str(i) + '.csv')
-
+        print('applying adj')
         weights = apply_point_adjustments(weights, scale_guide)
         if reporting:
             weights.to_csv(rep_direc + '/weightsAdjusted' + str(i) + '.csv')
@@ -277,8 +278,7 @@ def collapse_all_tuas(all_tuas, has_arg, arg_spec, has_source, source_spec, repo
         collapsed = all_tuas[all_tuas['tua_uuid'] == real_tasks[0]]
         for i in range(1,len(real_tasks)):
             collapsed = collapsed.append(all_tuas[all_tuas['tua_uuid'] == real_tasks[i]])
-    if reporting:
-        print(np.sort(real_tasks))
+
     return collapsed
 
 def enhance_all_tuas(all_tuas, scaling_guide, has_arg, arg_spec, has_source, source_spec):
