@@ -59,18 +59,14 @@ def unpack_iaa(input):
 def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None):
     print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
-    print("HL Name", highlightfilename)
-    print("outdir in", outDirectory)
-    print(directory)
+
     if directory.startswith('./'):
         directory = directory[2:]
-    print(directory)
     if not outDirectory:
         outDirectory = 's_iaa' + directory
         print(outDirectory)
         if outDirectory[0] == '.':
             outDirectory == outDirectory[1:]
-    print("outDir, top", outDirectory)
     #print("donegettingdata")
     data = [["article_num", "article_sha256", "quiz_task_uuid", "tua_uuid", "schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score",

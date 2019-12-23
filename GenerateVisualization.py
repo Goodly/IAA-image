@@ -6,14 +6,15 @@ import os
 import os.path
 
 
-def visualize(articleID):
-    print("visualizing", articleID)
+def visualize(articleID, prefix = ''):
+    print("visualizing", articleID, prefix)
 
     shutil.copy("Visualization.html", os.getcwd() + "/TestBed")
-    curName = "TestBed/Visualization" + articleID + ".html"
+    curName = "TestBed/Visualization" +prefix+ articleID + ".html"
     os.rename("TestBed/Visualization.html", curName)
+    print('curName',curName)
     shutil.move(curName, os.getcwd())
-    curName = "Visualization" + articleID + ".html"
+    curName = "Visualization" + prefix+articleID + ".html"
 
     text = ""
 

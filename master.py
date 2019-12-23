@@ -11,11 +11,13 @@ from dataV2 import make_directory
 from time import time
 from send_to_s3 import send_s3
 from GenerateVisualization import visualize
+from eval_overalls import eval_triage_scoring
+from art_to_id_key import make_key
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
-                            push_aws = True):
+                            push_aws = True, out_prefix = ''):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -49,6 +51,11 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     #iaa_dir is now handled inside IAA.py
     #if iaa_dir is None:
     #    iaa_dir = 's_iaa_'+directory
+<<<<<<< HEAD
+=======
+    print("PUSH AWS VAL", push_aws)
+    print("PREFFF", out_prefix)
+>>>>>>> bce481af444dc69886107bd7c031a143aa2b07ba
     rep_direc = directory + "_report"
     make_directory(rep_direc)
     start = time()
@@ -74,17 +81,20 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     print("WEIGHTING")
     launch_Weighting(scoring_dir)
     print("SORTING POINTS")
-    pointSort(scoring_dir, directory)
+    tuas, weights = pointSort(scoring_dir, directory)
+
+    eval_triage_scoring(tuas, weights, scoring_dir)
+    make_key(tuas, scoring_dir, out_prefix)
     print("----------------SPLITTING-----------------------------------")
     splitcsv(scoring_dir)
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
         print("Pushing to aws")
-        ids = send_s3(scoring_dir, directory)
+        ids = send_s3(scoring_dir, directory, prefix=out_prefix)
 
     for id in ids:
-        visualize(id)
+        visualize(id, prefix=out_prefix)
 
 def load_args():
     parser = argparse.ArgumentParser()
@@ -131,16 +141,21 @@ def load_args():
     parser.add_argument(
         '-p', '--push_aws',
         help= "true if you want to push the visualization data to the aws s3; false by default")
+    parser.add_argument(
+        '-pre', '--out_prefix',
+        help='optional, if you need a prefix before the visualization data for testing, make this variable not be a zero string'
+    )
     return parser.parse_args()
 
 
 if __name__ == '__main__':
     args = load_args()
-    #input_dir = 'sep_urap'
+    input_dir = 'nyu_3_4'
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
     rep_file = './UserRepScores.csv'
+    out_prefix = ''
     if args.input_dir:
         input_dir = args.input_dir
     if args.tua_file:
@@ -151,6 +166,10 @@ if __name__ == '__main__':
         scoring_dir = args.scoring_dir
     if args.rep_file:
         rep_file = args.rep_file
-    calculate_scores_master(input_dir, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file)
+    if args.out_prefix:
+        out_prefix = args.out_prefix
 
-calculate_scores_master("nyu_0")
+    calculate_scores_master(input_dir, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
+                            out_prefix = out_prefix)
+
+#calculate_scores_master("nyu_0")

@@ -9,16 +9,12 @@ import uuid
 
 def pointSort(directory, input_dir,
               scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False):
-    print("files in")
-    print(input_dir)
+
     dir_path = os.path.dirname(os.path.realpath(input_dir))
 
-    print('dir', dir_path)
     input_path = os.path.join(dir_path, input_dir)
     tua_path = os.path.join(input_path, 'tua')
     tua_location = ''
-    print('tua path',tua_path)
-    print(input_dir+'/tua')
     for file in os.walk(input_dir):
         if 'tua' in file and os.path.join(input_dir, file).isdir():
             tua_path = os.path.join(input_dir, file)
@@ -27,12 +23,16 @@ def pointSort(directory, input_dir,
     for file in os.listdir(input_dir+'/tua'):
         print('file in tua',file)
         tua_location = os.path.join(tua_path, file)
+        try:
+            tuas = tuas.append(pd.read_csv(tua_location))
+        except UnboundLocalError:
+            tuas = pd.read_csv(tua_location)
 
     #Load everything so that it's a pandas dataframe
     scale_guide = pd.read_csv(scale_guide_dir)
     if len(tua_location)<3:
         raise FileNotFoundError("TUA file not found")
-    tuas = pd.read_csv(tua_location)
+    #tuas = pd.read_csv(tua_location)
     files = getFiles(directory)
 
     if not rep_direc:
@@ -66,26 +66,30 @@ def pointSort(directory, input_dir,
         make_directory(rep_direc)
         weights.to_csv(rep_direc+'/weightsStacked'+str(len(weightFiles))+'.csv')
     if hasArg or hasSource:
+        print('collapsing')
         tuas = collapse_all_tuas(tuas, hasArg, argRel, hasSource, sourceRel, reporting)
         if reporting:
             tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+str(i)+'.csv')
-
+        print('enhancing')
         tuas = enhance_all_tuas(tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
         if reporting:
             tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+str(i)+'.csv')
-
+        print('matching')
         tuas, weights = find_tua_match(tuas, weights)
         if reporting:
             tuas.to_csv(rep_direc+'/matched_All_TUAS'+str(i)+'.csv')
             weights.to_csv(rep_direc + '/weightsMatched' + str(i) + '.csv')
-
+        print('applying adj')
         weights = apply_point_adjustments(weights, scale_guide)
         if reporting:
             weights.to_csv(rep_direc + '/weightsAdjusted' + str(i) + '.csv')
     else:
         weights['points'] = weights['agreement_adjusted_points']
-    #Now break up weights by article
+    #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
+    #investigate the root
+    weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'agreed_Answer', 'Question_Number'])
     weights.to_csv(directory+'/SortedPts.csv')
+    return tuas, weights
 
 def apply_point_adjustments(weights, scale_guide):
     """
@@ -199,11 +203,6 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
         art_tuas = all_tuas[all_tuas['article_sha256'] == w_art]
         w_h = w['highlighted_indices']
 
-        #len will be 1 if failed IAA; or 0 if it's an empty list
-        #print('whigh', w['highlighted_indices'])
-        #print(not (isinstance(w_h, str)) or len(w_h)>1)
-        #print(not (isinstance(w_h, float)))
-        #print(len(w['highlighted_indices']))
         if not (isinstance(w_h, float)) and (not (isinstance(w_h, str)) or len(w_h)>1):
             weight_unit = get_indices_hard(w['highlighted_indices'])
             if len(weight_unit) > 0:
@@ -252,9 +251,8 @@ def add_indices_column(all_tuas):
         #     end = j[1]
         #     #TODO: decode this right so \u goes away
         #     text +=j[2]+"//"
-        for k in range(start, end+1):
+        for k in range(int(start), int(end+1)):
             ind.append(k)
-        print(ind)
         #JSOn so the legnth of the array being added is 1;
         #There's a better way but this works
         all_tuas.iloc[i,all_tuas.columns.get_loc('indices')] = json.dumps(ind)
@@ -280,8 +278,7 @@ def collapse_all_tuas(all_tuas, has_arg, arg_spec, has_source, source_spec, repo
         collapsed = all_tuas[all_tuas['tua_uuid'] == real_tasks[0]]
         for i in range(1,len(real_tasks)):
             collapsed = collapsed.append(all_tuas[all_tuas['tua_uuid'] == real_tasks[i]])
-    if reporting:
-        print(np.sort(real_tasks))
+
     return collapsed
 
 def enhance_all_tuas(all_tuas, scaling_guide, has_arg, arg_spec, has_source, source_spec):
@@ -339,4 +336,4 @@ def convert_to_tq_format(topic, question):
     return "T"+str(topic)+".Q"+str(question)
 
 
-#pointSort('scoring_sep_urap', 'sep_urap/')
+#pointSort('scoring_nyu_6', 'nyu_6/')

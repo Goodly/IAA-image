@@ -1,0 +1,9 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Well-balanced,0.5,[],-1,-1,nan
+ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Metaphor unhelpful,-1.6959938131098995,[],-1,-1,nan
+ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Inappropriate slang,-0.5085539288344783,[],-1,-1,nan
+ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Denigration,-0.25,[],-1,-1,nan
+ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,O0,Overall,Very Biased,-1.3814105385399311,[],-1,-1,nan
+ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,O0,Overall,Good Title,1.1083713057234186,"[62, 63, 64, 65]",62,66,Fishy
+ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,O0,Overall,Celebrity Gossip,-4.0,L,-1,-1,nan
+,,,,,,,,

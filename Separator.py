@@ -79,7 +79,7 @@ def splitcsv(directory, textseparator = '//'):
 def findWeights(directory):
     for root, dir, files in os.walk(directory):
         for file in files:
-            if file.endswith('.csv') and 'SortedPts' in file:
+            if file.endswith('.csv') and 'AssessedPoints' in file:
                 return file
 
 
