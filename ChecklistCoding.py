@@ -15,7 +15,8 @@ def scoreChecklist(answers,numUsers, num_choices):
         out.append(scores[i]/numUsers)
     return out
 
-def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sourceText, hlUsers, hlAns, num_choices  = 5,  dfunc = None, useRep = False):
+def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sourceText, hlUsers, hlAns,
+                      num_choices  = 5,  dfunc = None, useRep = False, threshold_func = 'logis_0'):
 
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF, useRep=useRep)
     #assert len(starts) == len(users), 'starts, users mismatched'
@@ -46,7 +47,8 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
         #print(weightScaledNumUsers)
         winner, units, uScore, iScore, selectedText = passToUnitizing(weightScaledAnswers,weightScaledHlUsers, weightScaledStarts,
                                                         weightScaledEnds,numUsers,length, codingScore, i,
-                                                        weightScaledNumUsers, userWeightDict, sourceText, useRep=useRep)
+                                                        weightScaledNumUsers, userWeightDict, sourceText, useRep=useRep,
+                                                        threshold_func = threshold_func)
         firstSecondDiff = 1 - codingScore
         out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText, firstSecondDiff, 'checklist', num_choices])
         #do_rep_calculation_nominal(users, answers, out[0], units, starts, ends, length, repDF,last30, checkListScale=(1/num_choices))

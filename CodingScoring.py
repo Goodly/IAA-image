@@ -8,7 +8,7 @@ import numpy as np
 
 
 def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, hlUsers, hlAns, repDF=None, dfunc=None,
-                   num_choices=15, useRep = False):
+                   num_choices=15, useRep = False, threshold_func = 'logis_0'):
     """ calculate all scores for any coding question
         inputs:
         answers, users, starts, and ends are all lists that are in the same order,
@@ -41,7 +41,7 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
         # and misclicks
 
         # It seemed like this made every ordinal q way more lenient without the extra clause
-        if evalThresholdMatrix(highScore, numUsers) != 'H' and \
+        if evalThresholdMatrix(highScore, numUsers, func = threshold_func) != 'H' and \
                 (num_choices > 3 and winner == 1 or winner == num_choices):
             highScore, winner, weights, firstSecondScoreDiff = scoreCoding(answers, users, 'ordinal', scale=2)
     # These all return tuples (array of answers, amount of scaling done), element at index 1 is same for all
@@ -63,7 +63,7 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
                                                                   weightScaledStarts,
                                                                   weightScaledEnds, numUsers, length, highScore, winner,
                                                                   weightScaledNumUsers, userWeightDict, sourceText,
-                                                                  useRep=useRep)
+                                                                  useRep=useRep, threshold_func=threshold_func)
     return winner, units, uScore, iScore, highScore, numUsers, selectedText, firstSecondScoreDiff
 
 
@@ -108,12 +108,13 @@ def weightScaleEverything(answers, weights, users, hlUsers, starts, ends, repDF)
 
 # TOPTWO metric add the top two score difference as  an input
 def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
-                    highScore, winner, scaledNumUsers, userWeightDict, sourceText, useRep = False):
+                    highScore, winner, scaledNumUsers, userWeightDict, sourceText, useRep = False,
+                    threshold_func = 'logis_0'):
     """ calculates unitizing agreement for any coding question after verifying that it passes the threshold matrix
     Only calculates unitizing agreement amongst users who selected the most agreed-upon answer"""
     # assert len(starts) == len(users), 'starts, users mismatched'
     # TOPTWO metric change next line to have the score difference as an arg
-    if evalThresholdMatrix(highScore, numUsers) == 'H':
+    if evalThresholdMatrix(highScore, numUsers, func=threshold_func) == 'H':
         # f for filtered
         starts, ends, hlusers = np.array(starts), np.array(ends), np.array(hlusers)
         # fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
@@ -124,7 +125,8 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
         if len(starts) >= 3:
             assert len(fStarts) == len(fhlusers)
             uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fhlusers,
-                                                     userWeightDict, answers, winner, useRep = useRep)
+                                                     userWeightDict, answers, winner, useRep = useRep,
+                                                     threshold_func=threshold_func)
             selectedText = 'N/A'
             if uScore == 'U':
                 return 'U', 'U', 'U', 'U', 'U'
@@ -138,7 +140,7 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
             selectedText = 'NA'
         return winner, units, uScore, iScore, selectedText
     else:
-        status = evalThresholdMatrix(highScore, numUsers)
+        status = evalThresholdMatrix(highScore, numUsers, func=threshold_func)
         return status, status, status, status, status
 
 
@@ -166,11 +168,9 @@ def scoreCoding(answers, users, dfunc, scale=1, num_choices=25):
 
 
 def getWinnersOrdinal(answers, num_choices=5, scale=1):
-    # Todo:confirm that I said the right thing about Shannon
     """Calculates the most-common answer and assigns it an agreement score
     uses shannon's thingy-ma-jig to assign weights to different answers"""
     # Shannon Entropy ordinal metric
-    # Todo: get number of possible answers as an input so we don't have to assume it's 5
     length = num_choices * scale
     # index 1 refers to answer 1, 0 and the last item are not answer choices, but
     # deal with corner cases that would cause errors

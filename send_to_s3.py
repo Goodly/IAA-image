@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 from time import sleep
-def send_s3(scoring_dir, input_dir, prefix = ''):
+def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
     print("pushing to s3")
     art_ids = []
     for root, dir, files in os.walk(scoring_dir):
@@ -41,10 +41,13 @@ def send_s3(scoring_dir, input_dir, prefix = ''):
     for filename in os.listdir(text_dir):
         i = filenames.index(filename)
         new_sha = sha_256s[i]
-        new_name = new_sha+'SSSArticle.txt'
+        new_name = func+new_sha+'SSSArticle.txt'
         src = os.path.join(text_dir, filename)
         dst = os.path.join(text_dir, new_name)
-        os.rename(src, dst)
+        cmd_str = "aws s3 cp " + src + " s3://publiceditor.io/Articles/" + \
+                                       new_name + " --acl public-read"
+        os.system(cmd_str)
+        #os.rename(src, dst)
     print("done renaming")
     sleep(5)
     for filename in os.listdir(text_dir):
@@ -52,23 +55,23 @@ def send_s3(scoring_dir, input_dir, prefix = ''):
 
 
     #now send
-    for root, dir, files in os.walk(input_dir):
-        for file in files:
-            if file.endswith('.txt'):
-                print("pushing text", file)
-                if 'SSSArticle' in file:
-                    dir_path = os.path.dirname(os.path.realpath(file))
-                    print('dir', dir_path)
-                    input_path = os.path.join(dir_path, input_dir)
-                    file_path = os.path.join(input_path, 'texts/')
-                    text_path = os.path.join(file_path, file)
-                    cmd_str = "aws s3 cp " + text_path + " s3://publiceditor.io/Articles/" + \
-                              file + " --acl public-read"
-                    os.system(cmd_str)
-                else:
-                    print("!!!YOU IDIOT!!!!--make sure the text file's format is SHA256 + SSSArticle.txt, where SHA256 "+
-                          "is the \n"+
-                          "article's sha256 and SSSArticle.txt is that, regardless of article title")
+    # for root, dir, files in os.walk(input_dir):
+    #     for file in files:
+    #         if file.endswith('.txt'):
+    #             print("pushing text", file)
+    #             if 'SSSArticle' in file:
+    #                 dir_path = os.path.dirname(os.path.realpath(file))
+    #                 print('dir', dir_path)
+    #                 input_path = os.path.join(dir_path, input_dir)
+    #                 file_path = os.path.join(input_path, 'texts/')
+    #                 text_path = os.path.join(file_path, file)
+    #                 cmd_str = "aws s3 cp " + text_path + " s3://publiceditor.io/Articles/" + \
+    #                           file + " --acl public-read"
+    #                 os.system(cmd_str)
+    #             else:
+    #                 print("!!!YOU IDIOT!!!!--make sure the text file's format is SHA256 + SSSArticle.txt, where SHA256 "+
+    #                       "is the \n"+
+    #                       "article's sha256 and SSSArticle.txt is that, regardless of article title")
     return art_ids
 
-#send_s3('scoring_nyu_6', 'nyu_6')
+#send_s3('scoring_nyu_6', 'nyu_6', 'logis_0')

@@ -1,0 +1,6 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+raw_7086d0e1839d825b8b56f2c7430efa716f4777e45dd001dd29ff68a3d232069e4c,L0,Language,Inappropriate slang,-0.2256443238394881,"[1868, 1869, 1870, 1871, 1872, 1873, 1874, 1875, 1876, 1877, 1878, 1879, 1880, 1881, 1882, 1883, 1884, 1885, 1886]",1868,1887,nan
+raw_7086d0e1839d825b8b56f2c7430efa716f4777e45dd001dd29ff68a3d232069e4c,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+raw_7086d0e1839d825b8b56f2c7430efa716f4777e45dd001dd29ff68a3d232069e4c,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+raw_7086d0e1839d825b8b56f2c7430efa716f4777e45dd001dd29ff68a3d232069e4c,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+,,,,,,,,

@@ -1,0 +1,4 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+logis_0ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+logis_0ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,O0,Overall,Good Title,1.1083713057234186,"[62, 63, 64, 65]",62,66,Fishy
+,,,,,,,,

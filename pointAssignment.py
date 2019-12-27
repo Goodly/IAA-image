@@ -53,14 +53,21 @@ def pointSort(directory, input_dir,
 
 
     weightFiles = files[2]
-    if len(weightFiles)>0:
-        weights = pd.read_csv(weightFiles[0])
-    else:
-        print("NO WEIGHTS FOUND")
-        return
-    for i in range(1,len(weightFiles)):
+    # if len(weightFiles)>0:
+    #     weights = pd.read_csv(weightFiles[0])
+    # else:
+    #     print("NO WEIGHTS FOUND")
+    #     return
+    weight_list = []
+    for i in range(len(weightFiles)):
+        print('badone', i, weightFiles[i])
         wf = pd.read_csv(weightFiles[i])
-        weights = weights.append(wf)
+        weight_list.append(wf)
+        #weights = weights.append(wf)
+    for i in range(len(weight_list)):
+        weight_list[i].to_csv('interm'+str(i))
+    weights = pd.concat(weight_list)
+
 
     if reporting:
         make_directory(rep_direc)
@@ -163,7 +170,7 @@ def getFiles(directory):
 
                     argRelevanceFile = directory+file
                     print('Found Arguments File ' + argRelevanceFile)
-            if file.endswith('.csv')  and 'Point' in file:
+            if file.endswith('.csv')  and 'Point_recs' in file:
                 print('Found Weights File '+ directory + file)
                 weightOutputs.append(directory+file)
                 print('foud Weights File...', weightOutputs)

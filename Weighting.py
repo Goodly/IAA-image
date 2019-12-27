@@ -107,7 +107,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
         for_visualization = for_visualization.append(new_csv)
 
 
-    column_names = ["article_num", "article_sha256", "quiz_task_uuid", "Question_Number", "Answer_Number",
+    column_names = ["article_num", "article_sha256", "article_id", "quiz_task_uuid", "Question_Number", "Answer_Number",
                     "highlighted_indices", "Point_Recommendation", "agreement_adjusted_points", "Label", "target_text"]
 
     # if IAA_csv_schema_type == "Evidence":
