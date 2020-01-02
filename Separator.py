@@ -21,9 +21,10 @@ def splitcsv(directory, textseparator = '//'):
 
 
     for art in articles:
+        print(art)
         final_out = [final_cols]
         artdf = valid_points[valid_points['article_sha256'] == art]
-        art_id = artdf['article_sha256'].iloc[0]
+        art_id = artdf['article_id'].iloc[0]
         schema = np.unique(artdf['Schema'])
         for s in schema:
             sch_df = artdf[artdf['Schema'] == s]
@@ -65,9 +66,9 @@ def splitcsv(directory, textseparator = '//'):
                     final_out.append(addend)
                 #final_out = pd.concat([final_out, addend], axis =0, names = final_cols)
         final_out.append([None, None, None, None,None,None,None, None, None])
-        path = directory + '/VisualizationData_' + str(art) + '.csv'
+        path = directory + '/VisualizationData_' + art_id + '.csv'
         print("EXPORTENg  "+path)
-        scores = open(directory + '/VisualizationData_' + str(art) + '.csv', 'w', encoding='utf-8')
+        scores = open(directory + '/VisualizationData_' + art_id + '.csv', 'w', encoding='utf-8')
         with scores:
             writer = csv.writer(scores)
             writer.writerows(final_out)
@@ -107,4 +108,4 @@ def indicesToStartEnd(indices):
     #ends.append(indices[len(indices)-1])
     print(starts, ends, sorted(chunks))
     return sorted(starts), sorted(ends), sorted(chunks)
-#splitcsv('scoring_urap')
+#splitcsv('scoring_nyu_6')

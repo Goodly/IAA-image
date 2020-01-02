@@ -2,13 +2,14 @@ import krippendorff
 import numpy as np
 from ThresholdMatrix import evalThresholdMatrix
 
-def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner, useRep = False):
+def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner, useRep = False,
+                     threshold_func = 'logis_0'):
     answerMatrix = toArray(starts,ends,length, users, userWeightDict, answers, winner)
     #TODO: SCALE answerMatrix by rep
     numUsers = len(np.unique(users))
     percentageArray = scorePercentageUnitizing(answerMatrix,length,numUsers)
     assert len(starts) == len(users)
-    filteredData = filterSingular(percentageArray, numUsers,users,starts,ends)
+    filteredData = filterSingular(percentageArray, numUsers,users,starts,ends, threshold_func=threshold_func)
     fStarts,fEnds,fNumUsers,goodIndices, fUsers = filteredData[0], filteredData[1], \
                                                   filteredData[2], filteredData[3], filteredData[4]
     if len(fStarts)==0:
@@ -95,7 +96,7 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
     unitsMatrix = np.stack((col1, col2), axis=0).T
     return unitsMatrix
 
-def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
+def filterSingular(percentageScoresArray, numUsers,users,starts,ends, threshold_func = 'logis_0'):
     """
     filters the data so that only users who highlighted units that passed the
     thresholdmatrix after their percentage agreement was calculated get scored
@@ -116,7 +117,7 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends):
 #TODO: get math done for minpasspercent
 #        if percentageScoresArray[i]>minPassPercent:
 
-        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 2.4) == 'H':
+        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 2, func=threshold_func) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
     assert len(starts) == len(users)

@@ -1,0 +1,9 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+logis_0729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+logis_0729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+logis_0729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+logis_0729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+logis_0729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[1473],1473,1473, //UNDERMINING//WE’RE DETERMINED TO FIND OUT
+logis_0729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0,"[1597, 1598, 1599, 1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607]",1597,1607, //UNDERMINING//WE’RE DETERMINED TO FIND OUT
+logis_0729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0,"[1906, 1907, 1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929, 1930, 1931, 1932]",1906,1933, //UNDERMINING//WE’RE DETERMINED TO FIND OUT
+,,,,,,,,

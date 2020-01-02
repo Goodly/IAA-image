@@ -17,7 +17,7 @@ from art_to_id_key import make_key
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
-                            push_aws = True, out_prefix = ''):
+                            push_aws = True, out_prefix = '', threshold_func = 'logis_0'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -42,11 +42,38 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     **if in the future the data import is adjusted to depend on other file outputs from tagworks, new parameters would
         have to be added to accomodate the change in importing procedures
     :param push_aws: True if we want outputs sent to the s3 AWS folder, false to just store locally
+    :param out_prefix: add something to the prefix of output files to keep everything tidy
+    :param: threshold_func: the threshold function being used to determine inter-annotator agreement; for a
+        comprehensive test of all the threshold functions set this to 'all'; this will not work if an iaa_directory is
+        specified
     :return: No explicit return.  Running will create two directories named by the inputs. the iaa_dir will house
         a csv output from the IAA algorithm.  The scoring_dir will house the csvs output from the dependency evaluation
         algorithm; the weighting algorithm; the point sorting algorithm; and the final cleaning algorithm that prepares
         data to be visualized
     """
+    print(threshold_func)
+    all_funcs = ['raw_70', 'raw_50', 'raw_30', 'logis_0', 'logis+20', 'logis+40']
+    target_funcs = ['raw_70', 'raw_50', 'raw_30']
+    #all_funcs is every possible scoring function; target_funcs is just the functions you want to test when you say all
+    if threshold_func == 'all':
+        for func in target_funcs:
+            if iaa_dir is None:
+                if directory.startswith('./'):
+                    iaa_direc = 's_iaa_' + func + '_' + directory[2:]
+                else:
+                    iaa_direc = 's_iaa_' + func + '_' + directory
+            if scoring_dir is None:
+                if directory.startswith('./'):
+                    scoring_direc = 'scoring_' + func + '_' + directory[2:]
+                else:
+                    scoring_direc = 'scoring_' + func + '_' + directory
+            calculate_scores_master(directory, tua_file=tua_file, iaa_dir=iaa_direc, scoring_dir=scoring_direc,
+                                    repCSV=repCSV, just_s_iaa=just_s_iaa, just_dep_iaa=just_dep_iaa, use_rep=use_rep,
+                                    reporting=reporting,single_task=single_task, highlights_file=highlights_file,
+                                    schema_file=schema_file, answers_file=answers_file,
+                                    push_aws=push_aws, out_prefix=out_prefix, threshold_func=func)
+        return
+
     print("IAA PROPER")
     #iaa_dir is now handled inside IAA.py
     #if iaa_dir is None:
@@ -60,11 +87,12 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     make_directory(rep_direc)
     start = time()
     if not single_task:
-        iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir, useRep=use_rep)
+        iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
+                                           useRep=use_rep, threshold_func=threshold_func)
     else:
 
         iaa_dir = calc_scores(highlights_file, repCSV=repCSV, answersFile = answers_file, schemaFile = schema_file,
-                              outDirectory = iaa_dir, useRep = use_rep)
+                              outDirectory = iaa_dir, useRep = use_rep, threshold_func=threshold_func)
 
     if reporting:
         make_iaa_human_readable(iaa_dir, rep_direc)
@@ -91,7 +119,7 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     ids = []
     if push_aws:
         print("Pushing to aws")
-        ids = send_s3(scoring_dir, directory, prefix=out_prefix)
+        ids = send_s3(scoring_dir, directory, prefix=out_prefix, func = threshold_func)
 
     for id in ids:
         visualize(id, prefix=out_prefix)
@@ -143,7 +171,10 @@ def load_args():
         help= "true if you want to push the visualization data to the aws s3; false by default")
     parser.add_argument(
         '-pre', '--out_prefix',
-        help='optional, if you need a prefix before the visualization data for testing, make this variable not be a zero string'
+        help='optional, if you need a prefix before the visualization data for testing, make this variable not be a zero string')
+    parser.add_argument(
+        '-tf', '--threshold_function',
+        help= 'the threshold function used to check for inter annotator agreement'
     )
     return parser.parse_args()
 
@@ -168,8 +199,10 @@ if __name__ == '__main__':
         rep_file = args.rep_file
     if args.out_prefix:
         out_prefix = args.out_prefix
+    if args.threshold_function:
+        threshold_function = args.threshold_function
 
     calculate_scores_master(input_dir, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
-                            out_prefix = out_prefix)
+                            out_prefix = out_prefix, threshold_func=threshold_function)
 
 #calculate_scores_master("nyu_0")

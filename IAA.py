@@ -9,7 +9,7 @@ import os
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
 def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, answersFile = None, outDirectory = None,
-                             useRep = False):
+                             useRep = False, threshold_func = 'logis_0'):
     print("IAA STARTING")
     if outDirectory is None:
         if directory.startswith('./'):
@@ -41,22 +41,26 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
     for i in range(len(schema)):
 
         ins.append([highlights[i], hardCodedTypes, repCSV ,
-                            answers[i], schema[i], outDirectory, useRep])
+                            answers[i], schema[i], outDirectory, useRep, directory, threshold_func])
     print("starting pol")
-    # with Pool() as pool:
-    #     pool.map(unpack_iaa, ins)
+    with Pool() as pool:
+        pool.map(unpack_iaa, ins)
 
-    for i in range(len(highlights)):
-        calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
-                           answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep, directory=directory)
-                    #will be an error for every file that isn't the right file, there's a more graceful solution, but
-                    #we'll save that dream for another day
+    # for i in range(len(highlights)):
+    #     calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
+    #                        answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
+    #                 directory=directory, threshold_func = threshold_func)
+    #                 #will be an error for every file that isn't the right file, there's a more graceful solution, but
+    #                 #we'll save that dream for another day
     return outDirectory
 def unpack_iaa(input):
     print("unpacking", input)
     calc_scores(input[0], hardCodedTypes=input[1], repCSV = input[2],
-                            answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6])
-def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None, fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None):
+                            answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6],
+                directory = input[7], threshold_func=input[8])
+def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None,
+                fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
+                threshold_func = 'logis_0'):
     print('collecting Data')
     uberDict = data_storer(highlightfilename, answersFile, schemaFile)
 
@@ -68,7 +72,7 @@ def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFi
         if outDirectory[0] == '.':
             outDirectory == outDirectory[1:]
     #print("donegettingdata")
-    data = [["article_num", "article_sha256", "quiz_task_uuid", "tua_uuid", "schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
+    data = [["article_num", "article_sha256", "article_id","quiz_task_uuid", "tua_uuid", "schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
     #initialize rep
@@ -89,6 +93,7 @@ def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFi
         task_id = task
         article_num = get_article_num(uberDict,task_id)
         article_sha = get_article_sha(uberDict, task_id)
+        article_id =threshold_func+article_sha
         schema_namespace = get_schema(uberDict, task_id)
         schema_sha = get_schema_sha256(uberDict, task_id)
         tua_uuid = get_tua_uuid(uberDict, task_id)
@@ -123,7 +128,7 @@ def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFi
                     units = units.replace(' ', ', ')
                     #TODO: when separate topics implemented; replace the 1 with th the topicnum
                     ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
-                    data.append([article_num, article_sha, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
+                    data.append([article_num, article_sha, article_id, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
                                  codingPercentAgreement, agreements[i][7], units,
                                  unitizingScore, inclusiveUnitizing, totalScore, num_users, agreements[i][9],agreements[i][6],
                                 question_text, answer_text])
@@ -152,7 +157,8 @@ def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFi
                 units = units.replace(' ', ', ')
                 ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
 
-                data.append([article_num, article_sha,task_id,tua_uuid,schema_namespace, schema_sha, ques_num, ans_uuid, agreements[8], winner, codingPercentAgreement, agreements[7],
+                data.append([article_num, article_sha, article_id, task_id,tua_uuid,schema_namespace, schema_sha,
+                             ques_num, ans_uuid, agreements[8], winner, codingPercentAgreement, agreements[7],
                              units, unitizingScore, inclusiveUnitizing,
                              totalScore, num_users, agreements[9], selectedText,
                              question_text, answer_text])
@@ -202,7 +208,7 @@ def adjustForJson(units):
 
 
 
-def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = False):
+def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -274,19 +280,21 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = Fa
     if question_type == 'ordinal':
         #assert(len(answers) == len(users))
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText, hlUsers, hlAns, repDF = repDF,
-                             dfunc='ordinal', num_choices=num_choices, useRep=useRep)
+                             dfunc='ordinal', num_choices=num_choices, useRep=useRep, threshold_func=threshold_func)
 
         #print("ORDINAL", out[1], starts, ends)
         #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], hlUsers, starts, ends, length, repDF, thirtyDf)
         out = out+(question_type, num_choices)
     elif question_type == 'nominal':
         #print('nominal', users)
-        out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText,hlUsers, hlAns, repDF = repDF, num_choices=num_choices, useRep=useRep)
+        out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText,hlUsers, hlAns, repDF = repDF,
+                             num_choices=num_choices, useRep=useRep, threshold_func=threshold_func)
         #do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF)
         #print("NOMINAL", out[1], starts, ends)
         out = out+(question_type, num_choices)
     elif question_type == 'checklist':
-        out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, hlUsers, hlAns, num_choices = num_choices, useRep=useRep)
+        out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, hlUsers, hlAns,
+                                num_choices = num_choices, useRep=useRep, threshold_func = threshold_func)
     return out
 
 

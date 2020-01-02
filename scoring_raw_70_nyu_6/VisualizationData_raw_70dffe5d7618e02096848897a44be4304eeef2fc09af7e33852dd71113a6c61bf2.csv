@@ -1,0 +1,5 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+raw_70dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Denigration,-0.25,"[2374, 2375, 2376, 2377, 2378, 2379, 2380, 2381, 2382]",2374,2383,nan
+raw_70dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+raw_70dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+,,,,,,,,
