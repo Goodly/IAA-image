@@ -1,0 +1,1 @@
+quiz_task_uuid,task_url,article_batch_name,article_number,article_filename,article_sha256,quiz_taskrun_uuid,contributor_uuid,namespace,topic_number,topic_name,question_number,question_text,answer_number,answer_content,answer_uuid,submitted_tua_uuid,answer_text,case_number,start_pos,end_pos,target_text,source_text_length

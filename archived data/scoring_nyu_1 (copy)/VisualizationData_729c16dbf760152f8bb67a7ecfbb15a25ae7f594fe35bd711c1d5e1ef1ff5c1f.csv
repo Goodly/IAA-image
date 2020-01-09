@@ -1,0 +1,9 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Exaggeration,-2.1199922663873747,"[3709, 3710, 3711, 3712, 3713, 3714, 3715]",3709,3716,nan
+729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Writing errors,-2.542769644172392,[],-1,-1,nan
+729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.5,[],-1,-1,nan
+729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.40367746102880203,[],-1,-1,nan
+729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.5,[],-1,-1,nan
+729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.40367746102880203,[],-1,-1,nan
+729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.40367746102880203,[],-1,-1,nan
+,,,,,,,,

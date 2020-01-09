@@ -1,0 +1,4 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+logis_0a2cbd2793021682ba8c9d0dc90f901373791b6653b8de686a304de0f07fbdcd0,O0,Overall,Circumspect,0.980601592285984,[],-1,-1,nan
+logis_0a2cbd2793021682ba8c9d0dc90f901373791b6653b8de686a304de0f07fbdcd0,O0,Overall,Good Title,2.0,[],-1,-1,nan
+,,,,,,,,

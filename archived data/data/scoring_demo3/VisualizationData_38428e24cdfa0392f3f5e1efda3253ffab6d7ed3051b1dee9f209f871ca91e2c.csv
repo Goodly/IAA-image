@@ -1,0 +1,12 @@
+Article ID,Credibility Indicator ID ,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,E0,Evidence,Sample representativeness,-0.4167350949215892,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,E1,Evidence,Control condition,-0.3818137942930394,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,E2,Evidence,Alternative explanation,-3.8020093121304144,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,E3,Evidence,Systematic uncertainty,-2.912335624075932,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,P0,Probability,Inappropriate confidence,-0.8390359525563189,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,P1,Probability,False precision,-0.8020924636173948,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,P2,Probability,Open to evidence,0.3983206411569795,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L0,Language,Exaggeration,-2.068493192518459,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L1,Language,Inappropriately emotional,-2.3339007365534385,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L2,Language,Writing errors,-1.0810324064294772,[],-1,-1
+38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,L3,Language,Well-balanced,0.4526622983724914,[],-1,-1

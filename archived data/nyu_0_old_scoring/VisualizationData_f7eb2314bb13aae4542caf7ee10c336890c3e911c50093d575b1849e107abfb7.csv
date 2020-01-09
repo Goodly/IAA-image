@@ -1,0 +1,12 @@
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.5,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.4853517024534248,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.5,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.4854268271702418,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.8286346099994961,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,P0,Probability,Inappropriate confidence,-0.4324129625717909,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,P0,Probability,Doesn’t acknowledge uncertainty,-2.0,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,P0,Probability,Doesn’t acknowledge uncertainty,-2.0,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,P0,Probability,Doesn’t acknowledge uncertainty,-2.0,[],-1,-1,nan
+f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,R0,Reasoning,nan,0.0,"[2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2070, 2071, 2072, 2073, 2074, 2075, 2076, 2077, 2078, 2079, 2080, 2081, 2082, 2083, 2084, 2085, 2086, 2087, 2088]",2057,2089,nan
+,,,,,,,,

@@ -78,11 +78,11 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     #iaa_dir is now handled inside IAA.py
     #if iaa_dir is None:
     #    iaa_dir = 's_iaa_'+directory
-<<<<<<< HEAD
-=======
-    print("PUSH AWS VAL", push_aws)
-    print("PREFFF", out_prefix)
->>>>>>> bce481af444dc69886107bd7c031a143aa2b07ba
+
+
+   
+
+
     rep_direc = directory + "_report"
     make_directory(rep_direc)
     start = time()
