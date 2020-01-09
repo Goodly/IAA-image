@@ -16,3 +16,8 @@
 __pycache__/
 *.pyc
 pip-selfcheck.json
+
+#Virtual environments
+
+./venv
+./VirtEnv
