@@ -1,4 +1,4 @@
-from datascience import *
+#from datascience import *
 import numpy as np
 import pandas as pd
 import os
@@ -21,10 +21,10 @@ def launch_Weighting(directory):
 
 def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './'):
 
-    IAA_csv = Table.read_table(IAA_csv_file)
+    IAA_csv = pd.read_csv(IAA_csv_file)
     #IndexError when the csv is empty
     try:
-        IAA_csv_schema_name = IAA_csv.column("schema_namespace").item(0)
+        IAA_csv_schema_name = IAA_csv.schema_namespace.iloc[0]
     except IndexError:
         if IAA_csv.shape[0]<1:
             return
@@ -48,66 +48,65 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
         print("unweighted IAA", IAA_csv_file, "aborting")
         return
     print("WEIGHINGWITHSCHEMA", IAA_csv_schema_type, IAA_csv_file)
-    IAA_csv = IAA_csv.with_column("Schema", IAA_csv_schema_type)
-    IAA_csv = IAA_csv.relabeled("question_Number", "Question_Number")
+
     #because data sciecne module doesn't support a where to distinguish between strings and ints, we're casting
     #the ints to strings.
-    IAA_csv.append_column("Answer_Number", [str(a) for a in IAA_csv.column('agreed_Answer')])
-    IAA_csv = IAA_csv.where("Answer_Number", are.not_contained_in('ULM'))
+    #IAA_csv.append_column("Answer_Number", [str(a) for a in IAA_csv.column('agreed_Answer')])
+    IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='U']
+    IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='M']
+    IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='L']
 
-
-
-    credibility_weights_csv = Table.read_table(credibility_weights_csv_file)
-    credibility_weights_csv = credibility_weights_csv.to_df()
+    IAA_csv = IAA_csv.rename(columns={ "question_Number": "Question_Number", 'agreed_Answer': 'Answer_Number'})
+    IAA_csv['Schema'] = IAA_csv_schema_type
+    credibility_weights_csv = pd.read_csv(credibility_weights_csv_file)
     weight_scale_table = pd.read_csv(weight_scale_csv)
 
 
 
     q6_points = 0
-    if IAA_csv_schema_type == "Evidence":
-        if 6 in IAA_csv.column("Question_Number"):
+    # if IAA_csv_schema_type == "Evidence":
+    #     if 6 in IAA_csv.column("Question_Number"):
+    #
+    #         question_six_table = IAA_csv.where("Question_Number", are.equal_to(6))
+    #         q6_holder_points = 0
+    #         a = "Correlation"
+    #         b = "Cause precedes effect"
+    #         c = "The correlation appears across multiple independent contexts"
+    #         d = "A plausible mechanism is proposed"
+    #         e = "An experimental study was conducted (natural experiments OK)"
+    #         f = "The bigger the cause, the bigger the effect (dose response curve)"
+    #         g = "Experts are cited"
+    #         h = "Other evidence"
+    #         i = "No evidence given"
+    #
+    #         for row in question_six_table.rows:
+    #             if row.item("answer_content") == a or row.item("answer_content") == b or row.item("answer_content") == d:
+    #                 q6_holder_points += row.item("agreement_score") * 50
+    #             if row.item("answer_content") == c or row.item("answer_content") == e or row.item("answer_content") == f:
+    #                 q6_holder_points += row.item("agreement_score") * 10
+    #             if row.item("answer_content") == g or row.item("answer_content") == h:
+    #                 q6_holder_points += row.item("agreement_score") * 1
+    #
+    #         q6_points = weighted_q6(q6_holder_points)
 
-            question_six_table = IAA_csv.where("Question_Number", are.equal_to(6))
-            q6_holder_points = 0
-            a = "Correlation"
-            b = "Cause precedes effect"
-            c = "The correlation appears across multiple independent contexts"
-            d = "A plausible mechanism is proposed"
-            e = "An experimental study was conducted (natural experiments OK)"
-            f = "The bigger the cause, the bigger the effect (dose response curve)"
-            g = "Experts are cited"
-            h = "Other evidence"
-            i = "No evidence given"
-
-            for row in question_six_table.rows:
-                if row.item("answer_content") == a or row.item("answer_content") == b or row.item("answer_content") == d:
-                    q6_holder_points += row.item("agreement_score") * 50
-                if row.item("answer_content") == c or row.item("answer_content") == e or row.item("answer_content") == f:
-                    q6_holder_points += row.item("agreement_score") * 10
-                if row.item("answer_content") == g or row.item("answer_content") == h:
-                    q6_holder_points += row.item("agreement_score") * 1
-
-            q6_points = weighted_q6(q6_holder_points)
-
-    IAA_csv = IAA_csv.to_df()
     IAA_csv["Question_Number"] = IAA_csv["Question_Number"].apply(int)
 
-    IAA_csv["Answer_Number"] = IAA_csv["Answer_Number"].apply(convertToInt)
+    IAA_csv['Answer_Number'] = IAA_csv['Answer_Number'].apply(convertToInt)
     for_visualization = pd.DataFrame()
     for task in np.unique(IAA_csv['quiz_task_uuid']):
         task_IAA = IAA_csv[IAA_csv['quiz_task_uuid'] == task]
         scaled_cred_weights = scale_weights_csv(credibility_weights_csv, weight_scale_table, task_IAA,
                                                     IAA_csv_schema_type)
 
-        new_csv = pd.merge(scaled_cred_weights, IAA_csv, on =["Schema", "Question_Number", "Answer_Number"], how = "inner")
+    new_csv = pd.merge(scaled_cred_weights, IAA_csv, on =["Schema", "Question_Number", 'Answer_Number'])
 
 
-        points = new_csv["Point_Recommendation"] * new_csv["agreement_score"]
-        new_csv = new_csv.assign(agreement_adjusted_points = points)
-        for_visualization = for_visualization.append(new_csv)
+    points = new_csv["Point_Recommendation"] * new_csv["agreement_score"]
+    new_csv = new_csv.assign(agreement_adjusted_points = points)
+    for_visualization = for_visualization.append(new_csv)
 
 
-    column_names = ["article_num", "article_sha256", "article_id", "quiz_task_uuid", "Question_Number", "Answer_Number",
+    column_names = ["article_num", "article_sha256", "article_id", "quiz_task_uuid", "Question_Number", "agreed_Answer",
                     "highlighted_indices", "Point_Recommendation", "agreement_adjusted_points", "Label", "target_text"]
 
     # if IAA_csv_schema_type == "Evidence":

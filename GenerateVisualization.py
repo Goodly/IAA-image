@@ -33,3 +33,4 @@ def visualize(articleID, prefix = ''):
     os.system(cmdString)
     print('viz sent to aws')
 
+visualize

@@ -181,12 +181,13 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'nyu_3_4'
+    input_dir = 'nyu_6'
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
     rep_file = './UserRepScores.csv'
     out_prefix = ''
+    threshold_function = 'raw_30'
     if args.input_dir:
         input_dir = args.input_dir
     if args.tua_file:

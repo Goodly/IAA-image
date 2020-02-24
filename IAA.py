@@ -9,7 +9,7 @@ import os
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
 def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, answersFile = None, outDirectory = None,
-                             useRep = False, threshold_func = 'logis_0'):
+                             useRep = False, threshold_func = 'raw_30'):
     print("IAA STARTING")
     if outDirectory is None:
         if directory.startswith('./'):
@@ -42,14 +42,14 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
 
         ins.append([highlights[i], hardCodedTypes, repCSV ,
                             answers[i], schema[i], outDirectory, useRep, directory, threshold_func])
-    print("starting pol")
-    with Pool() as pool:
-        pool.map(unpack_iaa, ins)
+    # print("starting pol")
+    # with Pool() as pool:
+    #     pool.map(unpack_iaa, ins)
 
-    # for i in range(len(highlights)):
-    #     calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
-    #                        answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
-    #                 directory=directory, threshold_func = threshold_func)
+    for i in range(len(highlights)):
+        calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
+                           answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
+                    directory=directory, threshold_func = threshold_func)
     #                 #will be an error for every file that isn't the right file, there's a more graceful solution, but
     #                 #we'll save that dream for another day
     return outDirectory
@@ -102,7 +102,7 @@ def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFi
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
-            agreements = score(task, ques, uberDict, repDF,hardCodedTypes = hardCodedTypes, useRep=useRep)
+            agreements = score(task, ques, uberDict, repDF,hardCodedTypes = hardCodedTypes, useRep=useRep, threshold_func=threshold_func)
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, task, ques)
             if type(agreements) is list:
@@ -265,9 +265,7 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = Fa
     #
     #         ]
     #     return(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-    if question_type == 'interval':
-        # TODO: verify if these still exist, if they do, bring up to speed with new output formats
-        return run_2step_unitization(data, article, ques, repDF)
+
     answers = get_question_answers(data, article, ques)
     users =get_question_userid(data, article, ques)
     #print('art', article,ques)
@@ -342,7 +340,7 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
 
 
 # # # TEST STUFF
-#calc_agreement_directory('./nyu_0', hardCodedTypes= True)
+#calc_agreement_directory('./nyu_6', hardCodedTypes= True)
 # calc_scores('./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntAnswers.csv',
 #             schemaFile = './demo1/Demo1ArgRel3-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
 # calc_scores('./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntAnswers.csv',

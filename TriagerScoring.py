@@ -49,12 +49,10 @@ def importData(path, excludedUsers = []):
                 starts = [int(s) for s in cat_data['start_pos'].tolist()]
                 ends = [int(e) for e in cat_data['end_pos'].tolist()]
                 users = cat_data['contributor_uuid'].tolist()
-                task_uuids = cat_data['task_uuid'].tolist()
+                task_uuids = cat_data['hg_tua_uuid'].tolist()
                 flags = cat_data['case_number'].tolist()
                 namespaces = cat_data['namespace'].tolist()
-                for n in namespaces:
-                    print(n)
-                    print(str(n))
+
                 length = floor(cat_data['source_text_length'].tolist()[0])
                 texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
 
@@ -79,7 +77,7 @@ def appendData(article_filename, article_sha256, task_uuids, namespaces,start_po
     for i in range(len(start_pos_list)):
         text = getText(start_pos_list[i], end_pos_list[i],source_text)
         text = text.encode('unicode-escape').decode('utf-8')
-        print(len(namespaces), len(start_pos_list), len(end_pos_list), len(case_numbers))
+        #print(len(namespaces), len(start_pos_list), len(end_pos_list), len(case_numbers))
         data.append([article_filename, article_sha256, task_uuids[i], namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
     return data
 def getIndices(c, cats):
@@ -90,7 +88,7 @@ def getIndices(c, cats):
     return indices
 def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, globalExclusion):
     #TODO: do this for each category
-    print('scoreT seu', len(starts), len(ends), len(users))
+    #print('scoreT seu', len(starts), len(ends), len(users))
     passers = determinePassingIndices(starts, ends, numUsers, users, length, category)
     #print('glob', globalExclusion)
     #Bug: sometimes users aren't being excluded when they should, not a huge deal, happens one time in all the data
@@ -100,7 +98,7 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, global
     #print('total exclusions', flagExclusions)
     #excl = findExcludedIndices(flagExclusions, users)
     #print(excl)
-    print('flagspreExcl', inFlags)
+    #print('flagspreExcl', inFlags)
    # #/ if len(excl > 1):
    #      inFlags = exclude(excl, inFlags)
    #      users = exclude(excl, users)
@@ -108,7 +106,7 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, global
    #      starts, ends = exclude(excl,starts), exclude(excl, ends)
    #  #
     codetoUser, userToCode= codeNameDict(users)
-    print(codetoUser)
+    #print(codetoUser)
     coded = codeUsers(userToCode, users)
     #print(coded, numUsers)
     newStarts, newEnds = toStartsEnds(passers)
@@ -276,10 +274,12 @@ def toStartsEnds(passers):
     if len(ends)<len(starts):
         ends.append(passers[-1])
     return starts, ends
-
 def toFlagMatrix(starts, ends, nStarts, nEnds, codedUsers, flags):
-    if len(nStarts)>0 and len(np.unique(codedUsers)>0):
-        flagMatrix = np.zeros((len(nStarts), len(np.unique(codedUsers))))
+
+    #take out numpy
+    numUsers = countUsers(codedUsers)
+    if len(nStarts)>0 and numUsers>0:
+        flagMatrix = [[0]*len(nStarts) for u in range(numUsers)]
         #i corresponds tot he code of a user
 
         for i in np.arange(len(starts)):
@@ -292,16 +292,25 @@ def toFlagMatrix(starts, ends, nStarts, nEnds, codedUsers, flags):
                 o = nStarts[j]
                 if (starts[i] <= nStarts[j] and ends[i] >= nStarts[j]) or \
                         (starts[i] <= nEnds[j] and ends[i] >= nEnds[j]):
-                    flagMatrix[j][codedUsers[i]] = flags[i]
-        return flagMatrix.T
+                    u  = codedUsers[i]
+                    flagMatrix[u][j]= flags[i]
+        return flagMatrix
     return []
-
+def countUsers(users):
+    #time complexity here is horrendous, I think inputs should be small enough that it doens't matter
+    uq = []
+    for u in users:
+        if u not in uq:
+            uq.append(u)
+    return len(uq)
 def assignFlags(matrix):
     numUsers = len(matrix)
     numNStarts = len(matrix[0])
     currFlag = 1
     sortedNStarts = []
-    flags = np.zeros(numNStarts)
+    flags = [0]*numNStarts
+    #in this loop; i is the lowest confirmed instance of the caseflag; j iterates through rest of the
+    #possible slots to see who else agreed
     for i in range(numNStarts):
         if i not in sortedNStarts:
             sortedNStarts.append(i)
@@ -323,13 +332,16 @@ def assignFlags(matrix):
 
 
 def determineFlags(starts, ends, nStarts, nEnds, codedUsers, flags):
-    print('flags')
-    print(flags)
-    print(codedUsers)
+    print()
+    print('flags',flags)
+    print('users',codedUsers)
     matrix = toFlagMatrix(starts, ends, nStarts,nEnds, codedUsers, flags)
-    print(matrix)
-    if len(matrix)>0 and len(matrix[0]>0):
+    print('nStarts', nStarts)
+    print('mat',matrix)
+
+    if len(matrix)>0 and len(matrix[0])>0:
         outFlags = assignFlags(matrix)
+        print("OUTPUT\n",outFlags)
         return outFlags
     return []
 
@@ -392,7 +404,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_file = './march_triage/march2019SemTri-2019-04-12T1713-Highlighter.csv'
+    input_file = 'march2019SemTri-2019-04-02T2214-Highlighter.csv'
     if args.input_file:
         input_file = args.input_file
     dirname = os.path.dirname(input_file)

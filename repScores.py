@@ -5,7 +5,7 @@ import pandas as pd
 from dataV2 import *
 import os.path
 from os import path
-from scipy.stats import norm
+#from scipy.stats import norm
 import math
 import datetime
 from dateutil.parser import parse

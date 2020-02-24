@@ -94,7 +94,7 @@ def pointSort(directory, input_dir,
         weights['points'] = weights['agreement_adjusted_points']
     #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
     #investigate the root
-    weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'agreed_Answer', 'Question_Number'])
+    weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'Answer_Number', 'Question_Number'])
     weights.to_csv(directory+'/SortedPts.csv')
     return tuas, weights
 
@@ -307,7 +307,7 @@ def input_specialist_answers(all_tuas, spec, prefix):
     for i in range(all_tuas.shape[0]):
         id = all_tuas.iloc[i]['tua_uuid']
         spec_crop = spec[spec['tua_uuid'] == id]
-        if len(spec_crop >0):
+        if len(spec_crop )>0:
             schema = spec_crop['schema_namespace'].iloc[0]
             if ('gumen' in schema.lower() and 'arg' in prefix) or ('ource' in schema.lower() and 'source' in prefix):
                 for s in range(spec_crop.shape[0]):
