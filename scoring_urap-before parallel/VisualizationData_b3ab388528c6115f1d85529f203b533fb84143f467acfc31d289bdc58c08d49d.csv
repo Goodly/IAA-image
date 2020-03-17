@@ -1,7 +1,0 @@
-Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End
-b3ab388528c6115f1d85529f203b533fb84143f467acfc31d289bdc58c08d49d,P0,Probability,Inappropriate confidence,-0.4041106963946881,[],-1,-1
-b3ab388528c6115f1d85529f203b533fb84143f467acfc31d289bdc58c08d49d,P0,Probability,Inappropriate confidence,-0.3941272640594369,[],-1,-1
-b3ab388528c6115f1d85529f203b533fb84143f467acfc31d289bdc58c08d49d,P0,Probability,Inappropriate confidence,-0.8088286353081535,[],-1,-1
-b3ab388528c6115f1d85529f203b533fb84143f467acfc31d289bdc58c08d49d,P0,Probability,False precision,-0.353759374819711,L,-1,-1
-b3ab388528c6115f1d85529f203b533fb84143f467acfc31d289bdc58c08d49d,P0,Probability,False precision,-0.3083120354373339,L,-1,-1
-b3ab388528c6115f1d85529f203b533fb84143f467acfc31d289bdc58c08d49d,P0,Probability,False precision,0.0,L,-1,-1

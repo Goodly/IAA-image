@@ -1,6 +1,0 @@
-Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End
-bad910fd0ffb399b223269afb4f75029d6e91fb55362ccaad4f28685ff1dc61e,P0,Probability,Inappropriate confidence,-0.34334398891459683,[],-1,-1
-bad910fd0ffb399b223269afb4f75029d6e91fb55362ccaad4f28685ff1dc61e,P0,Probability,Inappropriate confidence,-0.3406744095452772,[],-1,-1
-bad910fd0ffb399b223269afb4f75029d6e91fb55362ccaad4f28685ff1dc61e,P0,Probability,Inappropriate confidence,-0.6937809990113853,[],-1,-1
-bad910fd0ffb399b223269afb4f75029d6e91fb55362ccaad4f28685ff1dc61e,P0,Probability,False precision,-0.3225809556608076,L,-1,-1
-bad910fd0ffb399b223269afb4f75029d6e91fb55362ccaad4f28685ff1dc61e,P0,Probability,False precision,0.0,"[569, 570, 571, 572, 573, 574, 575, 576, 577, 578]",569,578
