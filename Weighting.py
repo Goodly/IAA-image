@@ -16,7 +16,7 @@ def launch_Weighting(directory):
                     iaaFiles.append(directory+'/'+file)
     print('files', iaaFiles)
     for f in iaaFiles:
-        weighting_alg(f, './weight_key.csv', 'weight_key_scaling_guide.csv', directory)
+        weighting_alg(f, './config/weight_key.csv', 'weight_key_scaling_guide.csv', directory)
 
 def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './'):
 
