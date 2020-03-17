@@ -181,7 +181,8 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'nyu_6'
+    input_dir = 'nyu_6_lang' \
+                ''
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
