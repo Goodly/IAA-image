@@ -11,7 +11,7 @@ from dataV2 import make_directory
 from time import time
 from send_to_s3 import send_s3
 from GenerateVisualization import visualize
-from eval_overalls import eval_triage_scoring
+from eval_triage import eval_triage_scoring
 from art_to_id_key import make_key
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
@@ -51,7 +51,7 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
         algorithm; the weighting algorithm; the point sorting algorithm; and the final cleaning algorithm that prepares
         data to be visualized
     """
-    print(threshold_func)
+    print("Running scoring algorithm with:", threshold_func)
     all_funcs = ['raw_70', 'raw_50', 'raw_30', 'logis_0', 'logis+20', 'logis+40']
     target_funcs = ['raw_70', 'raw_50', 'raw_30']
     #all_funcs is every possible scoring function; target_funcs is just the functions you want to test when you say all

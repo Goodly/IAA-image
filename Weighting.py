@@ -16,7 +16,7 @@ def launch_Weighting(directory):
                     iaaFiles.append(directory+'/'+file)
     print('files', iaaFiles)
     for f in iaaFiles:
-        weighting_alg(f, './config/weight_key.csv', 'weight_key_scaling_guide.csv', directory)
+        weighting_alg(f, './config/weight_key.csv', './config/weight_key_scaling_guide.csv', directory)
 
 def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './'):
 
@@ -41,15 +41,14 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
         IAA_csv_schema_type = "Evidence"
     elif "Probability" in IAA_csv_schema_name:
         IAA_csv_schema_type = "Probability"
-    elif "Overall" in IAA_csv_schema_name or 'olistic' in IAA_csv_schema_name:
-        IAA_csv_schema_type = "Overall"
+    elif 'olistic' in IAA_csv_schema_name:
+        IAA_csv_schema_type = "Holistic"
     else:
         print("unweighted IAA", IAA_csv_file, "aborting")
         return
     print("WEIGHINGWITHSCHEMA", IAA_csv_schema_type, IAA_csv_file)
 
-    #because data sciecne module doesn't support a where to distinguish between strings and ints, we're casting
-    #the ints to strings.
+
     #IAA_csv.append_column("Answer_Number", [str(a) for a in IAA_csv.column('agreed_Answer')])
     IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='U']
     IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='M']

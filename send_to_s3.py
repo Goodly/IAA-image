@@ -32,26 +32,29 @@ def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
                         filenames.append(t)
                         sha_256 = ans[ans['article_filename'] == t]['article_sha256'].iloc[0]
                         sha_256s.append(sha_256)
-    for i in range(len(filenames)):
-        print(filenames[i])
-        print(sha_256s[i])
+    # for i in range(len(filenames)):
+    #     #     print(filenames[i])
+    #     #     print(sha_256s[i])
 
     in_path = os.path.realpath(input_dir)
     text_dir = in_path+'/texts'
     for filename in os.listdir(text_dir):
-        i = filenames.index(filename)
-        new_sha = sha_256s[i]
-        new_name = func+new_sha+'SSSArticle.txt'
-        src = os.path.join(text_dir, filename)
-        dst = os.path.join(text_dir, new_name)
-        cmd_str = "aws s3 cp " + src + " s3://publiceditor.io/Articles/" + \
-                                       new_name + " --acl public-read"
-        os.system(cmd_str)
+        if filename in filenames:
+            i = filenames.index(filename)
+            new_sha = sha_256s[i]
+            new_name = func+new_sha+'SSSArticle.txt'
+            src = os.path.join(text_dir, filename)
+            dst = os.path.join(text_dir, new_name)
+            cmd_str = "aws s3 cp " + src + " s3://publiceditor.io/Articles/" + \
+                                           new_name + " --acl public-read"
+            os.system(cmd_str)
+        else:
+            print(filename, 'not found in any answers files')
         #os.rename(src, dst)
     print("done renaming")
     sleep(5)
-    for filename in os.listdir(text_dir):
-        print(filename)
+    # for filename in os.listdir(text_dir):
+    #     print(filename)
 
 
     #now send

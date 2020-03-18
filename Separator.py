@@ -15,6 +15,7 @@ def splitcsv(directory, textseparator = '//'):
     pointsdf = pd.read_csv(directory+'/'+pointsFile)
     #print(pointsdf)
     valid_points = pointsdf[~pd.isna(pointsdf['article_sha256'])]
+    valid_points = valid_points[valid_points['agreement_adjusted_points']!=0]
     articles = np.unique(valid_points['article_sha256'])
     final_cols = ['Article ID', 'Credibility Indicator ID', 'Credibilty Indicator Category',
                   'Credibility Indicator Name', 'Points', 'Indices of Label in Article', 'Start', 'End', 'target_text']

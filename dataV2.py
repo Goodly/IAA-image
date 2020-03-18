@@ -747,13 +747,20 @@ def get_type_hard(type, ques):
             },
         'Holistic Evaluation of Article':
             {
-                1:['ordinal', 5],
-                2:['ordinal',5],
-                3: ['checklist', 11],
-                4: ['checklist',5],
-                5: ['nominal',1],
-                6:['ordinal',5],
-                7:['ordinal', 5]
+                1: ['ominal', 9],
+                2: ['nominal',1],
+                3: ['checklist', 12],
+                4: ['nominal',1],
+                5: ['ordinal',5],
+                6: ['checklist',8],
+                7: ['ordinal', 5],
+                8: ['ordinal', 5],
+                9: ['checklist', 9],
+                10: ['ordinal', 5],
+                11: ['ordinal', 4],
+                12: ['ordinal', 5],
+                13: ['checklist', 5],
+
             }
 
     }
