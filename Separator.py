@@ -22,9 +22,11 @@ def splitcsv(directory, textseparator = '//'):
 
 
     for art in articles:
-        print(art)
         final_out = [final_cols]
         artdf = valid_points[valid_points['article_sha256'] == art]
+        if len(artdf)<1:
+            artdf = pointsdf[pointsdf['article_sha256'] == art]
+
         art_id = artdf['article_id'].iloc[0]
         schema = np.unique(artdf['Schema'])
         for s in schema:
@@ -42,10 +44,8 @@ def splitcsv(directory, textseparator = '//'):
                 text = sch_df['target_text'].iloc[j]
                 #if there is a unitization
                 if not (isinstance(indices, float)) and (not (isinstance(indices, str)) or len(indices) > 2):
-                    print(indices, len(indices))
                     indices = get_indices_hard(indices)
                     sei = indicesToStartEnd(indices)
-                    print("sei" ,sei)
                     starts = sei[0]
                     ends = sei[1]
                     chunks = sei[2] #chunk of the index that we're investigating
@@ -90,7 +90,6 @@ def indicesToStartEnd(indices):
     ends = []
     breakpointer = []
     last = -1
-    print("INDPASS", indices)
     arr = np.array(indices)
     if len(indices)<1:
         return [-1],[-1], [-1]
@@ -107,6 +106,5 @@ def indicesToStartEnd(indices):
         chunks.append(indices[base:breakpointer[i]])
         base = breakpointer[i]
     #ends.append(indices[len(indices)-1])
-    print(starts, ends, sorted(chunks))
     return sorted(starts), sorted(ends), sorted(chunks)
 #splitcsv('scoring_nyu_6')

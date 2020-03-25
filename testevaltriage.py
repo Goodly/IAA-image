@@ -1,6 +1,6 @@
 from pointAssignment import pointSort
-from eval_triage import eval_triage_scoring
+from holistic_eval import eval_triage_scoring
 
 
-tuas, weights = pointSort('scoring_nyu_6_lang', 'nyu_6_lang/')
-eval_triage_scoring(tuas, weights, 'nyu_6_lang/')
+tuas, weights, tua_raw = pointSort('scoring_covid', 'covid/')
+eval_triage_scoring(tua_raw, weights, 'covid/', 'scoring_covid',)

@@ -249,6 +249,8 @@ def findStartsEnds(schemadata, qlabel, highlightdata):
     #TODO: implement a check to see if people thought there should've been a highlight
     #Don't filter by answer for checklist questions here
     relevant_hl = highlightdata[highlightdata['question_label'] == qlabel]
+    if len(relevant_hl)<1:
+        return [0], [0], [0], 0, '', [0]
     starts = relevant_hl['start_pos'].apply(floor).tolist()
     ends = relevant_hl['end_pos'].apply(floor).tolist()
     users = relevant_hl['contributor_uuid'].tolist()
@@ -629,11 +631,11 @@ def get_type_hard(type, ques):
                 9: ['ordinal', 5],
                 10: ['ordinal', 3],
                 11: ['ordinal', 4],
-                12: ['nominal', 4],
+                12: ['nominal', 5],
                 13: ['ordinal', 10],
                 14: ['ordinal', 10]
             },
-        'Reasoning Specialist V4':
+        'Reasoning Specialist':
             {
                 1: ['checklist', 6],
                 2:['checklist', 6],
@@ -733,6 +735,19 @@ def get_type_hard(type, ques):
                 5:['ordinal', 10],
                 6:['ordinal', 10]
             },
+        'Quote Source Relevance':
+            {
+                1: ['nominal', 2],
+                2: ['ordinal', 8],
+                3: ['nominal', 2],
+                4: ['checklist', 9],
+                5: ['checklist', 9],
+                6: ['checklist', 2],
+                7: ['checklist', 6],
+                8: ['ordinal', 7],
+                9: ['ordinal', 10],
+                10: ['ordinal', 10]
+            },
         'Probability':
             {
                 1:['ordinal', 3],
@@ -740,14 +755,21 @@ def get_type_hard(type, ques):
                 3:['ordinal', 3],
                 4:['ordinal', 7],
                 5:['ordinal', 3],
-                6:['ordinal', 4],
+                6:['ordinal', 3],
                 7:['ordinal', 5],
                 8:['ordinal',10],
-                9:['nominal', 1]
+                9:['nominal', 1],
+                10:['ordinal', 3],
+                11:['ordinal', 4],
+                12:['ordinal', 5],
+                13:['ordinal', 10],
+                14:['ordinal', 10]
+
+
             },
         'Holistic Evaluation of Article':
             {
-                1: ['ominal', 9],
+                1: ['nominal', 9],
                 2: ['nominal',1],
                 3: ['checklist', 12],
                 4: ['nominal',1],

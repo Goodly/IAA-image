@@ -22,7 +22,7 @@ def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
     #have to look at all of them in case one article didn't get sent to a certain specialist
     for root, dir, files in os.walk(input_dir):
         for file in files:
-            if 'Answers' in file and 'lock' not in file:
+            if ('Answers' in file or 'Crosstab' in file)and 'lock' not in file:
                 print(file)
                 ans = pd.read_csv(os.path.join(input_dir, file))
                 filnams = ans['article_filename']
@@ -77,4 +77,4 @@ def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
     #                       "article's sha256 and SSSArticle.txt is that, regardless of article title")
     return art_ids
 
-#send_s3('scoring_nyu_6', 'nyu_6', 'logis_0')
+#send_s3('scoring_covid', 'covid', 'raw_30')

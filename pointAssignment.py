@@ -28,6 +28,7 @@ def pointSort(directory, input_dir,
             tuas = pd.read_csv(tua_location)
 
     #Load everything so that it's a pandas dataframe
+    tuas_raw = tuas
     scale_guide = pd.read_csv(scale_guide_dir)
     if len(tua_location)<3:
         raise FileNotFoundError("TUA file not found")
@@ -96,7 +97,7 @@ def pointSort(directory, input_dir,
 
     weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'Answer_Number', 'Question_Number'])
     weights.to_csv(directory+'/SortedPts.csv')
-    return tuas, weights
+    return tuas, weights, tuas_raw
 
 def apply_point_adjustments(weights, scale_guide):
     """
