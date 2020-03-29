@@ -27,7 +27,7 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
                 if 'Highlights' in file:
                     #print('highlight')
                     highlights.append(directory+'/'+file)
-                elif 'Answers' in file:
+                elif 'Answers' in file or 'Crosstab' in file:
                     answers.append(directory+'/'+file)
                 elif 'Schema' in file:
                     schema.append(directory+'/'+file)
@@ -265,7 +265,6 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = Fa
     #
     #         ]
     #     return(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-
     answers = get_question_answers(data, article, ques)
     users =get_question_userid(data, article, ques)
     #print('art', article,ques)

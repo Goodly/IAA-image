@@ -11,7 +11,7 @@ from dataV2 import make_directory
 from time import time
 from send_to_s3 import send_s3
 from GenerateVisualization import visualize
-from eval_triage import eval_triage_scoring
+from holistic_eval import eval_triage_scoring
 from art_to_id_key import make_key
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
@@ -109,10 +109,10 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     print("WEIGHTING")
     launch_Weighting(scoring_dir)
     print("SORTING POINTS")
-    tuas, weights = pointSort(scoring_dir, directory)
-
-    eval_triage_scoring(tuas, weights, scoring_dir)
-    make_key(tuas, scoring_dir, out_prefix)
+    tuas, weights, tua_raw = pointSort(scoring_dir, directory)
+    #BUG--figrue out why 09 article shows up as having low information
+    #eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
+    make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
     splitcsv(scoring_dir)
     #print("DONE, time elapsed", time()-start)
@@ -181,8 +181,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'nyu_6_lang' \
-                ''
+    input_dir = 'covid'
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None

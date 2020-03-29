@@ -1,4 +1,5 @@
 Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
 raw_30451edcdfeb13e92a47319c8933da0a45dfc5c7baa616f64ed73bad2bd3b59b05,L0,Language,Inappropriately emotional,-4.5,"[3177, 3178, 3179, 3180, 3181, 3182, 3183, 3184]",3177,3185,nan
 raw_30451edcdfeb13e92a47319c8933da0a45dfc5c7baa616f64ed73bad2bd3b59b05,L0,Language,Writing errors,-2.6745490851174085,"[4391, 4392, 4393, 4394, 4395, 4396, 4397, 4398, 4399, 4400, 4401, 4402, 4403, 4404, 4405, 4406, 4407, 4408, 4409, 4410, 4411, 4412, 4413, 4414, 4415, 4416, 4417, 4418]",4391,4419,nan
+raw_30451edcdfeb13e92a47319c8933da0a45dfc5c7baa616f64ed73bad2bd3b59b05,O0,Overall,Low Information,-2.26725775807473,[],-1,-1,nan
 ,,,,,,,,

@@ -1,6 +1,6 @@
-Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
-raw_70832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Inappropriate slang,-0.2256443238394881,"[771, 772, 773, 774, 775, 776, 777, 778]",771,778,nan
-raw_70832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Inappropriate slang,0,"[1769, 1770, 1771, 1772, 1773, 1774, 1775, 1776, 1777]",1769,1778,nan
-raw_70832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_70832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-,,,,,,,,
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+raw_70832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Inappropriate slang,-0.2256443238394881,"[1769, 1770, 1771, 1772]",1769,1772,nan
+raw_70832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Inappropriate slang,0,"[1774, 1775, 1776, 1777]",1774,1778,nan
+raw_70832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Denigration,-0.4075060212390804,"[1769, 1770, 1771, 1772]",1769,1772,nan
+raw_70832ecb4405a6c6ba17b9f5a67e9cdb91b07462cb9d723162fbcf3e114b66f791,L0,Language,Denigration,0,"[1774, 1775, 1776, 1777]",1774,1778,nan
+,,,,,,,,

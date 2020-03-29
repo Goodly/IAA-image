@@ -1,4 +1,6 @@
-Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
-raw_50d7a866ba4b0104b93dc030d98d2416a336e37ef90f6c073c339e05cd47d19e24,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_50d7a866ba4b0104b93dc030d98d2416a336e37ef90f6c073c339e05cd47d19e24,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-,,,,,,,,
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+raw_50d7a866ba4b0104b93dc030d98d2416a336e37ef90f6c073c339e05cd47d19e24,L0,Language,Exaggeration,-2.1620648128589544,"[546, 547, 548, 549, 550, 551, 552]",546,552,nan
+raw_50d7a866ba4b0104b93dc030d98d2416a336e37ef90f6c073c339e05cd47d19e24,L0,Language,Exaggeration,0,"[728, 729, 730, 731, 732, 733]",728,734,nan
+raw_50d7a866ba4b0104b93dc030d98d2416a336e37ef90f6c073c339e05cd47d19e24,L0,Language,Inappropriate slang,-0.21620648128589545,"[1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104]",1094,1105,nan
+raw_50d7a866ba4b0104b93dc030d98d2416a336e37ef90f6c073c339e05cd47d19e24,L0,Language,Denigration,-0.25,"[1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104]",1094,1105,nan
+,,,,,,,,
