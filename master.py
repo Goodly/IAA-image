@@ -120,7 +120,7 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     for id in ids:
         visualize(id, prefix=out_prefix)
 
-def scoreOnly(directory, use_rep = False, repCSV = None, iaa_dir = None, scoring_dir = None, threshold_func = 'raw_30',):
+def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, scoring_dir = None, threshold_func = 'raw_30',):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
