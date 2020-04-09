@@ -27,7 +27,7 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
                 if 'Highlights' in file:
                     #print('highlight')
                     highlights.append(directory+'/'+file)
-                elif 'Answers' in file:
+                elif 'Answers' in file or 'Crosstab' in file:
                     answers.append(directory+'/'+file)
                 elif 'Schema' in file:
                     schema.append(directory+'/'+file)
@@ -98,7 +98,7 @@ def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFi
         schema_sha = get_schema_sha256(uberDict, task_id)
         tua_uuid = get_tua_uuid(uberDict, task_id)
         questions = uberDict[task]['quesData'].keys()
-        print("checking agreement for "+schema_namespace+" task "+task_id)
+        #print("checking agreement for "+schema_namespace+" task "+task_id)
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
@@ -265,7 +265,6 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = Fa
     #
     #         ]
     #     return(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-
     answers = get_question_answers(data, article, ques)
     users =get_question_userid(data, article, ques)
     #print('art', article,ques)

@@ -1,9 +1,5 @@
-Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
-raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0.0,[1473],1473,1473, //UNDERMINING//WE’RE DETERMINED TO FIND OUT
-raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0,"[1597, 1598, 1599, 1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607]",1597,1607, //UNDERMINING//WE’RE DETERMINED TO FIND OUT
-raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Well-balanced,0,"[1906, 1907, 1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929, 1930, 1931, 1932]",1906,1933, //UNDERMINING//WE’RE DETERMINED TO FIND OUT
-,,,,,,,,
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Inappropriate slang,-0.18933859667719324,"[3786, 3787, 3788, 3789, 3790, 3791, 3792, 3793, 3794, 3795, 3796, 3797, 3798, 3799, 3800, 3801, 3802, 3803, 3804, 3805, 3806, 3807, 3808, 3809]",3786,3810,nan
+raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Denigration,-0.2426758512267124,"[3786, 3787, 3788, 3789, 3790, 3791, 3792, 3793, 3794, 3795, 3796, 3797, 3798, 3799, 3800, 3801, 3802, 3803, 3804, 3805, 3806, 3807, 3808, 3809]",3786,3810,nan
+raw_70729c16dbf760152f8bb67a7ecfbb15a25ae7f594fe35bd711c1d5e1ef1ff5c1f,L0,Language,Writing errors,-0.8798353003397912,"[2056, 2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2070, 2071, 2072, 2073, 2074, 2075, 2076, 2077, 2078, 2079, 2080, 2081, 2082, 2083, 2084, 2085, 2086, 2087, 2088, 2089]",2056,2090,nan
+,,,,,,,,

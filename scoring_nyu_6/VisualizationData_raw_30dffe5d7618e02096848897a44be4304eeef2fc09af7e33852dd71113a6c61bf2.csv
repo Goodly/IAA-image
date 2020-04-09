@@ -1,5 +1,5 @@
 Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
-raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Inappropriately emotional,-2.5439907196648504,[],-1,-1,nan
+raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Inappropriately emotional,-2.5439907196648504,"[2675, 2676, 2677, 2678, 2679, 2680, 2681, 2682, 2683, 2684, 2685]",2675,2686,nan
 raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Inappropriate slang,-0.3926906350375459,"[2386, 2387, 2388]",2386,2388,nan
 raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Inappropriate slang,0,"[2535, 2536, 2537, 2538, 2539, 2540, 2541, 2542]",2535,2542,nan
 raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Inappropriate slang,0,"[2643, 2644, 2645, 2646]",2643,2647,nan
@@ -12,6 +12,5 @@ raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Langua
 raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Denigration,-0.20715865249987409,"[2386, 2387, 2388]",2386,2388,nan
 raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Denigration,0,"[2535, 2536, 2537, 2538, 2539, 2540, 2541, 2542]",2535,2542,nan
 raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Denigration,0,"[2643, 2644, 2645, 2646]",2643,2647,nan
-raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+raw_30dffe5d7618e02096848897a44be4304eeef2fc09af7e33852dd71113a6c61bf2,O0,Overall,Low Information,-4.380810710301228,[],-1,-1,nan
 ,,,,,,,,

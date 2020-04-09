@@ -1,8 +1,6 @@
-Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
-raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.0,[],-1,-1,nan
-raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,nan,"[7479, 7480, 7481, 7482, 7483, 7484, 7485]",7479,7485,pivotal//checkered career//trumped up
-raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0,"[7549, 7550, 7551, 7552, 7553, 7554, 7555, 7556, 7557, 7558, 7559, 7560, 7561, 7562, 7563, 7564]",7549,7564,pivotal//checkered career//trumped up
-raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0,"[7643, 7644, 7645, 7646, 7647, 7648, 7649, 7650, 7651]",7643,7652,pivotal//checkered career//trumped up
-,,,,,,,,
+Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,nan,"[7479, 7480, 7481, 7482, 7483, 7484, 7485]",7479,7485,pivotal//checkered career//trumped up
+raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0,"[7549, 7550, 7551, 7552, 7553, 7554, 7555, 7556, 7557, 7558, 7559, 7560, 7561, 7562, 7563, 7564]",7549,7564,pivotal//checkered career//trumped up
+raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0,"[7643, 7644, 7645, 7646, 7647, 7648, 7649, 7650, 7651]",7643,7652,pivotal//checkered career//trumped up
+raw_70f7eb2314bb13aae4542caf7ee10c336890c3e911c50093d575b1849e107abfb7,L0,Language,Well-balanced,0.5682071548371335,"[4297, 4298, 4299, 4300, 4301, 4302, 4303, 4304, 4305, 4306, 4307]",4297,4308,bottom of it
+,,,,,,,,

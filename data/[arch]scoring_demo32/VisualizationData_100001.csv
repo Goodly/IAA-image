@@ -1,5 +1,0 @@
-Article ID,Credibility Indicator ID ,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End
-100001,P0,Probability,Inappropriate confidence,-0.5,[],-1,-1
-100001,P1,Probability,Acknowledges uncertainty,0.0,"[1414, 1415, 1416, 1417, 1418, 1419, 1420, 1421, 1422, 1423, 1424, 1425, 1426, 1427]",1414,1427
-100001,P2,Probability,Numeric context,0.0,"[1499, 1500, 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510, 1511, 1512, 1513, 1514, 1515, 1516, 1517, 1518]",1499,1518
-100001,P3,Probability,False precision,0.0,"[1499, 1500, 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510, 1511, 1512, 1513, 1514, 1515, 1516, 1517, 1518]",1499,1518

@@ -1,8 +1,7 @@
 Article ID,Credibility Indicator ID,Credibilty Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
-raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Metaphor unhelpful,-1.6959938131099002,[],-1,-1,nan
-raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Inappropriate slang,-0.5085539288344783,[],-1,-1,nan
-raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Denigration,-0.25,[],-1,-1,nan
-raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Well-balanced,0.0,[],-1,-1,nan
+raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Metaphor unhelpful,-1.6959938131099002,"[62, 63, 64, 65]",62,66,nan
+raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Inappropriate slang,-0.5085539288344783,"[62, 63, 64, 65]",62,66,nan
+raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,L0,Language,Denigration,-0.25,"[62, 63, 64, 65]",62,66,nan
 raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,O0,Overall,Very Biased,-1.3814105385399311,[],-1,-1,nan
 raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,O0,Overall,Good Title,0.6836742566545242,"[7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]",7,66,Doctor Tells CNN Trump’s Walter Reed Medical Visit Was Fishy
 raw_30ea908e535280e57805f9f5f093d5694d37623279c3cd90ee46dff92144237ad7,O0,Overall,Celebrity Gossip,-3.929855326611136,"[7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66]",7,66,Doctor Tells CNN Trump’s Walter Reed Medical Visit Was Fishy//regarding Mr. Trump’s physical health

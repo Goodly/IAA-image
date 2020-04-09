@@ -1,2 +1,0 @@
-article_num,article_sha256,task_uuid,schema_namespace,question_Number,question_type,agreed_Answer,coding_perc_agreement,one_two_diff,highlighted_indices,alpha_unitizing_score,alpha_unitizing_score_inclusive,agreement_score,odds_by_chance,binary_odds_by_chance,num_users,num_answer_choices,target_text,question_text,answer_content
-100001,d75045768087d2dc0161022e64d3dd2f2387947560e95781fd23e75780833972,fc0539f4-75ea-41af-b43c-2029d22d022d,Argument relevance,1,ordinal,U,1.0,1.0,U,U,U,0.5,0.5,0.5,1,6,U,How important is the argument in bolded text to the overall article?,U

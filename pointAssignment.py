@@ -5,10 +5,9 @@ from dataV2 import make_directory
 from dataV2 import get_indices_hard
 import json
 import math
-import uuid
 
 def pointSort(directory, input_dir,
-              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False):
+              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False, eval_overall = True):
 
     dir_path = os.path.dirname(os.path.realpath(input_dir))
 
@@ -29,6 +28,7 @@ def pointSort(directory, input_dir,
             tuas = pd.read_csv(tua_location)
 
     #Load everything so that it's a pandas dataframe
+    tuas_raw = tuas
     scale_guide = pd.read_csv(scale_guide_dir)
     if len(tua_location)<3:
         raise FileNotFoundError("TUA file not found")
@@ -60,7 +60,7 @@ def pointSort(directory, input_dir,
     #     return
     weight_list = []
     for i in range(len(weightFiles)):
-        print('badone', i, weightFiles[i])
+        #print('badone', i, weightFiles[i])
         wf = pd.read_csv(weightFiles[i])
         weight_list.append(wf)
         #weights = weights.append(wf)
@@ -73,20 +73,20 @@ def pointSort(directory, input_dir,
         make_directory(rep_direc)
         weights.to_csv(rep_direc+'/weightsStacked'+str(len(weightFiles))+'.csv')
     if hasArg or hasSource:
-        print('collapsing')
+        #('collapsing')
         tuas = collapse_all_tuas(tuas, hasArg, argRel, hasSource, sourceRel, reporting)
         if reporting:
             tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+str(i)+'.csv')
-        print('enhancing')
+        #print('enhancing')
         tuas = enhance_all_tuas(tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
         if reporting:
             tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+str(i)+'.csv')
-        print('matching')
+        #print('matching')
         tuas, weights = find_tua_match(tuas, weights)
         if reporting:
             tuas.to_csv(rep_direc+'/matched_All_TUAS'+str(i)+'.csv')
             weights.to_csv(rep_direc + '/weightsMatched' + str(i) + '.csv')
-        print('applying adj')
+        #print('applying adj')
         weights = apply_point_adjustments(weights, scale_guide)
         if reporting:
             weights.to_csv(rep_direc + '/weightsAdjusted' + str(i) + '.csv')
@@ -94,9 +94,10 @@ def pointSort(directory, input_dir,
         weights['points'] = weights['agreement_adjusted_points']
     #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
     #investigate the root
+
     weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'Answer_Number', 'Question_Number'])
     weights.to_csv(directory+'/SortedPts.csv')
-    return tuas, weights
+    return tuas, weights, tuas_raw
 
 def apply_point_adjustments(weights, scale_guide):
     """
@@ -161,19 +162,19 @@ def getFiles(directory):
         for file in files:
             #print(file)
             if 'Dep_S_IAA' in file:
-                print('depsiaa file-------------', file)
+                #print('depsiaa file-------------', file)
                 if file.endswith('.csv')  and 'ource' in file:
-                    print("found Sources File" + directory + '/' + file)
+                    #print("found Sources File" + directory + '/' + file)
                     sourceFile = directory+file
-                    print('Found Sources File ' + sourceFile)
+                   # print('Found Sources File ' + sourceFile)
                 if file.endswith('.csv')   and ('Arg' in file or 'arg' in file):
 
                     argRelevanceFile = directory+file
-                    print('Found Arguments File ' + argRelevanceFile)
+                    #print('Found Arguments File ' + argRelevanceFile)
             if file.endswith('.csv')  and 'Point_recs' in file:
-                print('Found Weights File '+ directory + file)
+                #print('Found Weights File '+ directory + file)
                 weightOutputs.append(directory+file)
-                print('foud Weights File...', weightOutputs)
+                #print('foud Weights File...', weightOutputs)
 
     print('all', sourceFile, argRelevanceFile, weightOutputs)
     print("WEIGHTOUTPUTS:", len(weightOutputs))

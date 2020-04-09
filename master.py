@@ -11,7 +11,7 @@ from dataV2 import make_directory
 from time import time
 from send_to_s3 import send_s3
 from GenerateVisualization import visualize
-from eval_overalls import eval_triage_scoring
+from holistic_eval import eval_triage_scoring
 from art_to_id_key import make_key
 
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
@@ -51,7 +51,7 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
         algorithm; the weighting algorithm; the point sorting algorithm; and the final cleaning algorithm that prepares
         data to be visualized
     """
-    print(threshold_func)
+    print("Running scoring algorithm with:", threshold_func)
     all_funcs = ['raw_70', 'raw_50', 'raw_30', 'logis_0', 'logis+20', 'logis+40']
     target_funcs = ['raw_70', 'raw_50', 'raw_30']
     #all_funcs is every possible scoring function; target_funcs is just the functions you want to test when you say all
@@ -79,10 +79,6 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     #if iaa_dir is None:
     #    iaa_dir = 's_iaa_'+directory
 
-
-   
-
-
     rep_direc = directory + "_report"
     make_directory(rep_direc)
     start = time()
@@ -109,10 +105,10 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     print("WEIGHTING")
     launch_Weighting(scoring_dir)
     print("SORTING POINTS")
-    tuas, weights = pointSort(scoring_dir, directory)
-
-    eval_triage_scoring(tuas, weights, scoring_dir)
-    make_key(tuas, scoring_dir, out_prefix)
+    tuas, weights, tua_raw = pointSort(scoring_dir, directory)
+    #BUG--figrue out why 09 article shows up as having low information
+    #eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
+    make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
     splitcsv(scoring_dir)
     #print("DONE, time elapsed", time()-start)
@@ -124,6 +120,57 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     for id in ids:
         visualize(id, prefix=out_prefix)
 
+def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, scoring_dir = None, threshold_func = 'raw_30',):
+    """
+
+    :param directory: the directory that holds all files from the tagworks datahunt export
+    :param iaa_dir: the directory to output the raw IAA data to; if no input default is s_iaa_<directory>
+    :param scoring_dir: directory to output data from every other stage of the scoring algorithm to; if no
+        input default is scoring_<directory>
+    :param repCSV: the csv that holds the rep score data
+    :param use_rep: True if the scores should be computed using user rep scores; false otherwise
+    :param: threshold_func: the threshold function being used to determine inter-annotator agreement; for a
+        comprehensive test of all the threshold functions set this to 'all'; this will not work if an iaa_directory is
+        specified
+    :return: No explicit return.  Running will create two directories named by the inputs. the iaa_dir will house
+        a csv output from the IAA algorithm.  The scoring_dir will house the csvs output from the dependency evaluation
+        algorithm;
+    """
+    iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
+                                       useRep=use_rep, threshold_func=threshold_func)
+    scoring_dir = eval_dependency(directory, iaa_dir, out_dir=scoring_dir)
+    return scoring_dir
+
+def score_post_iaa(directory,scoring_dir = None,
+                            push_aws = True, out_prefix = '', threshold_func = 'logis_0'):
+    """
+    :param directory: the directory that holds all files from the tagworks datahunt export
+
+
+    :param push_aws: True if we want outputs sent to the s3 AWS folder, false to just store locally
+    :param out_prefix: add something to the prefix of output files to keep everything tidy
+    :param: threshold_func: the threshold function being used to determine inter-annotator agreement; for a
+        comprehensive test of all the threshold functions set this to 'all'; this will not work if an iaa_directory is
+        specified
+    :return: No explicit return.  writes many csvs to the scoring directory created byscoreOnly.  Also pushes lots of
+    files to AWS so that they can be visualized
+    """
+    launch_Weighting(scoring_dir)
+    print("SORTING POINTS")
+    tuas, weights, tua_raw = pointSort(scoring_dir, directory)
+    # BUG--figrue out why 09 article shows up as having low information
+    # eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
+    make_key(tuas, scoring_dir, prefix=threshold_func)
+    print("----------------SPLITTING-----------------------------------")
+    splitcsv(scoring_dir)
+    # print("DONE, time elapsed", time()-start)
+    ids = []
+    if push_aws:
+        print("Pushing to aws")
+        ids = send_s3(scoring_dir, directory, prefix=out_prefix, func=threshold_func)
+
+    for id in ids:
+        visualize(id, prefix=out_prefix)
 def load_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -181,7 +228,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'nyu_6'
+    input_dir = 'covid'
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None

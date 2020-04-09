@@ -22,7 +22,7 @@ def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
     #have to look at all of them in case one article didn't get sent to a certain specialist
     for root, dir, files in os.walk(input_dir):
         for file in files:
-            if 'Answers' in file and 'lock' not in file:
+            if ('Answers' in file or 'Crosstab' in file)and 'lock' not in file:
                 print(file)
                 ans = pd.read_csv(os.path.join(input_dir, file))
                 filnams = ans['article_filename']
@@ -32,26 +32,29 @@ def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
                         filenames.append(t)
                         sha_256 = ans[ans['article_filename'] == t]['article_sha256'].iloc[0]
                         sha_256s.append(sha_256)
-    for i in range(len(filenames)):
-        print(filenames[i])
-        print(sha_256s[i])
+    # for i in range(len(filenames)):
+    #     #     print(filenames[i])
+    #     #     print(sha_256s[i])
 
     in_path = os.path.realpath(input_dir)
     text_dir = in_path+'/texts'
     for filename in os.listdir(text_dir):
-        i = filenames.index(filename)
-        new_sha = sha_256s[i]
-        new_name = func+new_sha+'SSSArticle.txt'
-        src = os.path.join(text_dir, filename)
-        dst = os.path.join(text_dir, new_name)
-        cmd_str = "aws s3 cp " + src + " s3://publiceditor.io/Articles/" + \
-                                       new_name + " --acl public-read"
-        os.system(cmd_str)
+        if filename in filenames:
+            i = filenames.index(filename)
+            new_sha = sha_256s[i]
+            new_name = func+new_sha+'SSSArticle.txt'
+            src = os.path.join(text_dir, filename)
+            dst = os.path.join(text_dir, new_name)
+            cmd_str = "aws s3 cp " + src + " s3://publiceditor.io/Articles/" + \
+                                           new_name + " --acl public-read"
+            os.system(cmd_str)
+        else:
+            print(filename, 'not found in any answers files')
         #os.rename(src, dst)
     print("done renaming")
     sleep(5)
-    for filename in os.listdir(text_dir):
-        print(filename)
+    # for filename in os.listdir(text_dir):
+    #     print(filename)
 
 
     #now send
@@ -74,4 +77,4 @@ def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
     #                       "article's sha256 and SSSArticle.txt is that, regardless of article title")
     return art_ids
 
-#send_s3('scoring_nyu_6', 'nyu_6', 'logis_0')
+#send_s3('scoring_covid', 'covid', 'raw_30')
