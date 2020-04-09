@@ -122,35 +122,18 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
        
        
         #added (below) by Akhil on 4/8 for updated scoring:
-        
-
-        genre_tua = tua[tua['topic_name'] == 'Genre']
-        for i in range(len(genre_tua)):
-            targ = genre_tua['target_text'].iloc[i].strip()
-            art_num = genre_tua['article_number'].iloc[i]
-            art_id  = genre_tua['article_sha256'].iloc[i]
-            if targ.lower() == 'n':
-                overallChange = addPoints(overallChange, 0, 'Genre -- News', art_num, art_id)
-            elif targ.lower() == 'o':
-                overallChange = addPoints(overallChange, 0, 'Genre -- Opinion', art_num, art_id)
-            elif targ.lower() == 'p':
-                overallChange = addPoints(overallChange, -10, 'Genre -- Hyper-Partisan', art_num, art_id)
-            elif targ.lower() == 'g':
-                overallChange = addPoints(overallChange, -10, 'Genre -- Celebrity Gossip', art_num, art_id)
-            elif targ.lower() == 'h':
-                overallChange = addPoints(overallChange, 0, 'Genre -- Health News', art_num, art_id)
-            elif targ.lower() == 's':
-                overallChange = addPoints(overallChange, 0, 'Genre -- Science', art_num, art_id)
-        
-        if (num_assertions - num_args - num_sources - num_evidence) > -1:
-            if targ.lower() == n:
-                overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
-            else:
-                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
     
     
     
         source_type = get_dep_iaa(config, schema="holistic")
+        
+            
+            if (num_assertions - num_args - num_sources - num_evidence) > -1:
+                if targ.lower() == n:
+                    overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
+                else:
+                    overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+        
            
         for article_type in tua['answer_uuid'].unique():
            if not (article_type == "a2f97bce-2512-43e0-9605-0d137d30d8e6"):
