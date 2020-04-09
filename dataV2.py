@@ -212,6 +212,8 @@ def find_article_data(task_ans):
     return task_ans['article_number'].iloc[0], task_ans['article_sha256'].iloc[0]
 
 
+
+
 def indicesFromString(indices):
     indices = clearBogusChars(indices)
     try:
