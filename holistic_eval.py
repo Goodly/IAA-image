@@ -127,28 +127,7 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
        
         #added (below) by Akhil on 4/8 for updated scoring:
         
-        source_type = get_dep_iaa(config, schema="source") #idk what to do for schema
-        
-        #won't work until we get a holistic scoring csv
-        def launch_Weighting(directory):
-        print("WEIGHTING STARTING")
-        iaaFiles = []
-        print('weightdir',directory)
-        for root, dir, files in os.walk(directory):
-            for file in files:
-                print(file)
-                if file.endswith('.csv'):
-                    if 'Dep_S_IAA' in file:
-                        print('gotaFile', file)
-                        iaaFiles.append(directory+'/'+file)
-        print('files', iaaFiles)
-        
-        
-        
-        
-        
-            
-            
+
         genre_tua = tua[tua['topic_name'] == 'Genre']
         for i in range(len(genre_tua)):
             targ = genre_tua['target_text'].iloc[i].strip()
@@ -174,18 +153,22 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
                 overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
     
     
-
-        if not (thisArticle.category == ‘Opinion piece/Editorial/Op Ed’): #fix this
-           indexVal = (1 + num_assertions) / (1 + num_evidence + num_evidence)
-           if indexVal > 1:
-               overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+    
+        source_type = get_dep_iaa(config, schema="holistic")
+           
+        for article_type in tua['answer_uuid'].unique():
+           if not (article_type == "a2f97bce-2512-43e0-9605-0d137d30d8e6"):
+               indexVal = (1 + num_assertions) / (1 + num_evidence + num_evidence)
+               if indexVal > 1:
+                   overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
                    
-        if  not (thisArticle.category == ‘Interview/statement/new finding ’): #fix this
-            if (num_sources < 2 and num_evidence > num_assertions + num_args):
-                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+            if  not (article_type == "251e628c-2cd1-467a-9204-6f1b7c80cf79" or article_type == "a2f97bce-2512-43e0-9605-0d137d30d8e6" or article_type == "0f15553b-95da-4eec-84f7-6809f5205ff2" or  article_type == "ad87bdb1-2247-4660-b0fd-64b19aa050fb" ): #T1.Q6.A5 and T1.Q10.2
+                if (num_sources < 2 and num_evidence > num_assertions + num_args):
+                    overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
     
 
-        
+# end of Akhil's update
+
 
 
         # check if article is assertion-happy--triager instruction is that it's only an assertion if it's a rogue claim
