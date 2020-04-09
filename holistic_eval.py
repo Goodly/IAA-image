@@ -48,38 +48,34 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
             task_df = art_sources[art_sources['quiz_task_uuid'] == task]
             task_df['question_Number'] = task_df['question_Number'].apply(int)
             #handle Q2 (koalifications)
-            # 1.02 mc Does the experience/knowledge/position of the quoted source qualify them to make such claims?
-            # 1.02.01 Yes, definitely (+2 pts.)
-            # 1.02.02 Yes (+1)
-            # 1.02.03 Somewhat, yes
-            # 1.02.04 Barely
-            # 1.02.05 There's no way to know based on the information given (-1, and if there are 2 or 3 of these ding
-            # the article as 'poorly sourced' -5pts.)
-            # 1.02.06 Not really
-            # 1.02.07 Not at all (-1)
-            # 1.02.08 Their experience/knowledge/position disqualifies them from making such claims (-2)
+            #Can't be done on weightin.py because has to count number of occurrences of the same error.
             q2_df = task_df[task_df['question_Number'] == 2]
             if len(q2_df) > 0:
                 q2scored = False
-                ans = q2_df['agreed_Answer'].iloc[0]
-                if ans == 1:
+                ans = q2_df['answer_uuid'].iloc[0]
+                #q2.a1
+                if ans == '0d9f8841-407c-43af-8103-486c2c6aab56':
                     points = 2
                     desc = 'Qualified Source'
                     q2scored = True
-                elif ans == 2:
+                # q2.a2
+                elif ans == 'fd35ec7d-6745-4fc7-a330-7768977eb58f':
                     points = 1
                     desc = 'Qualified Source'
                     q2scored = True
-                elif ans == 5:
+                #q2.a3
+                elif ans == 'bfb4ba57-2b15-408e-9a89-553d0e2ecc9d':
                     points = -1
                     num_vague_quals += 1
                     desc = 'Vaguely Sourced'
                     q2scored = True
-                elif ans == 7:
+                #q2.a7
+                elif ans == 'ea5a00f8-1bec-42fc-8e0d-9f1defd8c024':
                     points = -1
                     desc = 'Unqualified Source'
                     q2scored = True
-                elif ans == 8:
+                #q2.a8
+                elif ans == '785bf454-ffda-4782-93d7-ba37040e0812':
                     points = -2
                     desc = 'Unqualified Source'
                     q2scored = True
