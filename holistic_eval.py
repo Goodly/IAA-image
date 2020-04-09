@@ -192,7 +192,7 @@ def get_dep_iaa(directory, schema='sources'):
     """
 
     :param directory: scoring directory, holds dep_iaa files
-    :param schema: 'sources' or ...
+    :param schema: 'sources' or 'holistic' or ...
     :return: dataframe of the dep_s_ia fo the schema
     """
     if schema == 'sources'or schema =='source':
