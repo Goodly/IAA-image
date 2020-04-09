@@ -174,7 +174,7 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
     #         overallChange = addPoints(overallChange, 0, 'Genre -- Science', art_num, art_id)
 
     pointsdf = pd.concat([pointsdf, overallChange], axis=0, ignore_index=True)
-    pointsdf.to_csv(directory + '/AssessedPoints.csv')
+    pointsdf.to_csv(scoring_dir + '/AssessedPoints.csv')
 
 
 def get_indices_by_uuid(tua, tua_uuid):
@@ -197,6 +197,8 @@ def get_dep_iaa(directory, schema='sources'):
     """
     if schema == 'sources'or schema =='source':
         search_term = "ource"
+    if schema == 'holistic'or schema =='overall':
+        search_term = "olisti"
     else:
         print("AAAHHHHH, can't evaluate get_dep_iaa in holistic_eval.py")
 
