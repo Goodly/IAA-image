@@ -129,7 +129,7 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
         
             
             if (num_assertions - num_args - num_sources - num_evidence) > -1:
-                if targ.lower() == n:
+                if article_type == "5aff36a3-f8c5-4e24-b28f-6b1bc7527694":
                     overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
                 else:
                     overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
