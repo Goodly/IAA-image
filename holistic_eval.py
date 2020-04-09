@@ -118,6 +118,74 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
         vagueness_index = (num_vague_sources+num_vague_quals)/article_size_index
         if vagueness_index > 4:
             overallChange = addPoints(overallChange, -5, 'Vague Sourcing', art_num, art_sha256, art_id)
+            
+       
+       
+       
+       
+       
+       
+        #added (below) by Akhil on 4/8 for updated scoring:
+        
+        source_type = get_dep_iaa(config, schema="source") #idk what to do for schema
+        
+        #won't work until we get a holistic scoring csv
+        def launch_Weighting(directory):
+        print("WEIGHTING STARTING")
+        iaaFiles = []
+        print('weightdir',directory)
+        for root, dir, files in os.walk(directory):
+            for file in files:
+                print(file)
+                if file.endswith('.csv'):
+                    if 'Dep_S_IAA' in file:
+                        print('gotaFile', file)
+                        iaaFiles.append(directory+'/'+file)
+        print('files', iaaFiles)
+        
+        
+        
+        
+        
+            
+            
+        genre_tua = tua[tua['topic_name'] == 'Genre']
+        for i in range(len(genre_tua)):
+            targ = genre_tua['target_text'].iloc[i].strip()
+            art_num = genre_tua['article_number'].iloc[i]
+            art_id  = genre_tua['article_sha256'].iloc[i]
+            if targ.lower() == 'n':
+                overallChange = addPoints(overallChange, 0, 'Genre -- News', art_num, art_id)
+            elif targ.lower() == 'o':
+                overallChange = addPoints(overallChange, 0, 'Genre -- Opinion', art_num, art_id)
+            elif targ.lower() == 'p':
+                overallChange = addPoints(overallChange, -10, 'Genre -- Hyper-Partisan', art_num, art_id)
+            elif targ.lower() == 'g':
+                overallChange = addPoints(overallChange, -10, 'Genre -- Celebrity Gossip', art_num, art_id)
+            elif targ.lower() == 'h':
+                overallChange = addPoints(overallChange, 0, 'Genre -- Health News', art_num, art_id)
+            elif targ.lower() == 's':
+                overallChange = addPoints(overallChange, 0, 'Genre -- Science', art_num, art_id)
+        
+        if (num_assertions - num_args - num_sources - num_evidence) > -1:
+            if targ.lower() == n:
+                overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
+            else:
+                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+    
+    
+
+        if not (thisArticle.category == ‘Opinion piece/Editorial/Op Ed’): #fix this
+           indexVal = (1 + num_assertions) / (1 + num_evidence + num_evidence)
+           if indexVal > 1:
+               overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+                   
+        if  not (thisArticle.category == ‘Interview/statement/new finding ’): #fix this
+            if (num_sources < 2 and num_evidence > num_assertions + num_args):
+                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+    
+
+        
 
 
         # check if article is assertion-happy--triager instruction is that it's only an assertion if it's a rogue claim
