@@ -784,8 +784,13 @@ def get_type_hard(type, ques):
                 11: ['ordinal', 4],
                 12: ['ordinal', 5],
                 13: ['checklist', 5],
-
+                14: ['nominal', 2],
+                15: ['checklist', 3],
+                16: ['nominal', 1],
+                17: ['ordinal', 10],
+                18: ['ordinal', 10]
             }
+
 
     }
 

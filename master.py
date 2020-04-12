@@ -107,7 +107,7 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     print("SORTING POINTS")
     tuas, weights, tua_raw = pointSort(scoring_dir, directory)
     #BUG--figrue out why 09 article shows up as having low information
-    #eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
+    eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
     make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
     splitcsv(scoring_dir)

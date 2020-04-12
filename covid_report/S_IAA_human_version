@@ -172,6 +172,102 @@
 160,100057,Evidence Specialist,12,ordinal,U,1.0,U,0.5,1,4,U,Does the author suggest in any way that further evidence might improve our understanding of the topic?,U
 161,100057,Evidence Specialist,13,ordinal,U,1.0,U,0.5,1,10,U,"How difficult was this task for you, on the whole?",U
 162,100057,Evidence Specialist,14,ordinal,U,1.0,U,0.5,1,10,U,"How confident are you about your answers, on the whole?",U
+0,2005,Holistic Evaluation of Article,1,nominal,1,1.0,,1.0,3,9,,What type of article is this?,News report
+1,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+2,2005,Holistic Evaluation of Article,3,checklist,2,1.0,,1.0,3,12,,What is the article's topic area? (check all that apply),World Events
+3,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+4,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+5,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+6,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+7,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+8,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+9,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+10,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+11,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+12,2005,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+13,2005,Holistic Evaluation of Article,5,ordinal,4,1.0,,1.0,3,5,,"Before carefully reading the article, would you have been inclined to agree or disagree with its point of view?",Somewhat Disagree
+14,2005,Holistic Evaluation of Article,6,checklist,1,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Arguments
+15,2005,Holistic Evaluation of Article,6,checklist,2,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Proposed explanation(s)
+16,2005,Holistic Evaluation of Article,6,checklist,L,0.0,L,0.0,3,8,L,What kind of information does the article include?  (Check all that apply.),L
+17,2005,Holistic Evaluation of Article,6,checklist,4,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Quotes
+18,2005,Holistic Evaluation of Article,6,checklist,L,0.0,L,0.0,3,8,L,What kind of information does the article include?  (Check all that apply.),L
+19,2005,Holistic Evaluation of Article,6,checklist,L,0.0,L,0.0,3,8,L,What kind of information does the article include?  (Check all that apply.),L
+20,2005,Holistic Evaluation of Article,6,checklist,7,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Potentially controversial or flawed information
+21,2005,Holistic Evaluation of Article,6,checklist,8,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Emotional or biased presentation
+22,2005,Holistic Evaluation of Article,7,ordinal,4,1.0,,1.0,3,5,,"Given what you know about the world, how *credible* does the article seem to you, overall?",Slightly credible
+23,2005,Holistic Evaluation of Article,8,ordinal,1,1.0,,1.0,3,5,,"Given what you know about the world, how *biased* does the article seem to you, overall?",Extremely biased
+24,2005,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+25,2005,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+26,2005,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+27,2005,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+28,2005,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+29,2005,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+30,2005,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+31,2005,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+32,2005,Holistic Evaluation of Article,9,checklist,9,1.0,,1.0,3,9,,What kind of bias is apparent in the article? Check all that apply.,Other
+33,2005,Holistic Evaluation of Article,10,ordinal,2,0.6780719051126377,,0.6780719051126377,3,5,,How would you describe the approach of the article? (Check all that apply.),"Report of what some person, body, or group said"
+34,2005,Holistic Evaluation of Article,11,ordinal,2,1.0,,1.0,3,4,,Does the article’s title/headline match the text?,"Yes, but with some exaggeration/clickbaitiness"
+35,2005,Holistic Evaluation of Article,12,ordinal,2,1.0,,1.0,3,5,,"Does the article exaggerate the importance of a relatively minor event, person, or group?",Quite a bit
+36,2005,Holistic Evaluation of Article,13,checklist,L,0.0,L,0.0,3,5,L,How likely is this article to affect anyone’s behavior or beliefs?,L
+37,2005,Holistic Evaluation of Article,13,checklist,2,1.0,,1.0,3,5,,How likely is this article to affect anyone’s behavior or beliefs?,Somewhat Likely
+38,2005,Holistic Evaluation of Article,13,checklist,L,0.0,L,0.0,3,5,L,How likely is this article to affect anyone’s behavior or beliefs?,L
+39,2005,Holistic Evaluation of Article,13,checklist,L,0.0,L,0.0,3,5,L,How likely is this article to affect anyone’s behavior or beliefs?,L
+40,2005,Holistic Evaluation of Article,13,checklist,L,0.0,L,0.0,3,5,L,How likely is this article to affect anyone’s behavior or beliefs?,L
+41,2005,Holistic Evaluation of Article,14,nominal,2,1.0,1.0,1.0,3,2,"In the scientific journal Nature Medicine for 2015, they found an article stating that American scientists artificially created a hybrid version of coronavirus in different animals, for example, bats//It is further described that back in 2013 they were studying the possibility of transmitting this virus to humans//the United States reported that they created an experimental coronavirus vaccine and began testing it//It is natural to assume who will be the beneficiary of the huge profits from its sale",Are there claims in the article that seem suspicious or wrong?,Yes (Please highlight them.)
+42,2005,Holistic Evaluation of Article,15,checklist,1,1.0,1.0,1.0,3,3,"It is further described that back in 2013 they were studying the possibility of transmitting this virus to humans.
+
+",What is/are the problem/s with the suspicious claim/s?,The claim needs a fact check before readers can trust it.
+43,2005,Holistic Evaluation of Article,15,checklist,L,0.0,L,0.0,3,3,L,What is/are the problem/s with the suspicious claim/s?,L
+44,2005,Holistic Evaluation of Article,15,checklist,3,1.0,1.0,1.0,3,3,"In the scientific journal Nature Medicine for 2015, they found an article stating that American scientists artificially created a hybrid version of coronavirus in different animals, for example, bats//the United States reported that they created an experimental coronavirus vaccine and began testing it",What is/are the problem/s with the suspicious claim/s?,The author needs to more specifically describe the source making (or supporting) the claim so readers know how to evaluate the source's crediblity?
+45,2005,Holistic Evaluation of Article,17,ordinal,5,1.0,,1.0,3,10,,"How difficult was this task for you, on the whole?",5: Middling difficulty
+46,2005,Holistic Evaluation of Article,18,ordinal,9,1.0,,1.0,3,10,,"How confident are you about your answers, on the whole?",9
+47,100054,Holistic Evaluation of Article,1,nominal,1,1.0,,1.0,3,9,,What type of article is this?,News report
+48,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+49,100054,Holistic Evaluation of Article,3,checklist,2,1.0,,1.0,3,12,,What is the article's topic area? (check all that apply),World Events
+50,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+51,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+52,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+53,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+54,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+55,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+56,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+57,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+58,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+59,100054,Holistic Evaluation of Article,3,checklist,L,0.0,L,0.0,3,12,L,What is the article's topic area? (check all that apply),L
+60,100054,Holistic Evaluation of Article,5,ordinal,5,1.0,,1.0,3,5,,"Before carefully reading the article, would you have been inclined to agree or disagree with its point of view?",Strongly Disagree with the article's point of view
+61,100054,Holistic Evaluation of Article,6,checklist,1,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Arguments
+62,100054,Holistic Evaluation of Article,6,checklist,2,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Proposed explanation(s)
+63,100054,Holistic Evaluation of Article,6,checklist,L,0.0,L,0.0,3,8,L,What kind of information does the article include?  (Check all that apply.),L
+64,100054,Holistic Evaluation of Article,6,checklist,4,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Quotes
+65,100054,Holistic Evaluation of Article,6,checklist,L,0.0,L,0.0,3,8,L,What kind of information does the article include?  (Check all that apply.),L
+66,100054,Holistic Evaluation of Article,6,checklist,L,0.0,L,0.0,3,8,L,What kind of information does the article include?  (Check all that apply.),L
+67,100054,Holistic Evaluation of Article,6,checklist,7,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Potentially controversial or flawed information
+68,100054,Holistic Evaluation of Article,6,checklist,8,1.0,,1.0,3,8,,What kind of information does the article include?  (Check all that apply.),Emotional or biased presentation
+69,100054,Holistic Evaluation of Article,7,ordinal,5,1.0,,1.0,3,5,,"Given what you know about the world, how *credible* does the article seem to you, overall?",Not at all credible
+70,100054,Holistic Evaluation of Article,8,ordinal,1,1.0,,1.0,3,5,,"Given what you know about the world, how *biased* does the article seem to you, overall?",Extremely biased
+71,100054,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+72,100054,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+73,100054,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+74,100054,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+75,100054,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+76,100054,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+77,100054,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+78,100054,Holistic Evaluation of Article,9,checklist,L,0.0,L,0.0,3,9,L,What kind of bias is apparent in the article? Check all that apply.,L
+79,100054,Holistic Evaluation of Article,9,checklist,9,1.0,,1.0,3,9,,What kind of bias is apparent in the article? Check all that apply.,Other
+80,100054,Holistic Evaluation of Article,10,ordinal,2,0.6780719051126377,,0.6780719051126377,3,5,,How would you describe the approach of the article? (Check all that apply.),"Report of what some person, body, or group said"
+81,100054,Holistic Evaluation of Article,11,ordinal,2,1.0,,1.0,3,4,,Does the article’s title/headline match the text?,"Yes, but with some exaggeration/clickbaitiness"
+82,100054,Holistic Evaluation of Article,12,ordinal,1,1.0,,1.0,3,5,,"Does the article exaggerate the importance of a relatively minor event, person, or group?",Enormously
+83,100054,Holistic Evaluation of Article,13,checklist,L,0.0,L,0.0,3,5,L,How likely is this article to affect anyone’s behavior or beliefs?,L
+84,100054,Holistic Evaluation of Article,13,checklist,2,1.0,,1.0,3,5,,How likely is this article to affect anyone’s behavior or beliefs?,Somewhat Likely
+85,100054,Holistic Evaluation of Article,13,checklist,L,0.0,L,0.0,3,5,L,How likely is this article to affect anyone’s behavior or beliefs?,L
+86,100054,Holistic Evaluation of Article,13,checklist,L,0.0,L,0.0,3,5,L,How likely is this article to affect anyone’s behavior or beliefs?,L
+87,100054,Holistic Evaluation of Article,13,checklist,L,0.0,L,0.0,3,5,L,How likely is this article to affect anyone’s behavior or beliefs?,L
+88,100054,Holistic Evaluation of Article,14,nominal,2,1.0,1.0,1.0,3,2,"the United States is keeping its sanctions against Iran in order to complement the bans’ effect with the scourge of the new coronavirus that he believes might be a US-made bioweapon//There are too many indications now that the virus has been leaked from a bioweapons lab in the United States//if it’s a weapon, then, they would not want to do that. If it’s a weapon, then, they are going to want to use the sanctions as part of the other weapon to force Iran into submission//The reason behind the confusion, he added, might be that the virus is “a form of warfare that has to remain secret in order for it to be successful",Are there claims in the article that seem suspicious or wrong?,Yes (Please highlight them.)
+89,100054,Holistic Evaluation of Article,15,checklist,1,1.0,1.0,1.0,3,3,"the United States is keeping its sanctions against Iran in order to complement the bans’ effect with the scourge of the new coronavirus that he believes might be a US-made bioweapon//There are too many indications now that the virus has been leaked from a bioweapons lab in the United States//if it’s a weapon, then, they would not want to do that. If it’s a weapon, then, they are going to want to use the sanctions as part of the other weapon to force Iran into submission//The reason behind the confusion, he added, might be that the virus is “a form of warfare that has to remain secret in order for it to be successful",What is/are the problem/s with the suspicious claim/s?,The claim needs a fact check before readers can trust it.
+90,100054,Holistic Evaluation of Article,15,checklist,L,0.0,L,0.0,3,3,L,What is/are the problem/s with the suspicious claim/s?,L
+91,100054,Holistic Evaluation of Article,15,checklist,L,0.0,L,0.0,3,3,L,What is/are the problem/s with the suspicious claim/s?,L
+92,100054,Holistic Evaluation of Article,17,ordinal,4,1.0,,1.0,3,10,,"How difficult was this task for you, on the whole?",4
+93,100054,Holistic Evaluation of Article,18,ordinal,9,1.0,,1.0,3,10,,"How confident are you about your answers, on the whole?",9
 0,2005,Language Specialist V4,1,checklist,L,0.0,L,0.0,4,13,L,"Which of the following appears in the bolded text to the left? Check all that apply, or none, and highlight the part of the passage in which you see each.",L
 1,2005,Language Specialist V4,1,checklist,M,0.25,M,0.125,4,13,M,"Which of the following appears in the bolded text to the left? Check all that apply, or none, and highlight the part of the passage in which you see each.",M
 2,2005,Language Specialist V4,1,checklist,M,0.25,M,0.125,4,13,M,"Which of the following appears in the bolded text to the left? Check all that apply, or none, and highlight the part of the passage in which you see each.",M
