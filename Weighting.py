@@ -91,10 +91,10 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
 
     IAA_csv['Answer_Number'] = IAA_csv['Answer_Number'].apply(convertToInt)
     for_visualization = pd.DataFrame()
-    for task in np.unique(IAA_csv['quiz_task_uuid']):
-        task_IAA = IAA_csv[IAA_csv['quiz_task_uuid'] == task]
-        scaled_cred_weights = scale_weights_csv(credibility_weights_csv, weight_scale_table, task_IAA,
-                                                    IAA_csv_schema_type)
+    # for task in np.unique(IAA_csv['quiz_task_uuid']):
+    #     task_IAA = IAA_csv[IAA_csv['quiz_task_uuid'] == task]
+    #     scaled_cred_weights = scale_weights_csv(credibility_weights_csv, weight_scale_table, task_IAA,
+    #                                                 IAA_csv_schema_type)
 
     new_csv = pd.merge(scaled_cred_weights, IAA_csv, on =["Schema", "Question_Number", 'Answer_Number'])
 
@@ -168,4 +168,4 @@ def convertToInt(string):
     except:
         return -1
 
-#launch_Weighting('scoring_nyu_6')
+launch_Weighting('scoring_nyu_6')

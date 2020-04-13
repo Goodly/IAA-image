@@ -192,7 +192,7 @@ def count_cases(tua, topic):
 
 
 def addPoints(df, points, label, art_num, art_sha, art_id, indices='[]'):
-    df = df.append({'Schema': 'Overall', 'agreement_adjusted_points': points, 'Label': label, 'article_num': art_num,
+    df = df.append({'Schema': 'Holistic', 'agreement_adjusted_points': points, 'Label': label, 'article_num': art_num,
                     'article_sha256': art_sha, 'article_id': art_id, 'highlighted_indices': indices}, ignore_index=True)
     return df
 
