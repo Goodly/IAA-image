@@ -363,6 +363,8 @@ def get_indices_hard(string):
               string = string[0]
     out = []
     num = 0
+    if not isinstance(string, str):
+        return out
     for i in range(len(string)):
         if string[i].isdigit():
             num = 10*num+int(string[i])

@@ -339,7 +339,7 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
 
 
 # # # TEST STUFF
-#calc_agreement_directory('./nyu_6', hardCodedTypes= True)
+calc_agreement_directory('./covid', hardCodedTypes= True)
 # calc_scores('./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntAnswers.csv',
 #             schemaFile = './demo1/Demo1ArgRel3-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
 # calc_scores('./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntAnswers.csv',
@@ -358,4 +358,4 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
 # calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)
 # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
 # # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-# # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
+#calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')

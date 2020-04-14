@@ -67,8 +67,8 @@ def pointSort(directory, input_dir,
     for i in range(len(weight_list)):
         weight_list[i].to_csv('interm'+str(i))
     weights = pd.concat(weight_list)
-
-
+    weights['agreement_adjusted_points'] = weights['agreement_adjusted_points'].apply(float)
+    weights = weights[weights['agreement_adjusted_points'] != 0]
     if reporting:
         make_directory(rep_direc)
         weights.to_csv(rep_direc+'/weightsStacked'+str(len(weightFiles))+'.csv')
@@ -114,6 +114,7 @@ def apply_point_adjustments(weights, scale_guide):
             abs_point, point_scale = checkForScale(w, scale_guide)
             if abs_point != 0:
                 weights.iloc[i, weights.columns.get_loc("points")] = abs_point
+            print(weights.iloc[i])
             weights.iloc[i, weights.columns.get_loc("points")] = w['points']*point_scale
     return weights
 
@@ -142,9 +143,9 @@ def check_scale_match(weight, scale):
     point_scale = 1
     if arg_ans == -1 or arg_ans == weight[arg_col]:
         src_col = "source_T"+str(math.floor(scale['source_topic']))+'.Q'+str(math.floor(scale['source_question_num']))
-        src_ans = scale['source_answer_num']
-
-        if src_ans == -1 or src_ans == weight[src_col]:
+        src_ans = int(scale['source_answer_num'])
+        spec_ans = weight[src_col]
+        if src_ans == -1 or src_ans == int(weight[src_col]):
             found = True
             abs_point = scale['absolute_points']
             point_scale = scale['scaling_factor']
@@ -240,7 +241,17 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
             src_row = all_tuas.iloc[src_best_ind]
             weights.iloc[i, weights.columns.get_loc('src_offsets')] = src_row['indices']
             weights.iloc[i, weights.columns.get_loc('src_case_number')] = src_row['case_number']
+            weights = add_a_columns(src_row, weights, i, 'source')
     return all_tuas, weights
+def add_a_columns(tua_row, weights, i, prefix):
+    """Transfer question answers from matched TUAs to matched Weights"""
+
+    ans_col = [col for col in tua_row.axes[0] if prefix+'_T' in col]
+    for col in ans_col:
+        weights.iloc[i, weights.columns.get_loc(col)] = tua_row[col]
+    return weights
+
+
 
 def add_indices_column(all_tuas):
     all_tuas['indices'] = np.zeros(all_tuas.shape[0])
@@ -310,6 +321,7 @@ def input_specialist_answers(all_tuas, spec, prefix):
         spec_crop = spec[spec['tua_uuid'] == id]
         if len(spec_crop )>0:
             schema = spec_crop['schema_namespace'].iloc[0]
+            #this check shouldn't be necessary but just in case
             if ('gumen' in schema.lower() and 'arg' in prefix) or ('ource' in schema.lower() and 'source' in prefix):
                 for s in range(spec_crop.shape[0]):
                     qNum = spec_crop['question_Number'].iloc[s]
@@ -344,4 +356,4 @@ def convert_to_tq_format(topic, question):
     return "T"+str(topic)+".Q"+str(question)
 
 
-#pointSort('scoring_nyu_6', 'nyu_6/')
+#pointSort('scoring_covid', 'covid/')

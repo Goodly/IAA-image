@@ -15,7 +15,7 @@ def splitcsv(directory, textseparator = '//'):
     pointsdf = pd.read_csv(directory+'/'+pointsFile)
     #print(pointsdf)
     valid_points = pointsdf[~pd.isna(pointsdf['article_sha256'])]
-    valid_points = valid_points[valid_points['agreement_adjusted_points']!=0]
+    valid_points = valid_points[valid_points['points']!=0]
     articles = np.unique(valid_points['article_sha256'])
     final_cols = ['Article ID', 'Credibility Indicator ID', 'Credibilty Indicator Category',
                   'Credibility Indicator Name', 'Points', 'Indices of Label in Article', 'Start', 'End', 'target_text']
@@ -40,7 +40,7 @@ def splitcsv(directory, textseparator = '//'):
                 end = -1
                 cred_ind_name = sch_df['Label'].iloc[j]
                 indices = sch_df['highlighted_indices'].iloc[j]
-                points = sch_df['agreement_adjusted_points'].iloc[j]
+                points = sch_df['points'].iloc[j]
                 text = sch_df['target_text'].iloc[j]
                 #if there is a unitization
                 if not (isinstance(indices, float)) and (not (isinstance(indices, str)) or len(indices) > 2):
@@ -107,4 +107,4 @@ def indicesToStartEnd(indices):
         base = breakpointer[i]
     #ends.append(indices[len(indices)-1])
     return sorted(starts), sorted(ends), sorted(chunks)
-#splitcsv('scoring_nyu_6')
+#splitcsv('scoring_covid')

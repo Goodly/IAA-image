@@ -96,32 +96,37 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
         if vagueness_index > 4:
             overallChange = addPoints(overallChange, -10, 'Vague Sourcing', art_num, art_sha256, art_id)
 
-        for article_type_uuid in art_holistic['answer_uuid'].unique():
-            if not (article_type_uuid == "a2f97bce-2512-43e0-9605-0d137d30d8e6"): #T1.Q1.A3 Op-Ed
-                indexVal = (1 + num_assertions) / (1 + num_evidence + num_evidence)
-                if indexVal > 1:
-                    overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
+            
+        article_type_ids = art_holistic['answer_uuid'].unique()
+        if (num_assertions - num_args - num_sources - num_evidence) > -1:
+            # 5aff36a3-f8c5-4e24-b28f-6b1bc7527694 T1.Q1.A1 News report
+            if checkArtType("5aff36a3-f8c5-4e24-b28f-6b1bc7527694", article_type_ids):
+                overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
+            else:
+                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+        # a2f97bce-2512-43e0-9605-0d137d30d8e6 T1.Q1.A3 Op-Ed
+        if not checkArtType("a2f97bce-2512-43e0-9605-0d137d30d8e6", article_type_ids):
+            indexVal = (1 + num_assertions) / (1 + num_evidence + num_evidence)
+            if indexVal > 1:
+                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
 
-            if not (
-                    # 251e628c-2cd1-467a-9204-6f1b7c80cf79: T1.Q1.A6 Interview;
-                    # a2f97bce-2512-43e0-9605-0d137d30d8e6 T1.Q1.A3 Op-Ed
-                    #0f15553b-95da-4eec-84f7-6809f5205ff2: T1.Q6.A5 Scientific study or discovery;
-                    # ad87bdb1-2247-4660-b0fd-64b19aa050fb T1.Q10.2 Report of what some person, body, or group said
-                    article_type_uuid == "251e628c-2cd1-467a-9204-6f1b7c80cf79" or article_type_uuid == "a2f97bce-2512-43e0-9605-0d137d30d8e6"
-                    or article_type_uuid == "0f15553b-95da-4eec-84f7-6809f5205ff2" or article_type_uuid == "ad87bdb1-2247-4660-b0fd-64b19aa050fb"):
-                if (num_sources < 2 and num_evidence > num_assertions + num_args):
-                    overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
-
-            if (num_assertions - num_args - num_sources - num_evidence) > -1:
-                #5aff36a3-f8c5-4e24-b28f-6b1bc7527694 T1.Q1.A1 News report
-                if article_type_uuid == "5aff36a3-f8c5-4e24-b28f-6b1bc7527694":
-                    overallChange = addPoints(overallChange, -10, 'Low Information', art_num, art_sha256, art_id)
-                else:
-                    overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
-   
-
+        if not (
+                # 251e628c-2cd1-467a-9204-6f1b7c80cf79: T1.Q1.A6 Interview;
+                # a2f97bce-2512-43e0-9605-0d137d30d8e6 T1.Q1.A3 Op-Ed
+                # 0f15553b-95da-4eec-84f7-6809f5205ff2: T1.Q6.A5 Scientific study or discovery;
+                # ad87bdb1-2247-4660-b0fd-64b19aa050fb T1.Q10.2 Report of what some person, body, or group said
+            checkArtType("251e628c-2cd1-467a-9204-6f1b7c80cf79", article_type_ids) or checkArtType(
+            "a2f97bce-2512-43e0-9605-0d137d30d8e6", article_type_ids) or checkArtType(
+            "0f15553b-95da-4eec-84f7-6809f5205ff2", article_type_ids) or checkArtType(
+            "ad87bdb1-2247-4660-b0fd-64b19aa050fb", article_type_ids)):  # T1.Q6.A5 and T1.Q10.2
+            if (num_sources < 2 and num_evidence < num_assertions + num_args):
+                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
     pointsdf = pd.concat([pointsdf, overallChange], axis=0, ignore_index=True)
     pointsdf.to_csv(scoring_dir + '/AssessedPoints.csv')
+
+
+def checkArtType(ans_uuid, all_uuid):
+    return ans_uuid in all_uuid
 
 
 def get_indices_by_uuid(tua, tua_uuid):
@@ -192,7 +197,7 @@ def count_cases(tua, topic):
 
 
 def addPoints(df, points, label, art_num, art_sha, art_id, indices='[]'):
-    df = df.append({'Schema': 'Holistic', 'agreement_adjusted_points': points, 'Label': label, 'article_num': art_num,
+    df = df.append({'Schema': 'Holistic', 'points': points, 'Label': label, 'article_num': art_num,
                     'article_sha256': art_sha, 'article_id': art_id, 'highlighted_indices': indices}, ignore_index=True)
     return df
 
