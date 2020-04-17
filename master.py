@@ -2,10 +2,10 @@ import argparse
 
 from IAA import calc_agreement_directory
 from IAA import calc_scores
-from Dependency import *
-from Weighting import *
-from pointAssignment import *
-from Separator import *
+from Dependency import eval_dependency
+from Weighting import launch_Weighting
+from pointAssignment import pointSort
+from Separator import splitcsv
 from IAA_report import make_iaa_human_readable
 from dataV2 import make_directory
 from time import time

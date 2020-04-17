@@ -96,7 +96,7 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
         if vagueness_index > 4:
             overallChange = addPoints(overallChange, -10, 'Vague Sourcing', art_num, art_sha256, art_id)
 
-            
+
         article_type_ids = art_holistic['answer_uuid'].unique()
         if (num_assertions - num_args - num_sources - num_evidence) > -1:
             # 5aff36a3-f8c5-4e24-b28f-6b1bc7527694 T1.Q1.A1 News report
