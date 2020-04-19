@@ -59,7 +59,7 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
         hasArg = True
         argRel = pd.read_csv(files[1])
 
-    if not weights:
+    if weights is None:
         weightFiles = files[2]
         # if len(weightFiles)>0:
         #     weights = pd.read_csv(weightFiles[0])
@@ -78,25 +78,25 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
     weights = weights[weights['agreement_adjusted_points'] != 0]
     if reporting:
         make_directory(rep_direc)
-        weights.to_csv(rep_direc+'/weightsStacked'+str(len(weightFiles))+'.csv')
+        weights.to_csv(rep_direc+'/weightsStacked'+'.csv')
     if hasArg or hasSource:
         #('collapsing')
         tuas = collapse_all_tuas(tuas, hasArg, argRel, hasSource, sourceRel, reporting)
         if reporting:
-            tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+str(i)+'.csv')
+            tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+'.csv')
         #print('enhancing')
         tuas = enhance_all_tuas(tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
         if reporting:
-            tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+str(i)+'.csv')
+            tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+'.csv')
         #print('matching')
         tuas, weights = find_tua_match(tuas, weights)
         if reporting:
-            tuas.to_csv(rep_direc+'/matched_All_TUAS'+str(i)+'.csv')
-            weights.to_csv(rep_direc + '/weightsMatched' + str(i) + '.csv')
+            tuas.to_csv(rep_direc+'/matched_All_TUAS'+'.csv')
+            weights.to_csv(rep_direc + '/weightsMatched' +  '.csv')
         #print('applying adj')
         weights = apply_point_adjustments(weights, scale_guide)
         if reporting:
-            weights.to_csv(rep_direc + '/weightsAdjusted' + str(i) + '.csv')
+            weights.to_csv(rep_direc + '/weightsAdjusted' +  '.csv')
     else:
         weights['points'] = weights['agreement_adjusted_points']
     #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
