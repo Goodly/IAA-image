@@ -49,10 +49,10 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
     print("WEIGHINGWITHSCHEMA", IAA_csv_schema_type, IAA_csv_file)
 
 
-    #IAA_csv.append_column("Answer_Number", [str(a) for a in IAA_csv.column('agreed_Answer')])
-    IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='U']
-    IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='M']
-    IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='L']
+    #don't need to check for this, it won't ever be matched with an answer weight
+    # IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='U']
+    # IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='M']
+    # IAA_csv = IAA_csv.loc[IAA_csv.agreed_Answer!='L']
 
     IAA_csv = IAA_csv.rename(columns={ "question_Number": "Question_Number", 'agreed_Answer': 'Answer_Number'})
     IAA_csv['Schema'] = IAA_csv_schema_type
@@ -144,6 +144,7 @@ def scale_weights_csv(weight_df, scale_df, iaa_df, schema):
     scale_df = scale_df[scale_df['if_schema'==schema]]
     scaled = weight_df
     for a in scale_df['if_ans_uuid']:
+        #Gotta make this not be uuid, not stable enough, for now its fine cuase this isn't used
         if a in iaa_df['answer_uuid']:
             row = iaa_df[iaa_df['answer_uuid' == a]]
             #guaranteed to only happen once
@@ -168,4 +169,4 @@ def convertToInt(string):
     except:
         return -1
 
-#launch_Weighting('scoring_nyu_6')
+launch_Weighting('scoring_covid')
