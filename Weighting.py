@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 
-def launch_Weighting(directory):
+def launch_Weighting(directory, reporting = False):
     print("WEIGHTING STARTING")
     iaaFiles = []
     print('weightdir',directory)
@@ -15,10 +15,14 @@ def launch_Weighting(directory):
                     print('gotaFile', file)
                     iaaFiles.append(directory+'/'+file)
     print('files', iaaFiles)
+    weight_list = []
     for f in iaaFiles:
-        weighting_alg(f, './config/weight_key.csv', './config/weight_key_scaling_guide.csv', directory)
+        weight = weighting_alg(f, './config/weight_key.csv', './config/weight_key_scaling_guide.csv', directory,reporting=reporting)
+        weight_list.append(weight)
+    weights = pd.concat(weight_list)
+    return weights
 
-def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './'):
+def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './', reporting = False):
 
     IAA_csv = pd.read_csv(IAA_csv_file)
     #IndexError when the csv is empty
@@ -113,9 +117,11 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
 
     for_visualization['schema'] = pd.Series(IAA_csv_schema_type for i in range(len(for_visualization['article_sha256'])+1))
     for_visualization = for_visualization.loc[:, ~for_visualization.columns.duplicated()]
-    out_file = directory+"/Point_recs_"+IAA_csv_schema_type+".csv"
-    print(out_file)
-    for_visualization.to_csv(out_file, encoding = 'utf-8')
+    if reporting:
+        out_file = directory+"/Point_recs_"+IAA_csv_schema_type+".csv"
+        print(out_file)
+        for_visualization.to_csv(out_file, encoding = 'utf-8')
+    return for_visualization
     # You can choose to specify the path of the exported csv file in the .to_csv() method.
 def weighted_q6(num):
     if num >= 160:
@@ -170,4 +176,4 @@ def convertToInt(string):
     except:
         return -1
 
-launch_Weighting('scoring_covid')
+#launch_Weighting('scoring_covid')

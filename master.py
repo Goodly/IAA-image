@@ -17,7 +17,7 @@ from art_to_id_key import make_key
 def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
-                            push_aws = True, out_prefix = '', threshold_func = 'logis_0'):
+                            push_aws = True, tua_dir = None, out_prefix = '', threshold_func = 'logis_0'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -83,7 +83,7 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     make_directory(rep_direc)
     start = time()
     if not single_task:
-        iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
+        iaa_dir = calc_agreement_directory(directory, './config/schema/',hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
                                            useRep=use_rep, threshold_func=threshold_func)
     else:
 
@@ -103,14 +103,14 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
         return
 
     print("WEIGHTING")
-    launch_Weighting(scoring_dir)
+    weights = launch_Weighting(scoring_dir)
     print("SORTING POINTS")
-    tuas, weights, tua_raw = pointSort(scoring_dir, directory)
-    #BUG--figrue out why 09 article shows up as having low information
-    eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
-    make_key(tuas, scoring_dir, prefix=threshold_func)
+    tuas, weights, tua_raw = pointSort(scoring_dir, directory, weights = weights, tua_dir=tua_dir, reporting=reporting)
+    points = eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
+    if reporting:
+        make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
-    splitcsv(scoring_dir)
+    splitcsv(scoring_dir, pointsFile = points, reporting=reporting)
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
@@ -141,10 +141,10 @@ def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, scoring_
     scoring_dir = eval_dependency(directory, iaa_dir, out_dir=scoring_dir)
     return scoring_dir
 
-def score_post_iaa(directory,scoring_dir = None,
-                            push_aws = True, out_prefix = '', threshold_func = 'logis_0'):
+def score_post_iaa(scoring_dir, input_dir,
+                            push_aws = True, out_prefix = '', threshold_func = 'raw_30', reporting = False):
     """
-    :param directory: the directory that holds all files from the tagworks datahunt export
+    :param input_dir: the directory that holds all files from the tagworks datahunt export; used to match
 
 
     :param push_aws: True if we want outputs sent to the s3 AWS folder, false to just store locally
@@ -155,19 +155,19 @@ def score_post_iaa(directory,scoring_dir = None,
     :return: No explicit return.  writes many csvs to the scoring directory created byscoreOnly.  Also pushes lots of
     files to AWS so that they can be visualized
     """
-    launch_Weighting(scoring_dir)
+    weights = launch_Weighting(scoring_dir)
     print("SORTING POINTS")
-    tuas, weights, tua_raw = pointSort(scoring_dir, directory)
-    # BUG--figrue out why 09 article shows up as having low information
-    # eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
-    make_key(tuas, scoring_dir, prefix=threshold_func)
+    tuas, weights, tua_raw = pointSort(scoring_dir, input_dir = None, weights = weights, tua_dir=tua_dir, reporting=reporting)
+    points = eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
+    if reporting:
+        make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
-    splitcsv(scoring_dir)
-    # print("DONE, time elapsed", time()-start)
+    splitcsv(scoring_dir, pointsFile = points, reporting=reporting)
+    #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
         print("Pushing to aws")
-        ids = send_s3(scoring_dir, directory, prefix=out_prefix, func=threshold_func)
+        ids = send_s3(scoring_dir, input_dir, prefix=out_prefix, func = threshold_func)
 
     for id in ids:
         visualize(id, prefix=out_prefix)
@@ -235,6 +235,7 @@ if __name__ == '__main__':
     rep_file = './UserRepScores.csv'
     out_prefix = ''
     threshold_function = 'raw_30'
+    tua_dir = './covid/tua'
     if args.input_dir:
         input_dir = args.input_dir
     if args.tua_file:
@@ -251,6 +252,6 @@ if __name__ == '__main__':
         threshold_function = args.threshold_function
 
     calculate_scores_master(input_dir, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
-                            out_prefix = out_prefix, threshold_func=threshold_function)
+                            out_prefix = out_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
 
 #calculate_scores_master("nyu_0")

@@ -8,7 +8,7 @@ import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
-def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, answersFile = None, outDirectory = None,
+def calc_agreement_directory(directory, schema_dir, hardCodedTypes = False, repCSV=None, answersFile = None, outDirectory = None,
                              useRep = False, threshold_func = 'raw_30'):
     print("IAA STARTING")
     if outDirectory is None:
@@ -29,8 +29,10 @@ def calc_agreement_directory(directory, hardCodedTypes = False, repCSV=None, ans
                     highlights.append(directory+'/'+file)
                 elif 'Answers' in file or 'Crosstab' in file:
                     answers.append(directory+'/'+file)
-                elif 'Schema' in file:
-                    schema.append(directory+'/'+file)
+    for root, dir, files in os.walk(schema_dir):
+        for file in files:
+            if 'Schema' in file:
+                schema.append(schema_dir+'/'+file)
     #sorting filenames alphabetically separates them into the right schemas, it's a gimmick and might not scale
     #if it doesn't work there'll be key errors because taskIDS won't align
     highlights.sort()
@@ -339,7 +341,7 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
 
 
 # # # TEST STUFF
-calc_agreement_directory('./covid', hardCodedTypes= True)
+calc_agreement_directory('./covid','./config/schema/', hardCodedTypes= True)
 # calc_scores('./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntAnswers.csv',
 #             schemaFile = './demo1/Demo1ArgRel3-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
 # calc_scores('./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntAnswers.csv',

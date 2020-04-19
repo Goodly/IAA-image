@@ -1,18 +1,19 @@
 import pandas as pd
 import numpy as np
 import os
-import json
 import csv
+from dataV2 import make_directory
 
 from dataV2 import get_indices_hard
 
 
-def splitcsv(directory, textseparator = '//'):
+def splitcsv(directory, pointsFile = None, textseparator = '//', reporting = True):
     #print('splitting')
-    pointsFile = findWeights(directory)
-    #print(pointsFile)
-    print(directory, pointsFile)
-    pointsdf = pd.read_csv(directory+'/'+pointsFile)
+    if not pointsFile:
+        pointsFile = findWeights(directory)
+        #print(pointsFile)
+        print(directory, pointsFile)
+        pointsdf = pd.read_csv(directory+'/'+pointsFile)
     #print(pointsdf)
     valid_points = pointsdf[~pd.isna(pointsdf['article_sha256'])]
     valid_points = valid_points[valid_points['points']!=0]
@@ -26,8 +27,10 @@ def splitcsv(directory, textseparator = '//'):
         artdf = valid_points[valid_points['article_sha256'] == art]
         if len(artdf)<1:
             artdf = pointsdf[pointsdf['article_sha256'] == art]
-
-        art_id = artdf['article_id'].iloc[0]
+        if reporting:
+            art_id = artdf['article_id'].iloc[0]
+        else:
+            art_id = art
         schema = np.unique(artdf['Schema'])
         for s in schema:
             sch_df = artdf[artdf['Schema'] == s]

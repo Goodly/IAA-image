@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 
-def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='logis_0'):
+def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', reporting = False):
     '''
     Calculates point additions/deductions based off of the TUAs used to generate tasks
     In the future I'll set up a csv to tune this.  For now I can't think of a good way to do that so I'll try to make
@@ -122,8 +122,9 @@ def eval_triage_scoring(tua, pointsdf, directory, scoring_dir, threshold_func='l
             if (num_sources < 2 and num_evidence < num_assertions + num_args):
                 overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
     pointsdf = pd.concat([pointsdf, overallChange], axis=0, ignore_index=True)
-    pointsdf.to_csv(scoring_dir + '/AssessedPoints.csv')
-
+    if reporting:
+        pointsdf.to_csv(scoring_dir + '/AssessedPoints.csv')
+    return pointsdf
 
 def checkArtType(ans_uuid, all_uuid):
     return ans_uuid in all_uuid

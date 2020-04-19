@@ -2,13 +2,13 @@ import os
 import pandas as pd
 import numpy as np
 from time import sleep
-def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
+def send_s3(scoring_dir, input_dir, texts_path, prefix = '', func = ''):
     print("pushing to s3")
     art_ids = []
     for root, dir, files in os.walk(scoring_dir):
         for file in files:
             if file.endswith('.csv') and 'VisualizationData_' in file:
-                cmd_str = "aws s3 cp "+ scoring_dir+'/'+file+" s3://publiceditor.io/Articles/"+prefix+file+" --acl public-read"
+                cmd_str = "aws s3 cp "+ scoring_dir+'/'+file+" dev.publiceditor.io/visualization/"+prefix+file+" --acl public-read"
                 os.system(cmd_str)
                 print('calling:',cmd_str)
                 id = file.split('Data_', 1)[1][:-4]
@@ -37,6 +37,7 @@ def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
     #     #     print(sha_256s[i])
 
     in_path = os.path.realpath(input_dir)
+
     text_dir = in_path+'/texts'
     for filename in os.listdir(text_dir):
         if filename in filenames:
@@ -45,7 +46,7 @@ def send_s3(scoring_dir, input_dir, prefix = '', func = ''):
             new_name = func+new_sha+'SSSArticle.txt'
             src = os.path.join(text_dir, filename)
             dst = os.path.join(text_dir, new_name)
-            cmd_str = "aws s3 cp " + src + " s3://publiceditor.io/Articles/" + \
+            cmd_str = "aws s3 cp " + src + " dev.publiceditor.io/visualization/" + \
                                            new_name + " --acl public-read"
             os.system(cmd_str)
         else:

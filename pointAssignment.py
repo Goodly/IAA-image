@@ -6,37 +6,45 @@ from dataV2 import get_indices_hard
 import json
 import math
 
-def pointSort(directory, input_dir,
-              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False, eval_overall = True):
+def pointSort(scoring_directory, input_dir = None, weights = None,
+              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False,
+              tua_dir = None):
 
     dir_path = os.path.dirname(os.path.realpath(input_dir))
 
     input_path = os.path.join(dir_path, input_dir)
-    tua_path = os.path.join(input_path, 'tua')
-    tua_location = ''
-    for file in os.walk(input_dir):
-        if 'tua' in file and os.path.join(input_dir, file).isdir():
-            tua_path = os.path.join(input_dir, file)
-            print("FOUND TUA", tua_path)
-            break
-    for file in os.listdir(input_dir+'/tua'):
-        print('file in tua',file)
-        tua_location = os.path.join(tua_path, file)
-        try:
-            tuas = tuas.append(pd.read_csv(tua_location))
-        except UnboundLocalError:
-            tuas = pd.read_csv(tua_location)
-
+    if not tua_dir:
+        tua_path = os.path.join(input_path, 'tua')
+        tua_location = ''
+        for file in os.walk(input_dir):
+            if 'tua' in file and os.path.join(input_dir, file).isdir():
+                tua_path = os.path.join(input_dir, file)
+                print("FOUND TUA", tua_path)
+                break
+        for file in os.listdir(input_dir+'/tua'):
+            print('file in tua',file)
+            tua_location = os.path.join(tua_path, file)
+            try:
+                tuas = tuas.append(pd.read_csv(tua_location))
+            except UnboundLocalError:
+                tuas = pd.read_csv(tua_location)
+    else:
+        for file in os.listdir(tua_dir):
+            tua_location = os.path.join(tua_dir, file)
+            try:
+                tuas = tuas.append(pd.read_csv(tua_location))
+            except UnboundLocalError:
+                tuas = pd.read_csv(tua_location)
     #Load everything so that it's a pandas dataframe
     tuas_raw = tuas
     scale_guide = pd.read_csv(scale_guide_dir)
     if len(tua_location)<3:
         raise FileNotFoundError("TUA file not found")
     #tuas = pd.read_csv(tua_location)
-    files = getFiles(directory)
+    files = getFiles(scoring_directory)
 
-    if not rep_direc:
-        rep_direc = directory+"_report"
+    if not rep_direc and reporting:
+        rep_direc = scoring_directory + "_report"
     # marker booleans that will make corner cases nicer down the road
     hasSource = False
     hasArg = False
@@ -51,22 +59,21 @@ def pointSort(directory, input_dir,
         hasArg = True
         argRel = pd.read_csv(files[1])
 
+    if not weights:
+        weightFiles = files[2]
+        # if len(weightFiles)>0:
+        #     weights = pd.read_csv(weightFiles[0])
+        # else:
+        #     print("NO WEIGHTS FOUND")
+        #     return
+        weight_list = []
+        for i in range(len(weightFiles)):
+            #print('badone', i, weightFiles[i])
+            wf = pd.read_csv(weightFiles[i])
+            weight_list.append(wf)
+            #weights = weights.append(wf)
 
-    weightFiles = files[2]
-    # if len(weightFiles)>0:
-    #     weights = pd.read_csv(weightFiles[0])
-    # else:
-    #     print("NO WEIGHTS FOUND")
-    #     return
-    weight_list = []
-    for i in range(len(weightFiles)):
-        #print('badone', i, weightFiles[i])
-        wf = pd.read_csv(weightFiles[i])
-        weight_list.append(wf)
-        #weights = weights.append(wf)
-    for i in range(len(weight_list)):
-        weight_list[i].to_csv('interm'+str(i))
-    weights = pd.concat(weight_list)
+        weights = pd.concat(weight_list)
     weights['agreement_adjusted_points'] = weights['agreement_adjusted_points'].apply(float)
     weights = weights[weights['agreement_adjusted_points'] != 0]
     if reporting:
@@ -96,7 +103,8 @@ def pointSort(directory, input_dir,
     #investigate the root
 
     weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'Answer_Number', 'Question_Number'])
-    weights.to_csv(directory+'/SortedPts.csv')
+    if reporting:
+        weights.to_csv(scoring_directory + '/SortedPts.csv')
     return tuas, weights, tuas_raw
 
 def apply_point_adjustments(weights, scale_guide):
@@ -172,14 +180,15 @@ def getFiles(directory):
 
                     argRelevanceFile = directory+file
                     #print('Found Arguments File ' + argRelevanceFile)
-            if file.endswith('.csv')  and 'Point_recs' in file:
-                #print('Found Weights File '+ directory + file)
-                weightOutputs.append(directory+file)
-                #print('foud Weights File...', weightOutputs)
+            #Now weights are passed in as an input from the previous step
+            # if file.endswith('.csv')  and 'Point_recs' in file:
+            #     #print('Found Weights File '+ directory + file)
+            #     weightOutputs.append(directory+file)
+            #     #print('foud Weights File...', weightOutputs)
 
     print('all', sourceFile, argRelevanceFile, weightOutputs)
     print("WEIGHTOUTPUTS:", len(weightOutputs))
-    return sourceFile, argRelevanceFile, weightOutputs
+    return sourceFile, argRelevanceFile #, weightOutputs
 
 def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6):
     """Compares the highlighted indices of specialist tasks to those generated by the arg/source triager
