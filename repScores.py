@@ -2,7 +2,7 @@ from dataV2 import *
 from math import exp
 import numpy as np
 import pandas as pd
-from dataV2 import *
+from dataV3 import *
 import os.path
 from os import path
 #from scipy.stats import norm
