@@ -7,13 +7,15 @@ from dataV2 import make_directory
 from dataV2 import get_indices_hard
 
 
-def splitcsv(directory, pointsFile = None, textseparator = '//', reporting = True):
+def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//', reporting = True):
     #print('splitting')
-    if not pointsFile:
+    if pointsFile is None:
         pointsFile = findWeights(directory)
         #print(pointsFile)
         print(directory, pointsFile)
         pointsdf = pd.read_csv(directory+'/'+pointsFile)
+    else:
+        pointsdf = pointsFile
     #print(pointsdf)
     valid_points = pointsdf[~pd.isna(pointsdf['article_sha256'])]
     valid_points = valid_points[valid_points['points']!=0]
@@ -72,7 +74,8 @@ def splitcsv(directory, pointsFile = None, textseparator = '//', reporting = Tru
         final_out.append([None, None, None, None,None,None,None, None, None])
         path = directory + '/VisualizationData_' + art_id + '.csv'
         print("EXPORTENg  "+path)
-        scores = open(directory + '/VisualizationData_' + art_id + '.csv', 'w', encoding='utf-8')
+        viz_dir = make_directory(viz_dir)
+        scores = open(viz_dir + '/VisualizationData_' + art_id + '.csv', 'w', encoding='utf-8')
         with scores:
             writer = csv.writer(scores)
             writer.writerows(final_out)

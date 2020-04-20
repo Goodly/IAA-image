@@ -14,8 +14,8 @@ from GenerateVisualization import visualize
 from holistic_eval import eval_triage_scoring
 from art_to_id_key import make_key
 
-def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
-                            just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = True,
+def calculate_scores_master(directory, texts_path , tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
+                            just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = False,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
                             push_aws = True, tua_dir = None, out_prefix = '', threshold_func = 'logis_0'):
     """
@@ -110,12 +110,14 @@ def calculate_scores_master(directory, tua_file = None, iaa_dir = None, scoring_
     if reporting:
         make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
-    splitcsv(scoring_dir, pointsFile = points, reporting=reporting)
+    viz_dir = 'visualization_'+directory
+    splitcsv(scoring_dir, pointsFile = points, viz_dir=viz_dir, reporting=reporting)
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
         print("Pushing to aws")
-        ids = send_s3(scoring_dir, directory, prefix=out_prefix, func = threshold_func)
+
+        ids = send_s3(scoring_dir, directory, texts_path, prefix=out_prefix, func = threshold_func)
 
     for id in ids:
         visualize(id, prefix=out_prefix)
@@ -251,7 +253,7 @@ if __name__ == '__main__':
     if args.threshold_function:
         threshold_function = args.threshold_function
 
-    calculate_scores_master(input_dir, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
+    calculate_scores_master(input_dir, './covid/texts', tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
                             out_prefix = out_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
 
 #calculate_scores_master("nyu_0")
