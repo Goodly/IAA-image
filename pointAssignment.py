@@ -7,7 +7,7 @@ import json
 import math
 
 def pointSort(scoring_directory, input_dir = None, weights = None,
-              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False,
+              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = False, rep_direc = False,
               tua_dir = None):
 
     dir_path = os.path.dirname(os.path.realpath(input_dir))

@@ -103,10 +103,11 @@ def calculate_scores_master(directory, texts_path , tua_file = None, iaa_dir = N
         return
 
     print("WEIGHTING")
-    weights = launch_Weighting(scoring_dir)
+    weights = launch_Weighting(scoring_dir, reporting=reporting)
     print("SORTING POINTS")
-    tuas, weights, tua_raw = pointSort(scoring_dir, directory, weights = weights, tua_dir=tua_dir, reporting=reporting)
-    points = eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
+    tuas, weights, tua_raw = pointSort(scoring_dir, input_dir=directory, weights=weights, tua_dir=tua_dir,
+                                       reporting=reporting)
+    points = eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func, reporting=reporting)
     if reporting:
         make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
@@ -160,7 +161,7 @@ def score_post_iaa(scoring_dir, input_dir,
     weights = launch_Weighting(scoring_dir)
     print("SORTING POINTS")
     tuas, weights, tua_raw = pointSort(scoring_dir, input_dir = None, weights = weights, tua_dir=tua_dir, reporting=reporting)
-    points = eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func)
+    points = eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func, reporting=reporting)
     if reporting:
         make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
