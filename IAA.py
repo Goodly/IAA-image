@@ -1,7 +1,7 @@
 import csv
 from ChecklistCoding import *
 from ExtraInfo import *
-from dataV2 import *
+from dataV3 import *
 from repScores import *
 from multiprocessing  import Pool
 import os
@@ -55,16 +55,19 @@ def calc_agreement_directory(directory, schema_dir, hardCodedTypes = False, repC
     #                 #will be an error for every file that isn't the right file, there's a more graceful solution, but
     #                 #we'll save that dream for another day
     return outDirectory
+
 def unpack_iaa(input):
     print("unpacking", input)
     calc_scores(input[0], hardCodedTypes=input[1], repCSV = input[2],
                             answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6],
                 directory = input[7], threshold_func=input[8])
+
 def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None,
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
     print('collecting Data')
-    uberDict = data_storer(highlightfilename, answersFile, schemaFile)
+    uberDict = dataStorer(highlightfilename, schemaFile)
+    # uberDict = data_storer(highlightfilename, answersFile, schemaFile)
 
     if directory.startswith('./'):
         directory = directory[2:]
@@ -245,7 +248,8 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = Fa
     get_question_numchoices(data, article, ques)
     schema = get_schema(data, article)
     if hardCodedTypes:
-        schema = get_schema(data, article)
+        # schema = get_schema(data, article)
+        schema = get_schema_topic(data, article)
         question_type, num_choices = get_type_hard(schema, ques)
         #print("QUESTION TYPE IS", question_type)
     #This block for scoring only a single article, iuseful for debugging
@@ -272,6 +276,9 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = Fa
     #print('art', article,ques)
     numUsers = get_num_users(data, article, ques)
     #print('nu', numUsers, users)
+    # print("Length of Answers:", len(answers), "\tLength of Users:", len(users))
+    # print("Answers", answers)
+    # print("Users", users)
     assert (len(answers) == len(users))
     #print('qtype', question_type)
     if num_choices == 1:

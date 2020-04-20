@@ -63,7 +63,8 @@ def explore(data_hunt_path):
 
 def dataStorer(data_hunt_path, schema_path):
     """
-    Takes in the csv file path and turns csv into a dictionary
+    Takes in a DataHunt csv file path and a Schema csv file path
+    Returns a dictionary of all extracted information. See data structure on the onboarding document
     """
     data_hunt = pd.read_csv(data_hunt_path, encoding = 'utf-8')
     uberDict = {}
@@ -75,7 +76,7 @@ def dataStorer(data_hunt_path, schema_path):
     task_id_url_data = data_hunt.loc[:, ["quiz_task_uuid", "task_url", "tua_uuid"]].drop_duplicates()
 
     task_question_answer_labels = data_hunt.loc[:, [ "quiz_task_uuid", "question_label", "answer_label"]
-                            ].drop_duplicates()
+                            ]
 
     taskrun_task = data_hunt.loc[:, ["quiz_task_uuid", "taskrun_count", "quiz_taskrun_uuid",
                                      "created", "finish_time", "elapsed_seconds", "contributor_uuid"]
@@ -87,7 +88,7 @@ def dataStorer(data_hunt_path, schema_path):
     starts_ends = data_hunt.loc[:,["quiz_task_uuid", "question_label", "start_pos", "end_pos"]
                   ].set_index("quiz_task_uuid")
     highlight = data_hunt.loc[:, ["quiz_task_uuid", "question_label", "contributor_uuid",
-                                  "target_text", "highlight_count", "answer_uuid", "answer_content", "answer_label"]
+                                  "target_text", "highlight_count", "answer_uuid", "answer_content", "answer_label", "answer_text"]
                 ].set_index("quiz_task_uuid")
 
     schemaData = pd.read_csv(schema_path, encoding = 'utf-8')
@@ -97,6 +98,7 @@ def dataStorer(data_hunt_path, schema_path):
     # Finds schema name and sha
     schema_name = data_hunt["schema_namespace"].iloc[0]
     schema_sha = data_hunt["schema_sha256"].iloc[0]
+    schema_topic = schemaData["topic_name"].iloc[0]
 
     # Creates a dictionary categorized by task_uuid
     for i in range(len(task_id_url_data)):
@@ -129,10 +131,10 @@ def dataStorer(data_hunt_path, schema_path):
             "schema_name": schema_name,
             "schema_sha": schema_sha,
             "schema_id" : schema_id,
+            "schema_topic" : schema_topic,
             'dependencies': dependencies,
             "question_labels": question_labels,
             "question_numbers" : getQuestionNumbersList(question_labels),
-
 
 
         }
@@ -153,6 +155,7 @@ def dataStorer(data_hunt_path, schema_path):
             hasHighlightedTasks = True
         target_text = usersGrouped["target_text"].apply(list) # Don't know for sure
         answer_content = highlight.loc[uuid].groupby("question_label")["answer_content"].apply(list)
+        newUsers = highlight.loc[uuid].groupby("question_label")["contributor_uuid"].apply(list)
 
         # for each task, creates a new questionData that parses through related question and answer
         ques = uberDict[uuid]['quesData'] = {}
@@ -168,12 +171,12 @@ def dataStorer(data_hunt_path, schema_path):
             question_num = getQuestionNumberFromLabel(question_label)
 
             ques[question_num] = {
-                    "answers" : getAnsNumsList(answer_id_text, uuid, question_label), # list of answer numbers
+                    "answers" : getAnsNumsList(highlight, uuid, question_label), # list of answer numbers
                     "starts" : starts.loc[question_label],
                     "ends" : ends.loc[question_label],
-                    "users" : contributors[question_label],
-                    "numUsers" : len(contributors[question_label]),
-                    "answer_content": answer_content[question_label],
+                    "users" : newUsers[question_label],
+                    "numUsers" : len(newUsers[question_label]),
+                    "answer_content": find_answer_contents(task_schema, question_label),
                     "question_text": quest_label_text.loc[question_label, "question_text"],
                     "target_text": target_text[question_label], #TODO: currently returns a list of target texts, check!
                     "hlUsers": hightlightUsers,
@@ -210,9 +213,9 @@ def getAnsText(answer_id_text, task_uuid, question_label):
     return ans["answer_text"].unique().tolist()
 
 def getAnsLabels(task_question_answer_labels, task_uuid, question_label):
-    task_data = task_question_answer_labels[task_question_answer_labels["quiz_task_uuid"]  == task_uuid]
+    task_data = task_question_answer_labels.loc[task_uuid]
     ans = task_data[task_data["question_label"] == question_label]
-    return ans["answer_label"].unique().tolist()
+    return ans["answer_label"].tolist()
 
 def getAnsNumsList(task_question_answer_labels, task_uuid, question_label):
     ans_labels = getAnsLabels(task_question_answer_labels, task_uuid, question_label)
@@ -398,6 +401,13 @@ def parseMany(base, field = None, separator = None):
     return out
 
 
+def find_answer_contents(schemadata, qlabel):
+    questiondf = schemadata[schemadata['question_label'] == qlabel]
+    pot_answers = questiondf['answer_content'].tolist()
+    pot_answers.insert(0,'zero')
+    return pot_answers
+
+
 ##################### GET the data from UberDict ##############
 
 def get_question_answers(data, task_id, question_num):
@@ -479,6 +489,9 @@ def get_article_dependencies(data,task_id):
 
 def get_namespace(data, article, question_num):
     return data[article][question_num][1][7][0].iloc[0]
+
+def get_schema_topic(data, task_id):
+    return data[task_id]['taskData']["schema_topic"]
 
 def finder(ser, a):
     if len(ser)<1:
@@ -737,8 +750,13 @@ def get_type_hard(type, ques):
                 11: ['ordinal', 4],
                 12: ['ordinal', 5],
                 13: ['checklist', 5],
-
+                14: ['nominal', 2],
+                15: ['checklist', 3],
+                16: ['nominal', 1],
+                17: ['ordinal', 10],
+                18: ['ordinal', 10]
             }
+
 
     }
 
