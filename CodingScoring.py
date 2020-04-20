@@ -1,6 +1,5 @@
 from UnitizingScoring import *
 from ThresholdMatrix import *
-from dataV2 import *
 from ExtraInfo import getTextFromIndices
 from math import ceil
 from repScores import *

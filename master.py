@@ -14,7 +14,7 @@ from GenerateVisualization import visualize
 from holistic_eval import eval_triage_scoring
 from art_to_id_key import make_key
 
-def calculate_scores_master(directory, texts_path , tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
+def calculate_scores_master(directory, texts_path ,config_path, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = False,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
                             push_aws = True, tua_dir = None, out_prefix = '', threshold_func = 'logis_0'):
@@ -83,7 +83,7 @@ def calculate_scores_master(directory, texts_path , tua_file = None, iaa_dir = N
     make_directory(rep_direc)
     start = time()
     if not single_task:
-        iaa_dir = calc_agreement_directory(directory, './config/schema/',hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
+        iaa_dir = calc_agreement_directory(directory, './config/schema/', config_path, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
                                            useRep=use_rep, threshold_func=threshold_func)
     else:
 
@@ -107,7 +107,7 @@ def calculate_scores_master(directory, texts_path , tua_file = None, iaa_dir = N
     print("SORTING POINTS")
     tuas, weights, tua_raw = pointSort(scoring_dir, input_dir=directory, weights=weights, tua_dir=tua_dir,
                                        reporting=reporting)
-    points = eval_triage_scoring(tua_raw, weights, scoring_dir, scoring_dir, threshold_func, reporting=reporting)
+    points = eval_triage_scoring(tua_raw, weights, scoring_dir,  threshold_func, reporting=reporting)
     if reporting:
         make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
@@ -239,6 +239,7 @@ if __name__ == '__main__':
     out_prefix = ''
     threshold_function = 'raw_30'
     tua_dir = './covid/tua'
+    config_path = './config/'
     if args.input_dir:
         input_dir = args.input_dir
     if args.tua_file:
@@ -254,7 +255,7 @@ if __name__ == '__main__':
     if args.threshold_function:
         threshold_function = args.threshold_function
 
-    calculate_scores_master(input_dir, './covid/texts', tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
+    calculate_scores_master(input_dir, './covid/texts',config_path, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
                             out_prefix = out_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
 
 #calculate_scores_master("nyu_0")

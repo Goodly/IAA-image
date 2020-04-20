@@ -246,3 +246,8 @@ typing_dict = {
 
 with open('./config/typing_dict.txt', 'w') as file:
     json.dump(typing_dict, file)
+
+with open('./config/typing_dict.txt', 'r') as read_file:
+    out_dict = json.load(read_file)
+
+print(out_dict)
