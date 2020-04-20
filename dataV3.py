@@ -91,7 +91,7 @@ def dataStorer(data_hunt_path, schema_path):
                                   "target_text", "highlight_count", "answer_uuid", "answer_content", "answer_label", "answer_text"]
                 ].set_index("quiz_task_uuid")
     highlighted_data = data_hunt.loc[:, ["quiz_task_uuid", "question_label", "contributor_uuid",
-                                  "target_text", "highlight_count", "answer_uuid", "answer_content", "answer_label", "answer_text"]
+                                  "target_text", "highlight_count", "answer_uuid", "answer_content", "answer_label", "answer_text", "start_pos", "end_pos"]
                 ]
     highlighted_data = highlighted_data[highlighted_data["highlight_count"] > 0]
 
@@ -145,7 +145,7 @@ def dataStorer(data_hunt_path, schema_path):
         assert (schema_id == schema_sha)
 
         # computes the start and end lists
-        starts, ends = getStartsEndsLists(starts_ends, uuid)
+        starts_lists, ends_lists = getStartsEndsLists(starts_ends, uuid)
 
         # gets highlighted information
         usersGrouped = highlight.loc[uuid].groupby("question_label")
@@ -165,10 +165,12 @@ def dataStorer(data_hunt_path, schema_path):
         rel_hl_data = highlighted_data[highlighted_data['quiz_task_uuid'] == uuid]
         # for each task, creates a new questionData that parses through related question and answer
         ques = uberDict[uuid]['quesData'] = {}
-        for question_label in list(starts.index):
+        for question_label in list(starts_lists.index):
             hightlightUsers = []
             hl_ans_nums = []
             target_text = []
+            starts = []
+            ends = []
 
             # print("Indices of highlight data under task", uuid, "are", rel_hl_data["question_label"])
             # print("The question label is: ", question_label)
@@ -179,6 +181,8 @@ def dataStorer(data_hunt_path, schema_path):
                 hl_ans_labels = question_hl_data["answer_label"].tolist()
                 hl_ans_nums = [getAnsNumberFromLabel(l) for l in hl_ans_labels]
                 target_text = question_hl_data["target_text"].tolist()
+                starts =   question_hl_data['start_pos'].apply(floor).tolist()
+                ends = question_hl_data['end_pos'].apply(floor).tolist()
 
                 # print("Highlight Users are: ", hightlightUsers)
                 # print("Highlight Answers are: ", hl_ans_labels)
@@ -189,8 +193,8 @@ def dataStorer(data_hunt_path, schema_path):
 
             ques[question_num] = {
                     "answers" : getAnsNumsList(highlight, uuid, question_label), # list of answer numbers
-                    "starts" : starts.loc[question_label],
-                    "ends" : ends.loc[question_label],
+                    "starts" : starts,
+                    "ends" : ends,
                     "users" : newUsers[question_label],
                     "numUsers" : len(newUsers[question_label]),
                     "answer_content": find_answer_contents(task_schema, question_label),
