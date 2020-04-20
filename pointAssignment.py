@@ -7,7 +7,7 @@ import json
 import math
 
 def pointSort(scoring_directory, input_dir = None, weights = None,
-              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = True, rep_direc = False,
+              scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = False, rep_direc = False,
               tua_dir = None):
 
     dir_path = os.path.dirname(os.path.realpath(input_dir))
@@ -55,9 +55,17 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
     if source_file:
         hasSource = True
         sourceRel = pd.read_csv(files[0])
+        slen = len(sourceRel)
+        sourceRel = sourceRel.dropna(subset=['tua_uuid'])
+        if len(sourceRel)< slen:
+            print("Warning, nan sourcerel tua_uuids")
     if arg_file:
         hasArg = True
         argRel = pd.read_csv(files[1])
+        alen = len(argRel)
+        argRel = argRel.dropna(subset=['tua_uuid'])
+        if len(argRel)< alen:
+            print("Warning, nan argrel tua_uuids")
 
     if weights is None:
         weightFiles = files[2]

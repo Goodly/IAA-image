@@ -531,7 +531,13 @@ def make_directory(directory):
     except FileExistsError:
         pass
     return directory
+def get_type_json(type, ques, config_path):
+    with open(config_path+'/typing_dict.txt', 'r') as read_file:
+        typing_dict = json.load(read_file)
+    #typing_dict = json.loads(config_path+"/typing_dict.txt")
 
+    out = typing_dict[type][str(ques)]
+    return out[0], out[1]
 def get_type_hard(type, ques):
     #ques = parse(ques, 'Q')
     #print('type', type, ques)

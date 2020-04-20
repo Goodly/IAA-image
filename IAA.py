@@ -1,14 +1,14 @@
 import csv
 from ChecklistCoding import *
 from ExtraInfo import *
+#from dataV2 import *
 from dataV3 import *
 from repScores import *
-from multiprocessing  import Pool
 import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
-def calc_agreement_directory(directory, schema_dir, hardCodedTypes = False, repCSV=None, answersFile = None, outDirectory = None,
+def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes = False, repCSV=None, answersFile = None, outDirectory = None,
                              useRep = False, threshold_func = 'raw_30'):
     print("IAA STARTING")
     if outDirectory is None:
@@ -49,7 +49,7 @@ def calc_agreement_directory(directory, schema_dir, hardCodedTypes = False, repC
     #     pool.map(unpack_iaa, ins)
 
     for i in range(len(highlights)):
-        calc_scores(highlights[i], hardCodedTypes=hardCodedTypes, repCSV = repCSV,
+        calc_scores(highlights[i], config_path, hardCodedTypes=hardCodedTypes, repCSV = repCSV,
                            answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
                     directory=directory, threshold_func = threshold_func)
     #                 #will be an error for every file that isn't the right file, there's a more graceful solution, but
@@ -62,13 +62,14 @@ def unpack_iaa(input):
                             answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6],
                 directory = input[7], threshold_func=input[8])
 
-def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None,
+def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None,
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
     print('collecting Data')
-    uberDict = dataStorer(highlightfilename, schemaFile)
-    # uberDict = data_storer(highlightfilename, answersFile, schemaFile)
-
+    #uberDict = dataStorer(highlightfilename, schemaFile)
+    #print("old ", uberDict)
+    uberDict = data_storer(highlightfilename, answersFile, schemaFile)
+    print("new ", uberDict)
     if directory.startswith('./'):
         directory = directory[2:]
     if not outDirectory:
@@ -107,7 +108,7 @@ def calc_scores(highlightfilename, hardCodedTypes = True, repCSV=None, answersFi
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
-            agreements = score(task, ques, uberDict, repDF,hardCodedTypes = hardCodedTypes, useRep=useRep, threshold_func=threshold_func)
+            agreements = score(task, ques, uberDict, config_path, repDF,hardCodedTypes = hardCodedTypes, useRep=useRep, threshold_func=threshold_func)
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, task, ques)
             if type(agreements) is list:
@@ -213,7 +214,7 @@ def adjustForJson(units):
 
 
 
-def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = False, threshold_func = 'logis_0'):
+def score(article, ques, data, config_path, repDF = None,  hardCodedTypes = True, useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -250,7 +251,7 @@ def score(article, ques, data, repDF = None,  hardCodedTypes = True, useRep = Fa
     if hardCodedTypes:
         # schema = get_schema(data, article)
         schema = get_schema_topic(data, article)
-        question_type, num_choices = get_type_hard(schema, ques)
+        question_type, num_choices = get_type_json(schema, ques, config_path)
         #print("QUESTION TYPE IS", question_type)
     #This block for scoring only a single article, iuseful for debugging
     # print()
@@ -348,7 +349,7 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
 
 
 # # # TEST STUFF
-calc_agreement_directory('./covid','./config/schema/', hardCodedTypes= True)
+calc_agreement_directory('./covid','./config/schema/', './config', hardCodedTypes= True)
 # calc_scores('./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntAnswers.csv',
 #             schemaFile = './demo1/Demo1ArgRel3-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
 # calc_scores('./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntAnswers.csv',
