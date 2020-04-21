@@ -160,7 +160,7 @@ def check_scale_match(weight, scale):
     if arg_ans == -1 or arg_ans == weight[arg_col]:
         src_col = "source_T"+str(math.floor(scale['source_topic']))+'.Q'+str(math.floor(scale['source_question_num']))
         src_ans = int(scale['source_answer_num'])
-        spec_ans = weight[src_col]
+        #spec_ans = weight[src_col]
         if src_ans == -1 or src_ans == int(weight[src_col]):
             found = True
             abs_point = scale['absolute_points']

@@ -244,7 +244,7 @@ def find_index(df, targetVals,col):
                 try:
                     df[col].iloc[i] = int(df[col].iloc[i])
                 except ValueError:
-                    print("VALUE ERROR CAUGHT: invalid row")
+                    #print("VALUE ERROR CAUGHT: invalid row")
                     continue
 
 
