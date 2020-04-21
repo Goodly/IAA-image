@@ -66,9 +66,9 @@ def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=No
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
     print('collecting Data')
-    #uberDict = dataStorer(highlightfilename, schemaFile)
+    uberDict = dataStorer(highlightfilename, schemaFile)
     #print("old ", uberDict)
-    uberDict = data_storer(highlightfilename, answersFile, schemaFile)
+    #uberDict = data_storer(highlightfilename, answersFile, schemaFile)
     print("new ", uberDict)
     if directory.startswith('./'):
         directory = directory[2:]
