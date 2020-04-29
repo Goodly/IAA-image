@@ -65,11 +65,10 @@ def unpack_iaa(input):
 def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None,
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
-    print('collecting Data')
     uberDict = dataStorer(highlightfilename, schemaFile)
     #print("old ", uberDict)
     #uberDict = data_storer(highlightfilename, answersFile, schemaFile)
-    print("new ", uberDict)
+
     if directory.startswith('./'):
         directory = directory[2:]
     if not outDirectory:
@@ -242,16 +241,13 @@ def score(article, ques, data, config_path, repDF = None,  hardCodedTypes = True
         sourceText = []
         hlUsers = []
         hlAns = []
-    # TODO: find actual number of choices always
-    # TODO: verify that I did this and that the following line is unnecessary
-    num_choices = 5
+
     question_type = get_question_type(data, article, ques)
     get_question_numchoices(data, article, ques)
-    schema = get_schema(data, article)
-    if hardCodedTypes:
-        # schema = get_schema(data, article)
-        schema = get_schema_topic(data, article)
-        question_type, num_choices = get_type_json(schema, ques, config_path)
+    schema = get_schema_topic(data, article)
+    question_type, num_choices = get_type_json(schema, ques, config_path)
+
+
         #print("QUESTION TYPE IS", question_type)
     #This block for scoring only a single article, iuseful for debugging
     # print()

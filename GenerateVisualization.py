@@ -29,7 +29,7 @@ def visualize(articleID, prefix = ''):
     #    for line in file:
     #        print(line.replace("ARTICLETEXTHERE", text, 1), end='')
 
-    cmdString = "aws s3 mv "+ curName + " s3://publiceditor.io/Articles/" + curName + " --acl public-read-write"
+    cmdString = "aws s3 mv "+ curName + " s3://dev.publiceditor.io/visualization/" + curName + " --acl public-read-write"
     os.system(cmdString)
     print('viz sent to aws')
 

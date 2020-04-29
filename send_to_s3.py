@@ -8,7 +8,7 @@ def send_s3(scoring_dir, input_dir, texts_path, prefix = '', func = ''):
     for root, dir, files in os.walk(scoring_dir):
         for file in files:
             if file.endswith('.csv') and 'VisualizationData_' in file:
-                cmd_str = "aws s3 cp "+ scoring_dir+'/'+file+" dev.publiceditor.io/visualization/"+prefix+file+" --acl public-read"
+                cmd_str = "aws s3 cp "+ scoring_dir+'/'+file+" s3://dev.publiceditor.io/visualization/"+prefix+file+" --acl public-read"
                 os.system(cmd_str)
                 print('calling:',cmd_str)
                 id = file.split('Data_', 1)[1][:-4]
@@ -46,7 +46,7 @@ def send_s3(scoring_dir, input_dir, texts_path, prefix = '', func = ''):
             new_name = func+new_sha+'SSSArticle.txt'
             src = os.path.join(text_dir, filename)
             dst = os.path.join(text_dir, new_name)
-            cmd_str = "aws s3 cp " + src + " dev.publiceditor.io/visualization/" + \
+            cmd_str = "aws s3 cp " + src + " s3://dev.publiceditor.io/visualization/" + \
                                            new_name + " --acl public-read"
             os.system(cmd_str)
         else:
