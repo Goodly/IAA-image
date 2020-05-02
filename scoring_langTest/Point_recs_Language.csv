@@ -1,5 +1,0 @@
-,article_num,article_sha256,task_uuid,Question_Number,Answer_Number,highlighted_indices,Point_Recommendation,Points,Label,schema
-0,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,8e98f97c-900e-4ff6-82a9-016b3b92be43,3,3,[],-2.5,-2.068493192518459,Exaggeration,Language
-1,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,8e98f97c-900e-4ff6-82a9-016b3b92be43,4,3,[],-3.0,-2.3339007365534385,Inappropriately emotional,Language
-3,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,8e98f97c-900e-4ff6-82a9-016b3b92be43,9,4,[],-1.25,-1.0810324064294772,Writing errors,Language
-4,1712,38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2c,8e98f97c-900e-4ff6-82a9-016b3b92be43,11,1,[],0.5,0.4526622983724914,Well-balanced,Language
