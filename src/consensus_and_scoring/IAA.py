@@ -12,10 +12,11 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
                              useRep = False, threshold_func = 'raw_30'):
     print("IAA STARTING")
     if outDirectory is None:
-        if directory.startswith('./'):
-            outDirectory = 's_iaa_'+ directory[2:]
-        else:
-            outDirectory = 's_iaa_' + directory
+        x = directory.rfind("/")
+        x +=1
+
+        outDirectory = '../../s_iaa_'+directory[x:]
+
     print("outDIR:", outDirectory)
     highlights = []
     answers = []

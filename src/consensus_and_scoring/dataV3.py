@@ -421,6 +421,23 @@ def parseMany(base, field = None, separator = None):
             base = base[end+1:]
     return out
 
+def get_indices_hard(string):
+
+    if isinstance(string, list):
+        if len(string == 1) and isinstance(string[0], str):
+              string = string[0]
+    out = []
+    num = 0
+    if not isinstance(string, str):
+        return out
+    for i in range(len(string)):
+        if string[i].isdigit():
+            num = 10*num+int(string[i])
+        elif num!=0:
+            out.append(num)
+            num = 0
+
+    return out
 
 def find_answer_contents(schemadata, qlabel):
     questiondf = schemadata[schemadata['question_label'] == qlabel]

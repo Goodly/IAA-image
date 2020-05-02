@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-from dataV2 import make_directory
+from dataV3 import make_directory
 
 def make_iaa_human_readable(iaa_dir, report_dir):
     print("making it readable")

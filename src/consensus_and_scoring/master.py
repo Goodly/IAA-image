@@ -7,7 +7,7 @@ from Weighting import launch_Weighting
 from pointAssignment import pointSort
 from Separator import splitcsv
 from IAA_report import make_iaa_human_readable
-from dataV2 import make_directory
+from dataV3 import make_directory
 from time import time
 from send_to_s3 import send_s3
 from GenerateVisualization import visualize
@@ -231,14 +231,14 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = 'covid'
+    input_dir = '../../covid'
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
     rep_file = './UserRepScores.csv'
     out_prefix = ''
     threshold_function = 'raw_30'
-    tua_dir = './covid/tua'
+    tua_dir = '../../covid/tua'
     config_path = './config/'
     if args.input_dir:
         input_dir = args.input_dir

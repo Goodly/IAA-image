@@ -4,11 +4,13 @@ import numpy as np
 import os
 import json
 from multiprocessing import Pool
-from dataV2 import *
+from dataV3 import *
 def eval_dependency(directory, iaa_dir, out_dir = None):
     print("DEPENDENCY STARTING")
     if out_dir is None:
-        out_dir = 'scoring_' + directory
+        x = directory.rfind("/")
+        x += 1
+        out_dir = '../../s_iaa_' + directory[x:]
     schema = []
     iaa = []
     for root, dir, files in os.walk(directory):

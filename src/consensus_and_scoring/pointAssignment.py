@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 import os
-from dataV2 import make_directory
-from dataV2 import get_indices_hard
+from dataV3 import make_directory
+from dataV3 import get_indices_hard
 import json
 import math
 

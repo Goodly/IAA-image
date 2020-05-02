@@ -2,9 +2,9 @@ import pandas as pd
 import numpy as np
 import os
 import csv
-from dataV2 import make_directory
+from dataV3 import make_directory
 
-from dataV2 import get_indices_hard
+from dataV3 import get_indices_hard
 
 
 def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//', reporting = True):
