@@ -130,7 +130,6 @@ def apply_point_adjustments(weights, scale_guide):
             abs_point, point_scale = checkForScale(w, scale_guide)
             if abs_point != 0:
                 weights.iloc[i, weights.columns.get_loc("points")] = abs_point
-            print(weights.iloc[i])
             weights.iloc[i, weights.columns.get_loc("points")] = w['points']*point_scale
     return weights
 
@@ -194,8 +193,7 @@ def getFiles(directory):
             #     weightOutputs.append(directory+file)
             #     #print('foud Weights File...', weightOutputs)
 
-    print('all', sourceFile, argRelevanceFile, weightOutputs)
-    print("WEIGHTOUTPUTS:", len(weightOutputs))
+
     return sourceFile, argRelevanceFile #, weightOutputs
 
 def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6):

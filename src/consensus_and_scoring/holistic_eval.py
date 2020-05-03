@@ -43,30 +43,30 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
             q2_df = task_df[task_df['question_Number'] == 2]
             if len(q2_df) > 0:
                 q2scored = False
-                ans = q2_df['answer_uuid'].iloc[0]
+                ans = str(q2_df['agreed_Answer'].iloc[0])
                 # q2.a1
-                if ans == '0d9f8841-407c-43af-8103-486c2c6aab56':
+                if ans == '1':
                     points = 2
                     desc = 'Qualified Source'
                     q2scored = True
                 # q2.a2
-                elif ans == 'fd35ec7d-6745-4fc7-a330-7768977eb58f':
+                elif ans == '2':
                     points = 1
                     desc = 'Qualified Source'
                     q2scored = True
                 # q2.a3
-                elif ans == 'bfb4ba57-2b15-408e-9a89-553d0e2ecc9d':
+                elif ans == '3':
                     points = -1
                     num_vague_quals += 1
                     desc = 'Vaguely Sourced'
                     q2scored = True
                 # q2.a7
-                elif ans == 'ea5a00f8-1bec-42fc-8e0d-9f1defd8c024':
+                elif ans == '7':
                     points = -1
                     desc = 'Unqualified Source'
                     q2scored = True
                 # q2.a8
-                elif ans == '785bf454-ffda-4782-93d7-ba37040e0812':
+                elif ans == '8':
                     points = -2
                     desc = 'Unqualified Source'
                     q2scored = True
@@ -97,15 +97,15 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
             overallChange = addPoints(overallChange, -10, 'Vague Sourcing', art_num, art_sha256, art_id)
 
 
-        article_type_ids = art_holistic['answer_uuid'].unique()
+
         if (num_assertions - num_args - num_sources - num_evidence) > -1:
             # 5aff36a3-f8c5-4e24-b28f-6b1bc7527694 T1.Q1.A1 News report
-            if checkArtType("5aff36a3-f8c5-4e24-b28f-6b1bc7527694", article_type_ids):
+            if checkArtType(1,1, art_holistic):
                 overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
             else:
                 overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
         # a2f97bce-2512-43e0-9605-0d137d30d8e6 T1.Q1.A3 Op-Ed
-        if not checkArtType("a2f97bce-2512-43e0-9605-0d137d30d8e6", article_type_ids):
+        if not checkArtType(1,3, art_holistic):
             indexVal = (1 + num_assertions) / (1 + num_evidence + num_evidence)
             if indexVal > 1:
                 overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
@@ -115,10 +115,8 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
                 # a2f97bce-2512-43e0-9605-0d137d30d8e6 T1.Q1.A3 Op-Ed
                 # 0f15553b-95da-4eec-84f7-6809f5205ff2: T1.Q6.A5 Scientific study or discovery;
                 # ad87bdb1-2247-4660-b0fd-64b19aa050fb T1.Q10.2 Report of what some person, body, or group said
-            checkArtType("251e628c-2cd1-467a-9204-6f1b7c80cf79", article_type_ids) or checkArtType(
-            "a2f97bce-2512-43e0-9605-0d137d30d8e6", article_type_ids) or checkArtType(
-            "0f15553b-95da-4eec-84f7-6809f5205ff2", article_type_ids) or checkArtType(
-            "ad87bdb1-2247-4660-b0fd-64b19aa050fb", article_type_ids)):  # T1.Q6.A5 and T1.Q10.2
+            checkArtType(1,6, art_holistic) or checkArtType(1,3, art_holistic)  or
+            checkArtType(6,5, art_holistic) or checkArtType(10,2, art_holistic)):  # T1.Q6.A5 and T1.Q10.2
             if (num_sources < 2 and num_evidence < num_assertions + num_args):
                 overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
     pointsdf = pd.concat([pointsdf, overallChange], axis=0, ignore_index=True)
@@ -126,8 +124,13 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
         pointsdf.to_csv(scoring_dir + '/AssessedPoints.csv')
     return pointsdf
 
-def checkArtType(ans_uuid, all_uuid):
-    return ans_uuid in all_uuid
+def checkArtType(question_number, answer_number, holistic_df):
+    ques_df = holistic_df[holistic_df['question_Number'] == question_number]
+    ans_df = ques_df[ques_df['agreed_Answer'] == answer_number]
+    if len(ans_df):
+        print("holi------------------scds57689988$%^&*^$%found match")
+        return True
+    return False
 
 
 def get_indices_by_uuid(tua, tua_uuid):
@@ -150,10 +153,10 @@ def get_dep_iaa(directory, schema='sources'):
     """
     if schema == 'sources' or schema == 'source':
         search_term = "ource"
-    if schema == 'holistic' or schema == 'overall':
+    elif schema == 'holistic' or schema == 'overall':
         search_term = "olis"
     else:
-        print("AAAHHHHH, can't evaluate get_dep_iaa in holistic_eval.py")
+        print("AAAHHHHH, can't evaluate get_dep_iaa in holistic_eval.py; directory:", directory, "schema:", schema)
 
     for root, dir, files in os.walk(directory):
         for file in files:

@@ -161,7 +161,7 @@ def dataStorer(data_hunt_path, schema_path):
 
             # target_text = usersGrouped["target_text"].apply(list) # Don't know for sure
         answer_content = highlight.loc[uuid].groupby("question_label")["answer_content"].apply(list)
-        newUsers = highlight.loc[uuid].groupby("question_label")["contributor_uuid"].apply(list)
+        newUsers = highlight.loc[uuid].groupby("question_label")["contributor_uuid"].unique().apply(list)
         rel_hl_data = highlighted_data[highlighted_data['quiz_task_uuid'] == uuid]
         # for each task, creates a new questionData that parses through related question and answer
         ques = uberDict[uuid]['quesData'] = {}
