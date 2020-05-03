@@ -17,7 +17,7 @@ from art_to_id_key import make_key
 def calculate_scores_master(directory, texts_path ,config_path, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = False,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
-                            push_aws = True, tua_dir = None, out_prefix = '', threshold_func = 'logis_0'):
+                            push_aws = True, tua_dir = None, out_prefix = '',viz_dir = None, threshold_func = 'logis_0'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -111,7 +111,8 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
     if reporting:
         make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
-    viz_dir = 'visualization_'+directory
+    if viz_dir == None:
+        viz_dir = '../../visualization_'+directory
     splitcsv(scoring_dir, pointsFile = points, viz_dir=viz_dir, reporting=reporting)
     #print("DONE, time elapsed", time()-start)
     ids = []
