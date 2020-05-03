@@ -195,7 +195,7 @@ def dataStorer(data_hunt_path, schema_path):
                     "answers" : getAnsNumsList(highlight, uuid, question_label), # list of answer numbers
                     "starts" : starts,
                     "ends" : ends,
-                    "users" : newUsers[question_label],
+                    "users" : getUsers(highlight, uuid, question_label),
                     "numUsers" : len(newUsers[question_label]),
                     "answer_content": find_answer_contents(task_schema, question_label),
                     "question_text": quest_label_text.loc[question_label, "question_text"],
@@ -230,12 +230,17 @@ def getAnsText(answer_id_text, task_uuid, question_label):
     Returns a list of answers under the question label
     """
     task_data = answer_id_text[answer_id_text["quiz_task_uuid"] == task_uuid]
-    ans = task_data[task_data["question_label"] == question_label]
+    ans = task_data[task_data["question_label"] == question_label].drop_duplicates(subset = ["contributor_uuid", "answer_uuid"])
     return ans["answer_text"].unique().tolist()
+
+def getUsers(task_question_answer_labels, task_uuid, question_label):
+    task_data = task_question_answer_labels.loc[task_uuid]
+    ans = task_data[task_data["question_label"] == question_label].drop_duplicates(subset = ["contributor_uuid", "answer_uuid"])
+    return ans["contributor_uuid"].tolist()
 
 def getAnsLabels(task_question_answer_labels, task_uuid, question_label):
     task_data = task_question_answer_labels.loc[task_uuid]
-    ans = task_data[task_data["question_label"] == question_label]
+    ans = task_data[task_data["question_label"] == question_label].drop_duplicates(subset = ["contributor_uuid", "answer_uuid"])
     return ans["answer_label"].tolist()
 
 def getAnsNumsList(task_question_answer_labels, task_uuid, question_label):
