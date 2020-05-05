@@ -228,6 +228,10 @@ def load_args():
         help= 'the threshold function used to check for inter annotator agreement'
     )
     parser.add_argument(
+        '-u', '--tua_dir',
+        help= 'input directory for TUA data'
+    )
+    parser.add_argument(
         '-v', '--viz_dir',
         help= 'output directory for visulizations'
     )
@@ -260,6 +264,8 @@ if __name__ == '__main__':
         out_prefix = args.out_prefix
     if args.threshold_function:
         threshold_function = args.threshold_function
+    if args.tua_dir:
+        tua_dir = args.tua_dir
     if args.viz_dir:
         viz_dir = args.viz_dir
 
