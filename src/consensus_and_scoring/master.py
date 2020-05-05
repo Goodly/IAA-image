@@ -78,9 +78,9 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
     #iaa_dir is now handled inside IAA.py
     #if iaa_dir is None:
     #    iaa_dir = 's_iaa_'+directory
-
-    rep_direc = directory + "_report"
-    make_directory(rep_direc)
+    if reporting:
+        rep_direc = directory + "_report"
+        make_directory(rep_direc)
     start = time()
     if not single_task:
         iaa_dir = calc_agreement_directory(directory, './config/schema/', config_path, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,

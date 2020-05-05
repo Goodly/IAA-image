@@ -39,6 +39,29 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
     highlights.sort()
     answers.sort()
     schema.sort()
+    #this is needed for the case where only 1 task is being run at a time, which is now normal behavior for PE
+    if len(highlights) != len(schema):
+        temp = []
+        for h in highlights:
+            #leave first letter
+            if 'language' in h.lower():
+                term = 'angua'
+            elif 'evidence' in h.lower():
+                term = 'viden'
+            elif 'probability' in h.lower():
+                term = 'robabil'
+            elif 'reasoning' in h.lower():
+                term = 'eason'
+            elif 'argument' in h.lower():
+                term = 'rgumen'
+            elif 'source' in h.lower():
+                term = 'ource'
+            else:
+                raise ValueError("highlight file passed in doesn't match a known schema")
+            for s in schema:
+                if term in s:
+                    temp.append(term)
+        schema = temp
     assert(len(highlights) == len(schema), 'files not found')
     ins = []
     for i in range(len(schema)):
