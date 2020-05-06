@@ -229,6 +229,14 @@ def load_args():
         '-tf', '--threshold_function',
         help= 'the threshold function used to check for inter annotator agreement'
     )
+    parser.add_argument(
+        '-u', '--tua_dir',
+        help= 'input directory for TUA data'
+    )
+    parser.add_argument(
+        '-v', '--viz_dir',
+        help= 'output directory for visulizations'
+    )
     return parser.parse_args()
 
 
@@ -245,6 +253,7 @@ if __name__ == '__main__':
     threshold_function = 'raw_30'
     tua_dir = '../../covid/tua'
     config_path = './config/'
+    viz_dir = '../../visualization_covid'
     if args.input_dir:
         input_dir = args.input_dir
     if args.tua_file:
@@ -259,8 +268,12 @@ if __name__ == '__main__':
         out_prefix = args.out_prefix
     if args.threshold_function:
         threshold_function = args.threshold_function
+    if args.tua_dir:
+        tua_dir = args.tua_dir
+    if args.viz_dir:
+        viz_dir = args.viz_dir
 
-    calculate_scores_master(input_dir, './covid/texts',config_path, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
-                            out_prefix = out_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
+    calculate_scores_master(input_dir, '../../covid/texts',config_path, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
+                            viz_dir=viz_dir, out_prefix = out_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
 
 #calculate_scores_master("nyu_0")
