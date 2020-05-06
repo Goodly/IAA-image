@@ -5,20 +5,18 @@ import os
 import json
 from multiprocessing import Pool
 from dataV3 import *
-def eval_dependency(directory, iaa_dir, out_dir = None):
+def eval_dependency(directory, iaa_dir, schema_dir, out_dir = None):
     print("DEPENDENCY STARTING")
     if out_dir is None:
         x = directory.rfind("/")
         x += 1
-        out_dir = '../../s_iaa_' + directory[x:]
+        out_dir = '../../scoring_' + directory[x:]
     schema = []
     iaa = []
-    for root, dir, files in os.walk(directory):
+    for root, dir, files in os.walk(schema_dir):
         for file in files:
-            if file.endswith('.csv') and 'Dep' not in file:
-                print("evaluating dependencies  for "+directory+'/'+file)
-                if 'Schema' in file:
-                    schema.append(directory+'/'+file)
+            #no safety check here; everything in the schema directory shoul dbe a schema csv
+            schema.append(schema_dir+'/'+file)
     for root, dir, files in os.walk(iaa_dir):
         for file in files:
             if file.endswith('.csv') and 'Dep' not in file:
@@ -26,12 +24,22 @@ def eval_dependency(directory, iaa_dir, out_dir = None):
                 if 'S_IAA' in file:
                     iaa.append(iaa_dir+'/'+file)
 
-    schema.sort()
-    iaa.sort()
+    temp = []
+    for h in iaa:
+        hdf = pd.read_csv(h, encoding = 'utf-8')
+        schem_sha = hdf['schema_sha256'].iloc[0]
+        matched_schema = False
+        for sch in schema:
+            if schem_sha in sch:
+                temp.append(sch)
+                matched_schema = True
+                break
+        if not matched_schema:
+            raise NameError("No schema matching file:", h)
     assert(len(schema)==len(iaa), 'mismatched files ', len(schema), 'schema', len(iaa), 'iaa oututs')
     out_dir = make_directory(out_dir)
     ins = []
-    for i in range(len(schema)):
+    for i in range(len(iaa)):
         ins.append((schema[i], iaa[i], out_dir))
         #handleDependencies(schema[i], iaa[i], out_dir)
 

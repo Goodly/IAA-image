@@ -87,7 +87,7 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
                                            useRep=use_rep, threshold_func=threshold_func)
     else:
 
-        iaa_dir = calc_scores(highlights_file, repCSV=repCSV, answersFile = answers_file, schemaFile = schema_file,
+        iaa_dir = calc_scores(highlights_file, repCSV=repCSV,  schemaFile = schema_file,
                               outDirectory = iaa_dir, useRep = use_rep, threshold_func=threshold_func)
 
     if reporting:
@@ -98,7 +98,7 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
     print("IAA TIME ELAPSED", end - start)
     print('iaaaa', iaa_dir)
     print("DEPENDENCY")
-    scoring_dir = eval_dependency(directory, iaa_dir, out_dir=scoring_dir)
+    scoring_dir = eval_dependency(directory, iaa_dir, './config/schema/', out_dir=scoring_dir)
     if just_dep_iaa:
         return
 
@@ -112,14 +112,16 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
         make_key(tuas, scoring_dir, prefix=threshold_func)
     print("----------------SPLITTING-----------------------------------")
     if viz_dir == None:
-        viz_dir = '../../visualization_'+directory
+        x = directory.rfind("/")
+        x += 1
+        viz_dir = '../../visualization_'+directory[x:]
     splitcsv(scoring_dir, pointsFile = points, viz_dir=viz_dir, reporting=reporting)
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
         print("Pushing to aws")
 
-        ids = send_s3(scoring_dir, directory, texts_path, prefix=out_prefix, func = threshold_func)
+        ids = send_s3(viz_dir, directory, texts_path, prefix=out_prefix, func = threshold_func)
 
     for id in ids:
         visualize(id, prefix=out_prefix)
@@ -232,10 +234,12 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_dir = '../../covid'
+    input_dir = '../../covid_evi'
     tua_file = './config/allTUAS.csv'
     output_dir = None
     scoring_dir  = None
+
+
     rep_file = './UserRepScores.csv'
     out_prefix = ''
     threshold_function = 'raw_30'

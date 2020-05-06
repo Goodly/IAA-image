@@ -7,7 +7,6 @@ import argparse
 
 from UnitizingScoring import toArray, scorePercentageUnitizing, getIndicesFromUser
 from ThresholdMatrix import evalThresholdMatrix
-from IAA import get_path
 
 
 path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
@@ -15,7 +14,13 @@ path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
 jpath1 = 'FormTriager1.2C2-2018-07-25T23.json'
 jpath2 = 'SemanticsTriager1.3C2-2018-07-25T23.json'
 
-def importData(path, excludedUsers = []):
+def importData(path, out_path):
+    '''
+
+    :param path: location of the triage data
+    :param out_path: where triage data should get output too. includes name of the ouptut file, should be a .csv
+    :return:
+    '''
     """CSV INPUT"""
     data = pd.read_csv(path, encoding = 'utf-8')
     #only excluding users for purpose of cleaner test data
@@ -62,8 +67,7 @@ def importData(path, excludedUsers = []):
                 out = appendData(filename[0], a, task_uuids, namespaces, pstarts, pends, c, pflags, out, source_text)
     print('exporting to csv')
 
-    outPath, name = get_path(path)
-    scores = open(outPath+'T_IAA'+name, 'w', encoding = 'utf-8')
+    scores = open(out_path, 'w', encoding = 'utf-8')
 
     with scores:
         writer = csv.writer(scores)

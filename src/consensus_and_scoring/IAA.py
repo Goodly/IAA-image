@@ -1,14 +1,15 @@
 import csv
+import pandas as pd
 from ChecklistCoding import *
 from ExtraInfo import *
-#from dataV2 import *
+
 from dataV3 import *
 from repScores import *
 import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
-def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes = False, repCSV=None, answersFile = None, outDirectory = None,
+def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes = False, repCSV=None,  outDirectory = None,
                              useRep = False, threshold_func = 'raw_30'):
     print("IAA STARTING")
     if outDirectory is None:
@@ -19,62 +20,39 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
 
     print("outDIR:", outDirectory)
     highlights = []
-    answers = []
     schema = []
     for root, dir, files in os.walk(directory):
         for file in files:
             if file.endswith('.csv') and 'IAA' not in file:
                 print("Checking Agreement for "+directory+'/'+file)
-                if 'Highlights' in file:
+                if 'DataHunt' in file:
                     #print('highlight')
                     highlights.append(directory+'/'+file)
-                elif 'Answers' in file or 'Crosstab' in file:
-                    answers.append(directory+'/'+file)
+
     for root, dir, files in os.walk(schema_dir):
         for file in files:
-            if 'Schema' in file:
-                schema.append(schema_dir+'/'+file)
-    #sorting filenames alphabetically separates them into the right schemas, it's a gimmick and might not scale
-    #if it doesn't work there'll be key errors because taskIDS won't align
-    highlights.sort()
-    answers.sort()
-    schema.sort()
-    #this is needed for the case where only 1 task is being run at a time, which is now normal behavior for PE
-    if len(highlights) != len(schema):
-        temp = []
-        for h in highlights:
-            #leave first letter
-            if 'language' in h.lower():
-                term = 'angua'
-            elif 'evidence' in h.lower():
-                term = 'viden'
-            elif 'probability' in h.lower():
-                term = 'robabil'
-            elif 'reasoning' in h.lower():
-                term = 'eason'
-            elif 'argument' in h.lower():
-                term = 'rgumen'
-            elif 'source' in h.lower():
-                term = 'ource'
-            else:
-                raise ValueError("highlight file passed in doesn't match a known schema")
-            for s in schema:
-                if term in s:
-                    temp.append(term)
-        schema = temp
-    assert(len(highlights) == len(schema), 'files not found')
-    ins = []
-    for i in range(len(schema)):
+            #no safety check here; everything in the schema directory shoul dbe a schema csv
+            schema.append(schema_dir+'/'+file)
 
-        ins.append([highlights[i], hardCodedTypes, repCSV ,
-                            answers[i], schema[i], outDirectory, useRep, directory, threshold_func])
-    # print("starting pol")
-    # with Pool() as pool:
-    #     pool.map(unpack_iaa, ins)
+    #pick out the schemas actually being used
+    temp = []
+    for h in highlights:
+        hdf = pd.read_csv(h, encoding = 'utf-8')
+        schem_sha = hdf['schema_sha256'].iloc[0]
+        matched_schema = False
+        for sch in schema:
+            if schem_sha in sch:
+                temp.append(sch)
+                matched_schema = True
+                break
+        if not matched_schema:
+            raise NameError("No schema matching file:", h)
+    schema = temp
+
 
     for i in range(len(highlights)):
         calc_scores(highlights[i], config_path, hardCodedTypes=hardCodedTypes, repCSV = repCSV,
-                           answersFile = answers[i], schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
+                          schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
                     directory=directory, threshold_func = threshold_func)
     #                 #will be an error for every file that isn't the right file, there's a more graceful solution, but
     #                 #we'll save that dream for another day
@@ -86,7 +64,7 @@ def unpack_iaa(input):
                             answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6],
                 directory = input[7], threshold_func=input[8])
 
-def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=None, answersFile = None, schemaFile = None,
+def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=None, schemaFile = None,
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
     uberDict = dataStorer(highlightfilename, schemaFile)

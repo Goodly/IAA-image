@@ -16,12 +16,18 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
     quoted_sources = get_dep_iaa(scoring_dir, schema="source")
     holistic = get_dep_iaa(scoring_dir, schema="holistic")
     for art_sha256 in tua['article_sha256'].unique():
-        art_holistic = holistic[holistic['article_sha256'] == art_sha256]
+        if holistic!=None:
+            art_holistic = holistic[holistic['article_sha256'] == art_sha256]
+        else:
+            art_holistic  =None
         art_tua = tua[tua['article_sha256'] == art_sha256]
         art_num = art_tua['article_number'].iloc[0]
         art_id = threshold_func + art_sha256
         art_length = art_tua['article_text_length'].iloc[0]
-        art_sources = quoted_sources[quoted_sources['article_sha256'] == art_sha256]
+        if quoted_sources!= None:
+            art_sources = quoted_sources[quoted_sources['article_sha256'] == art_sha256]
+        else:
+            art_sources = None
         if art_length < 800:
             continue
         # This is a constant, relatively arbitrary, try different values
@@ -35,63 +41,64 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
         # Handle Quoted Sources Schema here:
         num_vague_quals = 0
         num_vague_sources = 0
-        for task in art_sources['quiz_task_uuid'].unique():
-            task_df = art_sources[art_sources['quiz_task_uuid'] == task]
-            task_df['question_Number'] = task_df['question_Number'].apply(int)
-            # handle Q2 (koalifications)
-            # Can't be done on weightin.py because has to count number of occurrences of the same error.
-            q2_df = task_df[task_df['question_Number'] == 2]
-            if len(q2_df) > 0:
-                q2scored = False
-                ans = str(q2_df['agreed_Answer'].iloc[0])
-                # q2.a1
-                if ans == '1':
-                    points = 2
-                    desc = 'Qualified Source'
-                    q2scored = True
-                # q2.a2
-                elif ans == '2':
-                    points = 1
-                    desc = 'Qualified Source'
-                    q2scored = True
-                # q2.a3
-                elif ans == '3':
-                    points = -1
-                    num_vague_quals += 1
-                    desc = 'Vaguely Sourced'
-                    q2scored = True
-                # q2.a7
-                elif ans == '7':
-                    points = -1
-                    desc = 'Unqualified Source'
-                    q2scored = True
-                # q2.a8
-                elif ans == '8':
-                    points = -2
-                    desc = 'Unqualified Source'
-                    q2scored = True
-                if q2scored:
-                    tua_uuid = q2_df['tua_uuid'].iloc[0]
-                    indices = get_indices_by_uuid(tua, tua_uuid)
-                    overallChange = addPoints(overallChange, points, desc, art_num, art_sha256, art_id,
-                                              indices=str(indices))
-        # Handle q5 (identification)
+        if art_sources !=None:
+            for task in art_sources['quiz_task_uuid'].unique():
+                task_df = art_sources[art_sources['quiz_task_uuid'] == task]
+                task_df['question_Number'] = task_df['question_Number'].apply(int)
+                # handle Q2 (koalifications)
+                # Can't be done on weightin.py because has to count number of occurrences of the same error.
+                q2_df = task_df[task_df['question_Number'] == 2]
+                if len(q2_df) > 0:
+                    q2scored = False
+                    ans = str(q2_df['agreed_Answer'].iloc[0])
+                    # q2.a1
+                    if ans == '1':
+                        points = 2
+                        desc = 'Qualified Source'
+                        q2scored = True
+                    # q2.a2
+                    elif ans == '2':
+                        points = 1
+                        desc = 'Qualified Source'
+                        q2scored = True
+                    # q2.a3
+                    elif ans == '3':
+                        points = -1
+                        num_vague_quals += 1
+                        desc = 'Vaguely Sourced'
+                        q2scored = True
+                    # q2.a7
+                    elif ans == '7':
+                        points = -1
+                        desc = 'Unqualified Source'
+                        q2scored = True
+                    # q2.a8
+                    elif ans == '8':
+                        points = -2
+                        desc = 'Unqualified Source'
+                        q2scored = True
+                    if q2scored:
+                        tua_uuid = q2_df['tua_uuid'].iloc[0]
+                        indices = get_indices_by_uuid(tua, tua_uuid)
+                        overallChange = addPoints(overallChange, points, desc, art_num, art_sha256, art_id,
+                                                  indices=str(indices))
+            # Handle q5 (identification)
 
-        # >> Scoring note: If ONLY 1.05.07, 1.05.08, or 1.05.09 (i.e not any of the others) then -2 points for each
-        # source ... and if there are 2 or more such vague sources in a short article (or 3 in a long article), the
-        # article should be dinged -5pts and tagged as 'vague sourcing'
-        q5_df = task_df[task_df['question_Number'] == 5]
-        q5_df = q5_df.loc[q5_df.agreed_Answer != 'U']
-        q5_df = q5_df.loc[q5_df.agreed_Answer != 'M']
-        q5_df = q5_df.loc[q5_df.agreed_Answer != 'L']
-        if len(q5_df) > 0:
-            ans = q5_df['agreed_Answer'].apply(int).tolist()
-            if min(ans) > 6:
-                tua_uuid = q5_df['tua_uuid'].iloc[0]
-                indices = get_indices_by_uuid(tua, tua_uuid)
-                num_vague_sources += 1
-                overallChange = addPoints(overallChange, -2, 'Vague Sourcing', art_num, art_sha256, art_id,
-                                          indices=str(indices))
+            # >> Scoring note: If ONLY 1.05.07, 1.05.08, or 1.05.09 (i.e not any of the others) then -2 points for each
+            # source ... and if there are 2 or more such vague sources in a short article (or 3 in a long article), the
+            # article should be dinged -5pts and tagged as 'vague sourcing'
+            q5_df = task_df[task_df['question_Number'] == 5]
+            q5_df = q5_df.loc[q5_df.agreed_Answer != 'U']
+            q5_df = q5_df.loc[q5_df.agreed_Answer != 'M']
+            q5_df = q5_df.loc[q5_df.agreed_Answer != 'L']
+            if len(q5_df) > 0:
+                ans = q5_df['agreed_Answer'].apply(int).tolist()
+                if min(ans) > 6:
+                    tua_uuid = q5_df['tua_uuid'].iloc[0]
+                    indices = get_indices_by_uuid(tua, tua_uuid)
+                    num_vague_sources += 1
+                    overallChange = addPoints(overallChange, -2, 'Vague Sourcing', art_num, art_sha256, art_id,
+                                              indices=str(indices))
         vagueness_index = (num_vague_sources + num_vague_quals) / article_size_index
         if vagueness_index > 4:
             overallChange = addPoints(overallChange, -10, 'Vague Sourcing', art_num, art_sha256, art_id)
@@ -125,6 +132,8 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
     return pointsdf
 
 def checkArtType(question_number, answer_number, holistic_df):
+    if holistic_df == None:
+        return False
     ques_df = holistic_df[holistic_df['question_Number'] == question_number]
     ans_df = ques_df[ques_df['agreed_Answer'] == answer_number]
     if len(ans_df):
@@ -157,13 +166,16 @@ def get_dep_iaa(directory, schema='sources'):
         search_term = "olis"
     else:
         print("AAAHHHHH, can't evaluate get_dep_iaa in holistic_eval.py; directory:", directory, "schema:", schema)
-
+    df  = None
     for root, dir, files in os.walk(directory):
         for file in files:
             print(file)
             if file.endswith('.csv'):
                 if 'Dep_S_IAA' in file and search_term in file:
                     df = pd.read_csv(directory + '/' + file)
+    if df == None:
+        print("HOLISTIC EVAL, No specialist agreement for :", schema, "task")
+        return None
     return df
 
 
