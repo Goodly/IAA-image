@@ -9,7 +9,7 @@ ipython-genutils==0.2.0
 jedi==0.16.0
 jmespath==0.9.5
 krippendorff==0.2.3
-numpy==1.18.1
+numpy==1.22.0
 pandas==1.0.2
 parso==0.6.2
 pickleshare==0.7.5
